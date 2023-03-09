@@ -10,6 +10,9 @@ public class PlayerWeaponController : MonoBehaviour
     private void OnEnable()
     {
         InputManager.OnFire += SetFireInput;
+        InputManager.OnControlsEnabled += EnableControls;
+        InputManager.OnControlsDisabled += DisableControls;
+
         GameManager.OnGamePaused += DisableControls;
         GameManager.OnGameResumed += EnableControls;
     }
@@ -17,6 +20,8 @@ public class PlayerWeaponController : MonoBehaviour
     private void OnDisable()
     {
         InputManager.OnFire -= SetFireInput;
+        InputManager.OnControlsEnabled -= EnableControls;
+        InputManager.OnControlsDisabled -= DisableControls;
 
         GameManager.OnGamePaused -= DisableControls;
         GameManager.OnGameResumed -= EnableControls;

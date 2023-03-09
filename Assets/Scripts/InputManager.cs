@@ -24,6 +24,7 @@ public class InputManager : MonoBehaviour
             controls.Controls.Shoot.canceled += i => OnFire(false);
             controls.Controls.Pause.performed += i => OnPause?.Invoke();
 
+            GameManager.OnLevelCountDownStart += DisableControls;
             GameplayUIManager.OnCountdownDone += EnableControls;
             PlayerManager.OnPlayerDeath += DisableControls;
         }
@@ -31,6 +32,7 @@ public class InputManager : MonoBehaviour
 
     private void OnDisable()
     {
+        GameManager.OnLevelCountDownStart -= DisableControls;
         GameplayUIManager.OnCountdownDone -= EnableControls;
         PlayerManager.OnPlayerDeath -= DisableControls;
         DisableControls();

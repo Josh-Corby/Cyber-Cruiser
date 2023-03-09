@@ -6,6 +6,8 @@ public class GameplayUIManager : MonoBehaviour
 {
     public static event Action OnCountdownDone = null;
 
+    private Coroutine waveCountdown;
+
     [SerializeField] private TMP_Text waveCountdownText;
     [SerializeField] private GameObject gameplayPanel;
     [SerializeField] private GameObject gameOverPanel;
@@ -31,24 +33,32 @@ public class GameplayUIManager : MonoBehaviour
 
     private void StartMission()
     {
-        StartWaveCountdown();
+        ResetWaveCountdown();
         gameplayPanel.SetActive(true);
         gameOverPanel.SetActive(false);
         pausePanel.SetActive(false);
     }
 
+    private void ResetWaveCountdown()
+    {
+        if (waveCountdown != null)
+        {
+            StopCoroutine(waveCountdown);
+        }
+        StartWaveCountdown();
+    }
     private void StartWaveCountdown()
     {
-        StartCoroutine(WaveCountdown());
+        waveCountdown = StartCoroutine(WaveCountdown());
     }
 
     private IEnumerator WaveCountdown()
     {
-        gameOverPanel.SetActive(false);
         waveCountdownText.enabled = true;
         float waveCountdown = 3f;
+        float startActiveTimer = 1f;
 
-        while(waveCountdown >= 0)
+        while (waveCountdown >= 0)
         {
             waveCountdownText.text = waveCountdown.ToString("F2");
             waveCountdown -= Time.deltaTime;
@@ -57,8 +67,6 @@ public class GameplayUIManager : MonoBehaviour
 
         OnCountdownDone?.Invoke();
         waveCountdownText.text = "GO!";
-
-        float startActiveTimer = 1f;
 
         while(startActiveTimer >= 0)
         {
