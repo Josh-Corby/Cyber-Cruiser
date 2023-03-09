@@ -3,12 +3,49 @@ using System;
 public class GameManager : MonoBehaviour
 {
     public static event Action OnLevelCountDownStart = null;
+    public static event Action OnGamePaused = null;
+    public static event Action OnGameResumed = null;
+    [SerializeField] private GameObject gameplayObjects;
 
+    private bool isPaused = false;
 
+    private void OnEnable()
+    {
+        InputManager.OnPause += TogglePause;
+    }
     private void Start()
     {
-        OnLevelCountDownStart?.Invoke();
+        StartLevel();
     }
 
+    public void StartLevel()
+    {
+        OnLevelCountDownStart?.Invoke();
+        gameplayObjects.SetActive(true);
+    }
 
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
+
+        if (isPaused)
+        {
+            OnGamePaused?.Invoke();
+        }
+        else if (!isPaused)
+        {
+            OnGameResumed?.Invoke();
+        }
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+
+    }
+
+    private void ResumeGame()
+    {
+        Time.timeScale = 1f;
+    }
 }

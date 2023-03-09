@@ -11,12 +11,18 @@ public class DistanceCounter : MonoBehaviour
 
     private void OnEnable()
     {
-        LevelUIManager.OnCountdownDone += StartIncreasingDistance;
+        GameplayUIManager.OnCountdownDone += StartIncreasingDistance;
+
+        GameManager.OnGamePaused += StopIncreasingDistance;
+        GameManager.OnGameResumed += StartIncreasingDistance;
     }
 
     private void OnDisable()
     {
-        LevelUIManager.OnCountdownDone -= StartIncreasingDistance;
+        GameplayUIManager.OnCountdownDone -= StartIncreasingDistance;
+
+        GameManager.OnGamePaused -= StopIncreasingDistance;
+        GameManager.OnGameResumed -= StartIncreasingDistance;
     }
 
     private void Start()
@@ -39,5 +45,10 @@ public class DistanceCounter : MonoBehaviour
     private void StartIncreasingDistance()
     {
         distanceIncreasing = true;
+    }
+
+    private void StopIncreasingDistance()
+    {
+        distanceIncreasing = false;
     }
 }

@@ -4,8 +4,10 @@ using System;
 public class InputManager : MonoBehaviour
 {
     public static event Action<Vector2> OnMouseMove = null;
+    public static event Action<bool> OnFire = null;
     public static event Action OnControlsEnabled = null;
     public static event Action OnControlsDisabled = null;
+    public static event Action OnPause = null;
 
     PlayerControls controls;
 
@@ -17,15 +19,20 @@ public class InputManager : MonoBehaviour
 
             controls = new PlayerControls();
 
-            controls.MouseControls.MouseVectorInput.performed += i => OnMouseMove(i.ReadValue<Vector2>());
+            controls.Controls.MouseVectorInput.performed += i => OnMouseMove(i.ReadValue<Vector2>());
+            controls.Controls.Shoot.performed += i => OnFire(true);
+            controls.Controls.Shoot.canceled += i => OnFire(false);
+            controls.Controls.Pause.performed += i => OnPause?.Invoke();
 
-            LevelUIManager.OnCountdownDone += EnableControls;
+            GameplayUIManager.OnCountdownDone += EnableControls;
+            PlayerManager.OnPlayerDeath += DisableControls;
         }
     }
 
     private void OnDisable()
     {
-        LevelUIManager.OnCountdownDone -= EnableControls;
+        GameplayUIManager.OnCountdownDone -= EnableControls;
+        PlayerManager.OnPlayerDeath -= DisableControls;
         DisableControls();
     }
 
@@ -40,4 +47,5 @@ public class InputManager : MonoBehaviour
         controls.Disable();
         OnControlsDisabled?.Invoke();
     }
+
 }
