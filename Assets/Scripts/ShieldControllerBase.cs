@@ -1,9 +1,10 @@
 using UnityEngine;
 
-public abstract class ShieldBase : MonoBehaviour
+public abstract class ShieldControllerBase : MonoBehaviour
 {
-    [SerializeField] protected Collider2D unitCollider;
+    protected Collider2D unitCollider;
     [SerializeField] protected GameObject shields;
+    [SerializeField] protected Collider2D shieldCollider;
 
     public bool shieldsActive;
     [SerializeField] protected bool shieldsActiveOnSpawn;
@@ -13,6 +14,10 @@ public abstract class ShieldBase : MonoBehaviour
         if (shieldsActiveOnSpawn)
         {
             ActivateShields();
+        }
+        else
+        {
+            DeactivateShields();
         }
     }
 
@@ -25,6 +30,7 @@ public abstract class ShieldBase : MonoBehaviour
 
         shieldsActive = true;
         shields.SetActive(true);
+        shieldCollider.enabled = true;
         unitCollider.enabled = false;
     }
 
@@ -36,8 +42,9 @@ public abstract class ShieldBase : MonoBehaviour
         }
 
         shieldsActive = false;
-        unitCollider.enabled = true;
         shields.SetActive(false);
+        shieldCollider.enabled = false;
+        unitCollider.enabled = true;   
     }
 
 
@@ -51,6 +58,7 @@ public abstract class ShieldBase : MonoBehaviour
 
         if (collider.TryGetComponent<IDamageable>(out var damageable))
         {
+            Debug.Log(collider.name);
             damageable.Destroy();
             DeactivateShields();
         }

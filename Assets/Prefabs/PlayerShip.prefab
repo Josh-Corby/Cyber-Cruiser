@@ -11,13 +11,15 @@ GameObject:
   - component: {fileID: 1696511644321994428}
   - component: {fileID: 5350262363685245542}
   - component: {fileID: 7671205999642657847}
+  - component: {fileID: 7448088386261638001}
+  - component: {fileID: 6755066961025542417}
   m_Layer: 0
   m_Name: Shields
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1696511644321994428
 Transform:
   m_ObjectHideFlags: 0
@@ -25,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4253268769838961451}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 11.626713, y: 11.626713, z: 11.626713}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1165463880448735964}
-  m_RootOrder: 1
+  m_Father: {fileID: 703919016318476738}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5350262363685245542
 SpriteRenderer:
@@ -101,6 +103,81 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.09
+--- !u!114 &7448088386261638001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253268769838961451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f825a07ddf312d47836f5aab055bc91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6755066961025542417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4253268769838961451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f825a07ddf312d47836f5aab055bc91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7091729754616710028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 703919016318476738}
+  - component: {fileID: 6496008905095027466}
+  m_Layer: 0
+  m_Name: PlayerShieldController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &703919016318476738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7091729754616710028}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 11.626713, y: 11.626713, z: 11.626713}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1696511644321994428}
+  m_Father: {fileID: 1165463880448735964}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6496008905095027466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7091729754616710028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af7c83a58c7d6e148be02b453b399161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitCollider: {fileID: 1324404181}
+  shields: {fileID: 4253268769838961451}
+  shieldsActive: 0
+  shieldsActiveOnSpawn: 0
+  shieldActiveDuration: 5
+  shieldActiveTimer: 0
 --- !u!1 &8907491432247727163
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,7 +193,6 @@ GameObject:
   - component: {fileID: 8907491432247727160}
   - component: {fileID: 8907491432247727158}
   - component: {fileID: 5093816518230039129}
-  - component: {fileID: 8330975747855965192}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -137,7 +213,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4105431680881908016}
-  - {fileID: 1696511644321994428}
+  - {fileID: 703919016318476738}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -275,31 +351,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 077d4773bb84afa4f922dd9299e9eb4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shieldController: {fileID: 0}
-  plasmaCount: 0
-  plasmaCost: 0
+  plasmaCount: 10
+  plasmaCost: 5
   maxHealth: 2
---- !u!114 &8330975747855965192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8907491432247727163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7c83a58c7d6e148be02b453b399161, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitCollider: {fileID: 0}
-  shields: {fileID: 0}
-  maxShieldStrength: 0
-  CurrentShieldStrength: 0
-  shieldsActive: 0
-  shieldsActiveOnSpawn: 0
-  shieldActiveDuration: 0
-  shieldActiveTimer: 0
-  shieldDamageDurationReduction: 0
 --- !u!1 &8907491432817469735
 GameObject:
   m_ObjectHideFlags: 0

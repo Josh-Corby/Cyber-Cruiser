@@ -4,7 +4,7 @@ using System;
 public class PlayerManager : MonoBehaviour
 {
     public static event Action OnPlayerDeath = null;
-    [SerializeField] private PlayerShieldController shieldController;
+    private PlayerShieldController shieldController;
 
     [SerializeField] private int plasmaCount;
     [SerializeField] private int plasmaCost;
@@ -15,6 +15,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private int maxHealth;
     private int currentHealth;
 
+
+    private void Awake()
+    {
+        shieldController = GetComponentInChildren<PlayerShieldController>();
+    }
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += FullHeal;

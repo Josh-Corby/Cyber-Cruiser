@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyShieldController : ShieldBase, IShield
+public class EnemyShieldController : ShieldControllerBase, IShield
 {
     [SerializeField] protected int maxShieldStrength;
     [SerializeField] protected float CurrentShieldStrength;

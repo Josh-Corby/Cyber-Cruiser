@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShieldController : ShieldBase, IShield
+public class PlayerShieldController : ShieldControllerBase, IShield
 {
     [SerializeField] private int shieldActiveDuration;
     [SerializeField] private float shieldActiveTimer;
 
+    private void Awake()
+    {
+        unitCollider = GetComponentInParent<Collider2D>();
+    }
     private void Update()
     {
         if (shieldsActive)
