@@ -15,10 +15,11 @@ public class Enemy : MonoBehaviour, IDamageable
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
-            Die();
+            Destroy();
         }
     }
-    private void Die()
+
+    public void Destroy()
     {
         Destroy(gameObject);
     }

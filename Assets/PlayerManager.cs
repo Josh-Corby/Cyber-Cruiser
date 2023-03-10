@@ -4,9 +4,10 @@ using System;
 public class PlayerManager : MonoBehaviour
 {
     public static event Action OnPlayerDeath = null;
+    [SerializeField] private PlayerShieldController shieldController;
 
-    private float shieldCooldown;
-    private int plasmaCount;
+    [SerializeField] private int plasmaCount;
+    [SerializeField] private int plasmaCost;
 
     private float weaponPackCountdown;
     private float weaponPackDuration;
@@ -17,11 +18,13 @@ public class PlayerManager : MonoBehaviour
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += FullHeal;
+        InputManager.OnShield += CheckShieldsState;
     }
 
     private void OnDisable()
     {
         GameManager.OnLevelCountDownStart -= FullHeal;
+        InputManager.OnShield -= CheckShieldsState;
     }
 
     private void Start()
@@ -33,6 +36,7 @@ public class PlayerManager : MonoBehaviour
     {
         currentHealth = maxHealth;
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         ProcessCollision(collision.gameObject);
@@ -52,5 +56,49 @@ public class PlayerManager : MonoBehaviour
                 Debug.Log("Health left: " + currentHealth);
             }
         }
+    }
+
+    private void CheckShieldsState()
+    {
+        if (shieldController.shieldsActive)
+        {
+            Debug.Log("Shields already Active");
+            return;
+        }
+
+        else
+        {
+            CheckPlasma();
+        }
+    }
+
+    private void CheckPlasma()
+    {
+        if(plasmaCount >= plasmaCost)
+        {
+            ReducePlasma(plasmaCost);
+            ActivateShields();     
+            return;
+        }
+
+        else
+        {
+            Debug.Log("Not enough plasma");
+        }
+    }
+
+    private void AddPlasma(int amount)
+    {
+        plasmaCount += amount;
+    }
+
+    private void ReducePlasma(int amount)
+    {
+        plasmaCount -= amount;
+    }
+
+    private void ActivateShields()
+    {
+        shieldController.ActivateShields();
     }
 }
