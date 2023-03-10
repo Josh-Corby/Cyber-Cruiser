@@ -9,6 +9,7 @@ public class GameplayUIManager : MonoBehaviour
     private Coroutine waveCountdown;
 
     [SerializeField] private TMP_Text waveCountdownText;
+    [SerializeField] private TMP_Text plasmaCountText;
     [SerializeField] private GameObject gameplayPanel;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject pausePanel;
@@ -20,6 +21,7 @@ public class GameplayUIManager : MonoBehaviour
         GameManager.OnGameResumed += DisablePauseUI;
 
         PlayerManager.OnPlayerDeath += GameOverUI;
+        PlayerManager.OnPlasmaChange += UpdatePlasmaText;
     }
 
     private void OnDisable()
@@ -29,6 +31,7 @@ public class GameplayUIManager : MonoBehaviour
         GameManager.OnGameResumed -= DisablePauseUI;
 
         PlayerManager.OnPlayerDeath -= GameOverUI;
+        PlayerManager.OnPlasmaChange -= UpdatePlasmaText;
     }
 
     private void StartMission()
@@ -74,6 +77,11 @@ public class GameplayUIManager : MonoBehaviour
             yield return null;
         }
         waveCountdownText.enabled = false;
+    }
+
+    private void UpdatePlasmaText(int plasmaCount)
+    {
+        plasmaCountText.text = plasmaCount.ToString();
     }
 
     private void GameOverUI()

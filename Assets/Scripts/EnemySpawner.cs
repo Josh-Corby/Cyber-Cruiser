@@ -7,11 +7,6 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Vector3 spawnSize;
     [SerializeField] private GameObject[] enemyPrefabs;
 
-    private void Start()
-    {
-        SpawnEnemy();
-    }
-
     private Vector3 GetRandomSpawnPosition()
     {
         float x = Random.Range(-spawnSize.x / 2, spawnSize.x / 2);
@@ -25,6 +20,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length - 1)];
         GameObject enemy = Instantiate(randomEnemyPrefab, GetRandomSpawnPosition(),Quaternion.identity);
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

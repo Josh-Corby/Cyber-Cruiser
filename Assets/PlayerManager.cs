@@ -4,10 +4,13 @@ using System;
 public class PlayerManager : MonoBehaviour
 {
     public static event Action OnPlayerDeath = null;
+    public static event Action<int> OnPlasmaChange = null;
+
     private PlayerShieldController shieldController;
 
-    [SerializeField] private int plasmaCount;
+    [SerializeField] private int currentPlasma;
     [SerializeField] private int plasmaCost;
+    private int maxPlasma = 20;
 
     private float weaponPackCountdown;
     private float weaponPackDuration;
@@ -40,6 +43,9 @@ public class PlayerManager : MonoBehaviour
     private void FullHeal()
     {
         currentHealth = maxHealth;
+        currentPlasma = maxPlasma;
+
+        OnPlasmaChange(currentPlasma);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -49,8 +55,9 @@ public class PlayerManager : MonoBehaviour
 
     private void ProcessCollision(GameObject collider)
     {
-        if (collider.GetComponent<Enemy>())
+        if (collider.TryGetComponent<Enemy>(out var enemy))
         {
+            enemy.Destroy();
             currentHealth -= 1;
             if (currentHealth <= 0)
             {
@@ -79,7 +86,7 @@ public class PlayerManager : MonoBehaviour
 
     private void CheckPlasma()
     {
-        if(plasmaCount >= plasmaCost)
+        if(currentPlasma >= plasmaCost)
         {
             ReducePlasma(plasmaCost);
             ActivateShields();     
@@ -94,12 +101,14 @@ public class PlayerManager : MonoBehaviour
 
     private void AddPlasma(int amount)
     {
-        plasmaCount += amount;
+        currentPlasma += amount;
+        OnPlasmaChange(currentPlasma);
     }
 
     private void ReducePlasma(int amount)
     {
-        plasmaCount -= amount;
+        currentPlasma -= amount;
+        OnPlasmaChange(currentPlasma);
     }
 
     private void ActivateShields()

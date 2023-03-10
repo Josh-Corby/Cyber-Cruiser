@@ -12,16 +12,13 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         InputManager.OnPause += TogglePause;
+        UIManager.OnLevelEntry += StartLevel;
     }
 
     private void OnDisable()
     {
         InputManager.OnPause -= TogglePause;
-    }
-
-    private void Start()
-    {
-        StartLevel();
+        UIManager.OnLevelEntry -= StartLevel;
     }
 
     public void StartLevel()

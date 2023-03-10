@@ -152,6 +152,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: 2
-  maxHealth: 10
+  maxHealth: 2
   currentHealth: 0
-  speed: 1
+  speed: 4
