@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using TMPro;
-public class GameplayUIManager : MonoBehaviour
+public class GameplayUIManager : GameBehaviour
 {
     public static event Action OnCountdownDone = null;
 

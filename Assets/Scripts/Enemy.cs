@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy : MonoBehaviour, IDamageable
+public class Enemy : GameBehaviour, IDamageable
 {
     public enum movementDirection 
     { 
@@ -51,11 +51,11 @@ public class Enemy : MonoBehaviour, IDamageable
 
     public void Destroy()
     {
+        if (ESM.enemiesAlive.Contains(gameObject))
+        {
+            ESM.enemiesAlive.Remove(gameObject);
+        }
         Destroy(gameObject);
     }
 
-    private void MoveForward()
-    {
-
-    }
 }

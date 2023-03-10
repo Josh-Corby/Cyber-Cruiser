@@ -15,10 +15,11 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z + z);
         return spawnPosition;
     }
-    public void SpawnEnemy()
+    public GameObject SpawnEnemy()
     {
         GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length - 1)];
         GameObject enemy = Instantiate(randomEnemyPrefab, GetRandomSpawnPosition(),Quaternion.identity);
+        return enemy;
     }
 
     private void OnDrawGizmos()

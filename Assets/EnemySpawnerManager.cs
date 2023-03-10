@@ -1,34 +1,50 @@
 using UnityEngine;
 using System.Collections;
-using System;
+using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-public class EnemySpawnerManager : MonoBehaviour
+public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 {
     [SerializeField] private EnemySpawner[] spawners;
     [SerializeField] private int spawnEnemyInterval;
+
+    private Coroutine spawnEnemiesCoroutine;
+
+    public List<GameObject> enemiesAlive = new List<GameObject>();
     public bool spawnEnemies;
 
     private void OnEnable()
     {
+        GameManager.OnLevelCountDownStart += RestartLevel;
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
     }
 
     private void OnDisable()
     {
+        GameManager.OnLevelCountDownStart -= RestartLevel;
         GameplayUIManager.OnCountdownDone -= StartSpawningEnemies;
         PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
     }
 
+
     private void StartSpawningEnemies()
     {
-        StartCoroutine(SpawnEnemies());
+        spawnEnemiesCoroutine = StartCoroutine(SpawnEnemies());
     }
 
     private void StopSpawningEnemies()
     {
-        StopCoroutine(SpawnEnemies());
+        if (spawnEnemiesCoroutine != null)
+        {
+            StopCoroutine(spawnEnemiesCoroutine);
+        }
+    }
+
+    private void RestartLevel()
+    {
+        StopSpawningEnemies();
+        ClearEnemiesAlive();
     }
 
     private IEnumerator SpawnEnemies()
@@ -42,6 +58,16 @@ public class EnemySpawnerManager : MonoBehaviour
     private void ChooseRandomSpawner()
     {
         EnemySpawner currentspawner = spawners[Random.Range(0, spawners.Length - 1)];
-        currentspawner.SpawnEnemy();
+        enemiesAlive.Add(currentspawner.SpawnEnemy());
+    }
+
+    private void ClearEnemiesAlive()
+    {
+        for (int i = 0; i < enemiesAlive.Count; i++)
+        {
+            GameObject enemy = enemiesAlive[i];
+            enemiesAlive.Remove(enemy);
+            Destroy(enemy);
+        }
     }
 }
