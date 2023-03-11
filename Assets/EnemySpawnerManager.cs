@@ -18,6 +18,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         GameManager.OnLevelCountDownStart += RestartLevel;
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
+
+        EnemySpawner.OnEnemySpawned += AddEnemy;
     }
 
     private void OnDisable()
@@ -25,6 +27,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         GameManager.OnLevelCountDownStart -= RestartLevel;
         GameplayUIManager.OnCountdownDone -= StartSpawningEnemies;
         PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
+
+        EnemySpawner.OnEnemySpawned -= AddEnemy;
     }
 
 
@@ -40,7 +44,10 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
             StopCoroutine(spawnEnemiesCoroutine);
         }
     }
-
+    private void AddEnemy(GameObject enemy)
+    {
+        enemiesAlive.Add(enemy);
+    }
     private void RestartLevel()
     {
         StopSpawningEnemies();
@@ -58,7 +65,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void ChooseRandomSpawner()
     {
         EnemySpawner currentspawner = spawners[Random.Range(0, spawners.Length - 1)];
-        enemiesAlive.Add(currentspawner.SpawnEnemy());
+        currentspawner.StartSpawnProcess();
     }
 
     private void ClearEnemiesAlive()

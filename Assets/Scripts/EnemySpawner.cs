@@ -1,25 +1,60 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemySpawner : MonoBehaviour
 {
+    public static event Action<GameObject> OnEnemySpawned = null;
+
     [SerializeField] private Vector3 spawnSize;
     [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private GameObject EnemyIndicator;
+    [SerializeField] private Vector3 EnemyIndicatorPosition;
+    [SerializeField] private float IndicatorAngle;
+    [SerializeField] private float spawnDelay;
 
+
+    public void StartSpawnProcess()
+    {
+        Vector3 randomposition = GetRandomSpawnPosition();
+        CreateIndicator(randomposition);
+        StartCoroutine(SpawnEnemy(randomposition));
+    }
     private Vector3 GetRandomSpawnPosition()
     {
         float x = Random.Range(-spawnSize.x / 2, spawnSize.x / 2);
         float y = Random.Range(-spawnSize.y / 2, spawnSize.y / 2);
-        float z = Random.Range(-spawnSize.z / 2, spawnSize.z / 2);
+        float z = 0;
         Vector3 spawnPosition = new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z + z);
         return spawnPosition;
     }
-    public GameObject SpawnEnemy()
+
+    private void CreateIndicator(Vector2 position)
     {
+        GameObject Indicator = Instantiate(EnemyIndicator, transform.position, Quaternion.identity);
+
+        Indicator.transform.position += EnemyIndicatorPosition;
+
+        if(EnemyIndicatorPosition.x == 0)
+        {
+            Indicator.transform.position += new Vector3(position.x, 0);
+        }
+
+        if(EnemyIndicatorPosition.y == 0)
+        {
+            Indicator.transform.position += new Vector3(0, position.y);
+        }
+
+        Indicator.transform.rotation = Quaternion.Euler(0, 0, IndicatorAngle);
+    }
+
+    private IEnumerator SpawnEnemy(Vector3 spawnPosition)
+    {
+        yield return new WaitForSeconds(spawnDelay);
         GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length - 1)];
-        GameObject enemy = Instantiate(randomEnemyPrefab, GetRandomSpawnPosition(),Quaternion.identity);
-        return enemy;
+        GameObject enemy = Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity);
+        OnEnemySpawned(enemy);
     }
 
     private void OnDrawGizmos()
