@@ -159,3 +159,4 @@ MonoBehaviour:
   explodeOnDeath: 1
   explosionRadius: 1
   explosionDamage: 1
+  explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}

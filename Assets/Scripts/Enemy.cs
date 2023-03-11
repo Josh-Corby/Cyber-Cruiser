@@ -17,6 +17,7 @@ public class Enemy : GameBehaviour, IDamageable
     [SerializeField] private bool explodeOnDeath;
     [SerializeField] private float explosionRadius;
     [SerializeField] private float explosionDamage;
+    [SerializeField] private GameObject explosionGraphic;
     private Transform player;
 
     private void Awake()
@@ -80,11 +81,18 @@ public class Enemy : GameBehaviour, IDamageable
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
         foreach (Collider2D collider in colliders)
         {
-            if(!collider.TryGetComponent<PlayerManager>(out var player))
+            GameObject explosionEffect = Instantiate(explosionGraphic, transform);
+            explosionEffect.GetComponent<ExplosionGraphic>().explosionRadius = explosionRadius;
+            explosionEffect.transform.SetParent(null);
+
+            if (!collider.TryGetComponent<PlayerManager>(out var player))
             {
-                return;
+                continue;
             }
-            player.Damage(explosionDamage);
+            else
+            {
+                player.Damage(explosionDamage);
+            }       
         }
 
         Destroy();
