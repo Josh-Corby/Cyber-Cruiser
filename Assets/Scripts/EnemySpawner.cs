@@ -47,6 +47,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         Indicator.transform.rotation = Quaternion.Euler(0, 0, IndicatorAngle);
+        StartCoroutine(Indicator.GetComponent<EnemyIndicator>().IndicatorTimer(spawnDelay));
     }
 
     private IEnumerator SpawnEnemy(Vector3 spawnPosition)
