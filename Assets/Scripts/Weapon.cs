@@ -11,9 +11,9 @@ public class Weapon : MonoBehaviour
 
     [Header("Gun Base Stats")]
     [SerializeField] private GameObject bulletToFire;
-    [SerializeField] private float damage;
     [SerializeField] private float timeBetweenShots;
     public bool holdToFire;
+    [SerializeField] private bool autoFire;
 
     [Header("Spread Stats")]
     [SerializeField] private bool useSpread;
@@ -28,7 +28,6 @@ public class Weapon : MonoBehaviour
     [SerializeField] private int bulletsInBurst;
     [SerializeField] private float timeBetweenBurstShots;
 
-
     private void Awake()
     {
         firePointTransform = firePoint.transform;
@@ -39,6 +38,16 @@ public class Weapon : MonoBehaviour
         readyToFire = true;
     }
 
+    private void Update()
+    {
+        if (autoFire)
+        {
+            if (readyToFire)
+            {
+                Fire();
+            }
+        }
+    }
 
     public void Fire()
     {

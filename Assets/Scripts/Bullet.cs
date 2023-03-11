@@ -2,13 +2,31 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public enum moveDirection
+    {
+        Left, Right
+    }
 
+    [SerializeField] private moveDirection direction;
     [SerializeField] private float speed;
-    private Vector2 direction = Vector2.right;
+    private Vector2 directionVector;
     [SerializeField] private float damage;
     [SerializeField] private GameObject collisionParticles;
 
     private float bulletLifetime = 3f;
+
+    private void Start()
+    {
+        switch (direction)
+        {
+            case moveDirection.Left:
+                directionVector = Vector2.left;
+                break;
+            case moveDirection.Right:
+                directionVector = Vector2.right;
+                break;
+        }
+    }
     private void Update()
     {
         bulletLifetime -= Time.deltaTime;
@@ -17,12 +35,7 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
 
-        transform.position += (Vector3)direction * speed * Time.deltaTime;
-
-        if(transform.rotation.z != 0)
-        {
-            direction = transform.right;
-        }
+        transform.position += (Vector3)directionVector * speed * Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

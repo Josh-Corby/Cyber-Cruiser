@@ -1,11 +1,12 @@
 using UnityEngine;
 using System;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 {
     public static event Action OnPlayerDeath = null;
     public static event Action<int> OnPlasmaChange = null;
 
+    [HideInInspector] public GameObject player;
     private PlayerShieldController shieldController;
 
     [SerializeField] private int currentPlasma;
@@ -16,12 +17,13 @@ public class PlayerManager : MonoBehaviour
     private float weaponPackDuration;
 
     [SerializeField] private int maxHealth;
-    private int currentHealth;
+    private float currentHealth;
 
 
     private void Awake()
     {
         shieldController = GetComponentInChildren<PlayerShieldController>();
+        player = gameObject;
     }
     private void OnEnable()
     {
@@ -58,16 +60,13 @@ public class PlayerManager : MonoBehaviour
         if (collider.TryGetComponent<Enemy>(out var enemy))
         {
             enemy.Destroy();
-            currentHealth -= 1;
-            if (currentHealth <= 0)
-            {
-                OnPlayerDeath?.Invoke();
-            }
-            else
-            {
-                Debug.Log("Health left: " + currentHealth);
-            }
+            Damage(maxHealth);
         }
+        else
+        {
+            Debug.Log("Health left: " + currentHealth);
+        }
+
     }
 
     private void CheckShieldsState()
@@ -86,10 +85,10 @@ public class PlayerManager : MonoBehaviour
 
     private void CheckPlasma()
     {
-        if(currentPlasma >= plasmaCost)
+        if (currentPlasma >= plasmaCost)
         {
             ReducePlasma(plasmaCost);
-            ActivateShields();     
+            ActivateShields();
             return;
         }
 
@@ -114,5 +113,19 @@ public class PlayerManager : MonoBehaviour
     private void ActivateShields()
     {
         shieldController.ActivateShields();
+    }
+
+    public void Damage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Destroy();
+        }
+    }
+
+    public void Destroy()
+    {
+        OnPlayerDeath?.Invoke();
     }
 }

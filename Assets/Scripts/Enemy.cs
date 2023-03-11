@@ -4,7 +4,7 @@ public class Enemy : GameBehaviour, IDamageable
 {
     public enum movementDirection 
     { 
-        Up, Down, Left, Right
+        Up, Down, Left, Right, DownLeft
     
     }
     [SerializeField] private movementDirection moveDirection;
@@ -12,6 +12,17 @@ public class Enemy : GameBehaviour, IDamageable
     [SerializeField] private float currentHealth;
     [SerializeField] private float speed;
     private Vector2 direction;
+    [SerializeField] private bool copyPlayerY;
+
+    [SerializeField] private bool explodeOnDeath;
+    [SerializeField] private float explosionRadius;
+    [SerializeField] private float explosionDamage;
+    private Transform player;
+
+    private void Awake()
+    {
+        player = PM.player.transform;
+    }
 
     private void Start()
     {
@@ -29,6 +40,9 @@ public class Enemy : GameBehaviour, IDamageable
             case movementDirection.Right:
                 direction = Vector2.right;
                 break;
+            case movementDirection.DownLeft:
+                direction = new Vector2(-1, -1);
+                break;
         }
 
 
@@ -38,6 +52,11 @@ public class Enemy : GameBehaviour, IDamageable
     private void Update()
     {
         transform.position += (Vector3)direction * speed * Time.deltaTime;
+
+        if (copyPlayerY)
+        {
+            transform.position = new Vector2(transform.position.x, player.position.y);
+        }
     }
 
     public void Damage(float damage)
@@ -45,8 +64,30 @@ public class Enemy : GameBehaviour, IDamageable
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
-            Destroy();
+            if (explodeOnDeath)
+            {
+                Explode();
+            }
+            else
+            {
+                Destroy();
+            }
         }
+    }
+
+    private void Explode()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+        foreach (Collider2D collider in colliders)
+        {
+            if(!collider.TryGetComponent<PlayerManager>(out var player))
+            {
+                return;
+            }
+            player.Damage(explosionDamage);
+        }
+
+        Destroy();
     }
 
     public void Destroy()

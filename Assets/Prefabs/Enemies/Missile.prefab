@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 3537538281721821469}
-  m_Layer: 0
-  m_Name: Enemy
+  m_Layer: 7
+  m_Name: Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +151,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDirection: 2
-  maxHealth: 2
+  moveDirection: 0
+  maxHealth: 1
   currentHealth: 0
   speed: 4
+  copyPlayerY: 0
+  explodeOnDeath: 1
+  explosionRadius: 1
+  explosionDamage: 1
