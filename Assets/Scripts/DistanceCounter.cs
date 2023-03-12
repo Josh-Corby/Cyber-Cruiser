@@ -15,26 +15,16 @@ public class DistanceCounter : MonoBehaviour
     private void OnEnable()
     {
         GameplayUIManager.OnCountdownDone += StartIncreasingDistance;
-
         GameManager.OnLevelCountDownStart += ResetCounter;
-        GameManager.OnGamePaused += StopIncreasingDistance;
-        GameManager.OnGameResumed += StartIncreasingDistance;
-
         PlayerManager.OnPlayerDeath += StopIncreasingDistance;
-
         EnemySpawnerManager.OnBossDied += StartIncreasingDistance;
     }
 
     private void OnDisable()
     {
         GameplayUIManager.OnCountdownDone -= StartIncreasingDistance;
-
         GameManager.OnLevelCountDownStart -= ResetCounter;
-        GameManager.OnGamePaused -= StopIncreasingDistance;
-        GameManager.OnGameResumed -= StartIncreasingDistance;
-
         PlayerManager.OnPlayerDeath -= StopIncreasingDistance;
-
         EnemySpawnerManager.OnBossDied -= StartIncreasingDistance;
     }
 
@@ -53,8 +43,6 @@ public class DistanceCounter : MonoBehaviour
 
         if(distanceIncreasing)
         {
-            Debug.Log("Distance is increasing");
-
             distanceFloat += Time.deltaTime * 10;
             distanceInt = Mathf.RoundToInt(distanceFloat);
             distanceText.text = distanceInt.ToString();
@@ -70,6 +58,8 @@ public class DistanceCounter : MonoBehaviour
 
     private void StartIncreasingDistance()
     {
+        distanceFloat += 1;
+        distanceInt += 1;
         distanceIncreasing = true;
     }
 
