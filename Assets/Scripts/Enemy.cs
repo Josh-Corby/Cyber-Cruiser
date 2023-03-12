@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System;
 public class Enemy : GameBehaviour, IDamageable
 {
     public enum movementDirection 
@@ -7,6 +7,9 @@ public class Enemy : GameBehaviour, IDamageable
         Up, Down, Left, Right, DownLeft
     
     }
+
+    public static event Action<GameObject> OnEnemyDied = null;
+
     [SerializeField] private movementDirection moveDirection;
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
@@ -102,7 +105,7 @@ public class Enemy : GameBehaviour, IDamageable
     {
         if (ESM.enemiesAlive.Contains(gameObject))
         {
-            ESM.enemiesAlive.Remove(gameObject);
+            OnEnemyDied(gameObject);
         }
         Destroy(gameObject);
     }

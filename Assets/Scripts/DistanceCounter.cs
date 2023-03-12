@@ -4,10 +4,13 @@ using TMPro;
 
 public class DistanceCounter : MonoBehaviour
 {
+    public static event Action OnBossDistanceReached;
+
     [SerializeField] private TMP_Text distanceText;
     private float distanceFloat;
     private int distanceInt;
     private bool distanceIncreasing;
+    private readonly int bossDistance = 500;
 
     private void OnEnable()
     {
@@ -18,6 +21,8 @@ public class DistanceCounter : MonoBehaviour
         GameManager.OnGameResumed += StartIncreasingDistance;
 
         PlayerManager.OnPlayerDeath += StopIncreasingDistance;
+
+        EnemySpawnerManager.OnBossDied += StartIncreasingDistance;
     }
 
     private void OnDisable()
@@ -29,6 +34,8 @@ public class DistanceCounter : MonoBehaviour
         GameManager.OnGameResumed -= StartIncreasingDistance;
 
         PlayerManager.OnPlayerDeath -= StopIncreasingDistance;
+
+        EnemySpawnerManager.OnBossDied -= StartIncreasingDistance;
     }
 
 
@@ -44,9 +51,21 @@ public class DistanceCounter : MonoBehaviour
     {
         if (!distanceIncreasing) return;
 
-        distanceFloat += Time.deltaTime * 10;
-        distanceInt = Mathf.RoundToInt(distanceFloat);
-        distanceText.text = distanceInt.ToString();
+        if(distanceIncreasing)
+        {
+            Debug.Log("Distance is increasing");
+
+            distanceFloat += Time.deltaTime * 10;
+            distanceInt = Mathf.RoundToInt(distanceFloat);
+            distanceText.text = distanceInt.ToString();
+
+            if(distanceInt > 0 && distanceInt % bossDistance == 0)
+            {
+                Debug.Log("boss distance reached");
+                StopIncreasingDistance();
+                OnBossDistanceReached?.Invoke();
+            }
+        }  
     }
 
     private void StartIncreasingDistance()

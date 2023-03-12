@@ -14,13 +14,19 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float IndicatorAngle;
     [SerializeField] private float spawnDelay;
 
-
     public void StartSpawnProcess()
     {
         Vector3 randomposition = GetRandomSpawnPosition();
         CreateIndicator(randomposition);
-        StartCoroutine(SpawnEnemy(randomposition));
+        StartCoroutine(SpawnRandomEnemy(randomposition));
     }
+
+    public void StartBossSpawn(GameObject bossToSpawn)
+    {
+        CreateIndicator(transform.position);
+        SpawnBoss(transform.position, bossToSpawn);
+    }
+
     private Vector3 GetRandomSpawnPosition()
     {
         float x = Random.Range(-spawnSize.x / 2, spawnSize.x / 2);
@@ -50,12 +56,18 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(Indicator.GetComponent<EnemyIndicator>().IndicatorTimer(spawnDelay));
     }
 
-    private IEnumerator SpawnEnemy(Vector3 spawnPosition)
+    private IEnumerator SpawnRandomEnemy(Vector3 spawnPosition)
     {
         yield return new WaitForSeconds(spawnDelay);
         GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length - 1)];
         GameObject enemy = Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity);
         OnEnemySpawned(enemy);
+    }
+
+    private void SpawnBoss(Vector3 spawnPosition, GameObject bossToSpawn)
+    {
+        GameObject boss = Instantiate(bossToSpawn, spawnPosition, Quaternion.identity);
+        OnEnemySpawned(boss);
     }
 
     private void OnDrawGizmos()

@@ -40,7 +40,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("bullet collision");
+        //Debug.Log("bullet collision");
 
         ProcessCollision(collision.gameObject);
     }
