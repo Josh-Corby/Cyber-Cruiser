@@ -13,7 +13,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     [SerializeField] private EnemySpawner bossSpawner;
     [SerializeField] private GameObject[] bossPrefabs;
-    private bool bossSpawned;
 
     private GameObject currentBoss;
     private int bossCounter;
@@ -24,16 +23,15 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     public bool spawnEnemies;
 
+    public GameObject bossGoalPosition;
+
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += RestartLevel;
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
-
         EnemySpawner.OnEnemySpawned += AddEnemy;
-
         DistanceCounter.OnBossDistanceReached += SpawnBoss;
-
         Enemy.OnEnemyDied += RemoveEnemy;
     }
 
@@ -42,11 +40,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         GameManager.OnLevelCountDownStart -= RestartLevel;
         GameplayUIManager.OnCountdownDone -= StartSpawningEnemies;
         PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
-
         EnemySpawner.OnEnemySpawned -= AddEnemy;
-
         DistanceCounter.OnBossDistanceReached -= SpawnBoss;
-
         Enemy.OnEnemyDied -= RemoveEnemy;
     }
 
@@ -54,7 +49,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     {
         bossCounter = 0;
         currentBoss = bossPrefabs[bossCounter];
-        bossSpawned = false;
     }
 
     private void StartSpawningEnemies()

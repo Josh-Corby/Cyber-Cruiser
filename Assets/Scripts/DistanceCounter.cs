@@ -10,7 +10,7 @@ public class DistanceCounter : MonoBehaviour
     private float distanceFloat;
     private int distanceInt;
     private bool distanceIncreasing;
-    private readonly int bossDistance = 500;
+    [SerializeField] private int bossDistance;
 
     private void OnEnable()
     {

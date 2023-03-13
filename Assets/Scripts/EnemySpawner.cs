@@ -47,6 +47,7 @@ public class EnemySpawner : MonoBehaviour
             Indicator.transform.position += new Vector3(position.x, 0);
         }
 
+
         if(EnemyIndicatorPosition.y == 0)
         {
             Indicator.transform.position += new Vector3(0, position.y);
@@ -59,7 +60,7 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator SpawnRandomEnemy(Vector3 spawnPosition)
     {
         yield return new WaitForSeconds(spawnDelay);
-        GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length - 1)];
+        GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
         GameObject enemy = Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity);
         OnEnemySpawned(enemy);
     }
