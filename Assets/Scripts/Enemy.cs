@@ -10,7 +10,7 @@ public class Enemy : GameBehaviour, IDamageable
 
     public enum movementTypes
     {
-        Forward, BackForth, None
+        Forward, BackForth, SeekPlayer, None
     }
 
     public static event Action<GameObject> OnEnemyDied = null;
@@ -20,7 +20,7 @@ public class Enemy : GameBehaviour, IDamageable
 
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
-    [SerializeField] private float speed;
+    public float speed;
     private Vector2 direction;
     [SerializeField] private bool copyPlayerY;
 
@@ -49,6 +49,7 @@ public class Enemy : GameBehaviour, IDamageable
         startPosition = transform.position;
         goalPoint = ESM.bossGoalPosition;
     }
+
 
     protected void Start()
     {     
@@ -142,7 +143,10 @@ public class Enemy : GameBehaviour, IDamageable
                         backForthUp = true;
                     }
                 }
+                break;
 
+            case movementTypes.SeekPlayer:
+                transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
                 break;
         }
 

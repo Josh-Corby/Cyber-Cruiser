@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 3537538281721821469}
   m_Layer: 7
-  m_Name: Mine
+  m_Name: Blimp 3x1.5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 2653145768784104840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -153,13 +153,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDirection: 2
   moveType: 0
-  maxHealth: 1
+  maxHealth: 6
   currentHealth: 0
-  speed: 4
+  speed: 2
   copyPlayerY: 0
-  explodeOnDeath: 1
-  explosionRadius: 1.5
-  explosionDamage: 1
+  explodeOnDeath: 0
+  explosionRadius: 0
+  explosionDamage: 0
   explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
   bossEnemy: 0
   goalPoint: {fileID: 0}

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : GameBehaviour
 {
     public enum moveDirection
     {
@@ -14,6 +14,16 @@ public class Bullet : MonoBehaviour
     [SerializeField] private GameObject collisionParticles;
 
     private float bulletLifetime = 3f;
+
+    private void OnEnable()
+    {
+        GameManager.OnLevelCountDownStart += DestroyBullet;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnLevelCountDownStart -= DestroyBullet;
+    }
 
     private void Start()
     {
@@ -47,6 +57,7 @@ public class Bullet : MonoBehaviour
 
     private void ProcessCollision(GameObject collider)
     {
+        Debug.Log(collider.name);
         GameObject particles = Instantiate(collisionParticles, transform);
         particles.transform.parent = null;
         if (!collider.TryGetComponent<IDamageable>(out var interactable))
@@ -57,6 +68,11 @@ public class Bullet : MonoBehaviour
         }
 
         interactable.Damage(damage);
+        Destroy(gameObject);
+    }
+
+    private void DestroyBullet()
+    {
         Destroy(gameObject);
     }
 }

@@ -1,29 +1,39 @@
-using System.Collections;
 using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : GameBehaviour
 {
     public static event Action<GameObject> OnEnemySpawned = null;
 
     [SerializeField] private Vector3 spawnSize;
     [SerializeField] private GameObject[] enemyPrefabs;
-    [SerializeField] private GameObject EnemyIndicator;
-    [SerializeField] private Vector3 EnemyIndicatorPosition;
-    [SerializeField] private float IndicatorAngle;
-    [SerializeField] private float spawnDelay;
+    [SerializeField] private float speedModifier;
+
+    private GameObject EnemyIndicator;
+    private Vector3 EnemyIndicatorPosition;
+    private float IndicatorAngle;
+
+    private void Start()
+    {
+        speedModifier = 0;
+    }
+
+    public void IncrementSpeedModifier(float value)
+    {
+        speedModifier += value;
+    }
 
     public void StartSpawnProcess()
     {
         Vector3 randomposition = GetRandomSpawnPosition();
-        CreateIndicator(randomposition);
-        StartCoroutine(SpawnRandomEnemy(randomposition));
+        //CreateIndicator(randomposition);
+        SpawnRandomEnemy(randomposition);
     }
 
     public void StartBossSpawn(GameObject bossToSpawn)
     {
-        CreateIndicator(transform.position);
+        //CreateIndicator(transform.position);
         SpawnBoss(transform.position, bossToSpawn);
     }
 
@@ -36,39 +46,48 @@ public class EnemySpawner : MonoBehaviour
         return spawnPosition;
     }
 
-    private void CreateIndicator(Vector2 position)
+    private void SpawnRandomEnemy(Vector3 spawnPosition)
     {
-        GameObject Indicator = Instantiate(EnemyIndicator, transform.position, Quaternion.identity);
-
-        Indicator.transform.position += EnemyIndicatorPosition;
-
-        if(EnemyIndicatorPosition.x == 0)
-        {
-            Indicator.transform.position += new Vector3(position.x, 0);
-        }
-
-
-        if(EnemyIndicatorPosition.y == 0)
-        {
-            Indicator.transform.position += new Vector3(0, position.y);
-        }
-
-        Indicator.transform.rotation = Quaternion.Euler(0, 0, IndicatorAngle);
-        StartCoroutine(Indicator.GetComponent<EnemyIndicator>().IndicatorTimer(spawnDelay));
-    }
-
-    private IEnumerator SpawnRandomEnemy(Vector3 spawnPosition)
-    {
-        yield return new WaitForSeconds(spawnDelay);
         GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
         GameObject enemy = Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity);
+        AddSpeedModifier(enemy);
         OnEnemySpawned(enemy);
     }
 
     private void SpawnBoss(Vector3 spawnPosition, GameObject bossToSpawn)
     {
         GameObject boss = Instantiate(bossToSpawn, spawnPosition, Quaternion.identity);
+        AddSpeedModifier(boss);
         OnEnemySpawned(boss);
+    }
+
+    private void AddSpeedModifier(GameObject enemy)
+    {
+        if(speedModifier > 0)
+        {
+            enemy.GetComponent<Enemy>().speed += speedModifier;
+        } 
+    }
+
+    private void CreateIndicator(Vector2 position)
+    {
+        GameObject Indicator = Instantiate(EnemyIndicator, transform.position, Quaternion.identity);
+
+        Indicator.transform.position += EnemyIndicatorPosition;
+
+        if (EnemyIndicatorPosition.x == 0)
+        {
+            Indicator.transform.position += new Vector3(position.x, 0);
+        }
+
+
+        if (EnemyIndicatorPosition.y == 0)
+        {
+            Indicator.transform.position += new Vector3(0, position.y);
+        }
+
+        Indicator.transform.rotation = Quaternion.Euler(0, 0, IndicatorAngle);
+        //Indicator.GetComponent<EnemyIndicator>().IndicatorTimer(spawnDelay));
     }
 
     private void OnDrawGizmos()

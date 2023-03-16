@@ -170,10 +170,7 @@ MonoBehaviour:
   spawnSize: {x: 16.65, y: 0, z: 0}
   enemyPrefabs:
   - {fileID: 2653145768784104840, guid: 2fec4a945356f4243890bd799d60aa11, type: 3}
-  EnemyIndicator: {fileID: 4630231504149823482, guid: eccf7339e3ebce64b95a42c2273d0758, type: 3}
-  EnemyIndicatorPosition: {x: 0, y: -1, z: 0}
-  IndicatorAngle: 0
-  spawnDelay: 1
+  speedModifier: 0
 --- !u!1 &105816261
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,6 +558,7 @@ Transform:
   - {fileID: 1359974721}
   - {fileID: 1123161085}
   - {fileID: 412835193}
+  - {fileID: 1767030756}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -712,7 +710,6 @@ GameObject:
   - component: {fileID: 366983004}
   - component: {fileID: 366983007}
   - component: {fileID: 366983006}
-  - component: {fileID: 366983005}
   m_Layer: 5
   m_Name: DistanceText
   m_TagString: Untagged
@@ -740,20 +737,6 @@ RectTransform:
   m_AnchoredPosition: {x: 29.400024, y: -79}
   m_SizeDelta: {x: 326.8518, y: 50}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &366983005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 366983003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b67f4adc11489541a8ba1de4e9bd46a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceText: {fileID: 366983006}
-  bossDistance: 10
 --- !u!114 &366983006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1290,10 +1273,7 @@ MonoBehaviour:
   spawnSize: {x: 0, y: 0, z: 0}
   enemyPrefabs:
   - {fileID: 2653145768784104840, guid: 1f555c3aa78c87a4595854770f311869, type: 3}
-  EnemyIndicator: {fileID: 4630231504149823482, guid: eccf7339e3ebce64b95a42c2273d0758, type: 3}
-  EnemyIndicatorPosition: {x: -1, y: -1, z: 0}
-  IndicatorAngle: -45
-  spawnDelay: 1
+  speedModifier: 0
 --- !u!1 &486426441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1782,7 +1762,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: f9571f8d256b356755892e5100000000d5110b17
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2424,10 +2404,7 @@ MonoBehaviour:
   spawnSize: {x: 16.65, y: 0, z: 0}
   enemyPrefabs:
   - {fileID: 2653145768784104840, guid: 220798bc178598748b955a7191456d4c, type: 3}
-  EnemyIndicator: {fileID: 4630231504149823482, guid: eccf7339e3ebce64b95a42c2273d0758, type: 3}
-  EnemyIndicatorPosition: {x: 0, y: 1, z: 0}
-  IndicatorAngle: 180
-  spawnDelay: 1
+  speedModifier: 0
 --- !u!1 &1008820351
 GameObject:
   m_ObjectHideFlags: 0
@@ -2573,11 +2550,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!58 &1100614731 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 7671205999642657847, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-  m_PrefabInstance: {fileID: 8907491432400472847}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1123161084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2626,8 +2598,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroy: 0
   spawners:
+  - {fileID: 984547534}
   - {fileID: 1370326090}
-  spawnEnemyInterval: 2
+  - {fileID: 47135018}
+  - {fileID: 485082065}
+  spawnEnemyInterval: 1
+  spawnEnemyReduction: 0.1
+  enemySpeedIncrement: 0.1
   bossSpawner: {fileID: 1370326090}
   bossPrefabs:
   - {fileID: 1686505066082717662, guid: 63caa24a17e837c4ebb6b3b44dc28a9e, type: 3}
@@ -3284,10 +3261,7 @@ MonoBehaviour:
   - {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
   - {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
   - {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
-  EnemyIndicator: {fileID: 4630231504149823482, guid: eccf7339e3ebce64b95a42c2273d0758, type: 3}
-  EnemyIndicatorPosition: {x: -1, y: 0, z: 0}
-  IndicatorAngle: -90
-  spawnDelay: 1
+  speedModifier: 0
 --- !u!4 &1370326091
 Transform:
   m_ObjectHideFlags: 0
@@ -3838,6 +3812,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1767030755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1767030756}
+  - component: {fileID: 1767030757}
+  m_Layer: 0
+  m_Name: DistanceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1767030756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767030755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 281578421}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1767030757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767030755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b67f4adc11489541a8ba1de4e9bd46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceText: {fileID: 366983006}
+  bossDistance: 500
 --- !u!1 &1792024014
 GameObject:
   m_ObjectHideFlags: 0
@@ -4636,18 +4656,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4253268769838961451, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 7686075475436964976, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_Constraints
+      value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: maxHealth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: shieldCollider
-      value: 
-      objectReference: {fileID: 1100614731}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: mouseInput
       value: 
@@ -4660,6 +4672,5 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerShip
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6755066961025542417, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}

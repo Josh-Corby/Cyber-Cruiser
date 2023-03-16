@@ -7,8 +7,7 @@ public class Boss : Enemy
 {
 
     [SerializeField] private float attackCooldown;
-    private float attackTimer;
-    private int randomAttackID;
+    [SerializeField] private float attackTimer;
 
     private IBoss bossMoveset;
 
@@ -42,18 +41,18 @@ public class Boss : Enemy
 
     protected void ChooseRandomAttack()
     {
-        randomAttackID = Random.Range(0, 1);
-        PerformAttack();
+        int randomAttackID = Random.Range(0, 2);
+        PerformAttack(randomAttackID);
     }
 
-    private void PerformAttack()
+    private void PerformAttack(int ID)
     {
-        if (randomAttackID == 0)
+        if (ID == 0)
         {
             bossMoveset.Attack1();
         }
 
-        if (randomAttackID == 1)
+        if (ID == 1)
         {
             bossMoveset.Attack2();
         }

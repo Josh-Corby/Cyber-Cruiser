@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class ShieldControllerBase : MonoBehaviour
 {
-    protected Collider2D unitCollider;
+    [SerializeField] protected Collider2D unitCollider;
     [SerializeField] protected GameObject shields;
     [SerializeField] protected Collider2D shieldCollider;
 
@@ -58,7 +58,7 @@ public abstract class ShieldControllerBase : MonoBehaviour
 
         if (collider.TryGetComponent<IDamageable>(out var damageable))
         {
-            Debug.Log(collider.name);
+            Debug.Log("Shield on ship collision");
             damageable.Destroy();
             DeactivateShields();
         }
@@ -67,6 +67,7 @@ public abstract class ShieldControllerBase : MonoBehaviour
         {
             if (collider.TryGetComponent<IShield>(out var shield))
             {
+                Debug.Log("Shield on shield collision");
                 shield.DeactivateShields();
                 DeactivateShields();
             }

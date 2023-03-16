@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 569, y: 16}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &3537538281721821471
@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: 1
+  moveType: 0
   maxHealth: 2
   currentHealth: 0
   speed: 6
@@ -160,3 +161,7 @@ MonoBehaviour:
   explosionRadius: 0
   explosionDamage: 0
   explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
+  bossEnemy: 0
+  goalPoint: {fileID: 0}
+  backForthUp: 0
+  backForthMoveDistance: 0

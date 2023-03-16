@@ -9,20 +9,16 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     public static event Action OnBossDied = null;
 
     [SerializeField] private EnemySpawner[] spawners;
-    [SerializeField] private int spawnEnemyInterval;
-
+    [SerializeField] private float spawnEnemyInterval;
+    [SerializeField] private float spawnEnemyReduction;
+    [SerializeField] private float enemySpeedIncrement;
     [SerializeField] private EnemySpawner bossSpawner;
     [SerializeField] private GameObject[] bossPrefabs;
-
     private GameObject currentBoss;
     private int bossCounter;
-
     private Coroutine spawnEnemiesCoroutine;
-
     public List<GameObject> enemiesAlive = new List<GameObject>();
-
     public bool spawnEnemies;
-
     public GameObject bossGoalPosition;
 
     private void OnEnable()
@@ -47,6 +43,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void Start()
     {
+        spawnEnemyInterval = 1f;
         bossCounter = 0;
         currentBoss = bossPrefabs[bossCounter];
     }
@@ -88,11 +85,21 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         if (!spawnEnemies)
         {
             //if there are no enemies alive the boss fight is over
-            if(enemiesAlive.Count == 0)
+            if (enemiesAlive.Count == 0)
             {
                 Debug.Log("Boss dead");
+                //make enemies spawn faster
+                spawnEnemyInterval -= spawnEnemyReduction;
+                //make enemies move faster
+                foreach (EnemySpawner spawner in spawners)
+                {
+                    spawner.IncrementSpeedModifier(enemySpeedIncrement);
+                }
+
+
                 //broadcast boss death
                 OnBossDied?.Invoke();
+
                 //resume spawning enemies
                 StartSpawningEnemies();
             }
@@ -122,11 +129,20 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void ClearEnemiesAlive()
     {
-        for (int i = 0; i < enemiesAlive.Count; i++)
+        if (enemiesAlive.Count == 0)
         {
-            GameObject enemy = enemiesAlive[i];
-            enemiesAlive.Remove(enemy);
-            Destroy(enemy);
+            Debug.Log("No enemies to clear");
+        }
+
+        if (enemiesAlive.Count > 0)
+        {
+            for (int i = enemiesAlive.Count - 1; i >= 0; i--)
+            {
+                GameObject enemyToRemove = enemiesAlive[i];
+                enemiesAlive.RemoveAt(i);
+
+                Destroy(enemyToRemove);
+            }
         }
     }
 }

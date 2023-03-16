@@ -126,6 +126,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     public void Destroy()
     {
+        Debug.Log("Player dead");
         OnPlayerDeath?.Invoke();
     }
 }
