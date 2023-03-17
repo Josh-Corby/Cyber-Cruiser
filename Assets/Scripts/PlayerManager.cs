@@ -29,12 +29,14 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         GameManager.OnLevelCountDownStart += FullHeal;
         InputManager.OnShield += CheckShieldsState;
+        Pickup.OnPlasmaPickup += AddPlasma;
     }
 
     private void OnDisable()
     {
         GameManager.OnLevelCountDownStart -= FullHeal;
         InputManager.OnShield -= CheckShieldsState;
+        Pickup.OnPlasmaPickup -= AddPlasma;
     }
 
     private void Start()
@@ -61,12 +63,14 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         {
             enemy.Destroy();
             Damage(maxHealth);
+            return;
         }
-        else
+        else if(collider.TryGetComponent<Pickup>(out var pickup))
         {
-            Debug.Log("Health left: " + currentHealth);
+            pickup.PickupEffect();
+            Destroy(pickup.gameObject);
+            return;
         }
-
     }
 
     private void CheckShieldsState()

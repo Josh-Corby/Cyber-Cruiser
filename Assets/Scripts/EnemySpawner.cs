@@ -1,18 +1,19 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class EnemySpawner : GameBehaviour
 {
-    public static event Action<GameObject> OnEnemySpawned = null;
+    public static event Action<List<GameObject>, GameObject> OnEnemySpawned = null;
 
     [SerializeField] private Vector3 spawnSize;
     [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField] private float speedModifier;
 
-    private GameObject EnemyIndicator;
-    private Vector3 EnemyIndicatorPosition;
-    private float IndicatorAngle;
+    //private GameObject EnemyIndicator;
+    //private Vector3 EnemyIndicatorPosition;
+    //private float IndicatorAngle;
 
     private void Start()
     {
@@ -26,9 +27,8 @@ public class EnemySpawner : GameBehaviour
 
     public void StartSpawnProcess()
     {
-        Vector3 randomposition = GetRandomSpawnPosition();
         //CreateIndicator(randomposition);
-        SpawnRandomEnemy(randomposition);
+        SpawnRandomEnemy();
     }
 
     public void StartBossSpawn(GameObject bossToSpawn)
@@ -46,19 +46,19 @@ public class EnemySpawner : GameBehaviour
         return spawnPosition;
     }
 
-    private void SpawnRandomEnemy(Vector3 spawnPosition)
+    private void SpawnRandomEnemy()
     {
         GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-        GameObject enemy = Instantiate(randomEnemyPrefab, spawnPosition, Quaternion.identity);
+        GameObject enemy = Instantiate(randomEnemyPrefab, GetRandomSpawnPosition(), Quaternion.identity);
         AddSpeedModifier(enemy);
-        OnEnemySpawned(enemy);
+        OnEnemySpawned(ESM.enemiesAlive, enemy);
     }
 
     private void SpawnBoss(Vector3 spawnPosition, GameObject bossToSpawn)
     {
         GameObject boss = Instantiate(bossToSpawn, spawnPosition, Quaternion.identity);
         AddSpeedModifier(boss);
-        OnEnemySpawned(boss);
+        OnEnemySpawned(ESM.enemiesAlive, boss);
     }
 
     private void AddSpeedModifier(GameObject enemy)
@@ -69,30 +69,30 @@ public class EnemySpawner : GameBehaviour
         } 
     }
 
-    private void CreateIndicator(Vector2 position)
-    {
-        GameObject Indicator = Instantiate(EnemyIndicator, transform.position, Quaternion.identity);
+    //private void CreateIndicator(Vector2 position)
+    //{
+    //    GameObject Indicator = Instantiate(EnemyIndicator, transform.position, Quaternion.identity);
 
-        Indicator.transform.position += EnemyIndicatorPosition;
+    //    Indicator.transform.position += EnemyIndicatorPosition;
 
-        if (EnemyIndicatorPosition.x == 0)
-        {
-            Indicator.transform.position += new Vector3(position.x, 0);
-        }
+    //    if (EnemyIndicatorPosition.x == 0)
+    //    {
+    //        Indicator.transform.position += new Vector3(position.x, 0);
+    //    }
 
 
-        if (EnemyIndicatorPosition.y == 0)
-        {
-            Indicator.transform.position += new Vector3(0, position.y);
-        }
+    //    if (EnemyIndicatorPosition.y == 0)
+    //    {
+    //        Indicator.transform.position += new Vector3(0, position.y);
+    //    }
 
-        Indicator.transform.rotation = Quaternion.Euler(0, 0, IndicatorAngle);
-        //Indicator.GetComponent<EnemyIndicator>().IndicatorTimer(spawnDelay));
-    }
+    //    Indicator.transform.rotation = Quaternion.Euler(0, 0, IndicatorAngle);
+    //    Indicator.GetComponent<EnemyIndicator>().IndicatorTimer(spawnDelay));
+    //}
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(gameObject.transform.position, spawnSize);
+        Gizmos.DrawWireCube(transform.position, spawnSize);
     }
 }

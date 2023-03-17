@@ -6,15 +6,16 @@ public class PlayerShipController : MonoBehaviour
     [SerializeField] private GameObject mouseInput;
     [SerializeField] private Transform spawnPosition;
     [SerializeField] private float baseSpeed;
-    [SerializeField] private float moveSpeed;
 
-
-    #region lerpmovement
-    [SerializeField] private float maxSpeed;
     [SerializeField] private bool lerpMovement;
-    #endregion
 
     private bool controlsEnabled;
+
+    private float minAngle = -20;
+    private float maxAngle = 20;
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float distanceToStopRotation = 5f;
+    private Quaternion targetRotation;
 
     private void OnEnable()
     {
@@ -43,32 +44,52 @@ public class PlayerShipController : MonoBehaviour
 
     private void Update()
     {
+
         if (!controlsEnabled) return;  
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(input);
         mousePosition.z = 0f;
-        Vector3 mouseWorldPosition = mousePosition;
-        mouseInput.transform.position = mouseWorldPosition;
+        mouseInput.transform.position = mousePosition;
 
         if (!lerpMovement)
         {
-            transform.position = Vector2.MoveTowards(transform.position, mouseWorldPosition, moveSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, mousePosition, baseSpeed * Time.deltaTime);
         }
 
         if (lerpMovement)
         {
-            float distance = Vector2.Distance(transform.position, mouseWorldPosition);
-            float speedFactor = Mathf.Abs( 1f - (distance / 1f));
-            float speed = baseSpeed * speedFactor;
-            float t = Mathf.Clamp01(speed * Time.deltaTime / distance);
+            transform.position = Vector2.Lerp(transform.position, mousePosition, baseSpeed);
+        }
 
-            transform.position = Vector2.Lerp(transform.position, mouseWorldPosition, t);
-        }  
+
+        float yDiff = Mathf.Abs( mousePosition.y - transform.position.y);
+        if (yDiff > distanceToStopRotation)
+        {
+
+            if (mousePosition.y > transform.position.y)
+            {
+                targetRotation = Quaternion.Euler(0, 0, maxAngle);
+            }
+
+            else if (mousePosition.y < transform.position.y)
+            {
+                targetRotation = Quaternion.Euler(0, 0, minAngle);
+            }
+        }
+
+        else
+        {
+            targetRotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed);
+
     }
 
     private void StartLevelPosition()
     {
         transform.position = spawnPosition.position;
+        transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void RecieveInput(Vector2 _input)

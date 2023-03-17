@@ -21,6 +21,11 @@ public class ExplosionGraphic : MonoBehaviour
         float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeTime);
 
         explosionImage.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+
+        if(elapsedTime >= fadeTime)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnDrawGizmos()

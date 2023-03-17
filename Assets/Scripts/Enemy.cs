@@ -1,11 +1,13 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 public class Enemy : GameBehaviour, IDamageable
 {
+    public static event Action<List<GameObject>, GameObject> OnEnemyDied = null;
+
     public enum movementDirection
     {
         Up, Down, Left, Right, DownLeft, None
-
     }
 
     public enum movementTypes
@@ -13,9 +15,7 @@ public class Enemy : GameBehaviour, IDamageable
         Forward, BackForth, SeekPlayer, None
     }
 
-    public static event Action<GameObject> OnEnemyDied = null;
-
-    [SerializeField] private movementDirection moveDirection;
+    [SerializeField] protected movementDirection moveDirection;
     [SerializeField] private movementTypes moveType;
 
     [SerializeField] private float maxHealth;
@@ -50,8 +50,7 @@ public class Enemy : GameBehaviour, IDamageable
         goalPoint = ESM.bossGoalPosition;
     }
 
-
-    protected void Start()
+    protected virtual void Start()
     {     
         goalPositionReached = false;
         switch (moveDirection)
@@ -193,11 +192,11 @@ public class Enemy : GameBehaviour, IDamageable
         Destroy();
     }
 
-    public void Destroy()
+    public virtual void Destroy()
     {
         if (ESM.enemiesAlive.Contains(gameObject))
         {
-            OnEnemyDied(gameObject);
+            OnEnemyDied(ESM.enemiesAlive, gameObject);
         }
         Destroy(gameObject);
     }

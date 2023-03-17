@@ -18,26 +18,27 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private int bossCounter;
     private Coroutine spawnEnemiesCoroutine;
     public List<GameObject> enemiesAlive = new List<GameObject>();
+    [HideInInspector] public List<GameObject> gunshipsAlive = new List<GameObject>();
     public bool spawnEnemies;
     public GameObject bossGoalPosition;
 
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += RestartLevel;
+        GameManager.OnBossDistanceReached += SpawnBoss;
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
-        EnemySpawner.OnEnemySpawned += AddEnemy;
-        DistanceCounter.OnBossDistanceReached += SpawnBoss;
+        EnemySpawner.OnEnemySpawned += AddEnemy;  
         Enemy.OnEnemyDied += RemoveEnemy;
     }
 
     private void OnDisable()
     {
         GameManager.OnLevelCountDownStart -= RestartLevel;
+        GameManager.OnBossDistanceReached -= SpawnBoss;
         GameplayUIManager.OnCountdownDone -= StartSpawningEnemies;
         PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
         EnemySpawner.OnEnemySpawned -= AddEnemy;
-        DistanceCounter.OnBossDistanceReached -= SpawnBoss;
         Enemy.OnEnemyDied -= RemoveEnemy;
     }
 
@@ -72,12 +73,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         spawnEnemies = false;
     }
 
-    private void AddEnemy(GameObject enemy)
+    private void AddEnemy(List<GameObject> listToAddTo, GameObject enemy)
     {
         enemiesAlive.Add(enemy);
     }
 
-    private void RemoveEnemy(GameObject enemy)
+    private void RemoveEnemy(List<GameObject> listToRemoveFrom, GameObject enemy)
     {
         enemiesAlive.Remove(enemy);
 

@@ -558,7 +558,6 @@ Transform:
   - {fileID: 1359974721}
   - {fileID: 1123161085}
   - {fileID: 412835193}
-  - {fileID: 1767030756}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1591,6 +1590,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &539388722
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 539388723}
+  - component: {fileID: 539388724}
+  m_Layer: 0
+  m_Name: PlasmaSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &539388723
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539388722}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1544113745}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &539388724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539388722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e90ef5d0c61e92439a4f13b2976fda2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnSize: {x: 13, y: 8, z: 0}
+  plasmaPrefab: {fileID: 9010852593865095087, guid: 779ade78571d9ab48a240c09c3373d84, type: 3}
 --- !u!1 &598045736
 GameObject:
   m_ObjectHideFlags: 0
@@ -1762,7 +1807,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: f9571f8d256b356755892e5100000000d5110b17
+  m_ApplyToSortingLayers: f9571f8dcd9ace29256b356755892e5100000000d5110b17
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2182,7 +2227,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1495971564}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &876750293
 MonoBehaviour:
@@ -3222,8 +3267,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cad18c583299b4b45ad38ddfb6822476, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroy: 0
   waveCountdownText: {fileID: 1885259248}
   plasmaCountText: {fileID: 440003047}
+  distanceCounterText: {fileID: 366983006}
   gameplayPanel: {fileID: 446903193}
   gameOverPanel: {fileID: 370077279}
   pausePanel: {fileID: 1222381291}
@@ -3474,8 +3521,8 @@ Transform:
   m_Children:
   - {fileID: 1067534575}
   - {fileID: 1751233349}
-  - {fileID: 1324404175}
   - {fileID: 876750292}
+  - {fileID: 1324404175}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3642,6 +3689,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b60a804ffc485fa45b4a3963aecbd2b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossDistance: 500
+  plasmaSpawner: {fileID: 0}
   gameplayObjects: {fileID: 1495971563}
 --- !u!4 &1544113745
 Transform:
@@ -3654,7 +3703,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 539388723}
   m_Father: {fileID: 281578421}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3767,7 +3817,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1751233348}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -3812,52 +3862,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1767030755
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1767030756}
-  - component: {fileID: 1767030757}
-  m_Layer: 0
-  m_Name: DistanceManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1767030756
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767030755}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 281578421}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1767030757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1767030755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b67f4adc11489541a8ba1de4e9bd46a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceText: {fileID: 366983006}
-  bossDistance: 500
 --- !u!1 &1792024014
 GameObject:
   m_ObjectHideFlags: 0
@@ -4614,7 +4618,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1165463880448735964, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1165463880448735964, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4661,13 +4665,33 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: baseSpeed
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: mouseInput
       value: 
       objectReference: {fileID: 1751233348}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: lerpMovement
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: spawnPosition
       value: 
       objectReference: {fileID: 1067534575}
+    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: distanceWeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: shipRotationAngle
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: stopRotationThreshold
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727163, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_Name
       value: PlayerShip

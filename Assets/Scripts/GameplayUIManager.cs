@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using TMPro;
-public class GameplayUIManager : GameBehaviour
+public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 {
     public static event Action OnCountdownDone = null;
 
@@ -10,9 +10,11 @@ public class GameplayUIManager : GameBehaviour
 
     [SerializeField] private TMP_Text waveCountdownText;
     [SerializeField] private TMP_Text plasmaCountText;
+    public TMP_Text distanceCounterText;
     [SerializeField] private GameObject gameplayPanel;
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject pausePanel;
+
 
     private void OnEnable()
     {

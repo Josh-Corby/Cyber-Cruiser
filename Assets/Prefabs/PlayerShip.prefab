@@ -343,9 +343,8 @@ MonoBehaviour:
   mouseInput: {fileID: 0}
   spawnPosition: {fileID: 0}
   baseSpeed: 50
-  moveSpeed: 50
-  maxSpeed: 50
   lerpMovement: 0
+  shipRotationAngle: 0
 --- !u!114 &8907491432247727160
 MonoBehaviour:
   m_ObjectHideFlags: 0

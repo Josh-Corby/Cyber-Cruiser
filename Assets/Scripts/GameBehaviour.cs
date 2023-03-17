@@ -6,6 +6,7 @@ public class GameBehaviour : Utilities
 {
     protected static EnemySpawnerManager ESM { get { return EnemySpawnerManager.INSTANCE; } }
     protected static PlayerManager PM { get { return PlayerManager.INSTANCE; } }
+    protected static GameplayUIManager GUIM { get { return GameplayUIManager.INSTANCE; } }
 }
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour
 {
