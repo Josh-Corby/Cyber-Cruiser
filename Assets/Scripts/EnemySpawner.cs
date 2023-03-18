@@ -90,7 +90,7 @@ public class EnemySpawner : GameBehaviour
     //    Indicator.GetComponent<EnemyIndicator>().IndicatorTimer(spawnDelay));
     //}
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, spawnSize);

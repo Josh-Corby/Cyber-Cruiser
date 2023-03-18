@@ -153,7 +153,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2103134227}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &47135018
 MonoBehaviour:
@@ -170,6 +170,54 @@ MonoBehaviour:
   spawnSize: {x: 16.65, y: 0, z: 0}
   enemyPrefabs:
   - {fileID: 2653145768784104840, guid: 2fec4a945356f4243890bd799d60aa11, type: 3}
+  speedModifier: 0
+--- !u!1 &73874470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 73874471}
+  - component: {fileID: 73874472}
+  m_Layer: 0
+  m_Name: GunshipSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &73874471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73874470}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.313377, y: -0.004008651, z: -0.07042669}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2103134227}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &73874472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73874470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnSize: {x: 0, y: 9, z: 0}
+  enemyPrefabs:
+  - {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
   speedModifier: 0
 --- !u!1 &105816261
 GameObject:
@@ -311,6 +359,54 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &164079358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 164079359}
+  - component: {fileID: 164079360}
+  m_Layer: 0
+  m_Name: MineSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &164079359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164079358}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 9.313377, y: -0.004008651, z: -0.07042669}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2103134227}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &164079360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 164079358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnSize: {x: 0, y: 6, z: 0}
+  enemyPrefabs:
+  - {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
+  speedModifier: 0
 --- !u!1 &217317807
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,7 +1351,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2103134227}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &485082065
 MonoBehaviour:
@@ -2643,10 +2739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroy: 0
   spawners:
-  - {fileID: 984547534}
-  - {fileID: 1370326090}
-  - {fileID: 47135018}
-  - {fileID: 485082065}
+  - {fileID: 164079360}
   spawnEnemyInterval: 1
   spawnEnemyReduction: 0.1
   enemySpeedIncrement: 0.1
@@ -3307,7 +3400,6 @@ MonoBehaviour:
   spawnSize: {x: 0, y: 9, z: 0}
   enemyPrefabs:
   - {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
-  - {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
   - {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
   speedModifier: 0
 --- !u!4 &1370326091
@@ -4605,8 +4697,10 @@ Transform:
   m_Children:
   - {fileID: 984547533}
   - {fileID: 1370326091}
+  - {fileID: 164079359}
   - {fileID: 47135017}
   - {fileID: 485082064}
+  - {fileID: 73874471}
   m_Father: {fileID: 1123161085}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

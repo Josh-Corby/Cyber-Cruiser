@@ -155,13 +155,19 @@ MonoBehaviour:
   moveType: 0
   maxHealth: 1
   currentHealth: 0
-  speed: 4
-  copyPlayerY: 0
+  speed: 3
+  upDownSpeed: 0
+  seekPlayer: 0
+  seekSpeed: 0
   explodeOnDeath: 1
   explosionRadius: 1.5
   explosionDamage: 1
   explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
   bossEnemy: 0
   goalPoint: {fileID: 0}
+  upDown: 0
   backForthUp: 0
   backForthMoveDistance: 0
+  sinUpDown: 1
+  frequency: 2.6
+  magnitude: 0.01

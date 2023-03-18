@@ -86,12 +86,12 @@ public class Gunship : Enemy, IDamageable
         switch (gunshipMoveType) 
         {
             case GunshipMoveTypes.PlayerFollow:
-                seekPlayer = true;
+                seekPlayerY = true;
                 seekSpeed = fastSeekSpeed;
                 break;
 
             case GunshipMoveTypes.SlowPlayerFollow:
-                seekPlayer = true;
+                seekPlayerY = true;
                 seekSpeed = slowSeekSpeed;
                 break;
             case GunshipMoveTypes.UpDown:

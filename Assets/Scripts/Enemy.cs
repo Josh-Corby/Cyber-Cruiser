@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
+
 public class Enemy : GameBehaviour, IDamageable
 {
     public static event Action<List<GameObject>, GameObject> OnEnemyDied = null;
@@ -23,14 +25,14 @@ public class Enemy : GameBehaviour, IDamageable
     public float speed;
     [SerializeField] private float upDownSpeed;
     private Vector2 direction;
-    [SerializeField] protected bool seekPlayer;
+    [SerializeField] protected bool seekPlayerY;
     [SerializeField] protected float seekSpeed;
 
     [SerializeField] private bool explodeOnDeath;
     [SerializeField] private float explosionRadius;
     [SerializeField] private float explosionDamage;
     [SerializeField] private GameObject explosionGraphic;
-    private Transform player;
+    [SerializeField] private Transform player;
 
     [SerializeField] private bool bossEnemy;
     [SerializeField] private GameObject goalPoint;
@@ -38,14 +40,23 @@ public class Enemy : GameBehaviour, IDamageable
     [SerializeField] protected bool upDown;
     //if true backforth will move up, otherwise move down
     [SerializeField] private bool backForthUp;
-
-
     [SerializeField] private int backForthMoveDistance;
     private readonly float yUp = 4.5f;
     private readonly float yDown = -4.5f;
     private bool goalPositionReached;
 
+    [SerializeField] private bool sinUpDown;
+    [SerializeField] private float frequency;
+    [SerializeField] private float magnitude;
 
+    [SerializeField] private bool homeOnPlayer;
+    [SerializeField] private float turnSpeed;
+    [SerializeField] private float homeTime;
+    private float homeCounter;
+    [SerializeField] private Quaternion targetRotation;
+
+    //offset for random starting sin value
+    private float startTime;
     protected void Awake()
     {
         player = PM.player.transform;
@@ -55,6 +66,13 @@ public class Enemy : GameBehaviour, IDamageable
 
     protected virtual void Start()
     {
+        if (homeOnPlayer)
+        {
+            homeCounter = homeTime;
+        }
+
+        startTime = Random.Range(0f, Mathf.PI * 2f);
+
         goalPositionReached = false;
 
         switch (moveDirection)
@@ -79,11 +97,6 @@ public class Enemy : GameBehaviour, IDamageable
                 break;
         }
 
-        //if (upDown)
-        //{
-        //    yUp = new Vector2(goalPoint.transform.position.x, goalPoint.transform.position.y + backForthMoveDistance);
-        //    yDown = new Vector2(goalPoint.transform.position.x, goalPoint.transform.position.y - backForthMoveDistance);
-        //}
         currentHealth = maxHealth;
     }
 
@@ -93,80 +106,111 @@ public class Enemy : GameBehaviour, IDamageable
         {
             if (!goalPositionReached)
             {
-                transform.position = Vector2.MoveTowards(transform.position, goalPoint.transform.position, speed * Time.deltaTime);
-
-                if (Vector2.Distance(transform.position, goalPoint.transform.position) <= 0.1)
-                {
-                    goalPositionReached = true;
-                }
-                return;
+                MoveTowardGoalPosition();
             }
         }
 
-        //goal position has been reached if it exits. Move on to normal movement patterns
-        switch (moveType)
+        if (homeOnPlayer)
         {
-            case MovementTypes.None:
-                break;
+            RotateTowardsPlayer();
+        }
 
-            case MovementTypes.Forward:
-
-                transform.position += (Vector3)direction * speed * Time.deltaTime;
-                break;
+        if (moveType == MovementTypes.Forward)
+        {
+            MoveForward();
         }
 
         if (upDown)
         {
-            if (backForthUp)
-            {
-                if(transform.position.y < yUp)
-                {
-                    transform.position += new Vector3(0, upDownSpeed * Time.deltaTime, 0);
-                }
-                else
-                {
-                    backForthUp = false;
-                }
-                //if (Vector2.Distance(transform.TransformPoint(transform.localPosition), UpPosition) <= 0.1f)
-                //{
-                //    backForthUp = false;
-                //}
-                //transform.position = new Vector2(transform.position.x, transform.position.y + speed * Time.deltaTime);
-                //transform.position = Vector2.MoveTowards(transform.position, UpPosition, speed * Time.deltaTime);
-            }
-
-            if (!backForthUp)
-            {
-                if(transform.position.y> yDown)
-                {
-                    transform.position -= new Vector3(0, upDownSpeed * Time.deltaTime, 0);
-                }
-                else
-                {
-                    backForthUp = true;
-                }
-                //if (Vector2.Distance(transform.TransformPoint(transform.localPosition), DownPosition) <= 0.1f)
-                //{
-                //    backForthUp = true;
-                //}
-
-                //transform.position = new Vector2(transform.position.x, transform.position.y - speed * Time.deltaTime);
-                //transform.position = Vector2.MoveTowards(transform.position, DownPosition, speed * Time.deltaTime);
-            }
+            UpDownMovement();
+            return;
         }
 
-
-        if (seekPlayer)
+        if (seekPlayerY)
         {
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, player.position.y), seekSpeed * Time.deltaTime);
+            SeekPlayerY();
+            return;
         }
 
-        if (moveType == MovementTypes.None)
+        if (sinUpDown)
         {
+            SinUpDown();
             return;
         }
     }
 
+    private void MoveTowardGoalPosition()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, goalPoint.transform.position, speed * Time.deltaTime);
+
+        if (Vector2.Distance(transform.position, goalPoint.transform.position) <= 0.1)
+        {
+            goalPositionReached = true;
+        }
+        return;
+    }
+
+    private void MoveForward()
+    {
+        transform.position += (Vector3)direction * speed * Time.deltaTime;
+    }
+
+    private void UpDownMovement()
+    {
+        if (backForthUp)
+        {
+            if (transform.position.y < yUp)
+            {
+                transform.position += new Vector3(0, upDownSpeed * Time.deltaTime, 0);
+            }
+            else
+            {
+                backForthUp = false;
+            }
+        }
+
+        if (!backForthUp)
+        {
+            if (transform.position.y > yDown)
+            {
+                transform.position -= new Vector3(0, upDownSpeed * Time.deltaTime, 0);
+            }
+            else
+            {
+                backForthUp = true;
+            }
+        }
+    }
+
+    private void SeekPlayerY()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, player.position.y), seekSpeed * Time.deltaTime);
+    }
+
+    private void SinUpDown()
+    {
+        float yPos = Mathf.Sin((Time.time - startTime) * frequency) * magnitude;
+        transform.position = new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z);
+    }
+
+    private void RotateTowardsPlayer()
+    {
+        homeCounter -= Time.deltaTime;
+
+        if (homeCounter <= 0)
+        {
+            direction = transform.up;
+            homeOnPlayer = false;
+            Debug.Log("No longer rotating towards player");
+            return;
+        }
+
+        Vector3 vectorToPlayer = player.position - transform.position;
+        float angle = MathF.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg - 90;
+        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, q, turnSpeed * Time.deltaTime);
+        direction = transform.up;
+    }
     public void Damage(float damage)
     {
         currentHealth -= damage;
@@ -191,6 +235,7 @@ public class Enemy : GameBehaviour, IDamageable
             GameObject explosionEffect = Instantiate(explosionGraphic, transform);
             explosionEffect.GetComponent<ExplosionGraphic>().explosionRadius = explosionRadius;
             explosionEffect.transform.SetParent(null);
+            explosionEffect.transform.localScale = Vector3.one * 10;
 
             if (!collider.TryGetComponent<PlayerManager>(out var player))
             {
