@@ -5,16 +5,13 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(IBoss))]
 public class Boss : Enemy
 {
-
     [SerializeField] private float attackCooldown;
     [SerializeField] private float attackTimer;
 
     private IBoss bossMoveset;
 
-
     private void Awake()
     {
-        base.Awake();
         bossMoveset = GetComponent<IBoss>();
     }
     private void Start()
@@ -25,7 +22,6 @@ public class Boss : Enemy
 
     protected void Update()
     {
-        base.Update();
 
         if (attackTimer > 0)
         {

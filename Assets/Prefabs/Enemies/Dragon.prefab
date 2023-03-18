@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 3537538281721821471}
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
-  - component: {fileID: 3537538281721821469}
+  - component: {fileID: 4190476878520941826}
+  - component: {fileID: -7389411424098180537}
   m_Layer: 7
   m_Name: Dragon
   m_TagString: Untagged
@@ -29,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 2653145768784104840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.71679, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -139,7 +140,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &3537538281721821469
+--- !u!114 &4190476878520941826
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,20 +149,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 2653145768784104840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
+  m_Script: {fileID: 11500000, guid: 5484b21d8c4f62042adfd3bacc9493d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1
+  currentHealth: 0
+  explodeOnDeath: 0
+  explosionRadius: 0
+  explosionDamage: 0
+  explosionGraphic: {fileID: 0}
+--- !u!114 &-7389411424098180537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653145768784104840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 365a316a2f7b6c445bfc232c6280bd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: 4
   moveType: 0
-  maxHealth: 1
-  currentHealth: 0
   speed: 8
-  copyPlayerY: 0
-  explodeOnDeath: 0
-  explosionRadius: 0
-  explosionDamage: 0
-  explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
   bossEnemy: 0
-  goalPoint: {fileID: 0}
-  backForthUp: 0
-  backForthMoveDistance: 0
+  direction: {x: 0, y: 0}
+  upDown: 0
+  upDownSpeed: 0
+  upDownMoveDistance: 0
+  seekPlayerY: 0
+  seekSpeed: 0
+  sinUpDown: 0
+  frequency: 0
+  magnitude: 0
+  homeOnPlayer: 0
+  turnSpeed: 0
+  homeTime: 0

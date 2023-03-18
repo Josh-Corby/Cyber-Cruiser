@@ -7,8 +7,8 @@ public class EnemySpawner : GameBehaviour
 {
     public static event Action<List<GameObject>, GameObject> OnEnemySpawned = null;
 
-    [SerializeField] private Vector3 spawnSize;
-    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private Vector3 spawnArea;
+    [SerializeField] private GameObject[] enemiesToSpawn;
     [SerializeField] private float speedModifier;
 
     //private GameObject EnemyIndicator;
@@ -39,8 +39,8 @@ public class EnemySpawner : GameBehaviour
 
     private Vector3 GetRandomSpawnPosition()
     {
-        float x = Random.Range(-spawnSize.x / 2, spawnSize.x / 2);
-        float y = Random.Range(-spawnSize.y / 2, spawnSize.y / 2);
+        float x = Random.Range(-spawnArea.x / 2, spawnArea.x / 2);
+        float y = Random.Range(-spawnArea.y / 2, spawnArea.y / 2);
         float z = 0;
         Vector3 spawnPosition = new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z + z);
         return spawnPosition;
@@ -48,7 +48,7 @@ public class EnemySpawner : GameBehaviour
 
     private void SpawnRandomEnemy()
     {
-        GameObject randomEnemyPrefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+        GameObject randomEnemyPrefab = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)];
         GameObject enemy = Instantiate(randomEnemyPrefab, GetRandomSpawnPosition(), Quaternion.identity);
         AddSpeedModifier(enemy);
         OnEnemySpawned(ESM.enemiesAlive, enemy);
@@ -65,7 +65,7 @@ public class EnemySpawner : GameBehaviour
     {
         if(speedModifier > 0)
         {
-            enemy.GetComponent<Enemy>().speed += speedModifier;
+            enemy.GetComponent<EnemyMovement>().speed += speedModifier;
         } 
     }
 
@@ -93,6 +93,6 @@ public class EnemySpawner : GameBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, spawnSize);
+        Gizmos.DrawWireCube(transform.position, spawnArea);
     }
 }

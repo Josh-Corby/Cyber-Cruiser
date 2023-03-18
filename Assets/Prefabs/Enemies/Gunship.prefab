@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 7407092928578374691}
+  - component: {fileID: 1876512611095173727}
   m_Layer: 7
   m_Name: Gunship
   m_TagString: Untagged
@@ -152,23 +153,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c818a64a58ab34eb1f05a3a9bfc0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDirection: 2
-  moveType: 4
   maxHealth: 2
   currentHealth: 0
-  speed: 1
-  upDownSpeed: 3
-  seekPlayer: 0
-  seekSpeed: 0
   explodeOnDeath: 0
   explosionRadius: 0
   explosionDamage: 0
   explosionGraphic: {fileID: 0}
+--- !u!114 &1876512611095173727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653145768784104840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f983803b7c3c2240ae6af887933654e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveDirection: 0
+  moveType: 0
+  speed: 2
   bossEnemy: 0
-  goalPoint: {fileID: 0}
+  direction: {x: 0, y: 0}
   upDown: 0
-  backForthUp: 0
-  backForthMoveDistance: 4
+  upDownSpeed: 4
+  upDownMoveDistance: 4
+  seekPlayerY: 0
+  seekSpeed: 0
+  sinUpDown: 0
+  frequency: 0
+  magnitude: 0
+  homeOnPlayer: 0
+  turnSpeed: 0
+  homeTime: 0
   gunshipMoveType: 0
 --- !u!1 &3590740715818776598
 GameObject:
@@ -189,7 +207,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6883753668296052494
 RectTransform:
   m_ObjectHideFlags: 0
