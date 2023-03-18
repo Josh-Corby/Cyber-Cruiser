@@ -5,18 +5,18 @@ public class Enemy : GameBehaviour, IDamageable
 {
     public static event Action<List<GameObject>, GameObject> OnEnemyDied = null;
 
-    public enum movementDirection
+    public enum MovementDirection
     {
         Up, Down, Left, Right, DownLeft, None
     }
 
-    public enum movementTypes
+    public enum MovementTypes
     {
         Forward, BackForth, SeekPlayer, None
     }
 
-    [SerializeField] protected movementDirection moveDirection;
-    [SerializeField] private movementTypes moveType;
+    [SerializeField] protected MovementDirection moveDirection;
+    [SerializeField] private MovementTypes moveType;
 
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
@@ -55,22 +55,22 @@ public class Enemy : GameBehaviour, IDamageable
         goalPositionReached = false;
         switch (moveDirection)
         {
-            case movementDirection.Up:
+            case MovementDirection.Up:
                 direction = Vector2.up;
                 break;
-            case movementDirection.Down:
+            case MovementDirection.Down:
                 direction = Vector2.down;
                 break;
-            case movementDirection.Left:
+            case MovementDirection.Left:
                 direction = Vector2.left;
                 break;
-            case movementDirection.Right:
+            case MovementDirection.Right:
                 direction = Vector2.right;
                 break;
-            case movementDirection.DownLeft:
+            case MovementDirection.DownLeft:
                 direction = new Vector2(-1, -1);
                 break;
-            case movementDirection.None:
+            case MovementDirection.None:
                 direction = Vector2.zero;
                 break;
         }
@@ -80,7 +80,7 @@ public class Enemy : GameBehaviour, IDamageable
             default:
                 break;
 
-            case movementTypes.BackForth:
+            case MovementTypes.BackForth:
                 UpPosition = new Vector2(goalPoint.transform.position.x, startPosition.y + backForthMoveDistance);
                 DownPosition = new Vector2(goalPoint.transform.position.x, startPosition.y - backForthMoveDistance);
                 break;
@@ -89,7 +89,7 @@ public class Enemy : GameBehaviour, IDamageable
         currentHealth = maxHealth;
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         if (bossEnemy)
         {
@@ -108,10 +108,10 @@ public class Enemy : GameBehaviour, IDamageable
         //goal position has been reached if it exits. Move on to normal movement patterns
         switch (moveType)
         {
-            case movementTypes.None:
+            case MovementTypes.None:
                 break;
 
-            case movementTypes.Forward:
+            case MovementTypes.Forward:
 
                 transform.position += (Vector3)direction * speed * Time.deltaTime;
 
@@ -121,7 +121,7 @@ public class Enemy : GameBehaviour, IDamageable
                 }
                 break;
 
-            case movementTypes.BackForth:
+            case MovementTypes.BackForth:
 
                 if (backForthUp)
                 {
@@ -144,12 +144,12 @@ public class Enemy : GameBehaviour, IDamageable
                 }
                 break;
 
-            case movementTypes.SeekPlayer:
+            case MovementTypes.SeekPlayer:
                 transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
                 break;
         }
 
-        if (moveType == movementTypes.None)
+        if (moveType == MovementTypes.None)
         {
             return;
         }

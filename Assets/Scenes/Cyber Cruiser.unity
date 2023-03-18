@@ -2654,6 +2654,7 @@ MonoBehaviour:
   bossPrefabs:
   - {fileID: 1686505066082717662, guid: 63caa24a17e837c4ebb6b3b44dc28a9e, type: 3}
   enemiesAlive: []
+  gunshipsAlive: []
   spawnEnemies: 1
   bossGoalPosition: {fileID: 1997121481}
 --- !u!1 &1148502290
@@ -4677,6 +4678,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: rotationSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: spawnPosition
       value: 
       objectReference: {fileID: 1067534575}
@@ -4691,6 +4696,10 @@ PrefabInstance:
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: stopRotationThreshold
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: distanceToStopRotation
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727163, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_Name

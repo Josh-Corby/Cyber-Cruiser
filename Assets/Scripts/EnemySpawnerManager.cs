@@ -28,8 +28,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         GameManager.OnBossDistanceReached += SpawnBoss;
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
+
         EnemySpawner.OnEnemySpawned += AddEnemy;  
         Enemy.OnEnemyDied += RemoveEnemy;
+
+        Gunship.OnGunshipSpawn += AddEnemy;
+        Gunship.OnGunshipDied += RemoveEnemy;
     }
 
     private void OnDisable()
@@ -38,8 +42,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         GameManager.OnBossDistanceReached -= SpawnBoss;
         GameplayUIManager.OnCountdownDone -= StartSpawningEnemies;
         PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
+
         EnemySpawner.OnEnemySpawned -= AddEnemy;
         Enemy.OnEnemyDied -= RemoveEnemy;
+
+        Gunship.OnGunshipSpawn -= AddEnemy;
+        Gunship.OnGunshipDied -= RemoveEnemy;
     }
 
     private void Start()
