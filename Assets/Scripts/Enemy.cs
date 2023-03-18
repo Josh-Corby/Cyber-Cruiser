@@ -12,17 +12,19 @@ public class Enemy : GameBehaviour, IDamageable
 
     public enum MovementTypes
     {
-        Forward, BackForth, SeekPlayer, None
+        Forward, None
     }
 
     [SerializeField] protected MovementDirection moveDirection;
-    [SerializeField] private MovementTypes moveType;
+    [SerializeField] public MovementTypes moveType;
 
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
     public float speed;
+    [SerializeField] private float upDownSpeed;
     private Vector2 direction;
-    [SerializeField] private bool copyPlayerY;
+    [SerializeField] protected bool seekPlayer;
+    [SerializeField] protected float seekSpeed;
 
     [SerializeField] private bool explodeOnDeath;
     [SerializeField] private float explosionRadius;
@@ -33,13 +35,14 @@ public class Enemy : GameBehaviour, IDamageable
     [SerializeField] private bool bossEnemy;
     [SerializeField] private GameObject goalPoint;
     private Vector3 startPosition;
+    [SerializeField] protected bool upDown;
     //if true backforth will move up, otherwise move down
     [SerializeField] private bool backForthUp;
 
 
     [SerializeField] private int backForthMoveDistance;
-    private Vector2 UpPosition;
-    private Vector2 DownPosition;
+    private readonly float yUp = 4.5f;
+    private readonly float yDown = -4.5f;
     private bool goalPositionReached;
 
 
@@ -51,8 +54,9 @@ public class Enemy : GameBehaviour, IDamageable
     }
 
     protected virtual void Start()
-    {     
+    {
         goalPositionReached = false;
+
         switch (moveDirection)
         {
             case MovementDirection.Up:
@@ -75,17 +79,11 @@ public class Enemy : GameBehaviour, IDamageable
                 break;
         }
 
-        switch (moveType)
-        {
-            default:
-                break;
-
-            case MovementTypes.BackForth:
-                UpPosition = new Vector2(goalPoint.transform.position.x, startPosition.y + backForthMoveDistance);
-                DownPosition = new Vector2(goalPoint.transform.position.x, startPosition.y - backForthMoveDistance);
-                break;
-        }
-
+        //if (upDown)
+        //{
+        //    yUp = new Vector2(goalPoint.transform.position.x, goalPoint.transform.position.y + backForthMoveDistance);
+        //    yDown = new Vector2(goalPoint.transform.position.x, goalPoint.transform.position.y - backForthMoveDistance);
+        //}
         currentHealth = maxHealth;
     }
 
@@ -114,39 +112,53 @@ public class Enemy : GameBehaviour, IDamageable
             case MovementTypes.Forward:
 
                 transform.position += (Vector3)direction * speed * Time.deltaTime;
-
-                if (copyPlayerY)
-                {
-                    transform.position = new Vector2(transform.position.x, player.position.y);
-                }
                 break;
+        }
 
-            case MovementTypes.BackForth:
-
-                if (backForthUp)
+        if (upDown)
+        {
+            if (backForthUp)
+            {
+                if(transform.position.y < yUp)
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, UpPosition, speed * Time.deltaTime);
-
-                    if (Vector2.Distance(transform.position, UpPosition) <= 0.1f)
-                    {
-                        backForthUp = false;
-                    }
+                    transform.position += new Vector3(0, upDownSpeed * Time.deltaTime, 0);
                 }
-
-                if (!backForthUp)
+                else
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, DownPosition, speed * Time.deltaTime);
-
-                    if (Vector2.Distance(transform.position, DownPosition) <= 0.1f)
-                    {
-                        backForthUp = true;
-                    }
+                    backForthUp = false;
                 }
-                break;
+                //if (Vector2.Distance(transform.TransformPoint(transform.localPosition), UpPosition) <= 0.1f)
+                //{
+                //    backForthUp = false;
+                //}
+                //transform.position = new Vector2(transform.position.x, transform.position.y + speed * Time.deltaTime);
+                //transform.position = Vector2.MoveTowards(transform.position, UpPosition, speed * Time.deltaTime);
+            }
 
-            case MovementTypes.SeekPlayer:
-                transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-                break;
+            if (!backForthUp)
+            {
+                if(transform.position.y> yDown)
+                {
+                    transform.position -= new Vector3(0, upDownSpeed * Time.deltaTime, 0);
+                }
+                else
+                {
+                    backForthUp = true;
+                }
+                //if (Vector2.Distance(transform.TransformPoint(transform.localPosition), DownPosition) <= 0.1f)
+                //{
+                //    backForthUp = true;
+                //}
+
+                //transform.position = new Vector2(transform.position.x, transform.position.y - speed * Time.deltaTime);
+                //transform.position = Vector2.MoveTowards(transform.position, DownPosition, speed * Time.deltaTime);
+            }
+        }
+
+
+        if (seekPlayer)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, player.position.y), seekSpeed * Time.deltaTime);
         }
 
         if (moveType == MovementTypes.None)

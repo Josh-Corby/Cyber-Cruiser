@@ -17,8 +17,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private GameObject currentBoss;
     private int bossCounter;
     private Coroutine spawnEnemiesCoroutine;
-    public List<GameObject> enemiesAlive = new List<GameObject>();
-    [HideInInspector] public List<GameObject> gunshipsAlive = new List<GameObject>();
+    public List<GameObject> enemiesAlive = new();
+    public List<GameObject> gunshipsAlive = new();
     public bool spawnEnemies;
     public GameObject bossGoalPosition;
 
@@ -83,12 +83,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void AddEnemy(List<GameObject> listToAddTo, GameObject enemy)
     {
-        enemiesAlive.Add(enemy);
+        listToAddTo.Add(enemy);
     }
 
     private void RemoveEnemy(List<GameObject> listToRemoveFrom, GameObject enemy)
     {
-        enemiesAlive.Remove(enemy);
+        listToRemoveFrom.Remove(enemy);
 
         //if enemies arent being spawned a boss fight is happening
         if (!spawnEnemies)
@@ -138,11 +138,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void ClearEnemiesAlive()
     {
-        if (enemiesAlive.Count == 0)
-        {
-            Debug.Log("No enemies to clear");
-        }
-
         if (enemiesAlive.Count > 0)
         {
             for (int i = enemiesAlive.Count - 1; i >= 0; i--)
@@ -153,5 +148,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
                 Destroy(enemyToRemove);
             }
         }
+
+        gunshipsAlive.Clear();
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3537538281721821471}
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
-  - component: {fileID: -258228332016177176}
+  - component: {fileID: 7407092928578374691}
   m_Layer: 7
   m_Name: Gunship
   m_TagString: Untagged
@@ -140,7 +140,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &-258228332016177176
+--- !u!114 &7407092928578374691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,18 +149,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 2653145768784104840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
+  m_Script: {fileID: 11500000, guid: c7c818a64a58ab34eb1f05a3a9bfc0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: 2
+  moveType: 4
   maxHealth: 2
   currentHealth: 0
-  speed: 2
-  copyPlayerY: 1
+  speed: 1
+  upDownSpeed: 3
+  seekPlayer: 0
+  seekSpeed: 0
   explodeOnDeath: 0
   explosionRadius: 0
   explosionDamage: 0
-  explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
+  explosionGraphic: {fileID: 0}
+  bossEnemy: 0
+  goalPoint: {fileID: 0}
+  upDown: 0
+  backForthUp: 0
+  backForthMoveDistance: 4
+  gunshipMoveType: 0
 --- !u!1 &3590740715818776598
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,7 +189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6883753668296052494
 RectTransform:
   m_ObjectHideFlags: 0
