@@ -16,7 +16,6 @@ public class GunshipMovement : EnemyMovement
 
     protected override void Start()
     {
-        moveDirection = MovementDirection.Left;
         moveType = MovementTypes.Forward;
         ChooseMovementType();
         base.Start();

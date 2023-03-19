@@ -2,17 +2,11 @@ using UnityEngine;
 
 public class EnemyMovement : GameBehaviour
 {
-    public enum MovementDirection
-    {
-        Up, Down, Left, Right, DownLeft, None
-    }
-
     public enum MovementTypes
     {
         Forward, None
     }
 
-    public MovementDirection moveDirection;
     public MovementTypes moveType;
     private Transform player;
     public float speed;
@@ -66,28 +60,6 @@ public class EnemyMovement : GameBehaviour
         startTime = Random.Range(0f, Mathf.PI * 2f);
 
         goalPositionReached = false;
-
-        switch (moveDirection)
-        {
-            case MovementDirection.Up:
-                direction = Vector2.up;
-                break;
-            case MovementDirection.Down:
-                direction = Vector2.down;
-                break;
-            case MovementDirection.Left:
-                direction = Vector2.left;
-                break;
-            case MovementDirection.Right:
-                direction = Vector2.right;
-                break;
-            case MovementDirection.DownLeft:
-                direction = new Vector2(-1, -1);
-                break;
-            case MovementDirection.None:
-                direction = Vector2.zero;
-                break;
-        }
     }
 
     protected virtual void Update()
@@ -142,7 +114,7 @@ public class EnemyMovement : GameBehaviour
 
     private void MoveForward()
     {
-        transform.position += (Vector3)direction * speed * Time.deltaTime;
+        transform.position += speed * Time.deltaTime * transform.up;
     }
 
     private void UpDownMovement()

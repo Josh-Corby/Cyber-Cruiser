@@ -49,7 +49,7 @@ public class EnemySpawner : GameBehaviour
     private void SpawnRandomEnemy()
     {
         GameObject randomEnemyPrefab = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)];
-        GameObject enemy = Instantiate(randomEnemyPrefab, GetRandomSpawnPosition(), Quaternion.identity);
+        GameObject enemy = Instantiate(randomEnemyPrefab, GetRandomSpawnPosition(), transform.rotation);
         AddSpeedModifier(enemy);
         OnEnemySpawned(ESM.enemiesAlive, enemy);
     }

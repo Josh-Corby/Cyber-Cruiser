@@ -22,6 +22,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     public bool spawnEnemies;
     public GameObject bossGoalPosition;
 
+    public Transform dragonMovePoint;
+
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += RestartLevel;
