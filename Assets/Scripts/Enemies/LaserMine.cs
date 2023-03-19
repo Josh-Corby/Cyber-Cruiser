@@ -5,18 +5,26 @@ using UnityEngine;
 public class LaserMine : Enemy, IDamageable
 {
     [SerializeField] private GameObject laserProjectile;
-    private int rotationAngle;
+    private bool bulletCollision = false;
 
-    private float radius = 1;
+    private float radius = 0.5f;
 
     protected override void Start()
     {
-        rotationAngle = 0;
+        bulletCollision = false;
+    }
+    public override void Damage(float damage)
+    {
+        bulletCollision = true;
+        base.Damage(damage);
     }
 
     public override void Destroy()
     {
-        SpawnProjectile();
+        if (bulletCollision)
+        {
+            SpawnProjectile();
+        }
         base.Destroy();
     }
 
@@ -24,13 +32,15 @@ public class LaserMine : Enemy, IDamageable
     {
         for (int i = 0; i < 8; i++)
         {
-            float angle = (i * 45f) * Mathf.Rad2Deg;
+            float angle = i * 45f;
 
-            float x = radius + Mathf.Cos(angle);
-            float y = radius * Mathf.Sin(angle);
+            float rad = angle * Mathf.Deg2Rad;
+
+            float x = radius * Mathf.Cos(rad);
+            float y = radius * Mathf.Sin(rad);
             Vector3 spawnPos = transform.position + new Vector3(x, y, 0);
 
-            Quaternion spawnRotation = Quaternion.Euler(0, 0, angle - 90f);
+            Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
             Instantiate(laserProjectile, spawnPos, spawnRotation);
         }

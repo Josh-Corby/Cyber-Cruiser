@@ -19,7 +19,7 @@ public class Enemy : GameBehaviour, IDamageable
         currentHealth = maxHealth;
     }
 
-    public void Damage(float damage)
+    public virtual void Damage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth <= 0)

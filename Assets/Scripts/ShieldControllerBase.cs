@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class ShieldControllerBase : MonoBehaviour
+public abstract class ShieldControllerBase : MonoBehaviour,IShield
 {
     [SerializeField] protected Collider2D unitCollider;
     [SerializeField] protected GameObject shields;
@@ -8,6 +8,18 @@ public abstract class ShieldControllerBase : MonoBehaviour
 
     public bool shieldsActive;
     [SerializeField] protected bool shieldsActiveOnSpawn;
+
+    public bool reflectorShield;
+
+    private void OnEnable()
+    {
+        ShieldCollision.OnReflectorShieldCollision += ReflectProjectile;
+    }
+
+    private void OnDisable()
+    {
+        ShieldCollision.OnReflectorShieldCollision -= ReflectProjectile;
+    }
 
     private void Start()
     {
@@ -44,7 +56,7 @@ public abstract class ShieldControllerBase : MonoBehaviour
         shieldsActive = false;
         shields.SetActive(false);
         shieldCollider.enabled = false;
-        unitCollider.enabled = true;   
+        unitCollider.enabled = true;
     }
 
 
@@ -72,5 +84,17 @@ public abstract class ShieldControllerBase : MonoBehaviour
                 DeactivateShields();
             }
         }
+    }
+
+
+    public virtual void ReduceShields(float shieldDamage)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public virtual void ReflectProjectile(GameObject objectToReflect)
+    {
+        objectToReflect.transform.right = transform.right;
+
     }
 }

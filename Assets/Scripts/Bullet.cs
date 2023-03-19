@@ -39,12 +39,18 @@ public class Bullet : GameBehaviour
 
     private void ProcessCollision(GameObject collider)
     {
+        if(collider.TryGetComponent<ShieldCollision>(out var shield))
+        {
+            return;
+        }
+
         Debug.Log(collider.name);
         GameObject particles = Instantiate(collisionParticles, transform);
         particles.transform.parent = null;
+
         if (!collider.TryGetComponent<IDamageable>(out var interactable))
         {
-            
+
             Destroy(gameObject);
             return;
         }

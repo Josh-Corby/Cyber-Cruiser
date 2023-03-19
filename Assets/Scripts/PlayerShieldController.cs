@@ -7,10 +7,12 @@ public class PlayerShieldController : ShieldControllerBase, IShield
     [SerializeField] private int shieldActiveDuration;
     [SerializeField] private float shieldActiveTimer;
 
+    private const string PLAYER_PROJECTILE_LAYER_NAME = "PlayerProjectile";
     private void Awake()
     {
         unitCollider = GetComponentInParent<Collider2D>();
     }
+
     private void Update()
     {
         if (shieldsActive)
@@ -37,8 +39,14 @@ public class PlayerShieldController : ShieldControllerBase, IShield
         base.DeactivateShields();
     } 
 
-    public void ReduceShields(float shieldDamage)
+    public override void ReduceShields(float shieldDamage)
     {
         shieldActiveTimer -= shieldDamage;
+    }
+
+    public override void ReflectProjectile(GameObject objectToReflect)
+    {
+        base.ReflectProjectile(objectToReflect);
+        objectToReflect.layer = LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME);
     }
 }

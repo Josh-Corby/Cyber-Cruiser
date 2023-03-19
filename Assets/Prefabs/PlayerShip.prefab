@@ -411,7 +411,7 @@ MonoBehaviour:
   baseSpeed: 0.01
   lerpMovement: 1
   rotationSpeed: 0.5
-  distanceToStopRotation: 0.01
+  distanceToStopRotation: 0.5
 --- !u!114 &8907491432247727160
 MonoBehaviour:
   m_ObjectHideFlags: 0

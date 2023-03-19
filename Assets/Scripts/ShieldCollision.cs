@@ -1,7 +1,10 @@
 using UnityEngine;
+using System;
 
 public class ShieldCollision : MonoBehaviour
 {
+    public static event Action<GameObject> OnReflectorShieldCollision = null;
+
     private ShieldControllerBase shieldcontroller;
 
     private void Awake()
@@ -23,13 +26,19 @@ public class ShieldCollision : MonoBehaviour
             shieldcontroller.DeactivateShields();
         }
 
-        else
+        else if (collider.TryGetComponent<IShield>(out var shield))
         {
-            if (collider.TryGetComponent<IShield>(out var shield))
+            shield.DeactivateShields();
+            shieldcontroller.DeactivateShields();
+        }
+
+        else if (collider.TryGetComponent<Bullet>(out var bullet))
+        {
+            if (shieldcontroller.reflectorShield)
             {
-                shield.DeactivateShields();
-                shieldcontroller.DeactivateShields();
+                OnReflectorShieldCollision(collider);
             }
         }
+
     }
 }

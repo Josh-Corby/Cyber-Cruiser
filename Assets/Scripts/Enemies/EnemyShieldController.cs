@@ -5,6 +5,8 @@ public class EnemyShieldController : ShieldControllerBase, IShield
     [SerializeField] protected int maxShieldStrength;
     [SerializeField] protected float CurrentShieldStrength;
 
+    private const string ENEMY_PROJECTILE_LAYER_NAME = "EnemyProjectile";
+
     public override void ActivateShields()
     {
         CurrentShieldStrength = maxShieldStrength;
@@ -16,7 +18,7 @@ public class EnemyShieldController : ShieldControllerBase, IShield
         base.DeactivateShields();
     }
 
-    public void ReduceShields(float shieldDamage)
+    public override void ReduceShields(float shieldDamage)
     {
         CurrentShieldStrength -= shieldDamage;
         if(CurrentShieldStrength <= 0)
@@ -24,4 +26,12 @@ public class EnemyShieldController : ShieldControllerBase, IShield
             DeactivateShields();
         }
     }
+
+    public override void ReflectProjectile(GameObject objectToReflect)
+    {
+        base.ReflectProjectile(objectToReflect);
+        objectToReflect.layer = LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME);
+    }
+
 }
+

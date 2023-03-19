@@ -152,13 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116ea7c7f86f827488ce7399f86fcbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  currentHealth: 1
+  maxHealth: 1
+  currentHealth: 0
   explodeOnDeath: 0
   explosionRadius: 0
   explosionDamage: 0
   explosionGraphic: {fileID: 0}
-  laserProjectile: {fileID: 760453196464390188, guid: 130585e77da054b4ba24c84b35d78629, type: 3}
+  laserProjectile: {fileID: 760453196464390188, guid: f3c0c09c58bcd1646985d60bf0a8642a, type: 3}
 --- !u!114 &-3806085156021533184
 MonoBehaviour:
   m_ObjectHideFlags: 0

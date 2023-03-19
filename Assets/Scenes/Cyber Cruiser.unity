@@ -1036,6 +1036,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391529147}
   m_CullTransparentMesh: 1
+--- !u!1 &397626229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 397626230}
+  - component: {fileID: 397626231}
+  m_Layer: 0
+  m_Name: LaserMineSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &397626230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397626229}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: 0.7071068}
+  m_LocalPosition: {x: 9.313377, y: -0.004008651, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2103134227}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &397626231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397626229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnArea: {x: 0, y: 8, z: 0}
+  enemiesToSpawn:
+  - {fileID: 2653145768784104840, guid: 26d025349807efb46bbcf7de90e66d47, type: 3}
+  speedModifier: 0
 --- !u!1 &412835192
 GameObject:
   m_ObjectHideFlags: 0
@@ -2675,10 +2723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroy: 0
   spawners:
-  - {fileID: 984547534}
-  - {fileID: 1370326090}
-  - {fileID: 47135018}
-  - {fileID: 485082065}
+  - {fileID: 1846969865}
   spawnEnemyInterval: 1
   spawnEnemyReduction: 0.1
   enemySpeedIncrement: 0.1
@@ -3342,6 +3387,7 @@ MonoBehaviour:
   - {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
   - {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
   - {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
+  - {fileID: 2653145768784104840, guid: 1e99f4fec6f620d49bacebf379bf374b, type: 3}
   speedModifier: 0
 --- !u!4 &1370326091
 Transform:
@@ -4168,6 +4214,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846069970}
   m_CullTransparentMesh: 1
+--- !u!1 &1846969863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1846969864}
+  - component: {fileID: 1846969865}
+  m_Layer: 0
+  m_Name: GunshipSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1846969864
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846969863}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: 0.7071068}
+  m_LocalPosition: {x: 9.313377, y: -0.004008651, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2103134227}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &1846969865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846969863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnArea: {x: 0, y: 8, z: 0}
+  enemiesToSpawn:
+  - {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
+  speedModifier: 0
 --- !u!1 &1885259245
 GameObject:
   m_ObjectHideFlags: 0
@@ -4640,6 +4734,8 @@ Transform:
   - {fileID: 1370326091}
   - {fileID: 47135017}
   - {fileID: 485082064}
+  - {fileID: 397626230}
+  - {fileID: 1846969864}
   m_Father: {fileID: 1123161085}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4694,46 +4790,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7686075475436964976, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Constraints
-      value: 7
+    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: reflectorShield
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: baseSpeed
-      value: 0.01
+    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: playerProjectilelayerMask.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: mouseInput
       value: 
       objectReference: {fileID: 1751233348}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: lerpMovement
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: rotationSpeed
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: spawnPosition
       value: 
       objectReference: {fileID: 1067534575}
-    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: distanceWeight
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: shipRotationAngle
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: stopRotationThreshold
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: distanceToStopRotation
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727163, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_Name
       value: PlayerShip
