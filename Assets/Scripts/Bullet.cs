@@ -2,12 +2,6 @@ using UnityEngine;
 
 public class Bullet : GameBehaviour
 {
-    public enum moveDirection
-    {
-        Left, Right
-    }
-
-    [SerializeField] private moveDirection direction;
     [SerializeField] private float speed;
     private Vector2 directionVector;
     [SerializeField] private float damage;
@@ -25,18 +19,6 @@ public class Bullet : GameBehaviour
         GameManager.OnLevelCountDownStart -= DestroyBullet;
     }
 
-    private void Start()
-    {
-        switch (direction)
-        {
-            case moveDirection.Left:
-                directionVector = Vector2.left;
-                break;
-            case moveDirection.Right:
-                directionVector = Vector2.right;
-                break;
-        }
-    }
     private void Update()
     {
         bulletLifetime -= Time.deltaTime;
@@ -45,7 +27,7 @@ public class Bullet : GameBehaviour
             Destroy(gameObject);
         }
 
-        transform.position += (Vector3)directionVector * speed * Time.deltaTime;
+        transform.position += transform.right * speed * Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

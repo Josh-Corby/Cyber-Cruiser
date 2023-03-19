@@ -55,6 +55,7 @@ public class Weapon : MonoBehaviour
         {
             //Debug.Log("Bullet fired");
             GameObject bullet = Instantiate(bulletToFire, firePointTransform.position, firePointTransform.rotation);
+
             readyToFire = false;
             StartCoroutine(ResetShooting());
         }

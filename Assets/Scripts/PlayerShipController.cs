@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerShipController : MonoBehaviour
 {
+    [SerializeField] private GameObject playerSprite;
+
     [SerializeField] private Vector2 input;
     [SerializeField] private GameObject mouseInput;
     [SerializeField] private Transform spawnPosition;
@@ -62,7 +64,7 @@ public class PlayerShipController : MonoBehaviour
         }
 
 
-        float yDiff = Mathf.Abs( mousePosition.y - transform.position.y);
+        float yDiff = Mathf.Abs(mousePosition.y - transform.position.y);
         if (yDiff > distanceToStopRotation)
         {
 
@@ -82,14 +84,13 @@ public class PlayerShipController : MonoBehaviour
             targetRotation = Quaternion.Euler(0, 0, 0);
         }
 
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed);
-
+        playerSprite.transform.rotation = Quaternion.RotateTowards(playerSprite.transform.rotation, targetRotation, rotationSpeed);
     }
 
     private void StartLevelPosition()
     {
         transform.position = spawnPosition.position;
-        transform.rotation = Quaternion.Euler(0, 0, 0);
+        playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     private void RecieveInput(Vector2 _input)
