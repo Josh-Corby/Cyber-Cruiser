@@ -33,9 +33,9 @@ public class EnemyMovement : GameBehaviour
     [SerializeField] private float magnitude;
 
     [Header("Homing variables")]
-    [SerializeField] private bool homeOnPlayer;
-    [SerializeField] private float turnSpeed;
-    [SerializeField] private float homeTime;
+    [SerializeField] protected bool homeOnPlayer;
+    [SerializeField] protected float turnSpeed;
+    [SerializeField] protected float homeTime;
     private float homeCounter;
 
     //offset for random starting sin value
@@ -163,7 +163,7 @@ public class EnemyMovement : GameBehaviour
         {
             direction = transform.up;
             homeOnPlayer = false;
-            Debug.Log("No longer rotating towards player");
+            //Debug.Log("No longer rotating towards player");
             return;
         }
 

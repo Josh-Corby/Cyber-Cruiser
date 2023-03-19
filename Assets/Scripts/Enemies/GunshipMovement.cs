@@ -11,8 +11,8 @@ public class GunshipMovement : EnemyMovement
 
     public GunshipMoveTypes gunshipMoveType;
 
-    private readonly float fastSeekSpeed = 4;
-    private readonly float slowSeekSpeed = 2;
+    private readonly float fastSeekSpeed = 6;
+    private readonly float slowSeekSpeed = 3;
 
     protected override void Start()
     {

@@ -6,8 +6,6 @@ public class DragonMovement : EnemyMovement
 {
     //0 for move to bottom right
     //1 for arc movement
-    [Range(0, 1)] int movementTypeID;
-    [SerializeField] private bool bottomRightMove = false;
     [SerializeField] private bool arcMove = false;
 
     [HideInInspector] public Vector3 bottomLeftPoint;
@@ -35,11 +33,11 @@ public class DragonMovement : EnemyMovement
 
     private void ChooseRandomMoveType()
     {
-        movementTypeID = Random.Range(0, 2);
+        int movementTypeID = Random.Range(0, 2);
 
         if (movementTypeID == 0)
         {
-            bottomRightMove = true;
+            //move to bottom left
             bottomLeftPoint = ESM.dragonMovePoint.position;
 
             Vector3 vectorToBottomLeft = bottomLeftPoint - transform.position;

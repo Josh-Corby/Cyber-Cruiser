@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 3537538281721821469}
-  - component: {fileID: -3413633249832328670}
+  - component: {fileID: 3621735917832785536}
   m_Layer: 7
   m_Name: Missile
   m_TagString: Untagged
@@ -158,7 +158,7 @@ MonoBehaviour:
   explosionRadius: 1.5
   explosionDamage: 1
   explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
---- !u!114 &-3413633249832328670
+--- !u!114 &3621735917832785536
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,10 +167,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2653145768784104840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 365a316a2f7b6c445bfc232c6280bd6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a123e6e04d96d845b03b6da6b371ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDirection: 0
   moveType: 0
   speed: 3
   bossEnemy: 0
@@ -183,6 +182,6 @@ MonoBehaviour:
   sinUpDown: 0
   frequency: 0
   magnitude: 0
-  homeOnPlayer: 1
-  turnSpeed: 5
-  homeTime: 3
+  homeOnPlayer: 0
+  turnSpeed: 0
+  homeTime: 0
