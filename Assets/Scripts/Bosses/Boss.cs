@@ -2,25 +2,25 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(IBoss))]
+
 public class Boss : Enemy
 {
-    [SerializeField] private float attackCooldown;
-    [SerializeField] private float attackTimer;
+    [SerializeField] protected float attackCooldown;
+    [SerializeField] protected float attackTimer;
 
     private IBoss bossMoveset;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         bossMoveset = GetComponent<IBoss>();
     }
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         attackTimer = attackCooldown;
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
 
         if (attackTimer > 0)
