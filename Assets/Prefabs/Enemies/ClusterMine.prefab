@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 3537538281721821471}
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
-  - component: {fileID: 3537538281721821469}
+  - component: {fileID: 283805157547236424}
   - component: {fileID: -3806085156021533184}
   m_Layer: 7
-  m_Name: Mine
+  m_Name: ClusterMine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &3537538281721821469
+--- !u!114 &283805157547236424
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,15 +149,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2653145768784104840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
+  m_Script: {fileID: 11500000, guid: 116ea7c7f86f827488ce7399f86fcbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  maxHealth: 3
   currentHealth: 0
-  explodeOnDeath: 1
-  explosionRadius: 1.5
-  explosionDamage: 1
-  explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
+  explodeOnDeath: 0
+  explosionRadius: 0
+  explosionDamage: 0
+  explosionGraphic: {fileID: 0}
+  laserProjectile: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
 --- !u!114 &-3806085156021533184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +180,7 @@ MonoBehaviour:
   upDownMoveDistance: 0
   seekPlayerY: 0
   seekSpeed: 0
-  sinUpDown: 0
+  sinUpDown: 1
   frequency: 2.6
   magnitude: 0.01
   homeOnPlayer: 0

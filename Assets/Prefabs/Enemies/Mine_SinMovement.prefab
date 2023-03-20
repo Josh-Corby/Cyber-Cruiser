@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3537538281721821469}
   - component: {fileID: -3806085156021533184}
   m_Layer: 7
-  m_Name: Mine
+  m_Name: Mine_SinMovement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,7 +179,7 @@ MonoBehaviour:
   upDownMoveDistance: 0
   seekPlayerY: 0
   seekSpeed: 0
-  sinUpDown: 0
+  sinUpDown: 1
   frequency: 2.6
   magnitude: 0.01
   homeOnPlayer: 0

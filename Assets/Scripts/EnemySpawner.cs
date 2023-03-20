@@ -56,7 +56,7 @@ public class EnemySpawner : GameBehaviour
 
     private void SpawnBoss(Vector3 spawnPosition, GameObject bossToSpawn)
     {
-        GameObject boss = Instantiate(bossToSpawn, spawnPosition, Quaternion.identity);
+        GameObject boss = Instantiate(bossToSpawn, spawnPosition, transform.rotation);
         AddSpeedModifier(boss);
         OnEnemySpawned(ESM.enemiesAlive, boss);
     }

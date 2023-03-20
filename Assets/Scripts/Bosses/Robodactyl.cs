@@ -20,7 +20,8 @@ public class Robodactyl : Boss, IBoss
     public void Attack2()
     {
         Debug.Log("Mine spawned");
-        GameObject mine = Instantiate(minePrefab, transform);
+        GameObject mine = Instantiate(minePrefab, gameObject.transform.position, transform.rotation);
+        mine.transform.right = transform.right;
         mine.transform.parent = null;
     }
 }
