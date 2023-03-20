@@ -6,6 +6,7 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 {
     [SerializeField] private int shieldActiveDuration;
     [SerializeField] private float shieldActiveTimer;
+    [SerializeField] private float shieldTimerReductionOnCollision;
 
     private const string PLAYER_PROJECTILE_LAYER_NAME = "PlayerProjectile";
     private void Awake()
@@ -39,9 +40,9 @@ public class PlayerShieldController : ShieldControllerBase, IShield
         base.DeactivateShields();
     } 
 
-    public override void ReduceShields(float shieldDamage)
+    public override void ReduceShields()
     {
-        shieldActiveTimer -= shieldDamage;
+        shieldActiveTimer -= shieldTimerReductionOnCollision;
     }
 
     public override void ReflectProjectile(GameObject objectToReflect)

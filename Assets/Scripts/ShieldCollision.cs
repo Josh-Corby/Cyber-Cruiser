@@ -3,8 +3,6 @@ using System;
 
 public class ShieldCollision : MonoBehaviour
 {
-    public static event Action<GameObject> OnReflectorShieldCollision = null;
-
     private ShieldControllerBase shieldcontroller;
 
     private void Awake()
@@ -36,7 +34,11 @@ public class ShieldCollision : MonoBehaviour
         {
             if (shieldcontroller.reflectorShield)
             {
-                OnReflectorShieldCollision(collider);
+                shieldcontroller.ReflectProjectile(collider);
+            }
+            else
+            {
+                shieldcontroller.ReduceShields();
             }
         }
 

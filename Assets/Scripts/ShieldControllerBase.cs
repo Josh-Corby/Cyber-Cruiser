@@ -11,16 +11,6 @@ public abstract class ShieldControllerBase : MonoBehaviour,IShield
 
     public bool reflectorShield;
 
-    private void OnEnable()
-    {
-        ShieldCollision.OnReflectorShieldCollision += ReflectProjectile;
-    }
-
-    private void OnDisable()
-    {
-        ShieldCollision.OnReflectorShieldCollision -= ReflectProjectile;
-    }
-
     private void Start()
     {
         if (shieldsActiveOnSpawn)
@@ -87,7 +77,7 @@ public abstract class ShieldControllerBase : MonoBehaviour,IShield
     }
 
 
-    public virtual void ReduceShields(float shieldDamage)
+    public virtual void ReduceShields()
     {
         throw new System.NotImplementedException();
     }

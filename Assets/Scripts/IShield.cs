@@ -5,7 +5,7 @@ public interface IShield
 
     public void DeactivateShields();
 
-    public void ReduceShields(float shieldDamage);
+    public void ReduceShields();
 
     public void ReflectProjectile(GameObject objectToReflect);
 }

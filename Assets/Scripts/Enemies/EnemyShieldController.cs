@@ -18,11 +18,11 @@ public class EnemyShieldController : ShieldControllerBase, IShield
         base.DeactivateShields();
     }
 
-    public override void ReduceShields(float shieldDamage)
+    public override void ReduceShields()
     {
-        CurrentShieldStrength -= shieldDamage;
+        CurrentShieldStrength -= 1;
         if(CurrentShieldStrength <= 0)
-        {
+        {   
             DeactivateShields();
         }
     }
@@ -31,6 +31,8 @@ public class EnemyShieldController : ShieldControllerBase, IShield
     {
         base.ReflectProjectile(objectToReflect);
         objectToReflect.layer = LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME);
+        ReduceShields();
+
     }
 
 }
