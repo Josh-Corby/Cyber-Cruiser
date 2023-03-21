@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Behemoth : Boss, IBoss
 {
+    [SerializeField] private Weapon missileLauncher;
+    [SerializeField] private Weapon homingMissileLauncher;
 
     //missiles in random directions
     public void Attack1()
     {
-        throw new System.NotImplementedException();
+        missileLauncher.StartFireSequence();
     }
 
-    //missile cluster aimed at players current location
+    //shoot homing missiles at different directions
     public void Attack2()
     {
-        throw new System.NotImplementedException();
+        homingMissileLauncher.StartFireSequence();
     }
 }

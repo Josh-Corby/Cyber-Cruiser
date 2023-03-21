@@ -6,13 +6,15 @@ public class Enemy : GameBehaviour, IDamageable
 {
     public static event Action<List<GameObject>, GameObject> OnEnemyDied = null;
 
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float currentHealth;
+    public string enemyName;
+    public float maxHealth;
+    [HideInInspector] public float currentHealth;
 
     [SerializeField] private bool explodeOnDeath;
     [SerializeField] private float explosionRadius;
     [SerializeField] private float explosionDamage;
     [SerializeField] private GameObject explosionGraphic;
+
 
     protected virtual void Start()
     {

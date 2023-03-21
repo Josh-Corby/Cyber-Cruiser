@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : GameBehaviour
 {
     public static event Action<List<GameObject>, GameObject> OnEnemySpawned = null;
+    public static event Action<Enemy> OnBossSpawned = null;
 
     [SerializeField] private Vector3 spawnArea;
     [SerializeField] private GameObject[] enemiesToSpawn;
@@ -59,6 +60,9 @@ public class EnemySpawner : GameBehaviour
         GameObject boss = Instantiate(bossToSpawn, spawnPosition, transform.rotation);
         AddSpeedModifier(boss);
         OnEnemySpawned(ESM.enemiesAlive, boss);
+        Enemy bossInfo = boss.GetComponent<Enemy>();
+        boss.name = bossInfo.enemyName;
+        OnBossSpawned(bossInfo);
     }
 
     private void AddSpeedModifier(GameObject enemy)

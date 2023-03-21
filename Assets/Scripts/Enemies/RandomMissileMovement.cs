@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MissileMovement : EnemyMovement
+public class RandomMissileMovement : EnemyMovement
 {
     private float missileTurnSpeed = 5;
     private float missileHomeTime = 2;

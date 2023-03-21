@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 3537538281721821469}
-  - component: {fileID: -341527346657981128}
+  - component: {fileID: 2534658592493653730}
   m_Layer: 7
-  m_Name: SeekerMine
+  m_Name: Missile_Homing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 2653145768784104840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.44907293, y: 1.3760821, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -158,7 +158,7 @@ MonoBehaviour:
   explosionRadius: 1.5
   explosionDamage: 1
   explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
---- !u!114 &-341527346657981128
+--- !u!114 &2534658592493653730
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,17 +171,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveType: 0
-  speed: 2
+  speed: 3
   bossEnemy: 0
   direction: {x: 0, y: 0}
   upDown: 0
   upDownSpeed: 0
   upDownMoveDistance: 0
-  seekPlayerY: 1
-  seekSpeed: 3
+  seekPlayerY: 0
+  seekSpeed: 0
   sinUpDown: 0
   frequency: 0
   magnitude: 0
-  homeOnPlayer: 0
-  turnSpeed: 0
-  homeTime: 0
+  homeOnPlayer: 1
+  turnSpeed: 5
+  homeTime: 3
+  homeDelay: 1
+  homeDelayTime: 0.5

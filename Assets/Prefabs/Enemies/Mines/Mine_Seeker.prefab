@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 3537538281721821469}
-  - component: {fileID: -8968039490281039228}
+  - component: {fileID: -341527346657981128}
   m_Layer: 7
-  m_Name: Blimp 4x2
+  m_Name: Mine_Seeker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 2653145768784104840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -152,13 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 6
+  maxHealth: 1
   currentHealth: 0
-  explodeOnDeath: 0
-  explosionRadius: 0
-  explosionDamage: 0
+  explodeOnDeath: 1
+  explosionRadius: 1.5
+  explosionDamage: 1
   explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
---- !u!114 &-8968039490281039228
+--- !u!114 &-341527346657981128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,8 +177,8 @@ MonoBehaviour:
   upDown: 0
   upDownSpeed: 0
   upDownMoveDistance: 0
-  seekPlayerY: 0
-  seekSpeed: 0
+  seekPlayerY: 1
+  seekSpeed: 3
   sinUpDown: 0
   frequency: 0
   magnitude: 0

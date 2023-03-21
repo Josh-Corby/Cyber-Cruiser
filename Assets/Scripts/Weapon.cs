@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour
     public bool readyToFire;
 
     [Header("Gun Base Stats")]
-    [SerializeField] private GameObject bulletToFire;
+    [SerializeField] private GameObject objectToFire;
     [SerializeField] private float timeBetweenShots;
     public bool holdToFire;
     [SerializeField] private bool autoFire;
@@ -82,19 +82,19 @@ public class Weapon : MonoBehaviour
         if (useSpread)
         {
             Quaternion directionWithSpread = firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-spreadAngle, spreadAngle));
-            GameObject bullet = Instantiate(bulletToFire, firePointTransform.position, directionWithSpread);
+            GameObject bullet = Instantiate(objectToFire, firePointTransform.position, directionWithSpread);
         }
 
         if (!useSpread)
         {
-            GameObject bullet = Instantiate(bulletToFire, firePointTransform.position, firePointTransform.rotation);
+            GameObject bullet = Instantiate(objectToFire, firePointTransform.position, firePointTransform.rotation);
         }
     }
 
     private IEnumerator ResetShooting()
     {
         yield return new WaitForSeconds(timeBetweenShots);
-        Debug.Log("Gun is ready to fire");
+        //Debug.Log("Gun is ready to fire");
         readyToFire = true;
     }
 }

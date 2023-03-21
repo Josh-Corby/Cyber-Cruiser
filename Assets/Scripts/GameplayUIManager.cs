@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 using TMPro;
+
 public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 {
     public static event Action OnCountdownDone = null;
@@ -15,23 +16,32 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     [SerializeField] private GameObject gameOverPanel;
     [SerializeField] private GameObject pausePanel;
 
+    [SerializeField] private TMP_Text bossNameText;
+    [SerializeField] private GameObject bossHealthBarUI;
+    private HealthBar bossHealthBar;
 
+    private void Awake()
+    {
+        bossHealthBar = bossHealthBarUI.GetComponent<HealthBar>();
+    }
     private void OnEnable()
     {
+        Boss.OnBossDied += DisableBossHealthBar;
+        EnemySpawner.OnBossSpawned += EnableBossUI;
         GameManager.OnLevelCountDownStart += StartMission;
         GameManager.OnGamePaused += EnablePauseUI;
-        GameManager.OnGameResumed += DisablePauseUI;
-
+        GameManager.OnGameResumed += DisablePauseUI; 
         PlayerManager.OnPlayerDeath += GameOverUI;
         PlayerManager.OnPlasmaChange += UpdatePlasmaText;
     }
 
     private void OnDisable()
     {
+        Boss.OnBossDied -= DisableBossHealthBar;
+        EnemySpawner.OnBossSpawned -= EnableBossUI;
         GameManager.OnLevelCountDownStart -= StartMission;
         GameManager.OnGamePaused -= EnablePauseUI;
         GameManager.OnGameResumed -= DisablePauseUI;
-
         PlayerManager.OnPlayerDeath -= GameOverUI;
         PlayerManager.OnPlasmaChange -= UpdatePlasmaText;
     }
@@ -57,6 +67,20 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
         waveCountdown = StartCoroutine(WaveCountdown());
     }
 
+    private void EnableBossUI(Enemy boss)
+    {
+        bossNameText.text = boss.gameObject.name;
+        bossNameText.enabled = true;
+        bossHealthBarUI.SetActive(true);
+        bossHealthBar.SetHealthBar(boss);
+    }
+
+    private void DisableBossHealthBar()
+    {
+        bossNameText.enabled = false;
+        bossNameText.text = "";
+        bossHealthBarUI.SetActive(false);
+    }
     private IEnumerator WaveCountdown()
     {
         waveCountdownText.enabled = true;

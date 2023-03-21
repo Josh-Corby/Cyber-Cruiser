@@ -3,8 +3,11 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-public class Boss : Enemy
+public class Boss : Enemy,IDamageable
 {
+    public static event Action<float> OnBossDamage = null;
+    public static event Action OnBossDied = null;
+
     [SerializeField] protected float attackCooldown;
     [SerializeField] protected float attackTimer;
 
@@ -52,5 +55,17 @@ public class Boss : Enemy
         {
             bossMoveset.Attack2();
         }
+    }
+
+    public override void Damage(float damage)
+    {
+        OnBossDamage(currentHealth);
+        base.Damage(damage);
+    }
+
+    public override void Destroy()
+    {
+        OnBossDied?.Invoke();
+        base.Destroy();
     }
 }

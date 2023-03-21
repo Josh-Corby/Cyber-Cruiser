@@ -12,7 +12,7 @@ public class EnemyMovement : GameBehaviour
     public float speed;
     [SerializeField] private bool bossEnemy;
     private bool goalPositionReached;
-    [HideInInspector] public Vector2 direction;  
+    [HideInInspector] public Vector2 direction;
 
     [Header("UpDown Variables")]
     public bool upDown;
@@ -38,6 +38,10 @@ public class EnemyMovement : GameBehaviour
     [SerializeField] protected float homeTime;
     private float homeCounter;
 
+    [SerializeField] protected bool homeDelay;
+    [SerializeField] protected float homeDelayTime;
+    private float homeDelayCounter;
+
     //offset for random starting sin value
     private float startTime;
 
@@ -54,6 +58,11 @@ public class EnemyMovement : GameBehaviour
     {
         if (homeOnPlayer)
         {
+            if (homeDelay)
+            {
+                homeDelayCounter = homeDelayTime;
+            }
+
             homeCounter = homeTime;
         }
 
@@ -74,7 +83,15 @@ public class EnemyMovement : GameBehaviour
 
         if (homeOnPlayer)
         {
-            RotateTowardsPlayer();
+            if (homeDelay)
+            {
+                HomeDelay();
+            }
+
+            if (!homeDelay)
+            {
+                RotateTowardsPlayer();
+            }
         }
 
         if (moveType == MovementTypes.Forward)
@@ -155,8 +172,19 @@ public class EnemyMovement : GameBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z);
     }
 
+    private void HomeDelay()
+    {
+        homeDelayCounter -= Time.deltaTime;
+
+        if (homeDelayCounter <= 0)
+        {
+            homeDelay = false;
+        }
+    }
+
     private void RotateTowardsPlayer()
     {
+
         homeCounter -= Time.deltaTime;
 
         if (homeCounter <= 0)

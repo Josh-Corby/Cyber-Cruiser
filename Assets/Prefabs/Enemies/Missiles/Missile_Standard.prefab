@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 3537538281721821469}
-  - component: {fileID: -4165509634596114405}
+  - component: {fileID: -4931714136078008004}
   m_Layer: 7
-  m_Name: Blimp 3x1.5
+  m_Name: Missile_Standard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 2653145768784104840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 3, z: 1}
+  m_LocalScale: {x: 0.44907293, y: 1.3760821, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -152,13 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 6
+  maxHealth: 1
   currentHealth: 0
-  explodeOnDeath: 0
-  explosionRadius: 0
-  explosionDamage: 0
+  explodeOnDeath: 1
+  explosionRadius: 1.5
+  explosionDamage: 1
   explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
---- !u!114 &-4165509634596114405
+--- !u!114 &-4931714136078008004
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveType: 0
-  speed: 2
+  speed: 3
   bossEnemy: 0
   direction: {x: 0, y: 0}
   upDown: 0

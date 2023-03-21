@@ -44,7 +44,7 @@ public class Bullet : GameBehaviour
             return;
         }
 
-        Debug.Log(collider.name);
+        //Debug.Log(collider.name);
         GameObject particles = Instantiate(collisionParticles, transform);
         particles.transform.parent = null;
 

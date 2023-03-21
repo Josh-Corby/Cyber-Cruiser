@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 283805157547236424}
   - component: {fileID: -3806085156021533184}
   m_Layer: 7
-  m_Name: LaserMine
+  m_Name: Mine_Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
