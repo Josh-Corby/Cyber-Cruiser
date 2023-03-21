@@ -13,17 +13,6 @@ public class BeamAttack : MonoBehaviour
 
 
 
-    private void OnEnable()
-    {
-        ResetBeam();
-    }
-
-    private void OnDisable()
-    {
-        ResetBeam();
-    }
-
-
     private void Update()
     {
         beamTimer -= Time.deltaTime;

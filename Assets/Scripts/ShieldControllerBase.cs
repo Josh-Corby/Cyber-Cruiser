@@ -11,7 +11,7 @@ public abstract class ShieldControllerBase : MonoBehaviour,IShield
 
     public bool reflectorShield;
 
-    private void Start()
+    protected void Start()
     {
         if (shieldsActiveOnSpawn)
         {

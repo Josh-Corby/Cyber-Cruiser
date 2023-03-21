@@ -4,7 +4,7 @@ using System;
 public class PlayerWeaponController : MonoBehaviour
 {
     [SerializeField] private Weapon playerWeapon;
-    private bool fireInput;
+    [SerializeField] private bool fireInput;
     private bool controlsEnabled;
 
     private void OnEnable()
@@ -41,7 +41,7 @@ public class PlayerWeaponController : MonoBehaviour
             {
                 CheckForFireInput();
             }
-        }   
+        }
     }
 
     private void SetFireInput(bool input)
@@ -60,8 +60,12 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void FireWeapon()
     {
-        playerWeapon.Fire();
+        if (playerWeapon.readyToFire)
+        {
+            playerWeapon.StartFireSequence();
+        }
     }
+
 
     private void CancelFireInput()
     {

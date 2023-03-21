@@ -7,7 +7,7 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] private GameObject firePoint;
     private Transform firePointTransform;
-    private bool readyToFire;
+    public bool readyToFire;
 
     [Header("Gun Base Stats")]
     [SerializeField] private GameObject bulletToFire;
@@ -18,10 +18,6 @@ public class Weapon : MonoBehaviour
     [Header("Spread Stats")]
     [SerializeField] private bool useSpread;
     [SerializeField] private float spreadAngle;
-
-    [Header("Shotgun Stats")]
-    private bool shotgunFire;
-    private int shotsInShotgunFire;
 
     [Header("Burst Fire Stats")]
     [SerializeField] private bool burstFire;
@@ -44,26 +40,61 @@ public class Weapon : MonoBehaviour
         {
             if (readyToFire)
             {
-                Fire();
+                StartFireSequence();
             }
         }
     }
 
+    public void StartFireSequence()
+    {
+        //check for burst fire
+        readyToFire = false;
+        CheckBurstFire();
+        return;
+    }
+    private void CheckBurstFire()
+    {
+        //if gun is burst fire start burst fire
+        if (burstFire)
+        {
+            StartCoroutine(BurstFire());
+            return;
+        }
+        //otherwise normal fire
+
+        Fire();
+        StartCoroutine(ResetShooting());
+    }
+
+    private IEnumerator BurstFire()
+    {
+
+        for (int i = 0; i < bulletsInBurst; i++)
+        {
+            Fire();
+            yield return new WaitForSeconds(timeBetweenBurstShots);
+        }
+        StartCoroutine(ResetShooting());
+    }
+
     public void Fire()
     {
-        if (readyToFire)
+        if (useSpread)
         {
-            //Debug.Log("Bullet fired");
-            GameObject bullet = Instantiate(bulletToFire, firePointTransform.position, firePointTransform.rotation);
+            Quaternion directionWithSpread = firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-spreadAngle, spreadAngle));
+            GameObject bullet = Instantiate(bulletToFire, firePointTransform.position, directionWithSpread);
+        }
 
-            readyToFire = false;
-            StartCoroutine(ResetShooting());
+        if (!useSpread)
+        {
+            GameObject bullet = Instantiate(bulletToFire, firePointTransform.position, firePointTransform.rotation);
         }
     }
 
     private IEnumerator ResetShooting()
     {
         yield return new WaitForSeconds(timeBetweenShots);
+        Debug.Log("Gun is ready to fire");
         readyToFire = true;
     }
 }

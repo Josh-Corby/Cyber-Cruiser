@@ -28,8 +28,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4105431680881908016}
+  m_Children: []
   m_Father: {fileID: 581542919418203060}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -115,7 +114,7 @@ Transform:
   m_Children:
   - {fileID: 3486365589442822900}
   m_Father: {fileID: 1165463880448735964}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7091729754616710028
 GameObject:
@@ -148,7 +147,7 @@ Transform:
   m_Children:
   - {fileID: 1696511644321994428}
   m_Father: {fileID: 1165463880448735964}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6496008905095027466
 MonoBehaviour:
@@ -167,9 +166,10 @@ MonoBehaviour:
   shieldCollider: {fileID: 7671205999642657847}
   shieldsActive: 0
   shieldsActiveOnSpawn: 0
-  reflectorShield: 0
+  reflectorShield: 1
   shieldActiveDuration: 5
   shieldActiveTimer: 0
+  shieldTimerReductionOnCollision: 0
 --- !u!1 &8907491432247727163
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,6 +205,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4662151075472529233}
+  - {fileID: 4105431680881908016}
   - {fileID: 703919016318476738}
   - {fileID: 581542919418203060}
   m_Father: {fileID: 0}
@@ -275,7 +276,7 @@ MonoBehaviour:
   spawnPosition: {fileID: 0}
   baseSpeed: 0.01
   lerpMovement: 1
-  rotationSpeed: 0.5
+  rotationSpeed: 0.3
   distanceToStopRotation: 0.5
 --- !u!114 &8907491432247727160
 MonoBehaviour:
@@ -346,11 +347,11 @@ Transform:
   m_GameObject: {fileID: 8907491432817469735}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.6799998, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.1, z: 0.4}
+  m_LocalScale: {x: 0.39999995, y: 0.09999999, z: 0.39999995}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3486365589442822900}
-  m_RootOrder: 0
+  m_Father: {fileID: 1165463880448735964}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1587261825211559011
 SpriteRenderer:
@@ -421,8 +422,8 @@ MonoBehaviour:
   timeBetweenShots: 0.2
   holdToFire: 1
   autoFire: 0
-  useSpread: 0
-  spreadAngle: 0
+  useSpread: 1
+  spreadAngle: 20
   burstFire: 0
   bulletsInBurst: 0
   timeBetweenBurstShots: 0
