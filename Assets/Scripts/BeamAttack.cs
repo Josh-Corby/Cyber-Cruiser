@@ -21,6 +21,7 @@ public class BeamAttack : MonoBehaviour
         {
             beamSize += beamSpeed * Time.deltaTime;
             lineRenderer.SetPosition(1, transform.localPosition + transform.right * beamSize);
+
         }
         if(beamTimer <= 0)
         {

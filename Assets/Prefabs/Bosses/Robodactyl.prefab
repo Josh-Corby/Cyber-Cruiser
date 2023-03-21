@@ -154,7 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cd110bf2fa965240b8c43e0cfdce911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 125
+  enemyName: Robodactyl
+  maxHealth: 50
   currentHealth: 0
   explodeOnDeath: 0
   explosionRadius: 0
@@ -193,6 +194,8 @@ MonoBehaviour:
   homeOnPlayer: 0
   turnSpeed: 0
   homeTime: 0
+  homeDelay: 0
+  homeDelayTime: 0
 --- !u!1 &3534197723866894886
 GameObject:
   m_ObjectHideFlags: 0

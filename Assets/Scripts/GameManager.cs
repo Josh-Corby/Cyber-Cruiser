@@ -16,7 +16,6 @@ public class GameManager : GameBehaviour
     private bool distanceIncreasing;
     [SerializeField] private int bossDistance;
 
-    private int distancePerMilestone = 100;
     private int currentDistanceMilestone;
     private bool milestoneIncreased;
 
@@ -72,7 +71,7 @@ public class GameManager : GameBehaviour
 
 
             //increment distance milestone every 100 units
-            if (distanceInt % distancePerMilestone == 0 && !milestoneIncreased)
+            if (distanceInt % bossDistance == 0 && !milestoneIncreased)
             {
                 StartCoroutine(IncreaseDistanceMilestone());
                 GetNewPlasmaDropDistance();
@@ -99,7 +98,7 @@ public class GameManager : GameBehaviour
     private IEnumerator IncreaseDistanceMilestone()
     {
         milestoneIncreased = true;
-        currentDistanceMilestone += distancePerMilestone;
+        currentDistanceMilestone += bossDistance;
 
         yield return new WaitForSeconds(1f);
         milestoneIncreased = false;

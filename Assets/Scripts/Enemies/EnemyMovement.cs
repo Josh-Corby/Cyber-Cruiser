@@ -20,8 +20,7 @@ public class EnemyMovement : GameBehaviour
     [SerializeField] private float upDownSpeed;
     private bool isBackForthMovingUp;
     [SerializeField] private int upDownMoveDistance;
-    private readonly float yUp = 4.5f;
-    private readonly float yDown = -4.5f;
+   
 
     [Header("Seek Variables")]
     public bool seekPlayerY;
@@ -52,6 +51,8 @@ public class EnemyMovement : GameBehaviour
     {
         player = PM.player.transform;
         goalPoint = ESM.bossGoalPosition;
+
+
     }
 
     protected virtual void Start()
@@ -138,7 +139,7 @@ public class EnemyMovement : GameBehaviour
     {
         if (isBackForthMovingUp)
         {
-            if (transform.position.y < yUp)
+            if (transform.position.y < upDownMoveDistance)
             {
                 transform.position += new Vector3(0, upDownSpeed * Time.deltaTime, 0);
             }
@@ -150,7 +151,7 @@ public class EnemyMovement : GameBehaviour
 
         if (!isBackForthMovingUp)
         {
-            if (transform.position.y > yDown)
+            if (transform.position.y > -upDownMoveDistance)
             {
                 transform.position -= new Vector3(0, upDownSpeed * Time.deltaTime, 0);
             }

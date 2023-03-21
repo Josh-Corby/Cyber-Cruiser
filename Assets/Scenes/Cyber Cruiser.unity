@@ -2818,7 +2818,7 @@ MonoBehaviour:
   enemySpeedIncrement: 0.1
   bossSpawner: {fileID: 1370326090}
   bossPrefabs:
-  - {fileID: 519574247064427714, guid: bca44de9894fa0c499e8513a60373653, type: 3}
+  - {fileID: 1686505066082717662, guid: 66c6e72b98ecf6d43abdb0bc88401953, type: 3}
   enemiesAlive: []
   gunshipsAlive: []
   spawnEnemies: 1
@@ -5014,6 +5014,14 @@ PrefabInstance:
     - target: {fileID: 8907491432247727163, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_Name
       value: PlayerShip
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491432817469731, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: burstFire
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491432817469731, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: useSpread
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}

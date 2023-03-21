@@ -76,10 +76,11 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void SpawnBoss()
     {
         StopSpawningEnemies();
+        
+       
         bossSpawner.StartBossSpawn(currentBoss);
         //bossCounter += 1;
         //currentBoss = bossPrefabs[bossCounter];
-
         spawnEnemies = false;
     }
 

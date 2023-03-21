@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Behemoth
-  maxHealth: 150
+  maxHealth: 50
   currentHealth: 0
   explodeOnDeath: 0
   explosionRadius: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   upDown: 0
   upDownSpeed: 4
-  upDownMoveDistance: 4
+  upDownMoveDistance: 1
   seekPlayerY: 0
   seekSpeed: 0
   sinUpDown: 0
