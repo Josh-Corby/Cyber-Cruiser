@@ -31,11 +31,13 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
 
-        EnemySpawner.OnEnemySpawned += AddEnemy;  
+        EnemySpawner.OnEnemySpawned += AddEnemy;
         Enemy.OnEnemyDied += RemoveEnemy;
 
         Gunship.OnGunshipSpawn += AddEnemy;
         Gunship.OnGunshipDied += RemoveEnemy;
+
+        LaserMine.OnEnemySpawned += AddEnemy;
     }
 
     private void OnDisable()
@@ -76,8 +78,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void SpawnBoss()
     {
         StopSpawningEnemies();
-        
-       
+
+
         bossSpawner.StartBossSpawn(currentBoss);
         //bossCounter += 1;
         //currentBoss = bossPrefabs[bossCounter];
@@ -151,7 +153,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
                 Destroy(enemyToRemove);
             }
         }
-
         gunshipsAlive.Clear();
     }
 }

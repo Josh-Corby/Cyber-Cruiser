@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
 public class LaserMine : Enemy, IDamageable
 {
+    public static event Action<List<GameObject>, GameObject> OnEnemySpawned = null;
+
     [SerializeField] private GameObject laserProjectile;
     private bool bulletCollision = false;
-
+    [SerializeField] private bool spawnEnemies;
     private float radius = 0.5f;
 
     protected override void Start()
@@ -42,7 +44,9 @@ public class LaserMine : Enemy, IDamageable
 
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
-            Instantiate(laserProjectile, spawnPos, spawnRotation);
+            GameObject _go = Instantiate(laserProjectile, spawnPos, spawnRotation);
+            OnEnemySpawned(ESM.enemiesAlive, _go);
+
         }
     }
 }

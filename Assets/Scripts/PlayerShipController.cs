@@ -11,7 +11,7 @@ public class PlayerShipController : MonoBehaviour
 
     [SerializeField] private bool lerpMovement;
 
-    private bool controlsEnabled;
+    [SerializeField] private bool controlsEnabled;
 
     private float minAngle = -20;
     private float maxAngle = 20;
@@ -30,6 +30,8 @@ public class PlayerShipController : MonoBehaviour
         GameManager.OnGameResumed += EnableControls;
 
         Cursor.lockState = CursorLockMode.Confined;
+
+        EnableControls();
     }
 
     private void OnDisable()

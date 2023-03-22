@@ -16,10 +16,14 @@ public class ShieldCollision : MonoBehaviour
 
     private void ProcessCollision(GameObject collider)
     {
-
-        if (collider.TryGetComponent<IDamageable>(out var damageable))
+        if(collider.TryGetComponent<Boss>(out var boss))
         {
-            Debug.Log(collider.name);
+            return;
+        }
+
+        else if (collider.TryGetComponent<IDamageable>(out var damageable))
+        {
+            //Debug.Log(collider.name);
             damageable.Destroy();
             shieldcontroller.DeactivateShields();
         }
@@ -39,6 +43,7 @@ public class ShieldCollision : MonoBehaviour
             else
             {
                 shieldcontroller.ReduceShields();
+                Destroy(bullet.gameObject);
             }
         }
 

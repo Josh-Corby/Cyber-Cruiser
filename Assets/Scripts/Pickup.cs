@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class Pickup : GameBehaviour
 {
-    public static event Action<int> OnPlasmaPickup = null;
+    public static event Action<int> OnPlasmaIncrease = null;
+    public static event Action<GameObject> OnPlasmaPickup = null;
     [SerializeField] private int plasmaAmount;
 
     public enum PickupType
@@ -18,7 +19,8 @@ public class Pickup : GameBehaviour
         switch (pickup)
         {
             case PickupType.Plasma:
-                OnPlasmaPickup(plasmaAmount);
+                OnPlasmaIncrease(plasmaAmount);
+                OnPlasmaPickup(gameObject);
                 break;
         }
     }

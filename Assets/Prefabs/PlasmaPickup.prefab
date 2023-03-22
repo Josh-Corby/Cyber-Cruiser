@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5219403875857009542}
   - component: {fileID: 5730645401882679849}
   - component: {fileID: 224514308}
+  - component: {fileID: -5147248539730610081}
   m_Layer: 10
   m_Name: PlasmaPickup
   m_TagString: Untagged
@@ -116,3 +117,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plasmaAmount: 1
   pickup: 1
+--- !u!114 &-5147248539730610081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9010852593865095087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 365a316a2f7b6c445bfc232c6280bd6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveType: 0
+  speed: 1
+  bossEnemy: 0
+  direction: {x: 0, y: 0}
+  upDown: 0
+  upDownSpeed: 0
+  upDownMoveDistance: 0
+  seekPlayerY: 0
+  seekSpeed: 0
+  sinUpDown: 0
+  frequency: 0
+  magnitude: 0
+  homeOnPlayer: 0
+  turnSpeed: 0
+  homeTime: 0
+  homeDelay: 0
+  homeDelayTime: 0

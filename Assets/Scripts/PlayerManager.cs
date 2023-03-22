@@ -29,14 +29,14 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         GameManager.OnLevelCountDownStart += FullHeal;
         InputManager.OnShield += CheckShieldsState;
-        Pickup.OnPlasmaPickup += AddPlasma;
+        Pickup.OnPlasmaIncrease += AddPlasma;
     }
 
     private void OnDisable()
     {
         GameManager.OnLevelCountDownStart -= FullHeal;
         InputManager.OnShield -= CheckShieldsState;
-        Pickup.OnPlasmaPickup -= AddPlasma;
+        Pickup.OnPlasmaIncrease -= AddPlasma;
     }
 
     private void Start()
@@ -130,7 +130,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     public void Destroy()
     {
-        Debug.Log("Player dead");
+        //Debug.Log("Player dead");
         OnPlayerDeath?.Invoke();
     }
 }

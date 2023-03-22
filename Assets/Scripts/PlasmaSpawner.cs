@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
+using Random = UnityEngine.Random;
 
 public class PlasmaSpawner : GameBehaviour
 {
+    public static event Action<GameObject> OnPlasmaSpawned = null;
+
     [SerializeField] private Vector3 spawnSize;
     [SerializeField] private GameObject plasmaPrefab;
 
@@ -24,9 +26,10 @@ public class PlasmaSpawner : GameBehaviour
     }
     public void SpawnPlasma()
     {
-        GameObject plasma = Instantiate(plasmaPrefab, GetRandomPosition(), Quaternion.identity);
+        GameObject plasma = Instantiate(plasmaPrefab, GetRandomPosition(), transform.rotation);
+        OnPlasmaSpawned(plasma);
     }
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(transform.position, spawnSize);
