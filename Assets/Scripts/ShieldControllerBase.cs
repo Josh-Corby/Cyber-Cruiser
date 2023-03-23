@@ -85,6 +85,5 @@ public abstract class ShieldControllerBase : MonoBehaviour,IShield
     public virtual void ReflectProjectile(GameObject objectToReflect)
     {
         objectToReflect.transform.right = transform.right;
-
     }
 }

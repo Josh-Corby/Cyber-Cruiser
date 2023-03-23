@@ -52,6 +52,7 @@ public class GameManager : GameBehaviour
     {
         distanceText = GUIM.distanceCounterText;
         plasmaSpawner = GetComponentInChildren<PlasmaSpawner>();
+        Application.targetFrameRate = 60;
     }
 
     private void Start()

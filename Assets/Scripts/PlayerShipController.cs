@@ -31,7 +31,7 @@ public class PlayerShipController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Confined;
 
-        EnableControls();
+        //EnableControls();
     }
 
     private void OnDisable()

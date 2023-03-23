@@ -9,15 +9,54 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     [HideInInspector] public GameObject player;
     private PlayerShieldController shieldController;
 
-    [SerializeField] private int currentPlasma;
     [SerializeField] private int plasmaCost;
-    private int maxPlasma = 20;
 
     private float weaponPackCountdown;
     private float weaponPackDuration;
 
+
+
+    private float _currentHealth;
     [SerializeField] private int maxHealth;
-    private float currentHealth;
+    public float PlayerHealth
+    {
+        get
+        {
+            return _currentHealth;
+        }
+
+        set
+        {
+            _currentHealth = value;
+
+            if (_currentHealth <= 0)
+            {
+                Destroy();
+            }
+
+            if(_currentHealth > maxHealth)
+            {
+                _currentHealth = maxHealth;
+            }
+        }
+    }
+
+    [SerializeField] private int _playerPlasma;
+    private const string PLAYERPLASMA = "PlayerPlasma";
+    public int PlayerPlasma
+    {
+        get
+        {
+            return _playerPlasma;
+        }
+
+        set
+        {
+            _playerPlasma = value;
+            OnPlasmaChange(_playerPlasma);
+        }
+    }
+
 
 
     private void Awake()
@@ -42,14 +81,42 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     private void Start()
     {
         FullHeal();
+        RestoreSavedPlasma();
     }
 
     private void FullHeal()
     {
-        currentHealth = maxHealth;
-        currentPlasma = maxPlasma;
+        PlayerHealth += maxHealth;
+    }
 
-        OnPlasmaChange(currentPlasma);
+    public void Heal(float heal)
+    {
+        PlayerHealth  = maxHealth;
+    }
+    public void Damage(float damage)
+    {
+        PlayerHealth -= damage;
+    }
+
+    public void Destroy()
+    {
+        //Debug.Log("Player dead");
+        OnPlayerDeath?.Invoke();
+    }
+
+    private void AddPlasma(int amount)
+    {
+        PlayerPlasma += amount;
+    }
+
+    private void ReducePlasma(int amount)
+    {
+        PlayerPlasma -= amount;
+    }
+
+    private void RestoreSavedPlasma()
+    {
+        PlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYERPLASMA));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -65,6 +132,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             Damage(maxHealth);
             return;
         }
+
         else if(collider.TryGetComponent<Pickup>(out var pickup))
         {
             pickup.PickupEffect();
@@ -89,7 +157,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void CheckPlasma()
     {
-        if (currentPlasma >= plasmaCost)
+        if (_playerPlasma >= plasmaCost)
         {
             ReducePlasma(plasmaCost);
             ActivateShields();
@@ -102,35 +170,13 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         }
     }
 
-    private void AddPlasma(int amount)
-    {
-        currentPlasma += amount;
-        OnPlasmaChange(currentPlasma);
-    }
-
-    private void ReducePlasma(int amount)
-    {
-        currentPlasma -= amount;
-        OnPlasmaChange(currentPlasma);
-    }
-
     private void ActivateShields()
     {
         shieldController.ActivateShields();
     }
 
-    public void Damage(float damage)
+    private void OnApplicationQuit()
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            Destroy();
-        }
-    }
-
-    public void Destroy()
-    {
-        //Debug.Log("Player dead");
-        OnPlayerDeath?.Invoke();
+        PlayerPrefs.SetInt(nameof(PLAYERPLASMA), _playerPlasma);
     }
 }
