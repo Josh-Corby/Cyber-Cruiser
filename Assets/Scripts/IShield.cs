@@ -7,5 +7,5 @@ public interface IShield
 
     public void ReduceShields();
 
-    public void ReflectProjectile(GameObject objectToReflect);
+    public void ReflectProjectile(Bullet bulletToReflect);
 }

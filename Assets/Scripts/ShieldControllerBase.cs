@@ -82,8 +82,9 @@ public abstract class ShieldControllerBase : MonoBehaviour,IShield
         throw new System.NotImplementedException();
     }
 
-    public virtual void ReflectProjectile(GameObject objectToReflect)
+    public virtual void ReflectProjectile(Bullet bulletToReflect)
     {
-        objectToReflect.transform.right = transform.right;
+        bulletToReflect.gameObject.transform.right = transform.right;
+        bulletToReflect.speed /= 2;
     }
 }

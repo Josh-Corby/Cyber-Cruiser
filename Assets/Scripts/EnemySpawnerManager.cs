@@ -26,6 +26,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void OnEnable()
     {
+
         GameManager.OnLevelCountDownStart += RestartLevel;
         GameManager.OnBossDistanceReached += SpawnBoss;
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;

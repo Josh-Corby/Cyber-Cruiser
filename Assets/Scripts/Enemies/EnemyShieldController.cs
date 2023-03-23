@@ -27,10 +27,10 @@ public class EnemyShieldController : ShieldControllerBase, IShield
         }
     }
 
-    public override void ReflectProjectile(GameObject objectToReflect)
+    public override void ReflectProjectile(Bullet bulletToReflect)
     {
-        base.ReflectProjectile(objectToReflect);
-        objectToReflect.layer = LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME);
+        base.ReflectProjectile(bulletToReflect);
+        bulletToReflect.gameObject.layer = LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME);
         ReduceShields();
 
     }

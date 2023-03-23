@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using TMPro;
 
-public class GameManager : GameBehaviour
+public class GameManager : GameBehaviour<GameManager>
 {
     public static event Action OnLevelCountDownStart = null;
     public static event Action OnGamePaused = null;
@@ -24,7 +24,7 @@ public class GameManager : GameBehaviour
     private bool plasmaSpawned = false;
 
     [SerializeField] private GameObject gameplayObjects;
-    private bool isPaused = false;
+    public bool isPaused = false;
 
     private void OnEnable()
     {

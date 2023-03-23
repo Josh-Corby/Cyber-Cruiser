@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : GameBehaviour
 {
-    [SerializeField] private float speed;
+    public float speed;
     private Vector2 directionVector;
     [SerializeField] private float damage;
     [SerializeField] private GameObject collisionParticles;

@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyName: 
   maxHealth: 1
   currentHealth: 0
   explodeOnDeath: 1
@@ -181,7 +182,9 @@ MonoBehaviour:
   seekSpeed: 0
   sinUpDown: 1
   frequency: 2.6
-  magnitude: 0.01
+  magnitude: 0.03
   homeOnPlayer: 0
   turnSpeed: 0
   homeTime: 0
+  homeDelay: 0
+  homeDelayTime: 0

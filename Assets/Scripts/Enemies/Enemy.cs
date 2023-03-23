@@ -9,12 +9,10 @@ public class Enemy : GameBehaviour, IDamageable
     public string enemyName;
     public float maxHealth;
     [HideInInspector] public float currentHealth;
-
     [SerializeField] private bool explodeOnDeath;
     [SerializeField] private float explosionRadius;
     [SerializeField] private float explosionDamage;
     [SerializeField] private GameObject explosionGraphic;
-
 
     protected virtual void Start()
     {

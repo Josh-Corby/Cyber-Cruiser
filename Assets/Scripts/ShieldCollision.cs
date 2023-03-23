@@ -38,7 +38,7 @@ public class ShieldCollision : MonoBehaviour
         {
             if (shieldcontroller.reflectorShield)
             {
-                shieldcontroller.ReflectProjectile(collider);
+                shieldcontroller.ReflectProjectile(bullet);
             }
             else
             {

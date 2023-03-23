@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 189618726288177992}
   - component: {fileID: 189618726288178038}
   - component: {fileID: -2497671660820981553}
-  - component: {fileID: 6681327085228364012}
+  - component: {fileID: -4316434092633255210}
   m_Layer: 7
   m_Name: Robodactyl
   m_TagString: Untagged
@@ -167,7 +167,7 @@ MonoBehaviour:
   - {fileID: 5710954070109479895}
   - {fileID: 1958697201700664333}
   minePrefab: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
---- !u!114 &6681327085228364012
+--- !u!114 &-4316434092633255210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,26 +176,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1686505066082717662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 365a316a2f7b6c445bfc232c6280bd6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 1
   speed: 2
-  bossEnemy: 1
-  direction: {x: 0, y: 0}
-  upDown: 1
-  upDownSpeed: 4
-  upDownMoveDistance: 4
-  seekPlayerY: 0
-  seekSpeed: 0
-  sinUpDown: 0
-  frequency: 0
-  magnitude: 0
-  homeOnPlayer: 0
-  turnSpeed: 0
-  homeTime: 0
-  homeDelay: 0
-  homeDelayTime: 0
 --- !u!1 &3534197723866894886
 GameObject:
   m_ObjectHideFlags: 0

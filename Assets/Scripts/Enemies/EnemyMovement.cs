@@ -10,8 +10,7 @@ public class EnemyMovement : GameBehaviour
     public MovementTypes moveType;
     private Transform player;
     public float speed;
-    [SerializeField] private bool bossEnemy;
-    private bool goalPositionReached;
+    private bool isEnemyDead;
     [HideInInspector] public Vector2 direction;
 
     [Header("UpDown Variables")]
@@ -44,15 +43,9 @@ public class EnemyMovement : GameBehaviour
     //offset for random starting sin value
     private float startTime;
 
-
-    private GameObject goalPoint;
-
-    protected void Awake()
+    protected virtual void Awake()
     {
         player = PM.player.transform;
-        goalPoint = ESM.bossGoalPosition;
-
-
     }
 
     protected virtual void Start()
@@ -66,21 +59,17 @@ public class EnemyMovement : GameBehaviour
 
             homeCounter = homeTime;
         }
-
-        startTime = Random.Range(0f, Mathf.PI * 2f);
-
-        goalPositionReached = false;
+        startTime = Random.Range(0f, Mathf.PI * 2f);  
     }
 
     protected virtual void Update()
     {
-        if (bossEnemy)
+        if (GM.isPaused)
         {
-            if (!goalPositionReached)
-            {
-                MoveTowardGoalPosition();
-            }
+            return;
         }
+
+
 
         if (homeOnPlayer)
         {
@@ -119,16 +108,7 @@ public class EnemyMovement : GameBehaviour
         }
     }
 
-    private void MoveTowardGoalPosition()
-    {
-        transform.position = Vector2.MoveTowards(transform.position, goalPoint.transform.position, speed * Time.deltaTime);
-
-        if (Vector2.Distance(transform.position, goalPoint.transform.position) <= 0.1)
-        {
-            goalPositionReached = true;
-        }
-        return;
-    }
+   
 
     private void MoveForward()
     {
