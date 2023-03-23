@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 189618726288177992}
   - component: {fileID: 189618726288178038}
   - component: {fileID: 209936226571923938}
-  - component: {fileID: 6681327085228364012}
+  - component: {fileID: 2768467503477785582}
   m_Layer: 7
   m_Name: BattleCruiser
   m_TagString: Untagged
@@ -168,7 +168,7 @@ MonoBehaviour:
   minesToFire: 2
   pulverizerBeam: {fileID: 4362578315542066517}
   beamAttack: {fileID: 4362578315542066512}
---- !u!114 &6681327085228364012
+--- !u!114 &2768467503477785582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,26 +177,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1686505066082717662}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 365a316a2f7b6c445bfc232c6280bd6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 1
+  staticMovement: 0
   speed: 2
-  bossEnemy: 1
-  direction: {x: 0, y: 0}
-  upDown: 1
-  upDownSpeed: 4
-  upDownMoveDistance: 4
-  seekPlayerY: 0
-  seekSpeed: 0
-  sinUpDown: 0
-  frequency: 0
-  magnitude: 0
-  homeOnPlayer: 0
-  turnSpeed: 0
-  homeTime: 0
-  homeDelay: 0
-  homeDelayTime: 0
 --- !u!1 &5151822783525052687
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,7 +227,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3704976581961878824, guid: afdeb59224acf5047a4ffcf8ae4562a4, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3704976581961878825, guid: afdeb59224acf5047a4ffcf8ae4562a4, type: 3}
       propertyPath: m_Pivot.x
@@ -332,6 +317,10 @@ PrefabInstance:
       propertyPath: beamDuration
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3704976581961878827, guid: afdeb59224acf5047a4ffcf8ae4562a4, type: 3}
+      propertyPath: beamCollisionMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 3704976581961878830, guid: afdeb59224acf5047a4ffcf8ae4562a4, type: 3}
       propertyPath: m_Name
       value: BeamAttack
@@ -363,17 +352,3 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3704976581961878830, guid: afdeb59224acf5047a4ffcf8ae4562a4, type: 3}
   m_PrefabInstance: {fileID: 1143990513075910779}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &7628270132513567175
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4362578315542066517}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}

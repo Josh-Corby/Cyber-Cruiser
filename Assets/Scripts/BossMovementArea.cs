@@ -21,7 +21,7 @@ public class BossMovementArea : MonoBehaviour
         float randomY = Random.Range(transform.position.y - (bossMoveArea.y / 2), transform.position.y + (bossMoveArea.y / 2));
 
         Vector2 randomPosition = new Vector2(randomX, randomY);
-        Debug.Log(randomPosition);
+        //Debug.Log(randomPosition);
 
         bossRequesting.SetMovePosition = randomPosition;
     }
