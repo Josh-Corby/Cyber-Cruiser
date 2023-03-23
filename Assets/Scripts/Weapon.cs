@@ -13,7 +13,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] private GameObject objectToFire;
     [SerializeField] private float timeBetweenShots;
     public bool holdToFire;
-    [SerializeField] private bool autoFire;
+    [SerializeField] protected bool autoFire;
 
     [Header("Spread Stats")]
     [SerializeField] private bool useSpread;
@@ -29,7 +29,7 @@ public class Weapon : MonoBehaviour
         firePointTransform = firePoint.transform;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         readyToFire = true;
     }

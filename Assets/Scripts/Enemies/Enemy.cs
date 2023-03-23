@@ -6,6 +6,10 @@ public class Enemy : GameBehaviour, IDamageable
 {
     public static event Action<List<GameObject>, GameObject> OnEnemyDied = null;
 
+    private EnemyMovement movement;
+    private EnemyWeaponController weapon;
+    private SpriteRenderer spriteRenderer;
+
     public string enemyName;
     public float maxHealth;
     [HideInInspector] public float currentHealth;
@@ -14,6 +18,12 @@ public class Enemy : GameBehaviour, IDamageable
     [SerializeField] private float explosionDamage;
     [SerializeField] private GameObject explosionGraphic;
 
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        movement = GetComponent<EnemyMovement>();
+        weapon = GetComponentInChildren<EnemyWeaponController>();
+    }
     protected virtual void Start()
     {
         currentHealth = maxHealth;
@@ -30,7 +40,7 @@ public class Enemy : GameBehaviour, IDamageable
             }
             else
             {
-                Destroy();
+                Die();
             }
         }
     }
@@ -57,12 +67,19 @@ public class Enemy : GameBehaviour, IDamageable
         Destroy();
     }
 
+    protected void Die()
+    {
+        movement.isEnemyDead = true;
+        weapon.DisableWeapon();
+        spriteRenderer.color = Color.black;
+
+    }
     public virtual void Destroy()
     {
         if (ESM.enemiesAlive.Contains(gameObject))
-        {
+        {       
             OnEnemyDied(ESM.enemiesAlive, gameObject);
-        }
+        }     
         Destroy(gameObject);
     }
 }

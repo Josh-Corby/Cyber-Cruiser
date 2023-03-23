@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c818a64a58ab34eb1f05a3a9bfc0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyName: 
   maxHealth: 2
   currentHealth: 0
   explodeOnDeath: 0
@@ -173,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveType: 0
   speed: 2
-  bossEnemy: 0
+  isEnemyDead: 0
   direction: {x: 0, y: 0}
   upDown: 0
   upDownSpeed: 4
@@ -186,6 +187,8 @@ MonoBehaviour:
   homeOnPlayer: 0
   turnSpeed: 0
   homeTime: 0
+  homeDelay: 0
+  homeDelayTime: 0
   gunshipMoveType: 0
 --- !u!1 &3590740715818776598
 GameObject:
@@ -199,7 +202,7 @@ GameObject:
   - component: {fileID: 5740596643771435920}
   - component: {fileID: 1826123738308129158}
   - component: {fileID: 8890929126214283096}
-  - component: {fileID: 6406567899935648378}
+  - component: {fileID: 3076945486691073074}
   m_Layer: 7
   m_Name: Gun
   m_TagString: Untagged
@@ -327,7 +330,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &6406567899935648378
+--- !u!114 &3076945486691073074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -336,7 +339,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3590740715818776598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
+  m_Script: {fileID: 11500000, guid: ea0702ba6cee210479e32ae588f71995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 3823487148860911231}

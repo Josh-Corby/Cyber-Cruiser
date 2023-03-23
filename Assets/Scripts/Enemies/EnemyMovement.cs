@@ -10,7 +10,7 @@ public class EnemyMovement : GameBehaviour
     public MovementTypes moveType;
     private Transform player;
     public float speed;
-    private bool isEnemyDead;
+    public bool isEnemyDead;
     [HideInInspector] public Vector2 direction;
 
     [Header("UpDown Variables")]
@@ -69,7 +69,12 @@ public class EnemyMovement : GameBehaviour
             return;
         }
 
-
+        if (isEnemyDead)
+        {
+            MoveForward();
+            DeathMovement();
+            return;
+        }
 
         if (homeOnPlayer)
         {
@@ -181,5 +186,10 @@ public class EnemyMovement : GameBehaviour
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, q, turnSpeed * Time.deltaTime);
         direction = transform.up;
+    }
+
+    private void DeathMovement()
+    {
+        transform.position += speed * Time.deltaTime * Vector3.down;
     }
 }
