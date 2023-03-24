@@ -22,15 +22,12 @@ public class BeamAttack : MonoBehaviour
         {
             beamSize += beamSpeed * Time.deltaTime;
             lineRenderer.SetPosition(1, transform.localPosition + transform.right * beamSize);
-
-
-            //BeamCollision();
+            BeamCollision();
         }
-        if(beamTimer <= 0)
+        if (beamTimer <= 0)
         {
             lineRenderer.enabled = false;
         }
-
     }
 
     public void ResetBeam()
@@ -41,29 +38,35 @@ public class BeamAttack : MonoBehaviour
         beamTimer = beamDuration;
     }
 
- 
     private void BeamCollision()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(lineRenderer.GetPosition(0), new Vector2 (GetDistanceBetweenPoints(),1), 90, GetDirectionBetweenPoints(), GetDistanceBetweenPoints(),beamCollisionMask);
+        RaycastHit2D hit = Physics2D.BoxCast(GetPointWorldPosition(0), new Vector2(1, 1), 0, GetDirectionBetweenPoints(), GetDistanceXBetweenPoints(), beamCollisionMask);
         if (hit.collider != null)
         {
-            Debug.Log(hit.collider.name);
+            if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
+            {
+                damageable.Damage(1);
+            }
         }
     }
-    private void GetPointPosition(int pointIndex)
+
+    private Vector2 GetPointWorldPosition(int pointIndex)
     {
-        Vector2 pointPosition = new Vector2( transform.parent.position.x + lineRenderer.GetPosition(pointIndex).x, transform.parent.position.y + lineRenderer.GetPosition(pointIndex).y);
+        Vector2 localPosition = lineRenderer.GetPosition(pointIndex);
+        Vector2 worldPosition = lineRenderer.transform.TransformPoint(localPosition);
+
+        return worldPosition;
     }
     private Vector2 GetDirectionBetweenPoints()
     {
-        Vector2 directionBetweenPoints = lineRenderer.GetPosition(1) - lineRenderer.GetPosition(0);
-        return directionBetweenPoints.normalized;
+        Vector2 directionBetweenPoints = GetPointWorldPosition(1) - GetPointWorldPosition(0);
+        return directionBetweenPoints;
     }
 
-    private float GetDistanceBetweenPoints()
+    private float GetDistanceXBetweenPoints()
     {
-        float distanceBetweenPoints = lineRenderer.GetPosition(0).y - lineRenderer.GetPosition(1).y;
-        //Debug.Log(distanceBetweenPoints);
+        float distanceBetweenPoints = GetPointWorldPosition(0).x - GetPointWorldPosition(1).x;
+        Debug.Log(distanceBetweenPoints);
         return distanceBetweenPoints;
     }
 

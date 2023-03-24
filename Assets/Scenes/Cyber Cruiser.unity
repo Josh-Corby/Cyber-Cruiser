@@ -2300,7 +2300,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 24.3, y: 17.38}
+  m_Size: {x: 23.03, y: 14.2}
   m_EdgeRadius: 0
 --- !u!1 &896823221
 GameObject:
@@ -2949,14 +2949,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
+  enemiesToSpawn: 2
   spawners:
+  - {fileID: 984547534}
   - {fileID: 1370326090}
-  spawnEnemyInterval: 1
+  - {fileID: 47135018}
+  - {fileID: 485082065}
+  spawnEnemyInterval: 1.5
   spawnEnemyReduction: 0.1
   enemySpeedIncrement: 0.1
   bossSpawner: {fileID: 1370326090}
   bossPrefabs:
-  - {fileID: 1686505066082717662, guid: 63caa24a17e837c4ebb6b3b44dc28a9e, type: 3}
+  - {fileID: 1686505066082717662, guid: 66c6e72b98ecf6d43abdb0bc88401953, type: 3}
   enemiesAlive: []
   gunshipsAlive: []
   spawnEnemies: 1
@@ -2991,8 +2995,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2103134227}
-  m_RootOrder: 5
+  m_Father: {fileID: 1341614427}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!114 &1135875242
 MonoBehaviour:
@@ -3039,8 +3043,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2103134227}
-  m_RootOrder: 6
+  m_Father: {fileID: 1341614427}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!114 &1147188949
 MonoBehaviour:
@@ -3559,8 +3563,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2103134227}
-  m_RootOrder: 4
+  m_Father: {fileID: 1341614427}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!114 &1243928726
 MonoBehaviour:
@@ -3717,6 +3721,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1328990645}
   m_CullTransparentMesh: 1
+--- !u!1 &1341614426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1341614427}
+  m_Layer: 0
+  m_Name: TestSpawners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1341614427
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1341614426}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1243928725}
+  - {fileID: 1135875241}
+  - {fileID: 1147188948}
+  - {fileID: 1810121476}
+  m_Father: {fileID: 2103134227}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1359974720
 GameObject:
   m_ObjectHideFlags: 0
@@ -4191,7 +4230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
-  bossDistance: 10
+  bossDistance: 500
   plasmaSpawner: {fileID: 0}
   gameplayObjects: {fileID: 1495971563}
   isPaused: 0
@@ -4634,6 +4673,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1792024014}
   m_CullTransparentMesh: 1
+--- !u!1 &1810121475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1810121476}
+  - component: {fileID: 1810121477}
+  m_Layer: 0
+  m_Name: MissileSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1810121476
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810121475}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: 0.7071068}
+  m_LocalPosition: {x: 9.313377, y: -0.004008651, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1341614427}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!114 &1810121477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810121475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnArea: {x: 0, y: 8, z: 0}
+  enemiesToSpawn:
+  - {fileID: 2653145768784104840, guid: 220798bc178598748b955a7191456d4c, type: 3}
+  speedModifier: 0
 --- !u!1 &1846069970
 GameObject:
   m_ObjectHideFlags: 0
@@ -5243,9 +5330,7 @@ Transform:
   - {fileID: 1370326091}
   - {fileID: 47135017}
   - {fileID: 485082064}
-  - {fileID: 1243928725}
-  - {fileID: 1135875241}
-  - {fileID: 1147188948}
+  - {fileID: 1341614427}
   m_Father: {fileID: 1123161085}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5491,6 +5576,10 @@ PrefabInstance:
     - target: {fileID: 8907491432247727163, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_Name
       value: PlayerShip
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491432817469731, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: timeBetweenShots
+      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}

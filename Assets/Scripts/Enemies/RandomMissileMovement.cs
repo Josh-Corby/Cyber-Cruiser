@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class RandomMissileMovement : EnemyMovement
 {
-    private float missileTurnSpeed = 5;
-    private float missileHomeTime = 2;
-
     protected override void Start()
     {
         ChooseRandomMovementType();
@@ -23,8 +20,6 @@ public class RandomMissileMovement : EnemyMovement
         if(movementTypeID == 1)
         {
             homeOnPlayer = true;
-            turnSpeed = missileTurnSpeed;
-            homeTime = missileHomeTime;
         }
     }
 }

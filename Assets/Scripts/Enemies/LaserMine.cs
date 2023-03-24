@@ -6,6 +6,7 @@ public class LaserMine : Enemy, IDamageable
 {
     public static event Action<List<GameObject>, GameObject> OnEnemySpawned = null;
 
+    [SerializeField] private int objectsToSpawn;
     [SerializeField] private GameObject laserProjectile;
     private bool bulletCollision = false;
     [SerializeField] private bool spawnEnemies;
@@ -32,9 +33,10 @@ public class LaserMine : Enemy, IDamageable
 
     private void SpawnProjectile()
     {
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < objectsToSpawn; i++)
         {
-            float angle = i * 45f;
+            
+            float angle = i * (360/objectsToSpawn);
 
             float rad = angle * Mathf.Deg2Rad;
 
@@ -49,4 +51,6 @@ public class LaserMine : Enemy, IDamageable
 
         }
     }
+
+    
 }

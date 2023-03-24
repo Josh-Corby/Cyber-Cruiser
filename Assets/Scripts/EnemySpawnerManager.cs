@@ -8,6 +8,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 {
     public static event Action OnBossDied = null;
 
+    [SerializeField] private int enemiesToSpawn;
     [SerializeField] private EnemySpawner[] spawners;
     [SerializeField] private float spawnEnemyInterval;
     [SerializeField] private float spawnEnemyReduction;
@@ -138,8 +139,11 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void ChooseRandomSpawner()
     {
-        EnemySpawner currentspawner = spawners[Random.Range(0, spawners.Length - 1)];
-        currentspawner.StartSpawnProcess();
+        for (int i = 0; i < enemiesToSpawn; i++)
+        {
+            EnemySpawner currentspawner = spawners[Random.Range(0, spawners.Length - 1)];
+            currentspawner.StartSpawnProcess();
+        }    
     }
 
     private void ClearEnemiesAlive()

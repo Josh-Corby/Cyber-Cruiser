@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _collider: {fileID: 3537538281721821470}
+  enemyName: 
   maxHealth: 6
   currentHealth: 0
   explodeOnDeath: 0
@@ -172,7 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveType: 0
   speed: 2
-  bossEnemy: 0
+  isEnemyDead: 0
   direction: {x: 0, y: 0}
   upDown: 0
   upDownSpeed: 0
@@ -185,3 +187,5 @@ MonoBehaviour:
   homeOnPlayer: 0
   turnSpeed: 0
   homeTime: 0
+  homeDelay: 0
+  homeDelayTime: 0

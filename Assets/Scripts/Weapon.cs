@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class Weapon : GameBehaviour
 {
 
     [SerializeField] private GameObject firePoint;
@@ -28,6 +28,7 @@ public class Weapon : MonoBehaviour
     {
         firePointTransform = firePoint.transform;
     }
+
 
     protected virtual void Start()
     {

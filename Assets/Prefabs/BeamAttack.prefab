@@ -153,3 +153,6 @@ MonoBehaviour:
   beamSpeed: 10
   beamDuration: 0
   beamTimer: 0
+  beamCollisionMask:
+    serializedVersion: 2
+    m_Bits: 0

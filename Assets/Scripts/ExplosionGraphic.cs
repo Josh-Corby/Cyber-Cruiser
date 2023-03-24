@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ExplosionGraphic : MonoBehaviour
 {
-    [SerializeField] private float fadeTime = 1f;
+    [SerializeField] private float fadeTime = 0.3f;
 
     private SpriteRenderer explosionImage;
     private Color originalColor;

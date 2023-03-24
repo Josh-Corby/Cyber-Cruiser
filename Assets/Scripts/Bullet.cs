@@ -6,9 +6,14 @@ public class Bullet : GameBehaviour
     private Vector2 directionVector;
     [SerializeField] private float damage;
     [SerializeField] private GameObject collisionParticles;
+    [HideInInspector] public SpriteRenderer spriteRenderer;
 
     private float bulletLifetime = 3f;
 
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += DestroyBullet;
