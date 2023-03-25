@@ -14,8 +14,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     private float weaponPackCountdown;
     private float weaponPackDuration;
 
-
-
     private float _currentHealth;
     [SerializeField] private int maxHealth;
     public float PlayerHealth
@@ -56,8 +54,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             OnPlasmaChange(_playerPlasma);
         }
     }
-
-
 
     private void Awake()
     {
@@ -128,8 +124,8 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         if (collider.TryGetComponent<Enemy>(out var enemy))
         {
-            enemy.Destroy();
-            Damage(maxHealth);
+            enemy.Damage(10);
+            Damage(1);
             return;
         }
 

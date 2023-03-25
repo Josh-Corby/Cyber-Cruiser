@@ -15,7 +15,4 @@ public class Arachnoid : Boss, IBoss
     {
         throw new System.NotImplementedException();
     }
-
-    
-  
 }

@@ -16,7 +16,6 @@ public class GunshipMovement : EnemyMovement
 
     protected override void Start()
     {
-        moveType = MovementTypes.Forward;
         ChooseMovementType();
         base.Start();
     }
@@ -78,16 +77,18 @@ public class GunshipMovement : EnemyMovement
         switch (gunshipMoveType)
         {
             case GunshipMoveTypes.PlayerFollow:
-                seekPlayerY = true;
-                seekSpeed = fastSeekSpeed;
+                _seekPlayerY = true;
+                _seekSpeed = fastSeekSpeed;
                 break;
 
             case GunshipMoveTypes.SlowPlayerFollow:
-                seekPlayerY = true;
-                seekSpeed = slowSeekSpeed;
+                _seekPlayerY = true;
+                _seekSpeed = slowSeekSpeed;
                 break;
             case GunshipMoveTypes.UpDown:
-                upDown = true;
+                _upDownMovement = true;
+                _upDownSpeed = _speed;
+                _upDownMoveDistance = 1;
                 break;
         }
     }

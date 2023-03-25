@@ -2,67 +2,89 @@ using UnityEngine;
 
 public class EnemyMovement : GameBehaviour
 {
-    public enum MovementTypes
-    {
-        Forward, None
-    }
-
-    public MovementTypes moveType;
     private Transform player;
-    public float speed;
-    public bool isEnemyDead;
+
+    [HideInInspector] public bool isEnemyDead;
     [HideInInspector] public Vector2 direction;
 
-    [Header("UpDown Variables")]
-    public bool upDown;
-    //if true backforth will move up, otherwise move down
-    [SerializeField] private float upDownSpeed;
+    #region MovementInformation
+    [HideInInspector] public float _speed;
+
+    [Header("Up down movement")]
+    protected bool _upDownMovement;
+    protected float _upDownSpeed;
     private bool isBackForthMovingUp;
-    [SerializeField] private int upDownMoveDistance;
-   
+    protected float _upDownMoveDistance;
 
-    [Header("Seek Variables")]
-    public bool seekPlayerY;
-    public float seekSpeed;
+    [Header("Seek movement")]
+    protected bool _seekPlayerY;
+    protected float _seekSpeed;
 
-    [Header("Sin Variables")]
-    [SerializeField] private bool sinUpDown;
-    [SerializeField] private float frequency;
-    [SerializeField] private float magnitude;
+    [Header("Sin up down movement")]
+    private bool _sinUpDownMovement;
+    private float _sinFrequency;
+    private float _sinMagnitude;
+    private float _sinRandomSeed;
 
-    [Header("Homing variables")]
-    [SerializeField] protected bool homeOnPlayer;
-    [SerializeField] protected float turnSpeed;
-    [SerializeField] protected float homeTime;
+    [Header("Homing movement")]
+    protected bool _homeOnPlayer;
+    protected float _homeTurnSpeed;
+    protected float _homeTime;
     private float homeCounter;
-
-    [SerializeField] protected bool homeDelay;
-    [SerializeField] protected float homeDelayTime;
-    private float homeDelayCounter;
-
-    //offset for random starting sin value
-    private float startTime;
+    protected bool _homeDelay;
+    protected float _homeDelayTime;
+    private float _homeDelayCounter;
+    #endregion
 
     protected virtual void Awake()
     {
         player = PM.player.transform;
     }
 
+    public void AssignEnemyMovementInfo(EnemyScriptableObject enemyInfo)
+    {
+        _speed = enemyInfo.speed;
+        _upDownMovement = enemyInfo.upDownMovement;
+        _upDownSpeed = enemyInfo.upDownSpeed;
+        _upDownMoveDistance = enemyInfo.upDownDistance;
+
+        _seekPlayerY = enemyInfo.seekPlayerY;
+        _seekSpeed = enemyInfo.seekSpeed;
+
+        _sinUpDownMovement = enemyInfo.sinUpDownMovement;
+        _sinFrequency = enemyInfo.sinFrequency;
+        _sinMagnitude = enemyInfo.sinMagnitude;
+
+        _homeOnPlayer = enemyInfo.homeOnPlayer;
+        _homeTurnSpeed = enemyInfo.homeTurnSpeed;
+        _homeTime = enemyInfo.homeTime;
+        _homeDelay = enemyInfo.homeDelay;
+        _homeDelayTime = enemyInfo.homeDelayTime;
+    }
+
     protected virtual void Start()
     {
-        if (homeOnPlayer)
+        if (_homeOnPlayer)
         {
-            if (homeDelay)
+            if (_homeDelay)
             {
-                homeDelayCounter = homeDelayTime;
+                _homeDelayCounter = _homeDelayTime;
             }
 
-            homeCounter = homeTime;
+            homeCounter = _homeTime;
         }
-        startTime = Random.Range(0f, Mathf.PI * 2f);  
+        if (_sinUpDownMovement)
+        {
+            _sinRandomSeed = Random.Range(0f, Mathf.PI * 2f);
+        }
     }
 
     protected virtual void Update()
+    {
+        UnitMovement();
+    } 
+
+    private void UnitMovement()
     {
         if (GM.isPaused)
         {
@@ -76,57 +98,50 @@ public class EnemyMovement : GameBehaviour
             return;
         }
 
-        if (homeOnPlayer)
+        if (_homeOnPlayer)
         {
-            if (homeDelay)
+            if (_homeDelay)
             {
                 HomeDelay();
             }
 
-            if (!homeDelay)
+            if (!_homeDelay)
             {
                 RotateTowardsPlayer();
             }
+            return;
         }
 
-        if (moveType == MovementTypes.Forward)
-        {
-            MoveForward();
-        }
+        MoveForward();
 
-        if (upDown)
+        if (_upDownMovement)
         {
             UpDownMovement();
-            return;
         }
 
-        if (seekPlayerY)
+        if (_seekPlayerY)
         {
             SeekPlayerY();
-            return;
         }
 
-        if (sinUpDown)
+        if (_sinUpDownMovement)
         {
             SinUpDown();
-            return;
         }
     }
 
-   
-
     private void MoveForward()
     {
-        transform.position += speed * Time.deltaTime * transform.up;
+        transform.position += _speed * Time.deltaTime * transform.up;
     }
 
     private void UpDownMovement()
     {
         if (isBackForthMovingUp)
         {
-            if (transform.position.y < upDownMoveDistance)
+            if (transform.position.y < _upDownMoveDistance)
             {
-                transform.position += new Vector3(0, upDownSpeed * Time.deltaTime, 0);
+                transform.position += new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
             }
             else
             {
@@ -136,9 +151,9 @@ public class EnemyMovement : GameBehaviour
 
         if (!isBackForthMovingUp)
         {
-            if (transform.position.y > -upDownMoveDistance)
+            if (transform.position.y > -_upDownMoveDistance)
             {
-                transform.position -= new Vector3(0, upDownSpeed * Time.deltaTime, 0);
+                transform.position -= new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
             }
             else
             {
@@ -149,22 +164,22 @@ public class EnemyMovement : GameBehaviour
 
     private void SeekPlayerY()
     {
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, player.position.y), seekSpeed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, player.position.y), _seekSpeed * Time.deltaTime);
     }
 
     private void SinUpDown()
     {
-        float yPos = Mathf.Sin((Time.time - startTime) * frequency) * magnitude;
+        float yPos = Mathf.Sin((Time.time - _sinRandomSeed) * _sinFrequency) * _sinMagnitude;
         transform.position = new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z);
     }
 
     private void HomeDelay()
     {
-        homeDelayCounter -= Time.deltaTime;
+        _homeDelayCounter -= Time.deltaTime;
 
-        if (homeDelayCounter <= 0)
+        if (_homeDelayCounter <= 0)
         {
-            homeDelay = false;
+            _homeDelay = false;
         }
     }
 
@@ -176,7 +191,7 @@ public class EnemyMovement : GameBehaviour
         if (homeCounter <= 0)
         {
             direction = transform.up;
-            homeOnPlayer = false;
+            _homeOnPlayer = false;
             //Debug.Log("No longer rotating towards player");
             return;
         }
@@ -184,12 +199,12 @@ public class EnemyMovement : GameBehaviour
         Vector3 vectorToPlayer = player.position - transform.position;
         float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg - 90;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, turnSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, q, _homeTurnSpeed * Time.deltaTime);
         direction = transform.up;
     }
 
     private void DeathMovement()
     {
-        transform.position += speed * Time.deltaTime * Vector3.down;
+        transform.position += _speed * Time.deltaTime * Vector3.down;
     }
 }

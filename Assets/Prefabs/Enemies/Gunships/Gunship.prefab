@@ -80,8 +80,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -105750261
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
   m_Color: {r: 1, g: 0.023584902, b: 0.023584902, a: 1}
@@ -139,7 +139,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
 --- !u!114 &7407092928578374691
 MonoBehaviour:
@@ -153,13 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c818a64a58ab34eb1f05a3a9bfc0c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: 
-  maxHealth: 2
+  _unitInfo: {fileID: 11400000, guid: 11ad0b7501b164f4ea8d6773f1c92f9a, type: 2}
+  unitName: Gunship
+  maxHealth: 0
   currentHealth: 0
-  explodeOnDeath: 0
-  explosionRadius: 0
-  explosionDamage: 0
-  explosionGraphic: {fileID: 0}
 --- !u!114 &1876512611095173727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,23 +169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f983803b7c3c2240ae6af887933654e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
   isEnemyDead: 0
   direction: {x: 0, y: 0}
-  upDown: 0
-  upDownSpeed: 4
-  upDownMoveDistance: 4
-  seekPlayerY: 0
-  seekSpeed: 0
-  sinUpDown: 0
-  frequency: 0
-  magnitude: 0
-  homeOnPlayer: 0
-  turnSpeed: 0
-  homeTime: 0
-  homeDelay: 0
-  homeDelayTime: 0
+  _speed: 0
   gunshipMoveType: 0
 --- !u!1 &3590740715818776598
 GameObject:
@@ -342,17 +325,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0702ba6cee210479e32ae588f71995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firePoint: {fileID: 3823487148860911231}
+  _weaponInfo: {fileID: 11400000, guid: 9818121d79463934baba9740bb6cab5d, type: 2}
   readyToFire: 0
-  objectToFire: {fileID: 760453196464390188, guid: 130585e77da054b4ba24c84b35d78629, type: 3}
-  timeBetweenShots: 1
-  holdToFire: 0
-  autoFire: 1
-  useSpread: 0
-  spreadAngle: 0
-  burstFire: 0
-  bulletsInBurst: 0
-  timeBetweenBurstShots: 0
+  _holdToFire: 0
 --- !u!1 &3823487148860911231
 GameObject:
   m_ObjectHideFlags: 0

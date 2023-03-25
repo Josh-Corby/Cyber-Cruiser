@@ -6,6 +6,7 @@ public class Pickup : GameBehaviour
     public static event Action<int> OnPlasmaIncrease = null;
     public static event Action<GameObject> OnPlasmaPickup = null;
     [SerializeField] private int plasmaAmount;
+    [SerializeField] private float _speed;
 
     public enum PickupType
     {
@@ -23,5 +24,15 @@ public class Pickup : GameBehaviour
                 OnPlasmaPickup(gameObject);
                 break;
         }
+    }
+
+    private void Update()
+    {
+        MoveForward();
+    }
+
+    private void MoveForward()
+    {
+        transform.position += _speed * Time.deltaTime * transform.up;
     }
 }

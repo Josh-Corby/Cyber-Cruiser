@@ -79,8 +79,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -105750261
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 0.023584902, b: 0.023584902, a: 1}
@@ -128,7 +128,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
 --- !u!114 &3537538281721821469
 MonoBehaviour:
@@ -142,14 +142,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 0}
-  enemyName: 
+  _unitInfo: {fileID: 11400000, guid: 2e4abaa962787cc4cb4e06baf2ae894a, type: 2}
+  unitName: 
   maxHealth: 1
   currentHealth: 0
-  explodeOnDeath: 1
-  explosionRadius: 1
-  explosionDamage: 1
-  explosionGraphic: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
 --- !u!114 &-341527346657981128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,20 +158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365a316a2f7b6c445bfc232c6280bd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
   isEnemyDead: 0
   direction: {x: 0, y: 0}
-  upDown: 0
-  upDownSpeed: 0
-  upDownMoveDistance: 0
-  seekPlayerY: 1
-  seekSpeed: 3
-  sinUpDown: 0
-  frequency: 0
-  magnitude: 0
-  homeOnPlayer: 0
-  turnSpeed: 0
-  homeTime: 0
-  homeDelay: 0
-  homeDelayTime: 0
+  _speed: 0

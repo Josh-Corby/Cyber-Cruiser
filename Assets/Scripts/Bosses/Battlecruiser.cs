@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class Battlecruiser : Boss, IBoss
 {
-    [SerializeField] private GameObject mineReleasePoint;
-    [SerializeField] private GameObject seekerMinePrefab;
-    [SerializeField] private int minesToFire;
-    private int mineDelay = 1;
+    [SerializeField] private GameObject _mineReleasePoint;
+    [SerializeField] private GameObject _seekerMinePrefab;
+    [SerializeField] private int _minesToFire;
+    private int _mineDelay = 1;
 
-    private float beamAttackDuration;
-    private float mineAttackDuration = 0f;
-    private float timeAfterAttackFinish = 2f;
+    private float _beamAttackDuration;
+    private float _mineAttackDuration = 0f;
+    private float _timeAfterAttackFinish = 2f;
 
-    [SerializeField] private GameObject pulverizerBeam;
-    [SerializeField] private BeamAttack beamAttack;
+    [SerializeField] private GameObject _pulverizerBeam;
+    [SerializeField] private BeamAttack _beamAttack;
 
     protected override void Awake()
     {
         base.Awake();
-        beamAttack = pulverizerBeam.GetComponent<BeamAttack>();
-        beamAttackDuration = beamAttack.beamDuration;
+        _beamAttack = _pulverizerBeam.GetComponent<BeamAttack>();
+        _beamAttackDuration = _beamAttack.beamDuration;
     }
 
     protected override void Update()
@@ -39,12 +39,12 @@ public class Battlecruiser : Boss, IBoss
     //release seeker mines
     private IEnumerator ReleaseMines()
     {
-        attackTimer = mineAttackDuration + timeAfterAttackFinish;
-        for (int i = 0; i < minesToFire; i++)
+        attackTimer = _mineAttackDuration + _timeAfterAttackFinish;
+        for (int i = 0; i < _minesToFire; i++)
         {
-            GameObject seekerMine = Instantiate(seekerMinePrefab, mineReleasePoint.transform.position, mineReleasePoint.transform.rotation);
+            GameObject seekerMine = Instantiate(_seekerMinePrefab, _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
             seekerMine.transform.SetParent(null);
-            yield return new WaitForSeconds(mineDelay);
+            yield return new WaitForSeconds(_mineDelay);
         }
         StopCoroutine(ReleaseMines());
       
@@ -58,8 +58,8 @@ public class Battlecruiser : Boss, IBoss
     //fire laser
     public void Attack2()
     {
-        beamAttack.ResetBeam();
-        beamAttack.lineRenderer.enabled = true;
-        attackTimer = beamAttackDuration + timeAfterAttackFinish;
+        _beamAttack.ResetBeam();
+        _beamAttack.lineRenderer.enabled = true;
+        attackTimer = _beamAttackDuration + _timeAfterAttackFinish;
     }
 }

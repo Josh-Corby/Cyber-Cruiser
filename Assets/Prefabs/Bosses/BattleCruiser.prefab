@@ -81,8 +81,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -105750261
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
   m_Color: {r: 1, g: 0.023584902, b: 0.023584902, a: 1}
@@ -140,7 +140,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 7
 --- !u!114 &209936226571923938
 MonoBehaviour:
@@ -154,20 +154,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8849bba18b71cff49bf51efea2b26056, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyName: BattleCruiser
+  _unitInfo: {fileID: 11400000, guid: b3eead9fae217544fbca7e9c01d12c17, type: 2}
+  unitName: 
   maxHealth: 50
   currentHealth: 0
-  explodeOnDeath: 0
-  explosionRadius: 0
-  explosionDamage: 0
-  explosionGraphic: {fileID: 0}
   attackCooldown: 1
   attackTimer: 1
-  mineReleasePoint: {fileID: 5151822783525052687}
-  seekerMinePrefab: {fileID: 2653145768784104840, guid: 1e99f4fec6f620d49bacebf379bf374b, type: 3}
-  minesToFire: 2
-  pulverizerBeam: {fileID: 4362578315542066517}
-  beamAttack: {fileID: 4362578315542066512}
+  _mineReleasePoint: {fileID: 5151822783525052687}
+  _seekerMinePrefab: {fileID: 2653145768784104840, guid: 1e99f4fec6f620d49bacebf379bf374b, type: 3}
+  _minesToFire: 0
+  _pulverizerBeam: {fileID: 4362578315542066517}
+  _beamAttack: {fileID: 4362578315542066512}
 --- !u!114 &2768467503477785582
 MonoBehaviour:
   m_ObjectHideFlags: 0

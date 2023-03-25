@@ -7,29 +7,49 @@ public class Enemy : GameBehaviour, IDamageable
 {
     public static event Action<List<GameObject>, GameObject> OnEnemyDied = null;
 
+    public EnemyScriptableObject _unitInfo;
+    private EnemyMovement _unitMovement;
     private EnemyWeaponController _weapon;
     private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Collider2D _collider;
+    private Collider2D _collider;
     private Rigidbody2D _rb2D;
 
-    public string enemyName;
+
+    public string unitName;
     public float maxHealth;
-    [HideInInspector] public float currentHealth;
-    [SerializeField] private bool explodeOnDeath;
-    public float explosionRadius;
-    [SerializeField] private float explosionDamage;
-    [SerializeField] private GameObject explosionGraphic;
+    public float currentHealth;
+    private bool _explodeOnDeath;
+    private float _explosionRadius;
+    private float _explosionDamage;
+    private GameObject _explosionEffect;
+
+
 
     private void Awake()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _weapon = GetComponentInChildren<EnemyWeaponController>();
-        _collider = GetComponent<Collider2D>();
-        _rb2D = GetComponent<Rigidbody2D>();
+        AssignEnemyInfo();
     }
     protected virtual void Start()
     {
         currentHealth = maxHealth;
+    }
+
+    private void AssignEnemyInfo()
+    {
+        _unitMovement = GetComponent<EnemyMovement>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _weapon = GetComponentInChildren<EnemyWeaponController>();
+        _collider = GetComponent<Collider2D>();
+        _rb2D = GetComponent<Rigidbody2D>();
+
+        unitName = _unitInfo.unitName;
+        maxHealth = _unitInfo.maxHealth;
+        _explodeOnDeath = _unitInfo.explodeOnDeath;
+        _explosionRadius = _unitInfo.explosionRadius;
+        _explosionDamage = _unitInfo.explosionDamage;
+        _explosionEffect = _unitInfo.explosionEffect;
+
+        _unitMovement.AssignEnemyMovementInfo(_unitInfo);
     }
 
     public virtual void Damage(float damage)
@@ -37,7 +57,7 @@ public class Enemy : GameBehaviour, IDamageable
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
-            if (explodeOnDeath)
+            if (_explodeOnDeath)
             {
                 Explode();
             }
@@ -49,11 +69,11 @@ public class Enemy : GameBehaviour, IDamageable
     }
     private void Explode()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _explosionRadius);
         foreach (Collider2D collider in colliders)
         {
-            GameObject explosionEffect = Instantiate(explosionGraphic, transform);
-            explosionEffect.GetComponent<ExplosionGraphic>().explosionRadius = explosionRadius;
+            GameObject explosionEffect = Instantiate(_explosionEffect, transform);
+            explosionEffect.GetComponent<ExplosionGraphic>().explosionRadius = _explosionRadius;
             explosionEffect.transform.SetParent(null);
             explosionEffect.transform.localScale = Vector3.one * 10;
 
@@ -63,7 +83,7 @@ public class Enemy : GameBehaviour, IDamageable
             }
             else
             {
-                player.Damage(explosionDamage);
+                player.Damage(_explosionDamage);
             }
         }
         Destroy();
@@ -82,7 +102,7 @@ public class Enemy : GameBehaviour, IDamageable
         {
             _weapon.DisableWeapon();
         }
-        _spriteRenderer.color = Color.black;
+        _spriteRenderer.color = Color.grey;
 
         //wait a frame for rigidbody to be destroyed
         yield return new WaitForEndOfFrame();
@@ -100,9 +120,9 @@ public class Enemy : GameBehaviour, IDamageable
 
     private void OnDrawGizmosSelected()
     {
-        if (explodeOnDeath)
+        if (_explodeOnDeath)
         {
-            Gizmos.DrawWireSphere(transform.position, explosionRadius);
+            Gizmos.DrawWireSphere(transform.position, _explosionRadius);
         }
     }
 }

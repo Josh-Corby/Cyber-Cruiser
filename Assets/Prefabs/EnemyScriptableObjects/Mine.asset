@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
+  m_Name: Mine
+  m_EditorClassIdentifier: 
+  unitName: Mine
+  maxHealth: 1
+  explodeOnDeath: 1
+  explosionRadius: 1.5
+  explosionDamage: 1
+  explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
+  moveTypes: 0
+  speed: 3
+  upDownMovement: 0
+  upDownSpeed: 0
+  upDownDistance: 0
+  seekPlayerY: 0
+  seekSpeed: 0
+  sinUpDownMovement: 0
+  sinFrequency: 2.6
+  sinMagnitude: 0.03
+  homeOnPlayer: 0
+  homeTurnSpeed: 0
+  homeTime: 0
+  homeDelay: 0
+  homeDelayTime: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 
-public class Boss : Enemy,IDamageable
+public class Boss : Enemy, IDamageable
 {
     public static event Action<float> OnBossDamage = null;
     public static event Action OnBossDied = null;

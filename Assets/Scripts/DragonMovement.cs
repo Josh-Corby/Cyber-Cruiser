@@ -16,8 +16,6 @@ public class DragonMovement : EnemyMovement
     protected override void Start()
     {
         ChooseRandomMoveType();
-        moveType = MovementTypes.Forward;
-
         base.Start();
     }
 

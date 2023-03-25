@@ -51,7 +51,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void CheckForFireInput()
     {
-        if (!playerWeapon.holdToFire)
+        if (!playerWeapon._holdToFire)
         {
             CancelFireInput();
         }

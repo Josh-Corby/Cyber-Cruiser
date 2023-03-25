@@ -10,7 +10,7 @@ public class EnemySpawner : GameBehaviour
 
     [SerializeField] private Vector3 spawnArea;
     [SerializeField] private GameObject[] enemiesToSpawn;
-    [SerializeField] private float speedModifier;
+    private float speedModifier;
 
     //private GameObject EnemyIndicator;
     //private Vector3 EnemyIndicatorPosition;
@@ -61,7 +61,7 @@ public class EnemySpawner : GameBehaviour
         AddSpeedModifier(boss);
         OnEnemySpawned(ESM.enemiesAlive, boss);
         Enemy bossInfo = boss.GetComponent<Enemy>();
-        boss.name = bossInfo.enemyName;
+        boss.name = bossInfo.unitName;
         OnBossSpawned(bossInfo);
     }
 
@@ -71,7 +71,7 @@ public class EnemySpawner : GameBehaviour
         {
             if (enemy.TryGetComponent<EnemyMovement>(out var enemyMovement))
             {
-                enemyMovement.speed += speedModifier;
+                enemyMovement._speed += speedModifier;
             }
 
             else if (enemy.TryGetComponent<BossMovement>(out var bossMovement))

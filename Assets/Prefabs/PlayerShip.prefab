@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -610757451
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 3338173884847219490}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.6799998, y: 0, z: 0}
-  m_LocalScale: {x: 0.3999999, y: 0.09999999, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 581542919418203060}
@@ -154,8 +154,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -610757451
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -358,11 +358,11 @@ MonoBehaviour:
   input: {x: 0, y: 0}
   mouseInput: {fileID: 0}
   spawnPosition: {fileID: 0}
-  baseSpeed: 0.03
+  baseSpeed: 0.2
   lerpMovement: 1
   controlsEnabled: 0
-  rotationSpeed: 0.3
-  distanceToStopRotation: 0.5
+  rotationSpeed: 1
+  distanceToStopRotation: 1
 --- !u!114 &8907491432247727160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,7 +404,7 @@ MonoBehaviour:
   dontDestroy: 0
   player: {fileID: 8907491432247727163}
   plasmaCost: 5
-  maxHealth: 1
+  maxHealth: 5
   _playerPlasma: 0
 --- !u!1001 &1524391219515457962
 PrefabInstance:
@@ -547,7 +547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6640960726374861538, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: timeBetweenShots
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6640960726374861538, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: timeBetweenBurstShots

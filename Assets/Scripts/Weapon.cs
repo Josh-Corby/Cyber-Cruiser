@@ -4,31 +4,42 @@ using UnityEngine;
 
 public class Weapon : GameBehaviour
 {
+    [SerializeField] private WeaponScriptableObject _weaponInfo;
 
-    [SerializeField] private GameObject firePoint;
-    private Transform firePointTransform;
-    public bool readyToFire;
+    private GameObject _firePoint;
+    private Transform _firePointTransform;
+    [HideInInspector] public bool readyToFire;
+    protected bool _autoFire;
 
-    [Header("Gun Base Stats")]
-    [SerializeField] private GameObject objectToFire;
-    [SerializeField] private float timeBetweenShots;
-    public bool holdToFire;
-    [SerializeField] protected bool autoFire;
-
-    [Header("Spread Stats")]
-    [SerializeField] private bool useSpread;
-    [SerializeField] private float spreadAngle;
-
-    [Header("Burst Fire Stats")]
-    [SerializeField] private bool burstFire;
-    [SerializeField] private int bulletsInBurst;
-    [SerializeField] private float timeBetweenBurstShots;
+    private string _weaponName;
+    private GameObject _objectToFire;
+    private float _timeBetweenShots;
+    [HideInInspector] public bool _holdToFire;
+    private bool _useSpread;
+    private float _spreadAngle;
+    private bool _burstFire;
+    private int _bulletsInBurst;
+    private float _timeBetweenBurstShots;
 
     private void Awake()
     {
-        firePointTransform = firePoint.transform;
+        _firePoint = transform.GetChild(0).gameObject;
+        _firePointTransform = _firePoint.transform;
+        AssignWeaponInfo();
     }
 
+    private void AssignWeaponInfo()
+    {
+        _weaponName = _weaponInfo.weaponName;
+        _objectToFire = _weaponInfo.objectToFire;
+        _timeBetweenShots = _weaponInfo.timeBetweenShots;
+        _holdToFire = _weaponInfo.holdToFire;
+        _useSpread = _weaponInfo.useSpread;
+        _spreadAngle = _weaponInfo.spreadAngle;
+        _burstFire = _weaponInfo.burstFire;
+        _bulletsInBurst = _weaponInfo.bulletsInBurst;
+        _timeBetweenBurstShots = _weaponInfo.timeBetweenBurstShots;
+    }
 
     protected virtual void Start()
     {
@@ -37,7 +48,7 @@ public class Weapon : GameBehaviour
 
     private void Update()
     {
-        if (autoFire)
+        if (_autoFire)
         {
             if (readyToFire)
             {
@@ -56,7 +67,7 @@ public class Weapon : GameBehaviour
     private void CheckBurstFire()
     {
         //if gun is burst fire start burst fire
-        if (burstFire)
+        if (_burstFire)
         {
             StartCoroutine(BurstFire());
             return;
@@ -70,31 +81,31 @@ public class Weapon : GameBehaviour
     private IEnumerator BurstFire()
     {
 
-        for (int i = 0; i < bulletsInBurst; i++)
+        for (int i = 0; i < _bulletsInBurst; i++)
         {
             Fire();
-            yield return new WaitForSeconds(timeBetweenBurstShots);
+            yield return new WaitForSeconds(_timeBetweenBurstShots);
         }
         StartCoroutine(ResetShooting());
     }
 
     public void Fire()
     {
-        if (useSpread)
+        if (_useSpread)
         {
-            Quaternion directionWithSpread = firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-spreadAngle, spreadAngle));
-            GameObject bullet = Instantiate(objectToFire, firePointTransform.position, directionWithSpread);
+            Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-_spreadAngle, _spreadAngle));
+            GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, directionWithSpread);
         }
 
-        if (!useSpread)
+        if (!_useSpread)
         {
-            GameObject bullet = Instantiate(objectToFire, firePointTransform.position, firePointTransform.rotation);
+            GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, _firePointTransform.rotation);
         }
     }
 
     private IEnumerator ResetShooting()
     {
-        yield return new WaitForSeconds(timeBetweenShots);
+        yield return new WaitForSeconds(_timeBetweenShots);
         //Debug.Log("Gun is ready to fire");
         readyToFire = true;
     }

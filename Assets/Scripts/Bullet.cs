@@ -3,12 +3,10 @@ using UnityEngine;
 public class Bullet : GameBehaviour
 {
     public float speed;
-    private Vector2 directionVector;
     [SerializeField] private float damage;
     [SerializeField] private GameObject collisionParticles;
     [HideInInspector] public SpriteRenderer spriteRenderer;
 
-    private float bulletLifetime = 3f;
 
     private void Awake()
     {
@@ -26,19 +24,11 @@ public class Bullet : GameBehaviour
 
     private void Update()
     {
-        bulletLifetime -= Time.deltaTime;
-        if (bulletLifetime <= 0)
-        {
-            Destroy(gameObject);
-        }
-
         transform.position += transform.right * speed * Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log("bullet collision");
-
         ProcessCollision(collision.gameObject);
     }
 
@@ -48,7 +38,7 @@ public class Bullet : GameBehaviour
         {
             return;
         }
-        //Debug.Log(collider.name);
+
         GameObject particles = Instantiate(collisionParticles, transform);
         particles.transform.parent = null;
 

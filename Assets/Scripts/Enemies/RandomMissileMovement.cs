@@ -14,12 +14,12 @@ public class RandomMissileMovement : EnemyMovement
 
         if(movementTypeID == 0)
         {
-            homeOnPlayer = false;
+            _homeOnPlayer = false;
         }
 
         if(movementTypeID == 1)
         {
-            homeOnPlayer = true;
+            _homeOnPlayer = true;
         }
     }
 }
