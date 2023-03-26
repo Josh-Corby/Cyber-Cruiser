@@ -18,13 +18,13 @@ public class Enemy : GameBehaviour, IDamageable
     public string unitName;
     public float maxHealth;
     public float currentHealth;
-    private bool _explodeOnDeath;
+    [SerializeField] private bool _explodeOnDeath;
     private float _explosionRadius;
     private float _explosionDamage;
     private GameObject _explosionEffect;
 
 
-
+    protected const string DEAD_ENEMY_LAYER_NAME = "DeadEnemy";
     private void Awake()
     {
         AssignEnemyInfo();
@@ -96,17 +96,22 @@ public class Enemy : GameBehaviour, IDamageable
             movement.isEnemyDead = true;
         }  
         //remove the rigidbody so the object doesnt break when the collider is disabled
-        Destroy(_rb2D);
+        //Destroy(_rb2D);
 
         if (_weapon != null)
         {
             _weapon.DisableWeapon();
         }
         _spriteRenderer.color = Color.grey;
-
         //wait a frame for rigidbody to be destroyed
         yield return new WaitForEndOfFrame();
-        _collider.enabled = false;
+        //disable collider so layer can be safely changed
+        //_collider.enabled = false;
+
+        //change object layer to layer that only collides with cull area
+        gameObject.layer = LayerMask.NameToLayer(DEAD_ENEMY_LAYER_NAME);
+        //enable collider
+        //_collider.enabled = true;
     }
 
     public virtual void Destroy()

@@ -158,6 +158,7 @@ MonoBehaviour:
   unitName: 
   maxHealth: 50
   currentHealth: 0
+  _explodeOnDeath: 0
   attackCooldown: 3
   attackTimer: 0
   missileLauncher: {fileID: 2232906412665527685}
@@ -284,6 +285,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MissileLauncher
       objectReference: {fileID: 0}
+    - target: {fileID: 6640960726374861542, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491433915432714, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
 --- !u!114 &2232906412665527685 stripped
@@ -408,6 +417,14 @@ PrefabInstance:
     - target: {fileID: 6640960726374861542, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: m_Name
       value: Missile_HomingLauncher
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640960726374861542, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: m_Layer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491433915432714, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: m_Layer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}

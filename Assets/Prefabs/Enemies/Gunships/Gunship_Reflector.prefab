@@ -158,6 +158,7 @@ MonoBehaviour:
   unitName: Reflector Gunship
   maxHealth: 0
   currentHealth: 0
+  _explodeOnDeath: 0
 --- !u!114 &1876512611095173727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ GameObject:
   - component: {fileID: 1826123738308129158}
   - component: {fileID: 8890929126214283096}
   - component: {fileID: 288033379212444920}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2393016666862265549}
-  m_Layer: 7
+  m_Layer: 1
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,9 +412,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 4847769822778804586, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6498324827412908661, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_Name
       value: EnemyShieldController
+      objectReference: {fileID: 0}
+    - target: {fileID: 6498324827412908661, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_Layer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: unitCollider

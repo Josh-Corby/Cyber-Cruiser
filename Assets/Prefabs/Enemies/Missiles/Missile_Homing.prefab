@@ -157,6 +157,7 @@ MonoBehaviour:
   unitName: 
   maxHealth: 1
   currentHealth: 0
+  _explodeOnDeath: 0
 --- !u!114 &2534658592493653730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +227,10 @@ PrefabInstance:
     - target: {fileID: 8380442481365324077, guid: 5dea285bb22e82944a65002bfda2a544, type: 3}
       propertyPath: m_Name
       value: Missile_Particles
+      objectReference: {fileID: 0}
+    - target: {fileID: 8380442481365324077, guid: 5dea285bb22e82944a65002bfda2a544, type: 3}
+      propertyPath: m_Layer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5dea285bb22e82944a65002bfda2a544, type: 3}
