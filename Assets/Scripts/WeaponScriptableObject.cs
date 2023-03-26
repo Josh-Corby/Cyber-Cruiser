@@ -12,6 +12,9 @@ public class WeaponScriptableObject : ScriptableObject
     public bool useSpread;
     public float spreadAngle;
     public bool burstFire;
-    public int bulletsInBurst;
+    public int bursts;
     public float timeBetweenBurstShots;
+    public bool multiFire;
+    public int multiFireShots;
+    public bool isMultiFireSpreadRandom;
 }

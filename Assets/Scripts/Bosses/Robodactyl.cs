@@ -12,7 +12,7 @@ public class Robodactyl : Boss, IBoss
     {
         for (int i = 0; i < laserLaunchers.Length; i++)
         {
-            laserLaunchers[i].Fire();
+            laserLaunchers[i].FireWithoutSpread();
         }
     }
 

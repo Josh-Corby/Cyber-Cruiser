@@ -9,14 +9,14 @@ public class PickupManager : GameBehaviour
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += ClearPickups;
-        PlasmaSpawner.OnPlasmaSpawned += AddPickup;
+        PickupSpawner.OnPlasmaSpawned += AddPickup;
         Pickup.OnPlasmaPickup += RemovePickup;
     }
 
     private void OnDisable()
     {
         GameManager.OnLevelCountDownStart -= ClearPickups;
-        PlasmaSpawner.OnPlasmaSpawned -= AddPickup;
+        PickupSpawner.OnPlasmaSpawned -= AddPickup;
         Pickup.OnPlasmaPickup -= RemovePickup;
     }
     private void AddPickup(GameObject pickup)

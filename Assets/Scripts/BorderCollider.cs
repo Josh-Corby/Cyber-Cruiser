@@ -9,7 +9,7 @@ public class BorderCollider : GameBehaviour
         {
             if (collision.gameObject.TryGetComponent<IDamageable>(out var damageable))
             {
-                Debug.Log("enemy culled");
+                //Debug.Log("enemy culled");
                 damageable.Destroy();
             }
 

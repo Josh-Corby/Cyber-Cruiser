@@ -66,7 +66,7 @@ public class BeamAttack : MonoBehaviour
     private float GetDistanceXBetweenPoints()
     {
         float distanceBetweenPoints = GetPointWorldPosition(0).x - GetPointWorldPosition(1).x;
-        Debug.Log(distanceBetweenPoints);
+        //Debug.Log(distanceBetweenPoints);
         return distanceBetweenPoints;
     }
 

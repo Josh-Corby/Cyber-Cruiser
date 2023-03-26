@@ -12,8 +12,11 @@ public class WeaponEditor : Editor
     SerializedProperty useSpread;
     SerializedProperty spreadAngle;
     SerializedProperty burstFire;
-    SerializedProperty bulletsInBurst;
+    SerializedProperty bursts;
     SerializedProperty timeBetweenBurstShots;
+    SerializedProperty multiFire;
+    SerializedProperty multiFireShots;
+    SerializedProperty isMultiFireSpreadRandom;
     #endregion
     private void OnEnable()
     {
@@ -24,8 +27,11 @@ public class WeaponEditor : Editor
         useSpread = serializedObject.FindProperty(nameof(useSpread));
         spreadAngle = serializedObject.FindProperty(nameof(spreadAngle));
         burstFire = serializedObject.FindProperty(nameof(burstFire));
-        bulletsInBurst = serializedObject.FindProperty(nameof(bulletsInBurst));
-        timeBetweenBurstShots = serializedObject.FindProperty(nameof(bulletsInBurst));
+        bursts = serializedObject.FindProperty(nameof(bursts));
+        timeBetweenBurstShots = serializedObject.FindProperty(nameof(timeBetweenBurstShots));
+        multiFire = serializedObject.FindProperty(nameof(multiFire));
+        multiFireShots = serializedObject.FindProperty(nameof(multiFireShots));
+        isMultiFireSpreadRandom = serializedObject.FindProperty(nameof(isMultiFireSpreadRandom));
     }
 
     public override void OnInspectorGUI()
@@ -39,19 +45,26 @@ public class WeaponEditor : Editor
         EditorGUILayout.PropertyField(timeBetweenShots);
         EditorGUILayout.PropertyField(holdToFire);
 
+        EditorGUILayout.PropertyField(burstFire);
+        if (weaponSO.burstFire)
+        {
+            EditorGUILayout.PropertyField(bursts);
+            EditorGUILayout.PropertyField(timeBetweenBurstShots);
+        }
+
+        EditorGUILayout.PropertyField(multiFire);
+        if (weaponSO.multiFire)
+        {
+            weaponSO.useSpread = true;
+            EditorGUILayout.PropertyField(multiFireShots);
+            EditorGUILayout.PropertyField(isMultiFireSpreadRandom);
+        }
+
         EditorGUILayout.PropertyField(useSpread);
         if (weaponSO.useSpread)
         {
             EditorGUILayout.PropertyField(spreadAngle);
         }
-
-        EditorGUILayout.PropertyField(burstFire);
-        if (weaponSO.burstFire)
-        {
-            EditorGUILayout.PropertyField(bulletsInBurst);
-            EditorGUILayout.PropertyField(timeBetweenBurstShots);
-        }
-
         serializedObject.ApplyModifiedProperties();
     }
 }

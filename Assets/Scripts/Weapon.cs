@@ -8,7 +8,7 @@ public class Weapon : GameBehaviour
 
     private GameObject _firePoint;
     private Transform _firePointTransform;
-    [HideInInspector] public bool readyToFire;
+    public bool readyToFire;
     protected bool _autoFire;
 
     private string _weaponName;
@@ -18,8 +18,11 @@ public class Weapon : GameBehaviour
     private bool _useSpread;
     private float _spreadAngle;
     private bool _burstFire;
-    private int _bulletsInBurst;
+    private int _bursts;
     private float _timeBetweenBurstShots;
+    private bool _multiFire;
+    private int _multiFireShots;
+    private bool _isMultiFireSpreadRandom;
 
     private void Awake()
     {
@@ -28,7 +31,7 @@ public class Weapon : GameBehaviour
         AssignWeaponInfo();
     }
 
-    private void AssignWeaponInfo()
+    public void AssignWeaponInfo()
     {
         _weaponName = _weaponInfo.weaponName;
         _objectToFire = _weaponInfo.objectToFire;
@@ -37,8 +40,11 @@ public class Weapon : GameBehaviour
         _useSpread = _weaponInfo.useSpread;
         _spreadAngle = _weaponInfo.spreadAngle;
         _burstFire = _weaponInfo.burstFire;
-        _bulletsInBurst = _weaponInfo.bulletsInBurst;
+        _bursts = _weaponInfo.bursts;
         _timeBetweenBurstShots = _weaponInfo.timeBetweenBurstShots;
+        _multiFire = _weaponInfo.multiFire;
+        _multiFireShots = _weaponInfo.multiFireShots;
+        _isMultiFireSpreadRandom = _weaponInfo.isMultiFireSpreadRandom;
     }
 
     protected virtual void Start()
@@ -52,55 +58,151 @@ public class Weapon : GameBehaviour
         {
             if (readyToFire)
             {
-                StartFireSequence();
+                CheckFireTypes();
             }
         }
     }
 
-    public void StartFireSequence()
+    public void CheckFireTypes()
     {
-        //check for burst fire
         readyToFire = false;
-        CheckBurstFire();
-        return;
-    }
-    private void CheckBurstFire()
-    {
-        //if gun is burst fire start burst fire
+        //check for burst fire
         if (_burstFire)
         {
             StartCoroutine(BurstFire());
             return;
         }
-        //otherwise normal fire
-
-        Fire();
+        //check for multifire
+        else if (_multiFire)
+        {
+            MultiFire();
+        }
+        else
+        {
+            SpreadCheck();
+        }
         StartCoroutine(ResetShooting());
     }
 
     private IEnumerator BurstFire()
     {
-
-        for (int i = 0; i < _bulletsInBurst; i++)
+        for (int i = 0; i < _bursts; i++)
         {
-            Fire();
+            if (_multiFire)
+            {
+                MultiFire();
+            }
+            else
+            {
+                SpreadCheck();
+            }
             yield return new WaitForSeconds(_timeBetweenBurstShots);
         }
         StartCoroutine(ResetShooting());
     }
 
-    public void Fire()
+    private void MultiFire()
     {
-        if (_useSpread)
+        if (_isMultiFireSpreadRandom)
         {
-            Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-_spreadAngle, _spreadAngle));
-            GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, directionWithSpread);
+            //Debug.Log("Random spread fire");
+            for (int i = 0; i < _multiFireShots; i++)
+            {
+                FireWithSpread(GetRandomSpreadAngle());
+            }
         }
+        else if (!_isMultiFireSpreadRandom)
+        {
+            for (int i = 0; i < _multiFireShots; i++)
+            {
+                Quaternion projectileSpread = GetFixedSpreadAngle(i);
+                FireWithSpread(projectileSpread);
+            }
+            //Debug.Log("set spread fire");    
+        }
+    }
 
+    private void SpreadCheck()
+    {
         if (!_useSpread)
         {
-            GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, _firePointTransform.rotation);
+            FireWithoutSpread();
         }
+        else
+        {
+            FireWithSpread(GetRandomSpreadAngle());
+        }
+    }
+
+    private Quaternion GetRandomSpreadAngle()
+    {
+        Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-_spreadAngle, _spreadAngle));
+        return directionWithSpread;
+    }
+
+    private Quaternion GetFixedSpreadAngle(int index)
+    {
+        //get total weapon spread
+        float totalSpread = _spreadAngle * 2;
+        //find what angle the current bullet should be given
+        float spreadValue = totalSpread / (_multiFireShots - 1) * index;
+        //subtract _spread angle so negative values are assigned
+        float angle = spreadValue - _spreadAngle;
+        //convert to quaternion
+        Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, angle);
+        return directionWithSpread;
+
+        /*
+         * formula explanation
+         * 
+         * i value to angle = total spread / number of bullets -1 * i
+         * final angle = increment - angle
+         * 
+         * example equations
+         * fire 3
+         * spread angle of 10
+         * total spread if 20
+         * i values are   0,1 ,2
+         * increments are 0,10,20
+         * bullets should fire at angles -10,0,10
+         * 
+         * i = 0
+         * angle = 20 / 2 * 0 = 0 - 10 = -10
+         * i = 1
+         * angle = 20 / 2 * 1 = 10 - 10 = 0
+         * i = 2
+         * angle = 20 / 2 * 2 = 20 - 10 = 10
+         * 
+         * fire 5
+         * spread angle of 10
+         * total spread of 20
+         * 
+         * i values       0,1,2 ,3 ,4
+         * increments are 0,5,10,15,20
+         * bullets should fire at -10,-5,0,5,10
+         * 
+         * i = 0
+         * angle = 20 / 4 * 0 = 0 - 10 = -10
+         * i = 1
+         * angle = 20 / 4 * 1 = 5 - 10 = -5
+         * i = 2
+         * angle = 20 / 4 * 2 = 10 - 10 = 0
+         * i = 3
+         * angle = 20 / 4 * 3 = 15 - 10 = 5
+         * i = 4
+         * angle = 20 / 4 * 4 = 20 - 10 = 10
+         */
+    }
+
+    public void FireWithSpread(Quaternion directionWithSpread)
+    {
+        //Debug.Log("bullet fired");
+        GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, directionWithSpread);
+    }
+
+    public void FireWithoutSpread()
+    {
+        GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, _firePointTransform.rotation);
     }
 
     private IEnumerator ResetShooting()
@@ -108,5 +210,19 @@ public class Weapon : GameBehaviour
         yield return new WaitForSeconds(_timeBetweenShots);
         //Debug.Log("Gun is ready to fire");
         readyToFire = true;
+    }
+
+    public void MultiShotUpgrade()
+    {
+        _multiFire = true;
+        _multiFireShots = 3;
+        _isMultiFireSpreadRandom = true;
+        _useSpread = true;
+        _spreadAngle = 30;
+    }
+
+    public void PulverizerUpgrade()
+    {
+
     }
 }

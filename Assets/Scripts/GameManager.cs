@@ -10,18 +10,20 @@ public class GameManager : GameBehaviour<GameManager>
     public static event Action OnGameResumed = null;
     public static event Action OnBossDistanceReached;
 
-    private TMP_Text distanceText;
-    private float distanceFloat;
-    private int distanceInt;
-    private bool distanceIncreasing;
-    [SerializeField] private int bossDistance;
+    private TMP_Text _distanceText;
+    private float _distanceFloat;
+    private int _distanceInt;
+    private bool _distanceIncreasing;
+    [SerializeField] private int _bossDistance;
 
-    private int currentDistanceMilestone;
-    private bool milestoneIncreased;
+    private readonly int _milestoneDistance = 100;
+    //number used for plasma drop distance generation
+    private int _currentDistanceMilestone; 
+    private bool _milestoneIncreased;
 
-    [SerializeField] private PlasmaSpawner plasmaSpawner;
-    private int plasmaDropDistance;
-    private bool plasmaSpawned = false;
+    [SerializeField] private PickupSpawner _pickupSpawner;
+    private int _plasmaDropDistance;
+    private bool _plasmaSpawned = false;
 
     [SerializeField] private GameObject gameplayObjects;
     public bool isPaused = false;
@@ -32,7 +34,7 @@ public class GameManager : GameBehaviour<GameManager>
         UIManager.OnLevelEntry += StartLevel;
 
         GameplayUIManager.OnCountdownDone += StartIncreasingDistance;
-        GameplayUIManager.OnCountdownDone += GetNewPlasmaDropDistance;
+        GameplayUIManager.OnCountdownDone += GetNewPlasmaDistance;
         PlayerManager.OnPlayerDeath += StopIncreasingDistance;
         EnemySpawnerManager.OnBossDied += StartIncreasingDistance;
     }
@@ -43,43 +45,43 @@ public class GameManager : GameBehaviour<GameManager>
         UIManager.OnLevelEntry -= StartLevel;
 
         GameplayUIManager.OnCountdownDone -= StartIncreasingDistance;
-        GameplayUIManager.OnCountdownDone -= GetNewPlasmaDropDistance;
+        GameplayUIManager.OnCountdownDone -= GetNewPlasmaDistance;
         PlayerManager.OnPlayerDeath -= StopIncreasingDistance;
         EnemySpawnerManager.OnBossDied -= StartIncreasingDistance;
     }
 
     private void Awake()
     {
-        distanceText = GUIM.distanceCounterText;
-        plasmaSpawner = GetComponentInChildren<PlasmaSpawner>();
+        _distanceText = GUIM.distanceCounterText;
+        _pickupSpawner = GetComponentInChildren<PickupSpawner>();
         Application.targetFrameRate = 60;
     }
 
     private void Start()
     {
-        currentDistanceMilestone = 0;
-        milestoneIncreased = false;
+        _currentDistanceMilestone = 0;
+        _milestoneIncreased = false;
     }
     private void Update()
     {
-        if (!distanceIncreasing) return;
+        if (!_distanceIncreasing) return;
 
-        if (distanceIncreasing)
+        if (_distanceIncreasing)
         {
-            distanceFloat += Time.deltaTime * 10;
-            distanceInt = Mathf.RoundToInt(distanceFloat);
-            distanceText.text = distanceInt.ToString();
+            _distanceFloat += Time.deltaTime * 10;
+            _distanceInt = Mathf.RoundToInt(_distanceFloat);
+            _distanceText.text = _distanceInt.ToString();
 
 
             //increment distance milestone every 100 units
-            if (distanceInt % bossDistance == 0 && !milestoneIncreased)
-            {
+            if (_distanceInt % _milestoneDistance == 0 && !_milestoneIncreased)
+            {   
                 StartCoroutine(IncreaseDistanceMilestone());
-                GetNewPlasmaDropDistance();
+                GetNewPlasmaDistance();
             }
 
             //start boss fight at boss distance
-            if (distanceInt > 0 && distanceInt % bossDistance == 0)
+            if (_distanceInt > 0 && _distanceInt % _bossDistance == 0)
             {
                 Debug.Log("boss distance reached");
                 StopIncreasingDistance();
@@ -87,10 +89,10 @@ public class GameManager : GameBehaviour<GameManager>
             }
 
             //spawn plasma at seeded distance
-            if (distanceInt == plasmaDropDistance && !plasmaSpawned)
+            if (_distanceInt == _plasmaDropDistance && !_plasmaSpawned)
             {
-                SpawnPlasma();
-                plasmaSpawned = true;
+                _pickupSpawner.SpawnPlasma();
+                _plasmaSpawned = true;
             }
         }
     }
@@ -98,32 +100,27 @@ public class GameManager : GameBehaviour<GameManager>
     
     private IEnumerator IncreaseDistanceMilestone()
     {
-        milestoneIncreased = true;
-        currentDistanceMilestone += bossDistance;
+        _milestoneIncreased = true;
+        _currentDistanceMilestone += _milestoneDistance;
 
         yield return new WaitForSeconds(1f);
-        milestoneIncreased = false;
+        _milestoneIncreased = false;
 
     }
 
-    private void GetNewPlasmaDropDistance()
+    private void GetNewPlasmaDistance()
     {
-        plasmaDropDistance = plasmaSpawner.SetPlasmaDropDistance(currentDistanceMilestone);
-        Debug.Log("Plasma spawn distance is: " + plasmaDropDistance);
-        plasmaSpawned = false;
-    }
-
-    private void SpawnPlasma()
-    {
-        plasmaSpawner.SpawnPlasma();
+        _plasmaDropDistance = _pickupSpawner.SetPlasmaDropDistance(_currentDistanceMilestone);
+        Debug.Log("Plasma spawn distance is: " + _plasmaDropDistance);
+        _plasmaSpawned = false;
     }
 
     private void ResetCounter()
     {
-        distanceIncreasing = false;
-        distanceFloat = 0;
-        distanceInt = 0;
-        distanceText.text = distanceFloat.ToString();
+        _distanceIncreasing = false;
+        _distanceFloat = 0;
+        _distanceInt = 0;
+        _distanceText.text = _distanceFloat.ToString();
     }
 
     public void StartLevel()
@@ -137,14 +134,14 @@ public class GameManager : GameBehaviour<GameManager>
 
     private void StartIncreasingDistance()
     {
-        distanceFloat += 1;
-        distanceInt += 1;
-        distanceIncreasing = true;
+        _distanceFloat += 1;
+        _distanceInt += 1;
+        _distanceIncreasing = true;
     }
 
     private void StopIncreasingDistance()
     {
-        distanceIncreasing = false;
+        _distanceIncreasing = false;
     }
 
     public void TogglePause()

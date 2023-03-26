@@ -16,8 +16,11 @@ MonoBehaviour:
   objectToFire: {fileID: 760453196464390188, guid: 130585e77da054b4ba24c84b35d78629, type: 3}
   timeBetweenShots: 1
   holdToFire: 0
-  useSpread: 0
+  useSpread: 1
   spreadAngle: 0
   burstFire: 0
-  bulletsInBurst: 0
+  bursts: 0
   timeBetweenBurstShots: 0
+  multiFire: 1
+  multiFireShots: 0
+  isMultiFireSpreadRandom: 0

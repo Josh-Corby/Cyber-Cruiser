@@ -2,12 +2,13 @@ using UnityEngine;
 using System;
 using Random = UnityEngine.Random;
 
-public class PlasmaSpawner : GameBehaviour
+public class PickupSpawner : GameBehaviour
 {
     public static event Action<GameObject> OnPlasmaSpawned = null;
 
     [SerializeField] private Vector3 spawnSize;
     [SerializeField] private GameObject plasmaPrefab;
+    [SerializeField] private GameObject[] weaponUpgradePrefabs;
 
     public int SetPlasmaDropDistance(int currentDistanceMilestone)
     {
@@ -15,6 +16,8 @@ public class PlasmaSpawner : GameBehaviour
 
         return plasmaDropDistance;
     }
+
+
 
     private Vector3 GetRandomPosition()
     {
@@ -24,11 +27,13 @@ public class PlasmaSpawner : GameBehaviour
         Vector3 spawnPosition = new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z + z);
         return spawnPosition;
     }
+
     public void SpawnPlasma()
     {
         GameObject plasma = Instantiate(plasmaPrefab, GetRandomPosition(), transform.rotation);
         OnPlasmaSpawned(plasma);
     }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
