@@ -7,7 +7,7 @@ public class Enemy : GameBehaviour, IDamageable
 {
     public static event Action<List<GameObject>, GameObject> OnEnemyDied = null;
 
-    public EnemyScriptableObject _unitInfo;
+    [SerializeField] protected EnemyScriptableObject _unitInfo;
     private EnemyMovement _unitMovement;
     private EnemyWeaponController _weapon;
     private SpriteRenderer _spriteRenderer;
@@ -18,14 +18,14 @@ public class Enemy : GameBehaviour, IDamageable
     public string unitName;
     public float maxHealth;
     public float currentHealth;
-    [SerializeField] private bool _explodeOnDeath;
+    private bool _explodeOnDeath;
     private float _explosionRadius;
     private float _explosionDamage;
     private GameObject _explosionEffect;
 
 
     protected const string DEAD_ENEMY_LAYER_NAME = "DeadEnemy";
-    private void Awake()
+    protected virtual void Awake()
     {
         AssignEnemyInfo();
     }

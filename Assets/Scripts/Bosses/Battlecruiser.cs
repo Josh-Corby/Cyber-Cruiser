@@ -6,12 +6,12 @@ public class Battlecruiser : Boss, IBoss
 {
     [SerializeField] private GameObject _mineReleasePoint;
     [SerializeField] private GameObject _seekerMinePrefab;
-    [SerializeField] private int _minesToFire;
-    private int _mineDelay = 1;
+    private readonly int _minesToFire = 2;
+    private readonly int _mineDelay = 1;
 
     private float _beamAttackDuration;
-    private float _mineAttackDuration = 0f;
-    private float _timeAfterAttackFinish = 2f;
+    private readonly float _mineAttackDuration = 0f;
+    private readonly float _timeAfterAttackFinish = 2f;
 
     [SerializeField] private GameObject _pulverizerBeam;
     [SerializeField] private BeamAttack _beamAttack;
@@ -25,12 +25,12 @@ public class Battlecruiser : Boss, IBoss
 
     protected override void Update()
     {
-        if (attackTimer > 0)
+        if (_attackTimer > 0)
         {
-            attackTimer -= Time.deltaTime;
+            _attackTimer -= Time.deltaTime;
         }
 
-        if (attackTimer <= 0)
+        if (_attackTimer <= 0)
         {
             ChooseRandomAttack();
         }
@@ -39,7 +39,7 @@ public class Battlecruiser : Boss, IBoss
     //release seeker mines
     private IEnumerator ReleaseMines()
     {
-        attackTimer = _mineAttackDuration + _timeAfterAttackFinish;
+        _attackTimer = _mineAttackDuration + _timeAfterAttackFinish;
         for (int i = 0; i < _minesToFire; i++)
         {
             GameObject seekerMine = Instantiate(_seekerMinePrefab, _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
@@ -60,6 +60,6 @@ public class Battlecruiser : Boss, IBoss
     {
         _beamAttack.ResetBeam();
         _beamAttack.lineRenderer.enabled = true;
-        attackTimer = _beamAttackDuration + _timeAfterAttackFinish;
+        _attackTimer = _beamAttackDuration + _timeAfterAttackFinish;
     }
 }

@@ -8,33 +8,44 @@ public class Boss : Enemy, IDamageable
     public static event Action<float> OnBossDamage = null;
     public static event Action OnBossDied = null;
 
-    [SerializeField] protected float attackCooldown;
-    [SerializeField] protected float attackTimer;
+    private BossMovement _movement;
+
+    [SerializeField] protected float _attackCooldown;
+    [SerializeField] protected float _attackTimer;
 
     private IBoss bossMoveset;
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        _movement = GetComponent<BossMovement>();
+        AssignBossInfo();
         bossMoveset = GetComponent<IBoss>();
+    }
+
+    private void AssignBossInfo()
+    {
+        unitName = _unitInfo.unitName;
+        maxHealth = _unitInfo.maxHealth;
+        _movement.speed = _unitInfo.speed;
     }
     protected override void Start()
     {
         base.Start();
-        attackTimer = attackCooldown;
+        _attackTimer = _attackCooldown;
     }
 
     protected virtual void Update()
     {
 
-        if (attackTimer > 0)
+        if (_attackTimer > 0)
         {
-            attackTimer -= Time.deltaTime;
+            _attackTimer -= Time.deltaTime;
         }
 
-        if (attackTimer <= 0)
+        if (_attackTimer <= 0)
         {
             ChooseRandomAttack();
-            attackTimer = attackCooldown;
+            _attackTimer = _attackCooldown;
         }
     }
 

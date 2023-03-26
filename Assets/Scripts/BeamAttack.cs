@@ -32,7 +32,7 @@ public class BeamAttack : MonoBehaviour
 
     public void ResetBeam()
     {
-        lineRenderer.SetPosition(0, transform.localPosition);
+        lineRenderer.SetPosition(0, Vector2.zero);
         lineRenderer.SetPosition(1, transform.localPosition);
         beamSize = 0;
         beamTimer = beamDuration;

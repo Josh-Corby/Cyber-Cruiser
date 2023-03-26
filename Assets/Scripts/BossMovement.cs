@@ -5,11 +5,11 @@ public class BossMovement : GameBehaviour
 {
     public static event Action<BossMovement> OnMovePositionRequested = null;
 
-    [SerializeField] private bool staticMovement;
-    public float speed;
+    [SerializeField] private bool _staticMovement;
+    [HideInInspector] public float speed;
 
-    private GameObject goalPoint;
-    private bool goalPositionReached;
+    private GameObject _goalPoint;
+    private bool _goalPositionReached;
 
     private Vector2 _movePosition;
     public Vector2 SetMovePosition
@@ -22,22 +22,22 @@ public class BossMovement : GameBehaviour
 
     private void Awake()
     {
-        goalPoint = ESM.bossGoalPosition;
+        _goalPoint = ESM.bossGoalPosition;
     }
     private void Start()
     {
-        goalPositionReached = false;
+        _goalPositionReached = false;
     }
 
     private void Update()
     {
-        if (!goalPositionReached)
+        if (!_goalPositionReached)
         {
             MoveTowardGoalPosition();
             return;
         }
 
-        if (!staticMovement)
+        if (!_staticMovement)
         {
             if (_movePosition != null)
             {
@@ -59,11 +59,11 @@ public class BossMovement : GameBehaviour
 
     private void MoveTowardGoalPosition()
     {
-        transform.position = Vector2.MoveTowards(transform.position, goalPoint.transform.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, _goalPoint.transform.position, speed * Time.deltaTime);
 
-        if (Vector2.Distance(transform.position, goalPoint.transform.position) <= 0.1)
+        if (Vector2.Distance(transform.position, _goalPoint.transform.position) <= 0.1)
         {
-            goalPositionReached = true;
+            _goalPositionReached = true;
             RequestNewMovePosition();
         }
         return;
