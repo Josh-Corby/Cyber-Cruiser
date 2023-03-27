@@ -102,7 +102,11 @@ public class Enemy : GameBehaviour, IDamageable
         {
             _weapon.DisableWeapon();
         }
-        _spriteRenderer.color = Color.grey;
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.color = Color.grey;
+        }
+
         //wait a frame for rigidbody to be destroyed
         yield return new WaitForEndOfFrame();
         //disable collider so layer can be safely changed

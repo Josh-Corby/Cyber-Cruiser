@@ -812,7 +812,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 29.400024, y: -79}
+  m_AnchoredPosition: {x: 29.399902, y: -79}
   m_SizeDelta: {x: 326.8518, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &366983006
@@ -1165,7 +1165,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 29.400024, y: -16.299988}
+  m_AnchoredPosition: {x: 29.399902, y: -16.299927}
   m_SizeDelta: {x: 326.8518, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &440003047
@@ -4134,7 +4134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
-  _bossDistance: 500
+  _bossDistance: 10
   _pickupSpawner: {fileID: 0}
   gameplayObjects: {fileID: 1495971563}
   isPaused: 0

@@ -7,16 +7,13 @@ public class EnemyShieldController : ShieldControllerBase, IShield
 
     private const string ENEMY_PROJECTILE_LAYER_NAME = "EnemyProjectile";
 
+
     public override void ActivateShields()
     {
         CurrentShieldStrength = maxShieldStrength;
         base.ActivateShields();
     }
 
-    public override void DeactivateShields()
-    {
-        base.DeactivateShields();
-    }
 
     public override void ReduceShields()
     {
@@ -36,6 +33,7 @@ public class EnemyShieldController : ShieldControllerBase, IShield
         ReduceShields();
 
     }
+
 
 }
 

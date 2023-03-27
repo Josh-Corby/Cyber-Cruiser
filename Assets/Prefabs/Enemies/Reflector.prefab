@@ -157,7 +157,6 @@ MonoBehaviour:
   unitName: 
   maxHealth: 1
   currentHealth: 0
-  _explodeOnDeath: 0
 --- !u!114 &-8968039490281039228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +223,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 2241936634859946288, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: _shieldCollisionDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4847769822778804586, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6498324827412908661, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_Name
       value: EnemyShieldController
@@ -232,6 +239,10 @@ PrefabInstance:
       propertyPath: unitCollider
       value: 
       objectReference: {fileID: 3537538281721821470}
+    - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: _shieldsActiveOnSpawn
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
 --- !u!4 &7882796501218378330 stripped

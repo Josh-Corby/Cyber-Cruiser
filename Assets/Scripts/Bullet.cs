@@ -34,7 +34,7 @@ public class Bullet : GameBehaviour
 
     private void ProcessCollision(GameObject collider)
     {
-        if (collider.TryGetComponent<ShieldCollision>(out var shield))
+        if (collider.TryGetComponent<Shield>(out var shield))
         {
             return;
         }

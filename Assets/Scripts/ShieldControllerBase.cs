@@ -1,23 +1,24 @@
 using UnityEngine;
 
-public abstract class ShieldControllerBase : MonoBehaviour,IShield
+public abstract class ShieldControllerBase : MonoBehaviour, IShield
 {
-    [SerializeField] protected Collider2D unitCollider;
-    [SerializeField] protected GameObject shields;
-    [SerializeField] protected Collider2D shieldCollider;
+    [SerializeField] protected Collider2D _unitCollider;
+    [SerializeField] protected Shield _shields;
+
+    [SerializeField] protected bool _shieldsActiveOnSpawn;
 
     public bool shieldsActive;
-    [SerializeField] protected bool shieldsActiveOnSpawn;
-
     public bool reflectorShield;
 
+    protected void Awake()
+    {
+        _unitCollider = GetComponentInParent<Collider2D>();
+        _shields = GetComponentInChildren<Shield>();
+    }
     protected void Start()
     {
-        if (shieldsActiveOnSpawn)
-        {
-            ActivateShields();
-        }
-        else
+        shieldsActive = true;
+        if(!_shieldsActiveOnSpawn)
         {
             DeactivateShields();
         }
@@ -31,9 +32,8 @@ public abstract class ShieldControllerBase : MonoBehaviour,IShield
         }
 
         shieldsActive = true;
-        shields.SetActive(true);
-        shieldCollider.enabled = true;
-        unitCollider.enabled = false;
+        _shields.EnableShields();
+        //_unitCollider.enabled = false;
     }
 
     public virtual void DeactivateShields()
@@ -42,36 +42,36 @@ public abstract class ShieldControllerBase : MonoBehaviour,IShield
         {
             return;
         }
-
         shieldsActive = false;
-        shields.SetActive(false);
-        shieldCollider.enabled = false;
-        unitCollider.enabled = true;
+        _shields.DisableShields();
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public virtual void ProcessCollision(GameObject collider, int damage)
     {
-        ProcessCollision(collision.gameObject);
-    }
-
-    private void ProcessCollision(GameObject collider)
-    {
-
+        DeactivateShields();
         if (collider.TryGetComponent<IDamageable>(out var damageable))
         {
-            Debug.Log("Shield on ship collision");
-            damageable.Destroy();
+            damageable.Damage(damage);
             DeactivateShields();
         }
 
-        else
+        else if (collider.TryGetComponent<IShield>(out var shield))
         {
-            if (collider.TryGetComponent<IShield>(out var shield))
+            shield.DeactivateShields();
+            DeactivateShields();
+        }
+
+        else if (collider.TryGetComponent<Bullet>(out var bullet))
+        {
+            if (reflectorShield)
             {
-                Debug.Log("Shield on shield collision");
-                shield.DeactivateShields();
-                DeactivateShields();
+                ReflectProjectile(bullet);
+            }
+            else
+            {
+                ReduceShields();
+                Destroy(bullet.gameObject);
             }
         }
     }
