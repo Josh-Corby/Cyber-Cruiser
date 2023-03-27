@@ -109,7 +109,7 @@ public class PlayerWeaponController : MonoBehaviour
 
         switch(upgradeType)
         {
-            case PickupType.MultiShot:
+            case PickupType.Scatter:
                 _playerWeapon.MultiShotUpgrade();
                 break;
             case PickupType.Pulverizer:

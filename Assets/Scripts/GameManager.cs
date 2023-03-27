@@ -5,49 +5,55 @@ using TMPro;
 
 public class GameManager : GameBehaviour<GameManager>
 {
+    public bool isPaused = false;
+
+    public static event Action<int, Action<int>> OnPlasmaDropDistanceRequested = null;
+    public static event Action<int, int, Action<int>> OnWeaponUpgradeDropDistanceRequested = null;
     public static event Action OnLevelCountDownStart = null;
     public static event Action OnGamePaused = null;
     public static event Action OnGameResumed = null;
     public static event Action OnBossDistanceReached;
 
+
     private TMP_Text _distanceText;
     private float _distanceFloat;
     private int _distanceInt;
     private bool _distanceIncreasing;
-    [SerializeField] private int _bossDistance;
+    [SerializeField] private int _bossSpawnDistance;
+    private int _previousBossDistance = 0;
+    private int _currentBossDistance;
 
     private readonly int _milestoneDistance = 100;
-    //number used for plasma drop distance generation
     private int _currentDistanceMilestone; 
     private bool _milestoneIncreased;
 
     [SerializeField] private PickupSpawner _pickupSpawner;
     private int _plasmaDropDistance;
-    private bool _plasmaSpawned = false;
+    [SerializeField] private bool _plasmaSpawned = false;
+    private int _weaponUpgradeDropDistance;
+    private bool _weaponUpgradeSpawned = false;
 
     [SerializeField] private GameObject gameplayObjects;
-    public bool isPaused = false;
+    
 
     private void OnEnable()
     {
         InputManager.OnPause += TogglePause;
         UIManager.OnLevelEntry += StartLevel;
-
         GameplayUIManager.OnCountdownDone += StartIncreasingDistance;
-        GameplayUIManager.OnCountdownDone += GetNewPlasmaDistance;
+        GameplayUIManager.OnCountdownDone += RequestFirstPickupDistances;
         PlayerManager.OnPlayerDeath += StopIncreasingDistance;
-        EnemySpawnerManager.OnBossDied += StartIncreasingDistance;
+        EnemySpawnerManager.OnBossDied += OnBossDied;
     }
 
     private void OnDisable()
     {
         InputManager.OnPause -= TogglePause;
         UIManager.OnLevelEntry -= StartLevel;
-
         GameplayUIManager.OnCountdownDone -= StartIncreasingDistance;
-        GameplayUIManager.OnCountdownDone -= GetNewPlasmaDistance;
+        GameplayUIManager.OnCountdownDone -= RequestFirstPickupDistances;
         PlayerManager.OnPlayerDeath -= StopIncreasingDistance;
-        EnemySpawnerManager.OnBossDied -= StartIncreasingDistance;
+        EnemySpawnerManager.OnBossDied -= OnBossDied;
     }
 
     private void Awake()
@@ -61,7 +67,10 @@ public class GameManager : GameBehaviour<GameManager>
     {
         _currentDistanceMilestone = 0;
         _milestoneIncreased = false;
+        _previousBossDistance = 0;
+        _currentBossDistance = _bossSpawnDistance;
     }
+
     private void Update()
     {
         if (!_distanceIncreasing) return;
@@ -77,15 +86,18 @@ public class GameManager : GameBehaviour<GameManager>
             if (_distanceInt % _milestoneDistance == 0 && !_milestoneIncreased)
             {   
                 StartCoroutine(IncreaseDistanceMilestone());
-                GetNewPlasmaDistance();
+                RequestNewPlasmaDropDistance();
             }
 
             //start boss fight at boss distance
-            if (_distanceInt > 0 && _distanceInt % _bossDistance == 0)
+            if (_distanceInt > 0 && _distanceInt % _currentBossDistance == 0)
             {
+                _previousBossDistance = _distanceInt;
+                _currentBossDistance += _bossSpawnDistance;
                 Debug.Log("boss distance reached");
                 StopIncreasingDistance();
                 OnBossDistanceReached?.Invoke();
+                RequestNewWeaponUpgradeDropDistance();
             }
 
             //spawn plasma at seeded distance
@@ -94,9 +106,45 @@ public class GameManager : GameBehaviour<GameManager>
                 _pickupSpawner.SpawnPlasma();
                 _plasmaSpawned = true;
             }
+
+            if(_distanceInt == _weaponUpgradeDropDistance && !_weaponUpgradeSpawned)
+            {
+                _pickupSpawner.SpawnWeaponUpgrade();
+                _weaponUpgradeSpawned = true;
+            }
         }
     }
 
+    private void ResetBossDistance()
+    {
+
+    }
+    private void RequestFirstPickupDistances()
+    {
+        RequestNewPlasmaDropDistance();
+        RequestNewWeaponUpgradeDropDistance();
+    }
+    private void RequestNewPlasmaDropDistance()
+    {
+        OnPlasmaDropDistanceRequested(_currentDistanceMilestone, SetPlasmaDropDistance);
+        _plasmaSpawned = false;
+    }
+
+    private void SetPlasmaDropDistance(int value)
+    {
+        _plasmaDropDistance = value;
+    }
+
+    private void RequestNewWeaponUpgradeDropDistance()
+    {
+        OnWeaponUpgradeDropDistanceRequested(_previousBossDistance, _currentBossDistance, SetWeaponUpgradeDropDistance);
+        _weaponUpgradeSpawned = false;
+    }
+
+    private void SetWeaponUpgradeDropDistance(int value)
+    {
+        _weaponUpgradeDropDistance = value;
+    }
     
     private IEnumerator IncreaseDistanceMilestone()
     {
@@ -105,14 +153,11 @@ public class GameManager : GameBehaviour<GameManager>
 
         yield return new WaitForSeconds(1f);
         _milestoneIncreased = false;
-
     }
 
-    private void GetNewPlasmaDistance()
+    private void OnBossDied()
     {
-        _plasmaDropDistance = _pickupSpawner.SetPlasmaDropDistance(_currentDistanceMilestone);
-        Debug.Log("Plasma spawn distance is: " + _plasmaDropDistance);
-        _plasmaSpawned = false;
+        StartIncreasingDistance();
     }
 
     private void ResetCounter()

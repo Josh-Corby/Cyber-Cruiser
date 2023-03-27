@@ -4,20 +4,11 @@ using Random = UnityEngine.Random;
 
 public class PickupSpawner : GameBehaviour
 {
-    public static event Action<GameObject> OnPlasmaSpawned = null;
+    public static event Action<GameObject> OnPickupSpawned = null;
 
     [SerializeField] private Vector3 spawnSize;
     [SerializeField] private GameObject plasmaPrefab;
     [SerializeField] private GameObject[] weaponUpgradePrefabs;
-
-    public int SetPlasmaDropDistance(int currentDistanceMilestone)
-    {
-        int plasmaDropDistance = Random.Range(currentDistanceMilestone + 15, currentDistanceMilestone + 99);
-
-        return plasmaDropDistance;
-    }
-
-
 
     private Vector3 GetRandomPosition()
     {
@@ -31,7 +22,20 @@ public class PickupSpawner : GameBehaviour
     public void SpawnPlasma()
     {
         GameObject plasma = Instantiate(plasmaPrefab, GetRandomPosition(), transform.rotation);
-        OnPlasmaSpawned(plasma);
+        OnPickupSpawned(plasma);
+    }
+
+    public void SpawnWeaponUpgrade()
+    {
+        GameObject weaponUpgrade = Instantiate(GetRandomWeaponUpgrade(), GetRandomPosition(), transform.rotation);
+        OnPickupSpawned(weaponUpgrade);
+    }
+
+    private GameObject GetRandomWeaponUpgrade()
+    {
+        int randomIndex = Random.Range(0, weaponUpgradePrefabs.Length);
+        GameObject randomUpgradePrefab = weaponUpgradePrefabs[randomIndex];
+        return randomUpgradePrefab;
     }
 
     private void OnDrawGizmosSelected()

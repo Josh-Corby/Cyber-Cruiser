@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PickupManager : GameBehaviour
 {
@@ -9,16 +11,35 @@ public class PickupManager : GameBehaviour
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += ClearPickups;
-        PickupSpawner.OnPlasmaSpawned += AddPickup;
+        GameManager.OnPlasmaDropDistanceRequested += GenerateNewPlasmaDropDistance;
+        GameManager.OnWeaponUpgradeDropDistanceRequested += GenerateNewWeaponUpgradeDropDistance;
+        PickupSpawner.OnPickupSpawned += AddPickup;
         Pickup.OnPlasmaPickup += RemovePickup;
     }
 
     private void OnDisable()
     {
         GameManager.OnLevelCountDownStart -= ClearPickups;
-        PickupSpawner.OnPlasmaSpawned -= AddPickup;
+        GameManager.OnPlasmaDropDistanceRequested -= GenerateNewPlasmaDropDistance;
+        GameManager.OnWeaponUpgradeDropDistanceRequested -= GenerateNewWeaponUpgradeDropDistance;
+        PickupSpawner.OnPickupSpawned -= AddPickup;
         Pickup.OnPlasmaPickup -= RemovePickup;
     }
+
+    public void GenerateNewPlasmaDropDistance(int currentDistanceMilestone, Action<int> callback)
+    {
+        int plasmaDropDistance = Random.Range(currentDistanceMilestone + 15, currentDistanceMilestone + 99);
+        callback(plasmaDropDistance);
+        Debug.Log("Plasma spawn distance is " + plasmaDropDistance);
+    }
+
+    private void GenerateNewWeaponUpgradeDropDistance(int previousBossDistance, int currentBossDistance, Action<int> callback)
+    {
+        int weaponUpgradeDropDistance = Random.Range(previousBossDistance + 15, currentBossDistance);
+        callback(weaponUpgradeDropDistance);
+        Debug.Log("Weapon upgrade drop distance is " + weaponUpgradeDropDistance);
+    }
+
     private void AddPickup(GameObject pickup)
     {
         pickupsOnScreen.Add(pickup);

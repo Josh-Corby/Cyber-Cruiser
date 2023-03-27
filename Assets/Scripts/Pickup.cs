@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum PickupType
 {
-    MultiShot, Pulverizer, Plasma
+    Scatter, Pulverizer, Plasma
 }
 public class Pickup : GameBehaviour
 {
@@ -23,9 +23,8 @@ public class Pickup : GameBehaviour
                 OnPlasmaIncrease(plasmaAmount);
                 OnPlasmaPickup(gameObject);
                 break;
-
-            case PickupType.MultiShot:
-                OnWeaponUpgradePickup(PickupType.MultiShot);
+            case PickupType.Scatter:
+                OnWeaponUpgradePickup(PickupType.Scatter);
                 break;
             case PickupType.Pulverizer:
                 OnWeaponUpgradePickup(PickupType.Pulverizer);
