@@ -139,7 +139,6 @@ public class Weapon : GameBehaviour
         Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-_spreadAngle, _spreadAngle));
         return directionWithSpread;
     }
-
     private Quaternion GetFixedSpreadAngle(int index)
     {
         //get total weapon spread
@@ -196,7 +195,6 @@ public class Weapon : GameBehaviour
 
     public void FireWithSpread(Quaternion directionWithSpread)
     {
-        //Debug.Log("bullet fired");
         GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, directionWithSpread);
     }
 
@@ -208,7 +206,6 @@ public class Weapon : GameBehaviour
     private IEnumerator ResetShooting()
     {
         yield return new WaitForSeconds(_timeBetweenShots);
-        //Debug.Log("Gun is ready to fire");
         readyToFire = true;
     }
 

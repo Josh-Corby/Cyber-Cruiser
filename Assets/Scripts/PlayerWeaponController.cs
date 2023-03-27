@@ -3,14 +3,19 @@ using System.Collections;
 using System;
 
 
-public class PlayerWeaponController : MonoBehaviour
+public class PlayerWeaponController : GameBehaviour
 {
     [SerializeField] private Weapon _playerWeapon;
     [SerializeField] private bool _fireInput;
     private bool _controlsEnabled;
     private readonly float _weaponUpgradeDuration = 20;
+    private float _weaponUpgradeCounter;
 
     private Coroutine _weaponUpgradeCoroutine;
+
+    public static event Action<UISlider, float> OnWeaponUpgradeStart = null;
+    public static event Action<UISlider, float> OnWeaponUpgradeTimerTick = null;
+    public static event Action<UISlider> OnWeaponUpgradeFinished = null;
 
     private void Awake()
     {
@@ -107,7 +112,7 @@ public class PlayerWeaponController : MonoBehaviour
         //reset in case a different type of pickup is picked up while an upgrade is currently active
         ResetPlayerWeapon();
 
-        switch(upgradeType)
+        switch (upgradeType)
         {
             case PickupType.Scatter:
                 _playerWeapon.MultiShotUpgrade();
@@ -116,14 +121,22 @@ public class PlayerWeaponController : MonoBehaviour
                 _playerWeapon.PulverizerUpgrade();
                 break;
         }
-        yield return new WaitForSeconds(_weaponUpgradeDuration);
 
+        _weaponUpgradeCounter = _weaponUpgradeDuration;
+        OnWeaponUpgradeStart(GUIM.weaponUpgradeSlider, _weaponUpgradeDuration);
+        while (_weaponUpgradeCounter > 0)
+        {
+            _weaponUpgradeCounter -= Time.deltaTime;
+            OnWeaponUpgradeTimerTick(GUIM.weaponUpgradeSlider, _weaponUpgradeCounter);
+            yield return new WaitForSeconds(0.01f);
+        }
         //reset player weapon to its original values after upgrade duration is over
         ResetPlayerWeapon();
     }
 
     public void ResetPlayerWeapon()
     {
+        OnWeaponUpgradeFinished(GUIM.weaponUpgradeSlider);
         _playerWeapon.AssignWeaponInfo();
     }
 }

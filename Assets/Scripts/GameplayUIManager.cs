@@ -5,124 +5,201 @@ using TMPro;
 
 public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 {
+    public UISlider bossHealthBar;
+    public UISlider playerHealthBar;
+    public UISlider weaponUpgradeSlider;
+
+    [SerializeField] private GameObject _gameplayPanel;
+    [SerializeField] private GameObject _gameOverPanel;
+    [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _bossHealthBarUI;
+    [SerializeField] private GameObject _playerHealthBarUI;
+    [SerializeField] private GameObject _weaponUpgradeBarUI;
+
+    [SerializeField] private TMP_Text _waveCountdownText;
+    [SerializeField] private TMP_Text _plasmaCountText;
+    [SerializeField] private TMP_Text _distanceCounterText;
+    [SerializeField] private TMP_Text _bossNameText;
+
+    private Coroutine _waveCountdownCoroutine;
+
     public static event Action OnCountdownDone = null;
 
-    private Coroutine waveCountdown;
-
-    [SerializeField] private TMP_Text waveCountdownText;
-    [SerializeField] private TMP_Text plasmaCountText;
-    public TMP_Text distanceCounterText;
-    [SerializeField] private GameObject gameplayPanel;
-    [SerializeField] private GameObject gameOverPanel;
-    [SerializeField] private GameObject pausePanel;
-
-    [SerializeField] private TMP_Text bossNameText;
-    [SerializeField] private GameObject bossHealthBarUI;
-    private HealthBar bossHealthBar;
+    public string BossName
+    {
+        set
+        {
+            _bossNameText.text = value;
+            _bossNameText.enabled = true;
+        }
+    }
+    public string DistanceCounter
+    {
+        set
+        {
+            _distanceCounterText.text = value;
+        }
+    }
+    public string PlasmaCount
+    {
+        set
+        {
+            _plasmaCountText.text = value;
+        }
+    }
+    public string WaveCountDown
+    {
+        set
+        {
+            _waveCountdownText.text = value;
+        }
+    }
 
     private void Awake()
     {
-        bossHealthBar = bossHealthBarUI.GetComponent<HealthBar>();
+        bossHealthBar = _bossHealthBarUI.GetComponent<UISlider>();
+        playerHealthBar = _playerHealthBarUI.GetComponent<UISlider>();
     }
     private void OnEnable()
     {
-        Boss.OnBossDied += DisableBossHealthBar;
         EnemySpawner.OnBossSpawned += EnableBossUI;
+        Boss.OnBossDamage += ChangeSliderValue;
+        Boss.OnBossDied += DisableBossUI;
+
+        PlayerManager.OnPlayerMaxHealthChange += EnableSlider;
+        PlayerManager.OnPlayerCurrentHealthChange += ChangeSliderValue;
+
+        PlayerWeaponController.OnWeaponUpgradeStart += EnableSlider;
+        PlayerWeaponController.OnWeaponUpgradeTimerTick += ChangeSliderValue;
+        PlayerWeaponController.OnWeaponUpgradeFinished += DisableSlider;
+
         GameManager.OnLevelCountDownStart += StartMission;
         GameManager.OnGamePaused += EnablePauseUI;
-        GameManager.OnGameResumed += DisablePauseUI; 
+        GameManager.OnGameResumed += DisablePauseUI;
         PlayerManager.OnPlayerDeath += GameOverUI;
-        PlayerManager.OnPlasmaChange += UpdatePlasmaText;
+        GameManager.OnDistanceChanged += UpdateDistanceText;
+        PlayerManager.OnPlasmaChange += UpdatePlasmaText;     
     }
 
     private void OnDisable()
     {
-        Boss.OnBossDied -= DisableBossHealthBar;
         EnemySpawner.OnBossSpawned -= EnableBossUI;
+        Boss.OnBossDamage -= ChangeSliderValue;
+        Boss.OnBossDied -= DisableBossUI;
+
+        PlayerManager.OnPlayerMaxHealthChange -= EnableSlider;
+        PlayerManager.OnPlayerCurrentHealthChange -= ChangeSliderValue;
+
+        PlayerWeaponController.OnWeaponUpgradeStart -= EnableSlider;
+        PlayerWeaponController.OnWeaponUpgradeTimerTick -= ChangeSliderValue;
+        PlayerWeaponController.OnWeaponUpgradeFinished -= DisableSlider;
+
         GameManager.OnLevelCountDownStart -= StartMission;
         GameManager.OnGamePaused -= EnablePauseUI;
         GameManager.OnGameResumed -= DisablePauseUI;
-        PlayerManager.OnPlayerDeath -= GameOverUI;
+        PlayerManager.OnPlayerDeath -= GameOverUI;    
+        GameManager.OnDistanceChanged -= UpdateDistanceText;
         PlayerManager.OnPlasmaChange -= UpdatePlasmaText;
     }
 
     private void StartMission()
     {
         ResetWaveCountdown();
-        gameplayPanel.SetActive(true);
-        gameOverPanel.SetActive(false);
-        pausePanel.SetActive(false);
+        _gameplayPanel.SetActive(true);
+        _gameOverPanel.SetActive(false);
+        _pausePanel.SetActive(false);
     }
 
     private void ResetWaveCountdown()
     {
-        if (waveCountdown != null)
+        if (_waveCountdownCoroutine != null)
         {
-            StopCoroutine(waveCountdown);
+            StopCoroutine(_waveCountdownCoroutine);
         }
         StartWaveCountdown();
     }
+
     private void StartWaveCountdown()
     {
-        waveCountdown = StartCoroutine(WaveCountdown());
+        _waveCountdownCoroutine = StartCoroutine(WaveCountdown());
+    }
+
+    private void EnableSlider(UISlider slider, float maxValue)
+    {
+        slider.gameObject.SetActive(true);
+        slider.SetSliderValues(maxValue);
+    }
+
+    private void DisableSlider(UISlider slider)
+    {
+        slider.gameObject.SetActive(false);
+    }
+
+    private void ChangeSliderValue(UISlider slider, float value)
+    {
+        slider.SetSliderValue(value);
     }
 
     private void EnableBossUI(Enemy boss)
     {
-        bossNameText.text = boss.gameObject.name;
-        bossNameText.enabled = true;
-        bossHealthBarUI.SetActive(true);
-        bossHealthBar.SetHealthBar(boss);
+        BossName = boss.gameObject.name;
+        EnableSlider(bossHealthBar, boss.MaxHealth);
+    }
+    private void DisableBossUI()
+    {
+        _bossHealthBarUI.SetActive(false);
+        DisableSlider(bossHealthBar);
+        _bossNameText.enabled = false;
+        BossName = "";
     }
 
-    private void DisableBossHealthBar()
-    {
-        bossNameText.enabled = false;
-        bossNameText.text = "";
-        bossHealthBarUI.SetActive(false);
-    }
     private IEnumerator WaveCountdown()
     {
-        waveCountdownText.enabled = true;
+        _waveCountdownText.enabled = true;
         float waveCountdown = 3f;
         float startActiveTimer = 1f;
 
         while (waveCountdown >= 0)
         {
-            waveCountdownText.text = waveCountdown.ToString("F2");
+            WaveCountDown = waveCountdown.ToString("F2");
             waveCountdown -= Time.deltaTime;
             yield return null;
         }
 
         OnCountdownDone?.Invoke();
-        waveCountdownText.text = "GO!";
+        WaveCountDown = "GO!";
 
         while(startActiveTimer >= 0)
         {
             startActiveTimer -= Time.deltaTime;
             yield return null;
         }
-        waveCountdownText.enabled = false;
+        _waveCountdownText.enabled = false;
     }
 
     private void UpdatePlasmaText(int plasmaCount)
     {
-        plasmaCountText.text = plasmaCount.ToString();
+        PlasmaCount = plasmaCount.ToString();
+    }
+
+    private void UpdateDistanceText(int distance)
+    {
+        DistanceCounter = distance.ToString();
     }
 
     private void GameOverUI()
     {
         Cursor.visible = true;
-        gameOverPanel.SetActive(true);
+        _gameOverPanel.SetActive(true);
     }
 
     private void EnablePauseUI()
     {
-        pausePanel.SetActive(true);
+        _pausePanel.SetActive(true);
     }
 
     private void DisablePauseUI()
     {
-        pausePanel.SetActive(false);
+        _pausePanel.SetActive(false);
     }
 }

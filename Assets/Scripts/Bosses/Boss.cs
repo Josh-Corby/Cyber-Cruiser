@@ -5,7 +5,7 @@ using Random = UnityEngine.Random;
 
 public class Boss : Enemy, IDamageable
 {
-    public static event Action<float> OnBossDamage = null;
+    public static event Action<UISlider, float> OnBossDamage = null;
     public static event Action OnBossDied = null;
 
     private BossMovement _movement;
@@ -25,7 +25,7 @@ public class Boss : Enemy, IDamageable
     private void AssignBossInfo()
     {
         unitName = _unitInfo.unitName;
-        maxHealth = _unitInfo.maxHealth;
+        _maxHealth = _unitInfo.maxHealth;
         _movement.speed = _unitInfo.speed;
     }
     protected override void Start()
@@ -70,7 +70,7 @@ public class Boss : Enemy, IDamageable
 
     public override void Damage(float damage)
     {
-        OnBossDamage(currentHealth);
+        OnBossDamage(GUIM.bossHealthBar, CurrentHealth);
         base.Damage(damage);
     }
 

@@ -115,5 +115,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plasmaAmount: 1
-  _speed: 1
+  _speed: 3
   pickup: 2

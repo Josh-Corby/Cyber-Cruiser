@@ -16,8 +16,8 @@ public class Enemy : GameBehaviour, IDamageable
 
 
     public string unitName;
-    public float maxHealth;
-    public float currentHealth;
+    protected float _maxHealth;
+    private float _currentHealth;
     private bool _explodeOnDeath;
     private float _explosionRadius;
     private float _explosionDamage;
@@ -25,13 +25,37 @@ public class Enemy : GameBehaviour, IDamageable
 
 
     protected const string DEAD_ENEMY_LAYER_NAME = "DeadEnemy";
+
+    public float CurrentHealth
+    {
+        get
+        {
+            return _currentHealth;
+        }
+        set
+        {
+            _currentHealth = value;
+        }
+    }
+
+    public float MaxHealth
+    {
+        get
+        {
+            return _maxHealth;
+        }
+        set
+        {
+            _maxHealth = value;
+        }
+    }
     protected virtual void Awake()
     {
         AssignEnemyInfo();
     }
     protected virtual void Start()
     {
-        currentHealth = maxHealth;
+        _currentHealth = _maxHealth;
     }
 
     private void AssignEnemyInfo()
@@ -43,7 +67,7 @@ public class Enemy : GameBehaviour, IDamageable
         _rb2D = GetComponent<Rigidbody2D>();
 
         unitName = _unitInfo.unitName;
-        maxHealth = _unitInfo.maxHealth;
+        _maxHealth = _unitInfo.maxHealth;
         _explodeOnDeath = _unitInfo.explodeOnDeath;
         _explosionRadius = _unitInfo.explosionRadius;
         _explosionDamage = _unitInfo.explosionDamage;
@@ -54,8 +78,8 @@ public class Enemy : GameBehaviour, IDamageable
 
     public virtual void Damage(float damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        _currentHealth -= damage;
+        if (_currentHealth <= 0)
         {
             if (_explodeOnDeath)
             {

@@ -3,51 +3,62 @@ using System;
 
 public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 {
-    public static event Action OnPlayerDeath = null;
-    public static event Action<int> OnPlasmaChange = null;
+    private const string PLAYERPLASMA = "PlayerPlasma";
 
     [HideInInspector] public GameObject player;
     private PlayerShieldController shieldController;
-
     [SerializeField] private int plasmaCost;
-
-    private float weaponPackCountdown;
-    private float weaponPackDuration;
-
     private float _currentHealth;
-    [SerializeField] private int maxHealth;
-    public float PlayerHealth
+    [SerializeField] private float _maxHealth;
+    [SerializeField] private int _playerPlasma;
+
+
+    public static event Action OnPlayerDeath = null;
+    public static event Action<int> OnPlasmaChange = null;
+    public static event Action<UISlider, float> OnPlayerMaxHealthChange = null;
+    public static event Action<UISlider, float> OnPlayerCurrentHealthChange = null;
+
+
+    public float PlayerCurrentHealth
     {
         get
         {
             return _currentHealth;
         }
-
         set
         {
             _currentHealth = value;
-
+            if (_currentHealth > _maxHealth)
+            {
+                _currentHealth = _maxHealth;
+            }
+            OnPlayerCurrentHealthChange(GUIM.playerHealthBar, _currentHealth);
             if (_currentHealth <= 0)
             {
                 Destroy();
-            }
-
-            if(_currentHealth > maxHealth)
-            {
-                _currentHealth = maxHealth;
-            }
+            }       
         }
     }
 
-    [SerializeField] private int _playerPlasma;
-    private const string PLAYERPLASMA = "PlayerPlasma";
+    public float PlayerMaxHealth
+    {
+        get
+        {
+            return _maxHealth;
+        }
+        set
+        {
+            _maxHealth = value;
+            OnPlayerMaxHealthChange(GUIM.playerHealthBar, _maxHealth);
+        }
+    }
+
     public int PlayerPlasma
     {
         get
         {
             return _playerPlasma;
         }
-
         set
         {
             _playerPlasma = value;
@@ -76,22 +87,24 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void Start()
     {
+        OnPlayerMaxHealthChange(GUIM.playerHealthBar, _maxHealth);
         FullHeal();
         RestoreSavedPlasma();
     }
 
     private void FullHeal()
     {
-        PlayerHealth += maxHealth;
+        PlayerCurrentHealth = _maxHealth;
+        OnPlayerCurrentHealthChange(GUIM.playerHealthBar, _currentHealth);
     }
 
     public void Heal(float heal)
     {
-        PlayerHealth  = maxHealth;
+        PlayerCurrentHealth  = _maxHealth;
     }
     public void Damage(float damage)
     {
-        PlayerHealth -= damage;
+        PlayerCurrentHealth -= damage;
     }
 
     public void Destroy()
@@ -153,7 +166,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void CheckPlasma()
     {
-        if (_playerPlasma >= plasmaCost)
+        if (PlayerPlasma >= plasmaCost)
         {
             ReducePlasma(plasmaCost);
             ActivateShields();
@@ -173,6 +186,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void OnApplicationQuit()
     {
-        PlayerPrefs.SetInt(nameof(PLAYERPLASMA), _playerPlasma);
+        PlayerPrefs.SetInt(nameof(PLAYERPLASMA), PlayerPlasma);
     }
 }

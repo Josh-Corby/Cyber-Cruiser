@@ -7,7 +7,12 @@ using Random = UnityEngine.Random;
 public class PickupManager : GameBehaviour
 {
     private List<GameObject> pickupsOnScreen = new List<GameObject>();
+    private PickupSpawner _pickupSpawner;
 
+    private void Awake()
+    {
+        _pickupSpawner = GetComponentInChildren<PickupSpawner>();
+    }
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += ClearPickups;
@@ -39,6 +44,7 @@ public class PickupManager : GameBehaviour
         callback(weaponUpgradeDropDistance);
         Debug.Log("Weapon upgrade drop distance is " + weaponUpgradeDropDistance);
     }
+
 
     private void AddPickup(GameObject pickup)
     {

@@ -10,6 +10,17 @@ public class PickupSpawner : GameBehaviour
     [SerializeField] private GameObject plasmaPrefab;
     [SerializeField] private GameObject[] weaponUpgradePrefabs;
 
+    private void OnEnable()
+    {
+        GameManager.OnPlasmaDistanceReached += SpawnPlasma;
+        GameManager.OnWeaponUpgradeDistanceReached += SpawnWeaponUpgrade;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnPlasmaDistanceReached -= SpawnPlasma;
+        GameManager.OnWeaponUpgradeDistanceReached -= SpawnWeaponUpgrade;
+    }
     private Vector3 GetRandomPosition()
     {
         float x = Random.Range(-spawnSize.x / 2, spawnSize.x / 2);
