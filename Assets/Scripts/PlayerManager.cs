@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 {
     private const string PLAYER_PLASMA = "PlayerPlasma";
-    private const float I_FRAMES_DURATION = 1f;
+    private const float I_FRAMES_DURATION = 0.3f;
 
     [HideInInspector] public GameObject player;
     private PlayerShieldController shieldController;

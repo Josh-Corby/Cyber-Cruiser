@@ -26,7 +26,7 @@ MonoBehaviour:
   seekPlayerY: 0
   seekSpeed: 0
   sinUpDownMovement: 1
-  sinFrequency: 2.6
+  sinFrequency: 6
   sinMagnitude: 0.03
   homeOnPlayer: 0
   homeTurnSpeed: 0

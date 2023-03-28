@@ -50,6 +50,19 @@ public class GameManager : GameBehaviour<GameManager>
         }
     }
 
+    public float DistanceFloat
+    {
+        get
+        {
+            return _distanceFloat;
+        }
+
+        set
+        {
+            _distanceFloat = value;
+        }
+    }
+
     public int CurrentDistanceMilestone
     {
         get
@@ -85,6 +98,18 @@ public class GameManager : GameBehaviour<GameManager>
         }
     }
 
+    public bool IsDistanceIncreasing
+    {
+        get
+        {
+            return _isDistanceIncreasing;
+        }
+        set
+        {
+            _isDistanceIncreasing = value;
+        }
+    }
+
     private void OnEnable()
     {
         InputManager.OnPause += TogglePause;
@@ -105,39 +130,26 @@ public class GameManager : GameBehaviour<GameManager>
         EnemySpawnerManager.OnBossDied -= OnBossDied;
     }
 
-    private void Start()
-    {
-        ResetDistances();
-    }
-
-    private void ResetDistances()
-    {
-        isDistanceMilestoneIncreased = false;
-        CurrentDistanceMilestone = 0;
-        PreviousBossDistance = 0;
-        CurrentBossDistance = BOSS_SPAWN_DISTANCE;
-    }
-
     private void Update()
     {
-        if (!_isDistanceIncreasing) return;
+        if (!IsDistanceIncreasing) return;
 
-        if (_isDistanceIncreasing)
+        if (IsDistanceIncreasing)
         {
-            _distanceFloat += Time.deltaTime * 10;
-            DistanceInt = Mathf.RoundToInt(_distanceFloat);
+            DistanceFloat += Time.deltaTime * 10;
+            DistanceInt = Mathf.RoundToInt(DistanceFloat);
 
             //increment distance milestone every 100 units
-            if (_distanceInt % MILESTONE_DISTANCE == 0 && !isDistanceMilestoneIncreased)
+            if (DistanceInt % MILESTONE_DISTANCE == 0 && !isDistanceMilestoneIncreased)
             {   
                 StartCoroutine(IncreaseDistanceMilestone());
                 RequestNewPlasmaDropDistance();
             }
 
             //start boss fight at boss distance
-            if (_distanceInt > 0 && _distanceInt % _currentBossDistance == 0)
+            if (DistanceInt > 0 && DistanceInt % CurrentBossDistance == 0)
             {
-                PreviousBossDistance = _distanceInt;
+                PreviousBossDistance = DistanceInt;
                 CurrentBossDistance += BOSS_SPAWN_DISTANCE;
                 Debug.Log("boss distance reached");
                 StopIncreasingDistance();
@@ -146,7 +158,7 @@ public class GameManager : GameBehaviour<GameManager>
             }
 
             //spawn plasma at seeded distance
-            if (_distanceInt == _plasmaDropDistance && !_isPlasmaSpawned)
+            if (DistanceInt == _plasmaDropDistance && !_isPlasmaSpawned)
             {
                 OnPlasmaDistanceReached?.Invoke();
                 _isPlasmaSpawned = true;
@@ -200,32 +212,36 @@ public class GameManager : GameBehaviour<GameManager>
         StartIncreasingDistance();
     }
 
-    private void ResetCounter()
-    {
-        _isDistanceIncreasing = false;
-        _distanceFloat = 0;
-        DistanceInt = 0;
-    }
 
     public void StartLevel()
     {
         isPaused = false;
         Time.timeScale = 1f;
         OnLevelCountDownStart?.Invoke();
-        ResetCounter();
+        ResetValues();
         gameplayObjects.SetActive(true);
     }
 
+    private void ResetValues()
+    {
+        CurrentDistanceMilestone = 0;
+        PreviousBossDistance = 0;
+        DistanceFloat = 0;
+        DistanceInt = 0;
+        CurrentBossDistance = BOSS_SPAWN_DISTANCE;
+        isDistanceMilestoneIncreased = false;
+        IsDistanceIncreasing = false;  
+    }
     private void StartIncreasingDistance()
     {
-        _distanceFloat += 1;
+        DistanceFloat += 1;
         DistanceInt += 1;
-        _isDistanceIncreasing = true;
+        IsDistanceIncreasing = true;
     }
 
     private void StopIncreasingDistance()
     {
-        _isDistanceIncreasing = false;
+        IsDistanceIncreasing = false;
     }
 
     public void TogglePause()

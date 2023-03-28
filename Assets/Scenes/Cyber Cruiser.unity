@@ -3156,12 +3156,7 @@ MonoBehaviour:
   - {fileID: 984547534}
   - {fileID: 1370326090}
   - {fileID: 47135018}
-  - {fileID: 485082065}
-  spawnerWeights:
-  - 0.1
-  - 0.2
-  - 0.3
-  - 0.4
+  - {fileID: 71091565}
   spawnEnemyInterval: 1.75
   spawnEnemyReduction: 0.1
   enemySpeedIncrement: 0.1

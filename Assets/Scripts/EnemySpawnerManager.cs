@@ -11,7 +11,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     [SerializeField] private int enemiesToSpawn;
     [SerializeField] private EnemySpawner[] spawners;
-    [SerializeField] private List<float> spawnerWeights;
+    //[SerializeField] private List<float> spawnerWeights;
     [SerializeField] private float spawnEnemyInterval;
     [SerializeField] private float spawnEnemyReduction;
     [SerializeField] private float enemySpeedIncrement;
@@ -147,28 +147,28 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         }
     }
 
-    private void NormalizeWeights()
-    {
-        float sum = spawnerWeights.Sum();
-        for (int i = 0; i < spawnerWeights.Count; i++)
-        {
-            spawnerWeights[i] /= sum;
-        }
-    }
-    private EnemySpawner GetRandomWeightedSpawner()
-    {
-        float randomNumber = Random.value;
-        float weightSum = 0;
-        for (int i = 0; i < spawnerWeights.Count; i++)
-        {
-            weightSum += spawnerWeights[i];
-            if (weightSum >= randomNumber)
-            {
-                return spawners[i];
-            }
-        }
-        return spawners[spawners.Length - 1];
-    }
+    //private void NormalizeWeights()
+    //{
+    //    float sum = spawnerWeights.Sum();
+    //    for (int i = 0; i < spawnerWeights.Count; i++)
+    //    {
+    //        spawnerWeights[i] /= sum;
+    //    }
+    //}
+    //private EnemySpawner GetRandomWeightedSpawner()
+    //{
+    //    float randomNumber = Random.value;
+    //    float weightSum = 0;
+    //    for (int i = 0; i < spawnerWeights.Count; i++)
+    //    {
+    //        weightSum += spawnerWeights[i];
+    //        if (weightSum >= randomNumber)
+    //        {
+    //            return spawners[i];
+    //        }
+    //    }
+    //    return spawners[spawners.Length - 1];
+    //}
     private void ClearEnemiesAlive()
     {
         if (enemiesAlive.Count > 0)
