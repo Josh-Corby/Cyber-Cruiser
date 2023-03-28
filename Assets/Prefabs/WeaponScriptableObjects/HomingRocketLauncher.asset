@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6690d9937eefb004b80a60b01e3719af, type: 3}
+  m_Name: HomingRocketLauncher
+  m_EditorClassIdentifier: 
+  weaponName: 
+  objectToFire: {fileID: 2653145768784104840, guid: 0f1e8bf274a42564ca36a284fb8da74a, type: 3}
+  timeBetweenShots: 1
+  holdToFire: 0
+  useSpread: 1
+  spreadAngle: 30
+  burstFire: 0
+  bursts: 0
+  timeBetweenBurstShots: 0
+  multiFire: 1
+  multiFireShots: 0
+  isMultiFireSpreadRandom: 1

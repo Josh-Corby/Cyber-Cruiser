@@ -156,11 +156,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitInfo: {fileID: 11400000, guid: 45c00a2ce362ab249b4c9699c248f74d, type: 2}
   unitName: 
-  maxHealth: 50
-  currentHealth: 0
-  _explodeOnDeath: 0
-  attackCooldown: 2
-  attackTimer: 0
+  _currentHealth: 0
+  _attackCooldown: 1
+  _attackTimer: 0
   laserLaunchers:
   - {fileID: 5710954070109479895}
   - {fileID: 1958697201700664333}
@@ -177,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staticMovement: 0
+  _staticMovement: 0
   speed: 2
 --- !u!1 &3534197723866894886
 GameObject:
@@ -331,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponInfo: {fileID: 0}
+  _weaponInfo: {fileID: 11400000, guid: 9818121d79463934baba9740bb6cab5d, type: 2}
   readyToFire: 0
   _holdToFire: 0
 --- !u!1 &3807874348917580334
@@ -517,7 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponInfo: {fileID: 0}
+  _weaponInfo: {fileID: 11400000, guid: 9818121d79463934baba9740bb6cab5d, type: 2}
   readyToFire: 0
   _holdToFire: 0
 --- !u!1 &7020472227476826103

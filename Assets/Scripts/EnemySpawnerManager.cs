@@ -17,14 +17,13 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [SerializeField] private float enemySpeedIncrement;
     [SerializeField] private EnemySpawner bossSpawner;
     [SerializeField] private GameObject[] bossPrefabs;
-    private GameObject currentBoss;
-    private int bossCounter;
+    [SerializeField] private List<GameObject> _bossesToSpawn = new();
     private Coroutine spawnEnemiesCoroutine;
-    public List<GameObject> enemiesAlive = new();
-    public List<GameObject> gunshipsAlive = new();
+    [HideInInspector] public List<GameObject> enemiesAlive = new();
+    [HideInInspector] public List<GameObject> gunshipsAlive = new();
+
     public bool spawnEnemies;
     public GameObject bossGoalPosition;
-
     public Transform dragonMovePoint;
 
     private void OnEnable()
@@ -60,8 +59,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void Start()
     {
         spawnEnemyInterval = 1f;
-        bossCounter = 0;
-        currentBoss = bossPrefabs[bossCounter];
+    }
+    private void RestartLevel()
+    {
+        StopSpawningEnemies();
+        ClearEnemiesAlive();
+        ResetBossesToSpawn();
     }
 
     private void StartSpawningEnemies()
@@ -76,17 +79,37 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         {
             StopCoroutine(spawnEnemiesCoroutine);
         }
+        spawnEnemies = false;
     }
 
+    private void ResetBossesToSpawn()
+    {
+        foreach (GameObject boss in bossPrefabs)
+        {
+            _bossesToSpawn.Add(boss);
+        }
+    }
+
+    /// <summary>
+    /// Select a random gameobject from bosses left to spawn
+    /// </summary>
+    /// <returns>return boss selected</returns>
+    private GameObject GetRandomBossToSpawn()
+    {
+        int index = Random.Range(0, _bossesToSpawn.Count - 1);
+        GameObject boss = _bossesToSpawn[index];
+        _bossesToSpawn.RemoveAt(index);
+
+        if(_bossesToSpawn.Count == 0)
+        {
+            ResetBossesToSpawn();
+        }
+        return boss;
+    }
     private void SpawnBoss()
     {
         StopSpawningEnemies();
-
-
-        bossSpawner.StartBossSpawn(currentBoss);
-        //bossCounter += 1;
-        //currentBoss = bossPrefabs[bossCounter];
-        spawnEnemies = false;
+        bossSpawner.StartBossSpawn(GetRandomBossToSpawn());
     }
 
     private void AddEnemy(List<GameObject> listToAddTo, GameObject enemy)
@@ -121,12 +144,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
                 StartSpawningEnemies();
             }
         }
-    }
-
-    private void RestartLevel()
-    {
-        StopSpawningEnemies();
-        ClearEnemiesAlive();
     }
 
     private IEnumerator SpawnEnemies()

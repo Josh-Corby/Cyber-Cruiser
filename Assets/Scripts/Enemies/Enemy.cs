@@ -127,7 +127,8 @@ public class Enemy : GameBehaviour, IDamageable
 
         if (_weapon != null)
         {
-            _weapon.DisableWeapon();
+            _weapon.gameObject.SetActive(false);
+            //_weapon.DisableWeapon();
         }
         if (_spriteRenderer != null)
         {

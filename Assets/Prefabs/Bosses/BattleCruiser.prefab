@@ -156,9 +156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitInfo: {fileID: 11400000, guid: b3eead9fae217544fbca7e9c01d12c17, type: 2}
   unitName: 
-  maxHealth: 0
-  currentHealth: 0
-  _attackCooldown: 0
+  _currentHealth: 0
+  _attackCooldown: 1
   _attackTimer: 0
   _mineReleasePoint: {fileID: 5151822783525052687}
   _seekerMinePrefab: {fileID: 2653145768784104840, guid: 1e99f4fec6f620d49bacebf379bf374b, type: 3}

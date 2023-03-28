@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1365686145452451924}
   - component: {fileID: 1365686145452451946}
   - component: {fileID: 2603029663897889462}
-  - component: {fileID: 5542412715303961584}
+  - component: {fileID: 876452731815824654}
   m_Layer: 7
   m_Name: Behemoth
   m_TagString: Untagged
@@ -156,14 +156,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitInfo: {fileID: 11400000, guid: 78f9a89cd02828243b6c80b47d51d549, type: 2}
   unitName: 
-  maxHealth: 50
-  currentHealth: 0
-  _explodeOnDeath: 0
-  attackCooldown: 3
-  attackTimer: 0
+  _currentHealth: 0
+  _attackCooldown: 3
+  _attackTimer: 0
   missileLauncher: {fileID: 2232906412665527685}
   homingMissileLauncher: {fileID: 2603699317816938872}
---- !u!114 &5542412715303961584
+--- !u!114 &876452731815824654
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -172,12 +170,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 519574247064427714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 365a316a2f7b6c445bfc232c6280bd6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnemyDead: 0
-  direction: {x: 0, y: 0}
-  _speed: 0
+  _staticMovement: 0
+  speed: 0
 --- !u!1001 &4815911597949720423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -265,6 +262,10 @@ PrefabInstance:
       propertyPath: holdToFire
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6640960726374861538, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: _weaponInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: 721c41a4251c5fb4eac836df1fa797fb, type: 2}
     - target: {fileID: 6640960726374861538, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: objectToFire
       value: 
@@ -398,6 +399,10 @@ PrefabInstance:
       propertyPath: holdToFire
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6640960726374861538, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: _weaponInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: cd436523be8b21a489263e4809b4293b, type: 2}
     - target: {fileID: 6640960726374861538, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: objectToFire
       value: 

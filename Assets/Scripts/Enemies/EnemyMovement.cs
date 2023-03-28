@@ -109,7 +109,6 @@ public class EnemyMovement : GameBehaviour
             {
                 RotateTowardsPlayer();
             }
-            return;
         }
 
         MoveForward();

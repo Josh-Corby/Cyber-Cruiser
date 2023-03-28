@@ -5,7 +5,7 @@ using TMPro;
 
 public class GameManager : GameBehaviour<GameManager>
 {
-    private const int BOSS_SPAWN_DISTANCE = 500;
+    [SerializeField] private int _bossSpawnDistance = 500;
     private const int MILESTONE_DISTANCE = 100;
 
     public bool isPaused = false;
@@ -150,7 +150,7 @@ public class GameManager : GameBehaviour<GameManager>
             if (DistanceInt > 0 && DistanceInt % CurrentBossDistance == 0)
             {
                 PreviousBossDistance = DistanceInt;
-                CurrentBossDistance += BOSS_SPAWN_DISTANCE;
+                CurrentBossDistance += _bossSpawnDistance;
                 Debug.Log("boss distance reached");
                 StopIncreasingDistance();
                 OnBossDistanceReached?.Invoke();
@@ -228,7 +228,7 @@ public class GameManager : GameBehaviour<GameManager>
         PreviousBossDistance = 0;
         DistanceFloat = 0;
         DistanceInt = 0;
-        CurrentBossDistance = BOSS_SPAWN_DISTANCE;
+        CurrentBossDistance = _bossSpawnDistance;
         isDistanceMilestoneIncreased = false;
         IsDistanceIncreasing = false;  
     }

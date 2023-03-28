@@ -19,16 +19,13 @@ public class Boss : Enemy, IDamageable
     {
         base.Awake();
         _movement = GetComponent<BossMovement>();
-        //AssignBossInfo();
+        SetBossSpeed();
         bossMoveset = GetComponent<IBoss>();
     }
 
-    private void AssignBossInfo()
+    private void SetBossSpeed()
     {
-        unitName = _unitInfo.unitName;
-        _maxHealth = _unitInfo.maxHealth;
         _movement.speed = _unitInfo.speed;
-        
     }
     protected override void Start()
     {
