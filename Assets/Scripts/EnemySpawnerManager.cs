@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
+using System.Linq;
 
 public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 {
@@ -10,6 +11,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     [SerializeField] private int enemiesToSpawn;
     [SerializeField] private EnemySpawner[] spawners;
+    [SerializeField] private List<float> spawnerWeights;
     [SerializeField] private float spawnEnemyInterval;
     [SerializeField] private float spawnEnemyReduction;
     [SerializeField] private float enemySpeedIncrement;
@@ -27,7 +29,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void OnEnable()
     {
-
         GameManager.OnLevelCountDownStart += RestartLevel;
         GameManager.OnBossDistanceReached += SpawnBoss;
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
@@ -143,9 +144,31 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         {
             EnemySpawner currentspawner = spawners[Random.Range(0, spawners.Length - 1)];
             currentspawner.StartSpawnProcess();
-        }    
+        }
     }
 
+    private void NormalizeWeights()
+    {
+        float sum = spawnerWeights.Sum();
+        for (int i = 0; i < spawnerWeights.Count; i++)
+        {
+            spawnerWeights[i] /= sum;
+        }
+    }
+    private EnemySpawner GetRandomWeightedSpawner()
+    {
+        float randomNumber = Random.value;
+        float weightSum = 0;
+        for (int i = 0; i < spawnerWeights.Count; i++)
+        {
+            weightSum += spawnerWeights[i];
+            if (weightSum >= randomNumber)
+            {
+                return spawners[i];
+            }
+        }
+        return spawners[spawners.Length - 1];
+    }
     private void ClearEnemiesAlive()
     {
         if (enemiesAlive.Count > 0)

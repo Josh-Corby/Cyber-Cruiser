@@ -17,8 +17,9 @@ public class Boss : Enemy, IDamageable
 
     protected override void Awake()
     {
+        base.Awake();
         _movement = GetComponent<BossMovement>();
-        AssignBossInfo();
+        //AssignBossInfo();
         bossMoveset = GetComponent<IBoss>();
     }
 
@@ -27,6 +28,7 @@ public class Boss : Enemy, IDamageable
         unitName = _unitInfo.unitName;
         _maxHealth = _unitInfo.maxHealth;
         _movement.speed = _unitInfo.speed;
+        
     }
     protected override void Start()
     {

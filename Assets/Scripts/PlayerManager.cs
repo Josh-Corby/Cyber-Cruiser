@@ -1,9 +1,11 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
 public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 {
-    private const string PLAYERPLASMA = "PlayerPlasma";
+    private const string PLAYER_PLASMA = "PlayerPlasma";
+    private const float I_FRAMES_DURATION = 1f;
 
     [HideInInspector] public GameObject player;
     private PlayerShieldController shieldController;
@@ -11,13 +13,13 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     private float _currentHealth;
     [SerializeField] private float _maxHealth;
     [SerializeField] private int _playerPlasma;
-
+    [SerializeField] private Collider2D _playerCollider;
+    private bool _hasPlayerTakenDamage;
 
     public static event Action OnPlayerDeath = null;
     public static event Action<int> OnPlasmaChange = null;
     public static event Action<UISlider, float> OnPlayerMaxHealthChange = null;
     public static event Action<UISlider, float> OnPlayerCurrentHealthChange = null;
-
 
     public float PlayerCurrentHealth
     {
@@ -68,9 +70,11 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void Awake()
     {
+        _playerCollider = GetComponent<Collider2D>();
         shieldController = GetComponentInChildren<PlayerShieldController>();
         player = gameObject;
     }
+
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += FullHeal;
@@ -90,6 +94,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         OnPlayerMaxHealthChange(GUIM.playerHealthBar, _maxHealth);
         FullHeal();
         RestoreSavedPlasma();
+        _hasPlayerTakenDamage = false;
     }
 
     private void FullHeal()
@@ -102,11 +107,24 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         PlayerCurrentHealth  = _maxHealth;
     }
+
     public void Damage(float damage)
     {
-        PlayerCurrentHealth -= damage;
+        if (!_hasPlayerTakenDamage)
+        {
+            _hasPlayerTakenDamage = true;
+            PlayerCurrentHealth -= damage;
+            StartCoroutine(PlayerDamage());
+        }    
     }
 
+    private IEnumerator PlayerDamage()
+    {
+        _playerCollider.enabled = false;     
+        yield return new WaitForSeconds(I_FRAMES_DURATION);
+        _playerCollider.enabled = true;
+        _hasPlayerTakenDamage = false;
+    }
     public void Destroy()
     {
         //Debug.Log("Player dead");
@@ -125,7 +143,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void RestoreSavedPlasma()
     {
-        PlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYERPLASMA));
+        PlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -186,6 +204,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void OnApplicationQuit()
     {
-        PlayerPrefs.SetInt(nameof(PLAYERPLASMA), PlayerPlasma);
+        PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), PlayerPlasma);
     }
 }

@@ -11,13 +11,10 @@ public class Enemy : GameBehaviour, IDamageable
     private EnemyMovement _unitMovement;
     private EnemyWeaponController _weapon;
     private SpriteRenderer _spriteRenderer;
-    private Collider2D _collider;
-    private Rigidbody2D _rb2D;
-
 
     public string unitName;
     protected float _maxHealth;
-    private float _currentHealth;
+    [SerializeField] private float _currentHealth;
     private bool _explodeOnDeath;
     private float _explosionRadius;
     private float _explosionDamage;
@@ -37,7 +34,6 @@ public class Enemy : GameBehaviour, IDamageable
             _currentHealth = value;
         }
     }
-
     public float MaxHealth
     {
         get
@@ -60,20 +56,26 @@ public class Enemy : GameBehaviour, IDamageable
 
     private void AssignEnemyInfo()
     {
-        _unitMovement = GetComponent<EnemyMovement>();
+       
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _weapon = GetComponentInChildren<EnemyWeaponController>();
-        _collider = GetComponent<Collider2D>();
-        _rb2D = GetComponent<Rigidbody2D>();
-
         unitName = _unitInfo.unitName;
         _maxHealth = _unitInfo.maxHealth;
         _explodeOnDeath = _unitInfo.explodeOnDeath;
-        _explosionRadius = _unitInfo.explosionRadius;
-        _explosionDamage = _unitInfo.explosionDamage;
-        _explosionEffect = _unitInfo.explosionEffect;
 
-        _unitMovement.AssignEnemyMovementInfo(_unitInfo);
+        if (_explodeOnDeath)
+        {
+            _explosionRadius = _unitInfo.explosionRadius;
+            _explosionDamage = _unitInfo.explosionDamage;
+            _explosionEffect = _unitInfo.explosionEffect;
+        }
+
+        if (TryGetComponent<EnemyMovement>(out var enemyMovement))
+        {
+            _unitMovement = enemyMovement;
+            _unitMovement.AssignEnemyMovementInfo(_unitInfo);
+            
+        } 
     }
 
     public virtual void Damage(float damage)
@@ -81,6 +83,7 @@ public class Enemy : GameBehaviour, IDamageable
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {
+            Debug.Log("Enemy dead");
             if (_explodeOnDeath)
             {
                 Explode();
@@ -91,7 +94,7 @@ public class Enemy : GameBehaviour, IDamageable
             }
         }
     }
-    private void Explode()
+    protected void Explode()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _explosionRadius);
         foreach (Collider2D collider in colliders)
@@ -129,6 +132,7 @@ public class Enemy : GameBehaviour, IDamageable
         if (_spriteRenderer != null)
         {
             _spriteRenderer.color = Color.grey;
+            _spriteRenderer.sortingOrder = -1;
         }
 
         //wait a frame for rigidbody to be destroyed

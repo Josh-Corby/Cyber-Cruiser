@@ -144,8 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitInfo: {fileID: 11400000, guid: 80cf879db92239b419e7ba3aac9ff3a8, type: 2}
   unitName: 
-  maxHealth: 3
-  currentHealth: 0
+  _currentHealth: 0
   objectsToSpawn: 4
   laserProjectile: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
   spawnEnemies: 1

@@ -156,8 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitInfo: {fileID: 11400000, guid: 11ad0b7501b164f4ea8d6773f1c92f9a, type: 2}
   unitName: Reflector Gunship
-  maxHealth: 0
-  currentHealth: 0
+  _currentHealth: 0
 --- !u!114 &1876512611095173727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,6 +429,18 @@ PrefabInstance:
     - target: {fileID: 6498324827412908661, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_Layer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8055569515623550205, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8055569515623550205, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8055569515623550205, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: unitCollider

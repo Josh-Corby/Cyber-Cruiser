@@ -13,6 +13,8 @@ public class EnemyScriptableObject : ScriptableObject
     public float explosionDamage;
     public GameObject explosionEffect;
 
+
+
     [Header("Movement Info")]
     public MovementTypes moveTypes;
     public float speed;

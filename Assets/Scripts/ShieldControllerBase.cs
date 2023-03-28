@@ -17,33 +17,28 @@ public abstract class ShieldControllerBase : MonoBehaviour, IShield
     }
     protected void Start()
     {
-        shieldsActive = true;
         if(!_shieldsActiveOnSpawn)
         {
             DeactivateShields();
+        }
+        else if (_shieldsActiveOnSpawn)
+        {
+            ActivateShields();
         }
     }
 
     public virtual void ActivateShields()
     {
-        if (shieldsActive)
-        {
-            return;
-        }
-
         shieldsActive = true;
         _shields.EnableShields();
-        //_unitCollider.enabled = false;
+        _unitCollider.enabled = false;
     }
 
     public virtual void DeactivateShields()
     {
-        if (!shieldsActive)
-        {
-            return;
-        }
         shieldsActive = false;
         _shields.DisableShields();
+        _unitCollider.enabled = true;
     }
 
 
@@ -84,6 +79,7 @@ public abstract class ShieldControllerBase : MonoBehaviour, IShield
 
     public virtual void ReflectProjectile(Bullet bulletToReflect)
     {
+        Debug.Log(bulletToReflect + "reflected");
         bulletToReflect.gameObject.transform.right = transform.right;
         bulletToReflect.speed /= 2;
     }
