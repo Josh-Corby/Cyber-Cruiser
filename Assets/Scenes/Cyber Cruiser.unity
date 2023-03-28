@@ -167,9 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyTypes:
+  - CategoryName: Slicer
+    CategoryTypes:
+    - {fileID: 2653145768784104840, guid: 2fec4a945356f4243890bd799d60aa11, type: 3}
   spawnArea: {x: 25, y: 0, z: 0}
-  enemiesToSpawn:
-  - {fileID: 2653145768784104840, guid: 2fec4a945356f4243890bd799d60aa11, type: 3}
 --- !u!1 &71091563
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,9 +216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyTypes: []
   spawnArea: {x: 0, y: 13, z: 0}
-  enemiesToSpawn:
-  - {fileID: 2653145768784104840, guid: c71b832303f7d4b40a017f8f8d5fcfbb, type: 3}
 --- !u!1 &73215884
 GameObject:
   m_ObjectHideFlags: 0
@@ -1352,9 +1353,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyTypes:
+  - CategoryName: Dragon
+    CategoryTypes:
+    - {fileID: 2653145768784104840, guid: 1f555c3aa78c87a4595854770f311869, type: 3}
   spawnArea: {x: 0, y: 0, z: 0}
-  enemiesToSpawn:
-  - {fileID: 2653145768784104840, guid: 1f555c3aa78c87a4595854770f311869, type: 3}
 --- !u!1 &486426441
 GameObject:
   m_ObjectHideFlags: 0
@@ -2684,9 +2687,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyTypes:
+  - CategoryName: Missile
+    CategoryTypes:
+    - {fileID: 2653145768784104840, guid: 709a567aa7ddbbb499d1205e0edd3970, type: 3}
+    - {fileID: 2653145768784104840, guid: 0f1e8bf274a42564ca36a284fb8da74a, type: 3}
   spawnArea: {x: 25, y: 0, z: 0}
-  enemiesToSpawn:
-  - {fileID: 2653145768784104840, guid: 220798bc178598748b955a7191456d4c, type: 3}
 --- !u!1 &1008820351
 GameObject:
   m_ObjectHideFlags: 0
@@ -3156,13 +3162,13 @@ MonoBehaviour:
   - {fileID: 984547534}
   - {fileID: 1370326090}
   - {fileID: 47135018}
-  - {fileID: 71091565}
+  - {fileID: 485082065}
   spawnEnemyInterval: 1.75
   spawnEnemyReduction: 0.1
-  enemySpeedIncrement: 0.1
   bossSpawner: {fileID: 1370326090}
   bossPrefabs:
-  - {fileID: 1686505066082717662, guid: 66c6e72b98ecf6d43abdb0bc88401953, type: 3}
+  - {fileID: 519574247064427714, guid: bca44de9894fa0c499e8513a60373653, type: 3}
+  _bossesToSpawn: []
   enemiesAlive: []
   gunshipsAlive: []
   spawnEnemies: 0
@@ -3887,16 +3893,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyTypes:
+  - CategoryName: Blimp
+    CategoryTypes:
+    - {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
+    - {fileID: 2653145768784104840, guid: 361463efca6451a4187ad76d5d99e442, type: 3}
+  - CategoryName: Gunship
+    CategoryTypes:
+    - {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
+    - {fileID: 2653145768784104840, guid: 5315175d49caa2c4d9ee273cc227786a, type: 3}
+  - CategoryName: Mine
+    CategoryTypes:
+    - {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
+    - {fileID: 2653145768784104840, guid: 26d025349807efb46bbcf7de90e66d47, type: 3}
+    - {fileID: 2653145768784104840, guid: dfc56274f9f51c642a6c6718027fcde6, type: 3}
+    - {fileID: 2653145768784104840, guid: 1e99f4fec6f620d49bacebf379bf374b, type: 3}
+    - {fileID: 2653145768784104840, guid: 656e23012856eb74a87061df2241cb0f, type: 3}
+  - CategoryName: Reflector
+    CategoryTypes:
+    - {fileID: 2653145768784104840, guid: c71b832303f7d4b40a017f8f8d5fcfbb, type: 3}
   spawnArea: {x: 0, y: 13, z: 0}
-  enemiesToSpawn:
-  - {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
-  - {fileID: 2653145768784104840, guid: 656e23012856eb74a87061df2241cb0f, type: 3}
-  - {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
-  - {fileID: 2653145768784104840, guid: 1e99f4fec6f620d49bacebf379bf374b, type: 3}
-  - {fileID: 2653145768784104840, guid: dfc56274f9f51c642a6c6718027fcde6, type: 3}
-  - {fileID: 2653145768784104840, guid: c71b832303f7d4b40a017f8f8d5fcfbb, type: 3}
-  - {fileID: 2653145768784104840, guid: 5315175d49caa2c4d9ee273cc227786a, type: 3}
-  - {fileID: 2653145768784104840, guid: 26d025349807efb46bbcf7de90e66d47, type: 3}
 --- !u!4 &1370326091
 Transform:
   m_ObjectHideFlags: 0
@@ -4434,6 +4450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
+  _bossSpawnDistance: 500
   isPaused: 0
   gameplayObjects: {fileID: 1495971563}
 --- !u!4 &1544113745

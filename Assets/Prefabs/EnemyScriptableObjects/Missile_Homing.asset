@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
   m_Name: Missile_Homing
   m_EditorClassIdentifier: 
-  unitName: Missile
+  unitName: Homing Missile
   maxHealth: 1
   explodeOnDeath: 1
   explosionRadius: 1
   explosionDamage: 1
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  moveTypes: 0
-  speed: 3
+  moveTypes: 4
+  speed: 6
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0
@@ -28,8 +28,8 @@ MonoBehaviour:
   sinUpDownMovement: 0
   sinFrequency: 0
   sinMagnitude: 0
-  homeOnPlayer: 0
-  homeTurnSpeed: 0
-  homeTime: 0
-  homeDelay: 0
-  homeDelayTime: 0
+  homeOnPlayer: 1
+  homeTurnSpeed: 3
+  homeTime: 3
+  homeDelay: 1
+  homeDelayTime: 0.5
