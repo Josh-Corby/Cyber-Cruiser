@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,19 +10,22 @@ public class EnemySpawner : GameBehaviour
     public static event Action<List<GameObject>, GameObject> OnEnemySpawned = null;
     public static event Action<Enemy> OnBossSpawned = null;
 
+    [Range(0,1)]
+    [HideInInspector] public float spawnerWeight;
     private List<Vector3> spawnPositions = new();
     private bool isSpawnPositionValid;
-    public EnemyCategory[] EnemyTypes;
     [SerializeField] private Vector3 spawnArea;
     private float _speedModifier;
     private int _enemiesToSpawn;
 
+    public EnemyCategory[] EnemyCategories;
+    [SerializeField] private float _totalCategoryWeight;
     /*
     private GameObject EnemyIndicator;
     private Vector3 EnemyIndicatorPosition;
     private float IndicatorAngle;
     */
-
+   
     public int EnemiesToSpawn
     {
         get
@@ -59,14 +63,14 @@ public class EnemySpawner : GameBehaviour
 
     private EnemyCategory GetRandomEnemyCategory()
     {
-        EnemyCategory randomCategory = EnemyTypes[Random.Range(0, EnemyTypes.Length)];
+        EnemyCategory randomCategory = EnemyCategories[Random.Range(0, EnemyCategories.Length)];
         return randomCategory;
     }
 
     private GameObject GetRandomType(EnemyCategory category)
     {
-        GameObject randomType = category.CategoryTypes[Random.Range(0, category.CategoryTypes.Length)];
-        return randomType;
+        EnemyType randomType = category.CategoryTypes[Random.Range(0, category.CategoryTypes.Length)];
+        return randomType.Enemy;
     }
 
     private Vector3 GetRandomSpawnPosition()
@@ -155,6 +159,101 @@ public class EnemySpawner : GameBehaviour
         Gizmos.DrawWireCube(transform.position, spawnArea);
     }
 
+    public void OnInspectorUpdate()
+    {
+        CheckCategoryWeights();
+        //ValidateWeights();
+    }
+
+    public void CheckCategoryWeights()
+    {
+        for (int i = 0; i < EnemyCategories.Length; i++)
+        {
+            Debug.Log(EnemyCategories[i].CategoryWeight);
+        }
+    }
+
+    public void ResetCategoryWeights()
+    {
+        for (int i = 0; i < EnemyCategories.Length; i++)
+        {
+            EnemyCategories[i].CategoryWeight = 0;
+        }
+
+    }
+
+    public void CheckTypeWeights()
+    {
+
+    }
+
+    public void ResetTypeWeights()
+    {
+
+    }
+
+    public void ValidateWeights()
+    {
+        ValidateCategoryWeights(EnemyCategories, typeof(EnemyCategory), "CategoryWeight", _totalCategoryWeight);
+    }
+
+    public void ValidateCategoryWeights<T>(T[] structArray, Type structType, string fieldName, float totalWeight) where T : struct
+    {
+        totalWeight = 0;
+        var valueList = new List<float>();
+
+
+        foreach (T _struct in structArray)
+        {
+            if(_struct.GetType() != structType)
+            {
+                continue;
+            }
+
+            FieldInfo field = structType.GetField(fieldName);
+            if (field != null && field.FieldType == typeof(float))
+            {
+                object boxedValue = field.GetValue(_struct);
+                float value = (float)boxedValue;
+                valueList.Add(value);
+                Debug.Log(value);
+            }
+
+        }
+        for (int i = 0; i < valueList.Count; i++)
+        {
+            totalWeight += valueList[i];
+        }
+        if (totalWeight > 1)
+        {
+            float factor = 1 / totalWeight;
+            for (int i = 0; i < valueList.Count; i++)
+            {
+                valueList[i] *= factor;
+            }
+        }
+        for (int i = 0; i < valueList.Count; i++)
+        {
+            valueList[i] = (float)Math.Round(valueList[i], 3);
+        }
+        Debug.Log(totalWeight);
+        int x = 0;
+        foreach (T _struct in structArray)
+        {
+            if (_struct.GetType() != structType)
+            {
+                continue;
+            }
+
+            FieldInfo field = structType.GetField(fieldName);
+            if (field != null && field.FieldType == typeof(float))
+            {
+                field.SetValue(_struct, valueList[x]);
+                x++;
+            }
+        }
+    }
+
     /*
     private void CreateIndicator(Vector2 position)
     {
@@ -178,11 +277,4 @@ public class EnemySpawner : GameBehaviour
     }
 
     */
-}
-
-[System.Serializable]
-public struct EnemyCategory
-{
-    public string CategoryName;
-    public GameObject[] CategoryTypes;
 }

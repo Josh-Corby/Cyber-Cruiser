@@ -164,3 +164,20 @@ public class Enemy : GameBehaviour, IDamageable
         }
     }
 }
+
+[Serializable]
+public struct EnemyCategory
+{
+    public string CategoryName;
+    [Range(0, 1)]
+    public float CategoryWeight;
+    public EnemyType[] CategoryTypes;
+}
+
+[Serializable]
+public struct EnemyType
+{
+    public GameObject Enemy;
+    [Range(0, 1)]
+    public float spawnWeight;
+}

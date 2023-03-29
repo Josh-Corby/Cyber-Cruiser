@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
+
 public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 {
     private const float SPAWN_ENEMY_INTERVAL_BASE = 1.5f;
@@ -15,7 +16,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     [SerializeField] private int enemiesToSpawn;
     [SerializeField] private float _enemySpawnInterval;
-    [SerializeField] private EnemySpawner[] spawners;
+
+    private List<EnemySpawner> _enemySpawners = new();
     [SerializeField] private EnemySpawner bossSpawner;
     [SerializeField] private GameObject[] bossPrefabs;
 
@@ -24,9 +26,11 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [SerializeField] private List<GameObject> _bossesToSpawn = new();
     private List<EnemySpawner> _spawnersSpawning = new();
 
-    public static event Action OnBossDied = null;  
+    public static event Action OnBossDied = null;
     private Coroutine spawnEnemiesCoroutine;
 
+    [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
+    [SerializeField] private float _totalSpawnWeight;
     public float EnemySpawnInterval
     {
         get
@@ -38,7 +42,19 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
             _enemySpawnInterval = value;
         }
     }
-  
+
+    private void Awake()
+    {
+        InitializeEnemySpawners();
+    }
+
+    private void InitializeEnemySpawners()
+    {
+        foreach (EnemySpawnerInfo spawner in _enemySpawnerInfo)
+        {
+            _enemySpawners.Add(spawner.spawner);
+        }
+    }
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += RestartLevel;
@@ -85,7 +101,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void ResetSpawnersModifiers()
     {
-        foreach (EnemySpawner spawner in spawners)
+        foreach (EnemySpawner spawner in _enemySpawners)
         {
             spawner.SpeedModifier = 0;
         }
@@ -93,7 +109,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void SetSpawnersModifiers(float value)
     {
-        foreach (EnemySpawner spawner in spawners)
+        foreach (EnemySpawner spawner in _enemySpawners)
         {
             spawner.SpeedModifier += value;
         }
@@ -128,7 +144,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         _spawnersSpawning.Clear();
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            EnemySpawner currentspawner = spawners[Random.Range(0, spawners.Length - 1)];
+            EnemySpawner currentspawner = _enemySpawners[Random.Range(0, _enemySpawners.Count - 1)];
             currentspawner.EnemiesToSpawn += 1;
             if (!_spawnersSpawning.Contains(currentspawner))
             {
@@ -138,9 +154,9 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         return _spawnersSpawning;
     }
 
-    private void SpawnFromRandomSpawners(List<EnemySpawner> spawners)
+    private void SpawnFromRandomSpawners(List<EnemySpawner> _enemySpawners)
     {
-        foreach (EnemySpawner spawner in spawners)
+        foreach (EnemySpawner spawner in _enemySpawners)
         {
             spawner.StartSpawnProcess();
         }
@@ -178,7 +194,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
                 //make enemies spawn faster
                 _enemySpawnInterval -= SPAWN_ENEMY_REDUCTION;
                 //make enemies move faster
-                foreach (EnemySpawner spawner in spawners)
+                foreach (EnemySpawner spawner in _enemySpawners)
                 {
                     SetSpawnersModifiers(0.1f);
                 }
@@ -239,4 +255,53 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         StopSpawningEnemies();
         bossSpawner.StartBossSpawn(GetRandomBossToSpawn());
     }
+
+
+    public void OnInspectorUpdate()
+    {
+        ValidateSpawnerWeights();
+    }
+
+    public void ValidateSpawnerWeights()
+    {
+        _totalSpawnWeight = 0;
+
+        for (int i = 0; i < _enemySpawnerInfo.Length; i++)
+        {
+            _totalSpawnWeight += _enemySpawnerInfo[i].spawnerWeight;
+        }
+
+        if (_totalSpawnWeight > 1)
+        {
+            float factor = 1 / _totalSpawnWeight;
+            for (int i = 0; i < _enemySpawnerInfo.Length; i++)
+            {
+                _enemySpawnerInfo[i].spawnerWeight *= factor;
+                
+            }
+        }
+
+        for (int i = 0; i < _enemySpawnerInfo.Length; i++)
+        {
+            _enemySpawnerInfo[i].spawnerWeight = (float)Math.Round(_enemySpawnerInfo[i].spawnerWeight, 3);
+            _enemySpawnerInfo[i].spawner.spawnerWeight = _enemySpawnerInfo[i].spawnerWeight;
+        }
+    }
+
+    public void ResetWeights()
+    {
+        for (int i = 0; i < _enemySpawnerInfo.Length; i++)
+        {
+            _enemySpawnerInfo[i].spawnerWeight = 0;
+            _enemySpawnerInfo[i].spawner.spawnerWeight = _enemySpawnerInfo[i].spawnerWeight;
+        }
+    }
+}
+
+[System.Serializable]
+public struct EnemySpawnerInfo
+{
+    public EnemySpawner spawner;
+    [Range(0, 1)]
+    public float spawnerWeight;
 }
