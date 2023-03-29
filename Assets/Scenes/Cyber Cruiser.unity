@@ -167,10 +167,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   spawnArea: {x: 25, y: 0, z: 0}
-  EnemyCategories: []
-  _totalCategoryWeight: 0
+  enemyCategories:
+  - CategoryName: Slicer
+    CategoryWeight: 1
+    CategoryTypes:
+    - Enemy: {fileID: 2653145768784104840, guid: 2fec4a945356f4243890bd799d60aa11, type: 3}
+      spawnWeight: 1
+    TotalTypeWeights: 0.544
+  totalCategoryWeight: 1
 --- !u!1 &71091563
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,8 +223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnerWeight: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  EnemyCategories: []
-  _totalCategoryWeight: 0
+  enemyCategories: []
+  totalCategoryWeight: 0
 --- !u!1 &73215884
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,10 +1360,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   spawnArea: {x: 0, y: 0, z: 0}
-  EnemyCategories: []
-  _totalCategoryWeight: 0
+  enemyCategories:
+  - CategoryName: Dragon
+    CategoryWeight: 1
+    CategoryTypes:
+    - Enemy: {fileID: 2653145768784104840, guid: 1f555c3aa78c87a4595854770f311869, type: 3}
+      spawnWeight: 1
+    TotalTypeWeights: 0
+  totalCategoryWeight: 1
 --- !u!1 &486426441
 GameObject:
   m_ObjectHideFlags: 0
@@ -2687,13 +2699,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   spawnArea: {x: 25, y: 0, z: 0}
-  EnemyCategories:
-  - CategoryName: 
-    CategoryWeight: 0
-    CategoryTypes: []
-  _totalCategoryWeight: 0
+  enemyCategories:
+  - CategoryName: Missile
+    CategoryWeight: 1
+    CategoryTypes:
+    - Enemy: {fileID: 2653145768784104840, guid: 0f1e8bf274a42564ca36a284fb8da74a, type: 3}
+      spawnWeight: 0.5
+    - Enemy: {fileID: 2653145768784104840, guid: 709a567aa7ddbbb499d1205e0edd3970, type: 3}
+      spawnWeight: 0.5
+    TotalTypeWeights: 0
+  totalCategoryWeight: 1
 --- !u!1 &1008820351
 GameObject:
   m_ObjectHideFlags: 0
@@ -3158,27 +3175,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
-  spawnEnemies: 0
+  spawnEnemies: 1
   bossGoalPosition: {fileID: 1997121481}
   dragonMovePoint: {fileID: 73215885}
   enemiesToSpawn: 3
-  _enemySpawnInterval: 0
+  _enemySpawnInterval: 2
   bossSpawner: {fileID: 1370326090}
   bossPrefabs:
   - {fileID: 519574247064427714, guid: bca44de9894fa0c499e8513a60373653, type: 3}
+  - {fileID: 1686505066082717662, guid: 66c6e72b98ecf6d43abdb0bc88401953, type: 3}
+  - {fileID: 1686505066082717662, guid: 63caa24a17e837c4ebb6b3b44dc28a9e, type: 3}
   enemiesAlive: []
   gunshipsAlive: []
   _bossesToSpawn: []
+  _spawnersSpawning: []
   _enemySpawnerInfo:
   - spawner: {fileID: 984547534}
-    spawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 1370326090}
-    spawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 47135018}
-    spawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 485082065}
-    spawnerWeight: 0
-  _totalSpawnWeight: 0
+    SpawnerWeight: 0.25
+  _totalSpawnWeight: 1
 --- !u!1 &1148502290
 GameObject:
   m_ObjectHideFlags: 0
@@ -3898,22 +3918,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d640333fe82939345abc8e9a4dc24cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   spawnArea: {x: 0, y: 13, z: 0}
-  EnemyCategories:
-  - CategoryName: 
-    CategoryWeight: 0.153
-    CategoryTypes: []
-  - CategoryName: 
-    CategoryWeight: 0.24
-    CategoryTypes: []
-  - CategoryName: 
-    CategoryWeight: 0.284
-    CategoryTypes: []
-  - CategoryName: 
-    CategoryWeight: 0.364
-    CategoryTypes: []
-  _totalCategoryWeight: 0
+  enemyCategories:
+  - CategoryName: Blimp
+    CategoryWeight: 0.25
+    CategoryTypes:
+    - Enemy: {fileID: 2653145768784104840, guid: 361463efca6451a4187ad76d5d99e442, type: 3}
+      spawnWeight: 0.5
+    - Enemy: {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
+      spawnWeight: 0.5
+    TotalTypeWeights: 0
+  - CategoryName: Gunship
+    CategoryWeight: 0.25
+    CategoryTypes:
+    - Enemy: {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
+      spawnWeight: 0.5
+    - Enemy: {fileID: 2653145768784104840, guid: 5315175d49caa2c4d9ee273cc227786a, type: 3}
+      spawnWeight: 0.5
+    TotalTypeWeights: 0
+  - CategoryName: Mine
+    CategoryWeight: 0.25
+    CategoryTypes:
+    - Enemy: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
+      spawnWeight: 0.2
+    - Enemy: {fileID: 2653145768784104840, guid: 26d025349807efb46bbcf7de90e66d47, type: 3}
+      spawnWeight: 0.2
+    - Enemy: {fileID: 2653145768784104840, guid: dfc56274f9f51c642a6c6718027fcde6, type: 3}
+      spawnWeight: 0.2
+    - Enemy: {fileID: 2653145768784104840, guid: 1e99f4fec6f620d49bacebf379bf374b, type: 3}
+      spawnWeight: 0.2
+    - Enemy: {fileID: 2653145768784104840, guid: 656e23012856eb74a87061df2241cb0f, type: 3}
+      spawnWeight: 0.2
+    TotalTypeWeights: 0
+  - CategoryName: Reflector
+    CategoryWeight: 0.25
+    CategoryTypes:
+    - Enemy: {fileID: 2653145768784104840, guid: c71b832303f7d4b40a017f8f8d5fcfbb, type: 3}
+      spawnWeight: 1
+    TotalTypeWeights: 0
+  totalCategoryWeight: 1
 --- !u!4 &1370326091
 Transform:
   m_ObjectHideFlags: 0
@@ -5950,6 +5994,10 @@ PrefabInstance:
       propertyPath: spawnPosition
       value: 
       objectReference: {fileID: 1067534575}
+    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: distanceToStopRotation
+      value: 0.32
+      objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727163, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_Name
       value: PlayerShip

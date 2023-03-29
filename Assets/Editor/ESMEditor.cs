@@ -10,8 +10,6 @@ public class ESMEditor : Editor
 
         serializedObject.Update();
 
-        //EditorGUILayout.PropertyField(_enemySpawnerInfo);
-        //EditorGUILayout.PropertyField(_totalSpawnWeight);
         if(GUILayout.Button("Reset Weights"))
         {
             ESM.ResetWeights();

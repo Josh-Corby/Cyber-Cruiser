@@ -24,7 +24,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [HideInInspector] public List<GameObject> enemiesAlive = new();
     [HideInInspector] public List<GameObject> gunshipsAlive = new();
     [SerializeField] private List<GameObject> _bossesToSpawn = new();
-    private List<EnemySpawner> _spawnersSpawning = new();
+    [SerializeField] private List<EnemySpawner> _spawnersSpawning = new();
 
     public static event Action OnBossDied = null;
     private Coroutine spawnEnemiesCoroutine;
@@ -55,6 +55,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
             _enemySpawners.Add(spawner.spawner);
         }
     }
+
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += RestartLevel;
@@ -135,10 +136,32 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         while (spawnEnemies)
         {
             yield return new WaitForSeconds(_enemySpawnInterval);
-            SpawnFromRandomSpawners(GetRandomSpawners());
+            _spawnersSpawning.Clear();
+            for (int i = 0; i < enemiesToSpawn; i++)
+            {
+                GetRandomWeightedSpawners();
+            }
+            SpawnFromRandomSpawners();
         }
     }
 
+    private void GetRandomWeightedSpawners()
+    {
+        float value = Random.value;
+        for (int i = 0; i < _enemySpawnerInfo.Length; i++)
+        {
+            if(value < _enemySpawnerInfo[i].SpawnerWeight)
+            {
+                if (!_spawnersSpawning.Contains(_enemySpawnerInfo[i].spawner))
+                {
+                    _spawnersSpawning.Add(_enemySpawnerInfo[i].spawner);
+                }
+                _enemySpawnerInfo[i].spawner.EnemiesToSpawn += 1;
+                return;
+            }
+            value -= _enemySpawnerInfo[i].SpawnerWeight;
+        }
+    }
     private List<EnemySpawner> GetRandomSpawners()
     {
         _spawnersSpawning.Clear();
@@ -154,10 +177,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         return _spawnersSpawning;
     }
 
-    private void SpawnFromRandomSpawners(List<EnemySpawner> _enemySpawners)
+    private void SpawnFromRandomSpawners()
     {
-        foreach (EnemySpawner spawner in _enemySpawners)
+        
+        foreach (EnemySpawner spawner in _spawnersSpawning)
         {
+            //Debug.Log("tell spawner to spawn");
             spawner.StartSpawnProcess();
         }
     }
@@ -256,35 +281,22 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         bossSpawner.StartBossSpawn(GetRandomBossToSpawn());
     }
 
-
     public void OnInspectorUpdate()
     {
-        ValidateSpawnerWeights();
+        ValidateWeights();
+        ApplyWeightsToSpawners();
     }
 
-    public void ValidateSpawnerWeights()
+    private void ValidateWeights()
     {
-        _totalSpawnWeight = 0;
+        _totalSpawnWeight = ValidateSpawnRates(_enemySpawnerInfo, typeof(EnemySpawnerInfo), "SpawnerWeight", _totalSpawnWeight);
+    }
 
+    private void ApplyWeightsToSpawners()
+    {
         for (int i = 0; i < _enemySpawnerInfo.Length; i++)
         {
-            _totalSpawnWeight += _enemySpawnerInfo[i].spawnerWeight;
-        }
-
-        if (_totalSpawnWeight > 1)
-        {
-            float factor = 1 / _totalSpawnWeight;
-            for (int i = 0; i < _enemySpawnerInfo.Length; i++)
-            {
-                _enemySpawnerInfo[i].spawnerWeight *= factor;
-                
-            }
-        }
-
-        for (int i = 0; i < _enemySpawnerInfo.Length; i++)
-        {
-            _enemySpawnerInfo[i].spawnerWeight = (float)Math.Round(_enemySpawnerInfo[i].spawnerWeight, 3);
-            _enemySpawnerInfo[i].spawner.spawnerWeight = _enemySpawnerInfo[i].spawnerWeight;
+            _enemySpawnerInfo[i].spawner.spawnerWeight = _enemySpawnerInfo[i].SpawnerWeight;
         }
     }
 
@@ -292,16 +304,9 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     {
         for (int i = 0; i < _enemySpawnerInfo.Length; i++)
         {
-            _enemySpawnerInfo[i].spawnerWeight = 0;
-            _enemySpawnerInfo[i].spawner.spawnerWeight = _enemySpawnerInfo[i].spawnerWeight;
+            _enemySpawnerInfo[i].SpawnerWeight = 0;
+            _enemySpawnerInfo[i].spawner.spawnerWeight = _enemySpawnerInfo[i].SpawnerWeight;
         }
     }
 }
 
-[System.Serializable]
-public struct EnemySpawnerInfo
-{
-    public EnemySpawner spawner;
-    [Range(0, 1)]
-    public float spawnerWeight;
-}

@@ -172,6 +172,9 @@ public struct EnemyCategory
     [Range(0, 1)]
     public float CategoryWeight;
     public EnemyType[] CategoryTypes;
+    [HideInInspector]
+    [Range(0, 1)]
+    public float TotalTypeWeights;
 }
 
 [Serializable]

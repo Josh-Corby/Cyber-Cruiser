@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -639,5 +640,97 @@ public class Utilities : MonoBehaviour
     }
 
     #endregion
+
+    /// <summary>
+    /// Check if weights of a spawner exceed 1. If so, correct them
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="structArray"> Array of structs</param>
+    /// <param name="structType">The struct type of the array </param>
+    /// <param name="fieldName">The name of a float field in the struct type</param>
+    /// <param name="totalWeight">The total weight to be outputted for the inspector</param>
+    public float ValidateSpawnRates<T>(T[] structArray, Type structType, string fieldName, float totalWeight) where T : struct
+    {
+        //Reset total weight
+        totalWeight = 0;
+        //Create a new list to store weights
+        var valueList = new List<float>();
+
+        foreach (object _struct in structArray)
+        {
+            //Check if any structs in the array aren't of the correct type;
+            if (_struct.GetType() != structType)
+            {
+                continue;
+            }
+
+            //Use reflection to get the desired float from the struct
+            FieldInfo field = structType.GetField(fieldName);
+            if (field != null && field.FieldType == typeof(float))
+            {
+                object boxedValue = field.GetValue(_struct);
+                float value = (float)boxedValue;
+                //add the float to the list for easier use
+                valueList.Add(value);
+            }
+
+        }
+
+        //get the total weight
+        for (int i = 0; i < valueList.Count; i++)
+        {
+            totalWeight += valueList[i];
+        }
+
+        //if total weight exceeds 1, divide values by 1/total weight
+        if (totalWeight > 1)
+        {
+            float factor = 1 / totalWeight;
+            for (int i = 0; i < valueList.Count; i++)
+            {
+                valueList[i] *= factor;
+            }
+        }
+
+        //round floats to desired decimal place
+        for (int i = 0; i < valueList.Count; i++)
+        {
+            valueList[i] = (float)Math.Round(valueList[i], 3);
+        }
+
+        totalWeight = 0;
+        //Check total weight again
+        for (int i = 0; i < valueList.Count; i++)
+        {
+            totalWeight += valueList[i];
+        }
+
+        //Assign changed values back to structs
+        int x = 0;
+        foreach (object _struct in structArray)
+        {
+            if (_struct.GetType() != structType)
+            {
+                continue;
+            }
+
+            FieldInfo field = structType.GetField(fieldName);
+            if (field != null && field.FieldType == typeof(float))
+            {
+                field.GetValue(_struct);
+                float value = (float)field.GetValue(_struct);
+                value = valueList[x];
+
+                field.SetValue(_struct, value);
+                structArray[x] = (T)_struct;
+                x++;
+            }
+        }
+        return totalWeight;
+    }
+
+    //public T GetWeightedRandom<T>(T[] array, float weightedElement)
+    //{
+    //}
 
 }
