@@ -64,7 +64,7 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     {
         EnemySpawner.OnBossSpawned += EnableBossUI;
         Boss.OnBossDamage += ChangeSliderValue;
-        Boss.OnBossDied += DisableBossUI;
+        Boss.OnBossDied += (v) => { DisableBossUI(); };
 
         PlayerManager.OnPlayerMaxHealthChange += EnableSlider;
         PlayerManager.OnPlayerCurrentHealthChange += ChangeSliderValue;
@@ -85,7 +85,7 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     {
         EnemySpawner.OnBossSpawned -= EnableBossUI;
         Boss.OnBossDamage -= ChangeSliderValue;
-        Boss.OnBossDied -= DisableBossUI;
+        Boss.OnBossDied -= (v) => { DisableBossUI(); };
 
         PlayerManager.OnPlayerMaxHealthChange -= EnableSlider;
         PlayerManager.OnPlayerCurrentHealthChange -= ChangeSliderValue;

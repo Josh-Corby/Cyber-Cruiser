@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class Boss : Enemy, IDamageable
 {
     public static event Action<UISlider, float> OnBossDamage = null;
-    public static event Action OnBossDied = null;
+    public static event Action<Vector3> OnBossDied = null;
 
     private BossMovement _movement;
 
@@ -75,7 +75,7 @@ public class Boss : Enemy, IDamageable
 
     public override void Destroy()
     {
-        OnBossDied?.Invoke();
+        OnBossDied(transform.position);
         base.Destroy();
     }
 }

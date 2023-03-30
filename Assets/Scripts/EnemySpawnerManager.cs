@@ -26,7 +26,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private List<GameObject> _bossesToSpawn = new();
     private List<EnemySpawner> _spawnersSpawning = new();
 
-    public static event Action OnBossDied = null;
     private Coroutine spawnEnemiesCoroutine;
 
     [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
@@ -58,6 +57,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void OnEnable()
     {
+        Boss.OnBossDied += (v) => { ProcessBossDied(); };
         GameManager.OnLevelCountDownStart += RestartLevel;
         GameManager.OnBossDistanceReached += SpawnBoss;
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
@@ -74,6 +74,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void OnDisable()
     {
+        Boss.OnBossDied -= (v) => { ProcessBossDied(); };
         GameManager.OnLevelCountDownStart -= RestartLevel;
         GameManager.OnBossDistanceReached -= SpawnBoss;
         GameplayUIManager.OnCountdownDone -= StartSpawningEnemies;
@@ -208,28 +209,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         {
             listToRemoveFrom.Remove(enemy);
         }
-
-        //if enemies arent being spawned a boss fight is happening
-        if (!spawnEnemies)
-        {
-            //if there are no enemies alive the boss fight is over
-            if (enemiesAlive.Count == 0)
-            {
-                Debug.Log("Boss dead");
-                //make enemies spawn faster
-                _enemySpawnInterval -= SPAWN_ENEMY_REDUCTION;
-                //make enemies move faster
-                foreach (EnemySpawner spawner in _enemySpawners)
-                {
-                    SetSpawnersModifiers(0.1f);
-                }
-                //broadcast boss death
-                OnBossDied?.Invoke();
-
-                //resume spawning enemies
-                StartSpawningEnemies();
-            }
-        }
     }
 
     private void ClearEnemiesAlive()
@@ -279,6 +258,20 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     {
         StopSpawningEnemies();
         bossSpawner.StartBossSpawn(GetRandomBossToSpawn());
+    }
+
+    private void ProcessBossDied()
+    {
+        Debug.Log("Boss dead");
+        //make enemies spawn faster
+        _enemySpawnInterval -= SPAWN_ENEMY_REDUCTION;
+        //make enemies move faster
+        foreach (EnemySpawner spawner in _enemySpawners)
+        {
+            SetSpawnersModifiers(0.1f);
+        }
+        //resume spawning enemies
+        StartSpawningEnemies();
     }
 
     public void OnInspectorUpdate()

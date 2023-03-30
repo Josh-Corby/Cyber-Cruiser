@@ -36,7 +36,7 @@ public class GameManager : GameBehaviour<GameManager>
     public static event Action<int> OnDistanceChanged = null;
     public static event Action<int, Action<int>> OnPlasmaDropDistanceRequested = null;
     public static event Action<int, int, Action<int>> OnWeaponUpgradeDropDistanceRequested = null;
-  
+
     public int DistanceInt
     {
         get
@@ -120,7 +120,7 @@ public class GameManager : GameBehaviour<GameManager>
         GameplayUIManager.OnCountdownDone += StartIncreasingDistance;
         GameplayUIManager.OnCountdownDone += RequestFirstPickupDistances;
         PlayerManager.OnPlayerDeath += StopIncreasingDistance;
-        EnemySpawnerManager.OnBossDied += OnBossDied;
+        Boss.OnBossDied += (v) => { OnBossDied(); };
     }
 
     private void OnDisable()
@@ -130,7 +130,7 @@ public class GameManager : GameBehaviour<GameManager>
         GameplayUIManager.OnCountdownDone -= StartIncreasingDistance;
         GameplayUIManager.OnCountdownDone -= RequestFirstPickupDistances;
         PlayerManager.OnPlayerDeath -= StopIncreasingDistance;
-        EnemySpawnerManager.OnBossDied -= OnBossDied;
+        Boss.OnBossDied -= (v) => { OnBossDied(); };
     }
 
     private void Update()
@@ -144,7 +144,7 @@ public class GameManager : GameBehaviour<GameManager>
 
             //increment distance milestone every 100 units
             if (DistanceInt % MILESTONE_DISTANCE == 0 && !isDistanceMilestoneIncreased)
-            {   
+            {
                 StartCoroutine(IncreaseDistanceMilestone());
                 RequestNewPlasmaDropDistance();
             }
@@ -167,7 +167,7 @@ public class GameManager : GameBehaviour<GameManager>
                 _isPlasmaSpawned = true;
             }
 
-            if(_distanceInt == _weaponUpgradeDropDistance && !_isWeaponUpgradeSpawned)
+            if (_distanceInt == _weaponUpgradeDropDistance && !_isWeaponUpgradeSpawned)
             {
                 OnWeaponUpgradeDistanceReached?.Invoke();
                 _isWeaponUpgradeSpawned = true;
@@ -200,7 +200,7 @@ public class GameManager : GameBehaviour<GameManager>
     {
         _weaponUpgradeDropDistance = value;
     }
-    
+
     private IEnumerator IncreaseDistanceMilestone()
     {
         isDistanceMilestoneIncreased = true;
@@ -233,7 +233,7 @@ public class GameManager : GameBehaviour<GameManager>
         DistanceInt = 0;
         CurrentBossDistance = _bossSpawnDistance;
         isDistanceMilestoneIncreased = false;
-        IsDistanceIncreasing = false;  
+        IsDistanceIncreasing = false;
     }
     private void StartIncreasingDistance()
     {
