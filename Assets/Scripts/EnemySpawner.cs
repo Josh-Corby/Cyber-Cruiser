@@ -52,6 +52,7 @@ public class EnemySpawner : GameBehaviour
    
     public void StartSpawnProcess()
     {
+        spawnPositions.Clear();
         for (int i = 0; i < EnemiesToSpawn; i++)
         {
             EnemyCategory randomCategory = GetRandomWeightedCategory();
@@ -114,22 +115,26 @@ public class EnemySpawner : GameBehaviour
 
         while (!isSpawnPositionValid)
         {
-            foreach (Vector3 spawnPosition in spawnPositions)
+            if(spawnPositions.Count > 0)
             {
-                if (Vector3.Distance(enemySpawnPosition, spawnPosition) > MIN_ENEMY_SPAWN_DISTANCE)
+                foreach (Vector3 spawnPosition in spawnPositions)
                 {
-                    continue;
-                }
+                    if (Vector3.Distance(enemySpawnPosition, spawnPosition) > MIN_ENEMY_SPAWN_DISTANCE)
+                    {
+                        continue;
+                    }
 
-                else
-                {
-                    enemySpawnPosition = GetRandomSpawnPosition();
-                    break;
+                    else
+                    {
+                        enemySpawnPosition = GetRandomSpawnPosition();
+                        break;
+                    }
                 }
+                isSpawnPositionValid = true;
             }
-            isSpawnPositionValid = true;
+
+            spawnPositions.Add(enemySpawnPosition);
         }
-        spawnPositions.Clear();
         return enemySpawnPosition;
     }
 

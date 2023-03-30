@@ -6,19 +6,21 @@ public class PickupSpawner : GameBehaviour
 {
     public static event Action<GameObject> OnPickupSpawned = null;
 
+    [SerializeField] private GameObject _plasmaPickup;
+    [SerializeField] private GameObject _healthPickup;
+    [SerializeField] private GameObject[] _weaponUpgradePrefabs;
     [SerializeField] private Vector3 spawnSize;
-    [SerializeField] private GameObject plasmaPrefab;
-    [SerializeField] private GameObject[] weaponUpgradePrefabs;
+    
 
     private void OnEnable()
     {
-        GameManager.OnPlasmaDistanceReached += SpawnPlasma;
+        GameManager.OnPlasmaDistanceReached += SpawnPickupAtRandomPosition;
         GameManager.OnWeaponUpgradeDistanceReached += SpawnWeaponUpgrade;
     }
 
     private void OnDisable()
     {
-        GameManager.OnPlasmaDistanceReached -= SpawnPlasma;
+        GameManager.OnPlasmaDistanceReached -= SpawnPickupAtRandomPosition;
         GameManager.OnWeaponUpgradeDistanceReached -= SpawnWeaponUpgrade;
     }
     private Vector3 GetRandomPosition()
@@ -30,10 +32,54 @@ public class PickupSpawner : GameBehaviour
         return spawnPosition;
     }
 
-    public void SpawnPlasma()
+    private void SpawnPickupAtRandomPosition(PickupType pickupType)
     {
-        GameObject plasma = Instantiate(plasmaPrefab, GetRandomPosition(), transform.rotation);
-        OnPickupSpawned(plasma);
+        GameObject pickup = null;
+        switch (pickupType)
+        {
+            case PickupType.Plasma:
+                pickup = _plasmaPickup;
+                break;
+            case PickupType.Health:
+                pickup = _healthPickup;
+                break;
+            case PickupType.Weapon:
+                pickup = GetRandomWeaponUpgrade();
+                break;
+        }
+        SpawnPickupAtRandomPosition(pickup);
+        OnPickupSpawned(pickup);
+    }
+
+    private void SpawnPickupAtPosition(PickupType pickupType, Vector3 position)
+    {
+        GameObject pickup = null;
+        switch (pickupType)
+        {
+            case PickupType.Plasma:
+                pickup = _plasmaPickup;
+                break;
+            case PickupType.Health:
+                pickup = _healthPickup;
+                break;
+            case PickupType.Weapon:
+                pickup = GetRandomWeaponUpgrade();
+                break;
+        }
+        SpawnPickupAtPosition(pickup, position);
+        OnPickupSpawned(pickup);
+    }
+
+    private void SpawnPickupAtPosition(GameObject pickup, Vector3 position)
+    {
+        GameObject _pickup = Instantiate(pickup, position, transform.rotation);
+        OnPickupSpawned(_pickup);
+    }
+
+    private void SpawnPickupAtRandomPosition(GameObject pickup)
+    {
+        GameObject _pickup = Instantiate(pickup, GetRandomPosition(), transform.rotation);
+        OnPickupSpawned(_pickup);
     }
 
     public void SpawnWeaponUpgrade()
@@ -44,8 +90,8 @@ public class PickupSpawner : GameBehaviour
 
     private GameObject GetRandomWeaponUpgrade()
     {
-        int randomIndex = Random.Range(0, weaponUpgradePrefabs.Length);
-        GameObject randomUpgradePrefab = weaponUpgradePrefabs[randomIndex];
+        int randomIndex = Random.Range(0, _weaponUpgradePrefabs.Length);
+        GameObject randomUpgradePrefab = _weaponUpgradePrefabs[randomIndex];
         return randomUpgradePrefab;
     }
 

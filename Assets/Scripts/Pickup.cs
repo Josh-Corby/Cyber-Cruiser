@@ -3,33 +3,55 @@ using UnityEngine;
 
 public enum PickupType
 {
-    Scatter, Pulverizer, Plasma
+    Weapon, Plasma, Health
+}
+
+public enum WeaponUpgradeType
+{
+    None, Scatter, Pulverizer
 }
 public class Pickup : GameBehaviour
 {
-    public static event Action<int> OnPlasmaIncrease = null;
-    public static event Action<GameObject> OnPlasmaPickup = null;
-    public static event Action<PickupType> OnWeaponUpgradePickup = null;
+    public static event Action<int> OnPlasmaPickup = null;
+    public static event Action<int> OnHealthPickup = null;
+    public static event Action<GameObject> OnPickup = null;
+    public static event Action<WeaponUpgradeType, float> OnWeaponUpgradePickup = null;
 
-    [SerializeField] private int plasmaAmount;
+    public PickupType _pickupType;
+    public WeaponUpgradeType _upgradeType;
     [SerializeField] private float _speed;
-    [SerializeField] private PickupType pickup;
+    [SerializeField] private int _plasmaAmount;
+    [SerializeField] private int _healthAmount;
+    [SerializeField] private float _upgradeDuration;
+
+
 
     public void PickupEffect()
     {
-        switch (pickup)
+        switch (_pickupType)
         {
             case PickupType.Plasma:
-                OnPlasmaIncrease(plasmaAmount);
-                OnPlasmaPickup(gameObject);
+                OnPlasmaPickup(_plasmaAmount);           
                 break;
-            case PickupType.Scatter:
-                OnWeaponUpgradePickup(PickupType.Scatter);
+            case PickupType.Health:
+                OnHealthPickup(_healthAmount);
                 break;
-            case PickupType.Pulverizer:
-                OnWeaponUpgradePickup(PickupType.Pulverizer);
+            case PickupType.Weapon:
+                switch (_upgradeType) 
+                {
+                    case WeaponUpgradeType.None:
+                        return;
+
+                    case WeaponUpgradeType.Scatter:
+                    case WeaponUpgradeType.Pulverizer:
+                        OnWeaponUpgradePickup(_upgradeType, _upgradeDuration);
+                        break;
+                }
+
                 break;
+  
         }
+        OnPickup(gameObject);
     }
 
     private void Update()

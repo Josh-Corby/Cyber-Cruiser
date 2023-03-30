@@ -8,7 +8,6 @@ public class PlayerWeaponController : GameBehaviour
     [SerializeField] private Weapon _playerWeapon;
     [SerializeField] private bool _fireInput;
     private bool _controlsEnabled;
-    private readonly float _weaponUpgradeDuration = 20;
     private float _weaponUpgradeCounter;
 
     private Coroutine _weaponUpgradeCoroutine;
@@ -98,32 +97,32 @@ public class PlayerWeaponController : GameBehaviour
         _controlsEnabled = false;
     }
 
-    private void WeaponUpgrade(PickupType upgradeType)
+    private void WeaponUpgrade(WeaponUpgradeType upgradeType, float duration)
     {
         if (_weaponUpgradeCoroutine != null)
         {
             StopCoroutine(_weaponUpgradeCoroutine);
         }
-        _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimer(upgradeType));
+        _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimer(upgradeType, duration));
     }
 
-    private IEnumerator WeaponUpgradeTimer(PickupType upgradeType)
+    private IEnumerator WeaponUpgradeTimer(WeaponUpgradeType upgradeType, float duration)
     {
         //reset in case a different type of pickup is picked up while an upgrade is currently active
         ResetPlayerWeapon();
 
         switch (upgradeType)
         {
-            case PickupType.Scatter:
+            case WeaponUpgradeType.Scatter:
                 _playerWeapon.MultiShotUpgrade();
                 break;
-            case PickupType.Pulverizer:
+            case WeaponUpgradeType.Pulverizer:
                 _playerWeapon.PulverizerUpgrade();
                 break;
         }
 
-        _weaponUpgradeCounter = _weaponUpgradeDuration;
-        OnWeaponUpgradeStart(GUIM.weaponUpgradeSlider, _weaponUpgradeDuration);
+        _weaponUpgradeCounter = duration;
+        OnWeaponUpgradeStart(GUIM.weaponUpgradeSlider, duration);
         while (_weaponUpgradeCounter > 0)
         {
             _weaponUpgradeCounter -= Time.deltaTime;

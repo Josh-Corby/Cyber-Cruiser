@@ -79,14 +79,16 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         GameManager.OnLevelCountDownStart += FullHeal;
         InputManager.OnShield += CheckShieldsState;
-        Pickup.OnPlasmaIncrease += AddPlasma;
+        Pickup.OnPlasmaPickup += AddPlasma;
+        Pickup.OnHealthPickup += Heal;
     }
 
     private void OnDisable()
     {
         GameManager.OnLevelCountDownStart -= FullHeal;
         InputManager.OnShield -= CheckShieldsState;
-        Pickup.OnPlasmaIncrease -= AddPlasma;
+        Pickup.OnPlasmaPickup -= AddPlasma;
+        Pickup.OnHealthPickup -= Heal;
     }
 
     private void Start()
@@ -103,7 +105,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         OnPlayerCurrentHealthChange(GUIM.playerHealthBar, _currentHealth);
     }
 
-    public void Heal(float heal)
+    public void Heal(int heal)
     {
         PlayerCurrentHealth  = _maxHealth;
     }

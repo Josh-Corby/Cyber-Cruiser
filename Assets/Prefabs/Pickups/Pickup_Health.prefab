@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5730645401882679849}
   - component: {fileID: 224514308}
   m_Layer: 10
-  m_Name: Pickup_Scatter
+  m_Name: Pickup_Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,9 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pickupType: 0
-  _upgradeType: 1
+  _pickupType: 3
   _speed: 3
   _plasmaAmount: 0
-  _healthAmount: 0
+  _healthAmount: 5
   _upgradeDuration: 20

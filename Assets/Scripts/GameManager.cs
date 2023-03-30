@@ -31,7 +31,7 @@ public class GameManager : GameBehaviour<GameManager>
     public static event Action OnGamePaused = null;
     public static event Action OnGameResumed = null;
     public static event Action OnBossDistanceReached;
-    public static event Action OnPlasmaDistanceReached = null;
+    public static event Action<PickupType> OnPlasmaDistanceReached = null;
     public static event Action OnWeaponUpgradeDistanceReached = null;
     public static event Action<int> OnDistanceChanged = null;
     public static event Action<int, Action<int>> OnPlasmaDropDistanceRequested = null;
@@ -163,7 +163,7 @@ public class GameManager : GameBehaviour<GameManager>
             //spawn plasma at seeded distance
             if (DistanceInt == _plasmaDropDistance && !_isPlasmaSpawned)
             {
-                OnPlasmaDistanceReached?.Invoke();
+                OnPlasmaDistanceReached(PickupType.Plasma);
                 _isPlasmaSpawned = true;
             }
 

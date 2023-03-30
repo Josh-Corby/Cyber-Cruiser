@@ -19,7 +19,7 @@ public class PickupManager : GameBehaviour
         GameManager.OnPlasmaDropDistanceRequested += GenerateNewPlasmaDropDistance;
         GameManager.OnWeaponUpgradeDropDistanceRequested += GenerateNewWeaponUpgradeDropDistance;
         PickupSpawner.OnPickupSpawned += AddPickup;
-        Pickup.OnPlasmaPickup += RemovePickup;
+        Pickup.OnPickup += RemovePickup;
     }
 
     private void OnDisable()
@@ -28,7 +28,7 @@ public class PickupManager : GameBehaviour
         GameManager.OnPlasmaDropDistanceRequested -= GenerateNewPlasmaDropDistance;
         GameManager.OnWeaponUpgradeDropDistanceRequested -= GenerateNewWeaponUpgradeDropDistance;
         PickupSpawner.OnPickupSpawned -= AddPickup;
-        Pickup.OnPlasmaPickup -= RemovePickup;
+        Pickup.OnPickup -= RemovePickup;
     }
 
     public void GenerateNewPlasmaDropDistance(int currentDistanceMilestone, Action<int> callback)
