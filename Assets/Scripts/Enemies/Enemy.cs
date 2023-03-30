@@ -83,7 +83,7 @@ public class Enemy : GameBehaviour, IDamageable
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {
-            Debug.Log("Enemy dead");
+            //Debug.Log("Enemy dead");
             if (_explodeOnDeath)
             {
                 Explode();

@@ -109,7 +109,10 @@ public class GameManager : GameBehaviour<GameManager>
             _isDistanceIncreasing = value;
         }
     }
-
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
     private void OnEnable()
     {
         InputManager.OnPause += TogglePause;

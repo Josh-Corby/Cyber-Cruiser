@@ -23,8 +23,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     [HideInInspector] public List<GameObject> enemiesAlive = new();
     [HideInInspector] public List<GameObject> gunshipsAlive = new();
-    [SerializeField] private List<GameObject> _bossesToSpawn = new();
-    [SerializeField] private List<EnemySpawner> _spawnersSpawning = new();
+    private List<GameObject> _bossesToSpawn = new();
+    private List<EnemySpawner> _spawnersSpawning = new();
 
     public static event Action OnBossDied = null;
     private Coroutine spawnEnemiesCoroutine;

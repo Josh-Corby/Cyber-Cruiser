@@ -248,10 +248,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitCollider: {fileID: 0}
   _shields: {fileID: 0}
-  _shieldCollider: {fileID: 0}
-  _shieldCollisionDamage: 10
-  shieldsActive: 0
   _shieldsActiveOnSpawn: 0
+  shieldsActive: 0
   reflectorShield: 0
   shieldActiveDuration: 5
   shieldActiveTimer: 0
@@ -359,10 +357,10 @@ MonoBehaviour:
   input: {x: 0, y: 0}
   mouseInput: {fileID: 0}
   spawnPosition: {fileID: 0}
-  baseSpeed: 0.2
+  baseSpeed: 0.1
   lerpMovement: 1
   controlsEnabled: 0
-  rotationSpeed: 1
+  rotationSpeed: 1.5
   distanceToStopRotation: 1
 --- !u!114 &8907491432247727160
 MonoBehaviour:
@@ -405,8 +403,9 @@ MonoBehaviour:
   dontDestroy: 0
   player: {fileID: 8907491432247727163}
   plasmaCost: 5
-  maxHealth: 5
+  _maxHealth: 5
   _playerPlasma: 0
+  _playerCollider: {fileID: 0}
 --- !u!1001 &1524391219515457962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -461,6 +460,22 @@ PrefabInstance:
     - target: {fileID: 3323969703301485185, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
       propertyPath: m_Name
       value: Shields
+      objectReference: {fileID: 0}
+    - target: {fileID: 3323969703301485185, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852309266542908364, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852309266542908364, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -610757451
+      objectReference: {fileID: 0}
+    - target: {fileID: 8249280945201863387, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
+      propertyPath: _shieldCollisionDamage
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
@@ -528,6 +543,10 @@ PrefabInstance:
       propertyPath: useSpread
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6640960726374861538, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: _weaponInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: dcab90440fc56ad46a02c865024e77b9, type: 2}
     - target: {fileID: 6640960726374861538, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: objectToFire
       value: 

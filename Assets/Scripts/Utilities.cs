@@ -644,7 +644,7 @@ public class Utilities : MonoBehaviour
     /// <summary>
     /// Check if weights of a spawner exceed 1. If so, correct them
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T"></typeparam>`
     /// <param name="structArray"> Array of structs</param>
     /// <param name="structType">The struct type of the array </param>
     /// <param name="fieldName">The name of a float field in the struct type</param>
@@ -673,7 +673,6 @@ public class Utilities : MonoBehaviour
                 //add the float to the list for easier use
                 valueList.Add(value);
             }
-
         }
 
         //get the total weight
@@ -717,7 +716,6 @@ public class Utilities : MonoBehaviour
             FieldInfo field = structType.GetField(fieldName);
             if (field != null && field.FieldType == typeof(float))
             {
-                field.GetValue(_struct);
                 float value = (float)field.GetValue(_struct);
                 value = valueList[x];
 
@@ -729,8 +727,5 @@ public class Utilities : MonoBehaviour
         return totalWeight;
     }
 
-    //public T GetWeightedRandom<T>(T[] array, float weightedElement)
-    //{
-    //}
-
+ 
 }

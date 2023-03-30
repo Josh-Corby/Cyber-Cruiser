@@ -79,7 +79,7 @@ public abstract class ShieldControllerBase : MonoBehaviour, IShield
 
     public virtual void ReflectProjectile(Bullet bulletToReflect)
     {
-        Debug.Log(bulletToReflect + "reflected");
+        //Debug.Log(bulletToReflect + "reflected");
         bulletToReflect.gameObject.transform.right = transform.right;
         bulletToReflect.speed /= 2;
     }
