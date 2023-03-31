@@ -44,6 +44,7 @@ public class Battlecruiser : Boss, IBoss
         {
             GameObject seekerMine = Instantiate(_seekerMinePrefab, _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
             seekerMine.transform.SetParent(null);
+            ESM.enemiesAlive.Add(seekerMine);
             yield return new WaitForSeconds(_mineDelay);
         }
         StopCoroutine(ReleaseMines());

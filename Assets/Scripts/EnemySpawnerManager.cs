@@ -9,10 +9,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 {
     private const float SPAWN_ENEMY_INTERVAL_BASE = 1.5f;
     private const float SPAWN_ENEMY_REDUCTION = 0.1f;
+    private const float BOSS_WAIT_TIME = 2f;
 
     public bool spawnEnemies;
     public GameObject bossGoalPosition;
     public Transform dragonMovePoint;
+    private bool bossReadyToSpawn;
 
     [SerializeField] private int enemiesToSpawn;
     [SerializeField] private float _enemySpawnInterval;
@@ -21,15 +23,19 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [SerializeField] private EnemySpawner bossSpawner;
     [SerializeField] private GameObject[] bossPrefabs;
 
-    [HideInInspector] public List<GameObject> enemiesAlive = new();
+    public List<GameObject> enemiesAlive = new();
     [HideInInspector] public List<GameObject> gunshipsAlive = new();
     private List<GameObject> _bossesToSpawn = new();
     private List<EnemySpawner> _spawnersSpawning = new();
 
     private Coroutine spawnEnemiesCoroutine;
+    private Coroutine spawnBossCoroutine;
 
     [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
     [SerializeField] private float _totalSpawnWeight;
+
+    public static event Action<GameObject> OnBossSelected = null;
+
     public float EnemySpawnInterval
     {
         get
@@ -57,9 +63,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void OnEnable()
     {
-        Boss.OnBossDied += (v) => { ProcessBossDied(); };
+        Boss.OnBossDied += (v) => { StartCoroutine(ProcessBossDied()); };
         GameManager.OnLevelCountDownStart += RestartLevel;
-        GameManager.OnBossDistanceReached += SpawnBoss;
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
 
@@ -74,9 +79,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void OnDisable()
     {
-        Boss.OnBossDied -= (v) => { ProcessBossDied(); };
+        Boss.OnBossDied -= (v) => { StartCoroutine(ProcessBossDied()); };
         GameManager.OnLevelCountDownStart -= RestartLevel;
-        GameManager.OnBossDistanceReached -= SpawnBoss;
         GameplayUIManager.OnCountdownDone -= StartSpawningEnemies;
         PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
 
@@ -163,6 +167,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
             value -= _enemySpawnerInfo[i].SpawnerWeight;
         }
     }
+
     private List<EnemySpawner> GetRandomSpawners()
     {
         _spawnersSpawning.Clear();
@@ -209,6 +214,16 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         {
             listToRemoveFrom.Remove(enemy);
         }
+        if (bossReadyToSpawn)
+        {
+            if(enemiesAlive.Count == 0)
+            {
+                if (spawnBossCoroutine == null)
+                {
+                    spawnBossCoroutine = StartCoroutine(SpawnBoss());
+                }
+            }
+        }
     }
 
     private void ClearEnemiesAlive()
@@ -237,6 +252,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         }
     }
 
+    public void SetupForBossSpawn()
+    {
+        StopSpawningEnemies();
+        bossReadyToSpawn = true;
+    }
+
     /// <summary>
     /// Select a random gameobject from bosses left to spawn
     /// </summary>
@@ -254,13 +275,15 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         return boss;
     }
 
-    private void SpawnBoss()
+    private IEnumerator SpawnBoss()
     {
-        StopSpawningEnemies();
-        bossSpawner.StartBossSpawn(GetRandomBossToSpawn());
+        GameObject bossToSpawn = GetRandomBossToSpawn();
+        GUIM.EnableBossWarningUI(bossToSpawn);
+        yield return new WaitForSeconds(BOSS_WAIT_TIME);
+        bossSpawner.StartBossSpawn(bossToSpawn);
     }
 
-    private void ProcessBossDied()
+    private IEnumerator ProcessBossDied()
     {
         Debug.Log("Boss dead");
         //make enemies spawn faster
@@ -270,6 +293,9 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         {
             SetSpawnersModifiers(0.1f);
         }
+
+        //wait set time before spawning enemies again
+        yield return new WaitForSeconds(BOSS_WAIT_TIME);
         //resume spawning enemies
         StartSpawningEnemies();
     }

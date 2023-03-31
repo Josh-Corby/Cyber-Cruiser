@@ -14,15 +14,15 @@ public class PickupSpawner : GameBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnPlasmaDistanceReached += SpawnPickupAtRandomPosition;
-        GameManager.OnWeaponUpgradeDistanceReached += SpawnWeaponUpgrade;
+        DistanceManager.OnPlasmaDistanceReached += SpawnPickupAtRandomPosition;
+        DistanceManager.OnWeaponUpgradeDistanceReached += SpawnWeaponUpgrade;
         Boss.OnBossDied += SpawnHealthPickupAtPosition;
     }
 
     private void OnDisable()
     {
-        GameManager.OnPlasmaDistanceReached -= SpawnPickupAtRandomPosition;
-        GameManager.OnWeaponUpgradeDistanceReached -= SpawnWeaponUpgrade;
+        DistanceManager.OnPlasmaDistanceReached -= SpawnPickupAtRandomPosition;
+        DistanceManager.OnWeaponUpgradeDistanceReached -= SpawnWeaponUpgrade;
         Boss.OnBossDied -= SpawnHealthPickupAtPosition;
     }
     private Vector3 GetRandomPosition()
@@ -50,7 +50,6 @@ public class PickupSpawner : GameBehaviour
                 break;
         }
         SpawnPickupAtRandomPosition(pickup);
-        OnPickupSpawned(pickup);
     }
 
     private void SpawnPickupAtPosition(PickupType pickupType, Vector3 position)

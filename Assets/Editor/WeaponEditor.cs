@@ -7,6 +7,7 @@ public class WeaponEditor : Editor
 
     SerializedProperty weaponName;
     SerializedProperty objectToFire;
+    SerializedProperty isObjectEnemy;
     SerializedProperty timeBetweenShots;
     SerializedProperty holdToFire;
     SerializedProperty useSpread;

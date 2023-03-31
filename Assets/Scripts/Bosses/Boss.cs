@@ -27,6 +27,7 @@ public class Boss : Enemy, IDamageable
     {
         _movement.speed = _unitInfo.speed;
     }
+
     protected override void Start()
     {
         base.Start();

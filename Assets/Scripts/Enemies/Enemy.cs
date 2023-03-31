@@ -90,7 +90,7 @@ public class Enemy : GameBehaviour, IDamageable
             }
             else
             {
-                StartCoroutine(Die());
+                Die();
             }
         }
     }
@@ -116,35 +116,29 @@ public class Enemy : GameBehaviour, IDamageable
         Destroy();
     }
 
-    protected IEnumerator Die()
+    protected void Die()
     {
         if(TryGetComponent<EnemyMovement>(out var movement))
         {
             movement.isEnemyDead = true;
         }  
-        //remove the rigidbody so the object doesnt break when the collider is disabled
-        //Destroy(_rb2D);
 
         if (_weapon != null)
         {
             _weapon.gameObject.SetActive(false);
-            //_weapon.DisableWeapon();
         }
         if (_spriteRenderer != null)
         {
             _spriteRenderer.color = Color.grey;
             _spriteRenderer.sortingOrder = -1;
         }
-
-        //wait a frame for rigidbody to be destroyed
-        yield return new WaitForEndOfFrame();
-        //disable collider so layer can be safely changed
-        //_collider.enabled = false;
-
         //change object layer to layer that only collides with cull area
         gameObject.layer = LayerMask.NameToLayer(DEAD_ENEMY_LAYER_NAME);
-        //enable collider
-        //_collider.enabled = true;
+        //remove enemy from enemies alive so it doesn't make boss spawner wait for it
+        if (ESM.enemiesAlive.Contains(gameObject))
+        {
+            OnEnemyDied(ESM.enemiesAlive, gameObject);
+        }
     }
 
     public virtual void Destroy()

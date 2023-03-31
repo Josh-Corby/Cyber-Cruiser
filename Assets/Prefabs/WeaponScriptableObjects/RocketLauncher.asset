@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: 
   objectToFire: {fileID: 2653145768784104840, guid: 709a567aa7ddbbb499d1205e0edd3970, type: 3}
+  isObjectEnemy: 1
   timeBetweenShots: 1
   holdToFire: 0
   useSpread: 1

@@ -12,6 +12,7 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     [SerializeField] private GameObject _gameplayPanel;
     [SerializeField] private GameObject _gameOverPanel;
     [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _bossWarningUI;
     [SerializeField] private GameObject _bossHealthBarUI;
     [SerializeField] private GameObject _playerHealthBarUI;
     [SerializeField] private GameObject _weaponUpgradeBarUI;
@@ -20,6 +21,7 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     [SerializeField] private TMP_Text _plasmaCountText;
     [SerializeField] private TMP_Text _distanceCounterText;
     [SerializeField] private TMP_Text _bossNameText;
+    [SerializeField] private TMP_Text _bossWarningText;
 
     private Coroutine _waveCountdownCoroutine;
 
@@ -63,6 +65,7 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     private void OnEnable()
     {
         EnemySpawner.OnBossSpawned += EnableBossUI;
+        EnemySpawner.OnBossSpawned += (e) => { DisableBossWarningUI(); };
         Boss.OnBossDamage += ChangeSliderValue;
         Boss.OnBossDied += (v) => { DisableBossUI(); };
 
@@ -77,13 +80,14 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
         GameManager.OnGamePaused += EnablePauseUI;
         GameManager.OnGameResumed += DisablePauseUI;
         PlayerManager.OnPlayerDeath += GameOverUI;
-        GameManager.OnDistanceChanged += UpdateDistanceText;
+        DistanceManager.OnDistanceChanged += UpdateDistanceText;
         PlayerManager.OnPlasmaChange += UpdatePlasmaText;     
     }
 
     private void OnDisable()
     {
         EnemySpawner.OnBossSpawned -= EnableBossUI;
+        EnemySpawner.OnBossSpawned -= (e) => { DisableBossWarningUI(); };
         Boss.OnBossDamage -= ChangeSliderValue;
         Boss.OnBossDied -= (v) => { DisableBossUI(); };
 
@@ -97,8 +101,8 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
         GameManager.OnLevelCountDownStart -= StartMission;
         GameManager.OnGamePaused -= EnablePauseUI;
         GameManager.OnGameResumed -= DisablePauseUI;
-        PlayerManager.OnPlayerDeath -= GameOverUI;    
-        GameManager.OnDistanceChanged -= UpdateDistanceText;
+        PlayerManager.OnPlayerDeath -= GameOverUI;
+        DistanceManager.OnDistanceChanged -= UpdateDistanceText;
         PlayerManager.OnPlasmaChange -= UpdatePlasmaText;
     }
 
@@ -108,6 +112,8 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
         _gameplayPanel.SetActive(true);
         _gameOverPanel.SetActive(false);
         _pausePanel.SetActive(false);
+        _bossWarningUI.SetActive(false);
+        DisableBossUI();
     }
 
     private void ResetWaveCountdown()
@@ -140,6 +146,16 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
         slider.SetSliderValue(value);
     }
 
+    public void EnableBossWarningUI(GameObject boss)
+    {
+        _bossWarningText.text = "Warning!! " + boss.name + " approaching";
+        _bossWarningUI.SetActive(true);
+    }
+
+    private void DisableBossWarningUI()
+    {
+        _bossWarningUI.SetActive(false);
+    }
     private void EnableBossUI(Enemy boss)
     {
         BossName = boss.gameObject.name;

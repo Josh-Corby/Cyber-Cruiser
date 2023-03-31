@@ -30,6 +30,7 @@ public class PlayerWeaponController : GameBehaviour
         GameManager.OnGameResumed += EnableControls;
 
         Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
+        GameManager.OnLevelCountDownStart += ResetPlayerWeapon;
     }
 
     private void OnDisable()
@@ -42,6 +43,7 @@ public class PlayerWeaponController : GameBehaviour
         GameManager.OnGameResumed -= EnableControls;
 
         Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
+        GameManager.OnLevelCountDownStart -= ResetPlayerWeapon;
     }
 
     private void Start()

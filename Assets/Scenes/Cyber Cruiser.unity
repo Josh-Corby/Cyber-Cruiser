@@ -1871,10 +1871,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e90ef5d0c61e92439a4f13b2976fda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnSize: {x: 0, y: 13, z: 0}
-  plasmaPrefab: {fileID: 9010852593865095087, guid: 779ade78571d9ab48a240c09c3373d84, type: 3}
-  weaponUpgradePrefabs:
+  _plasmaPickup: {fileID: 9010852593865095087, guid: 779ade78571d9ab48a240c09c3373d84, type: 3}
+  _healthPickup: {fileID: 9010852593865095087, guid: 6f93701b93521ef4c917649eb38830e8, type: 3}
+  _weaponUpgradePrefabs:
   - {fileID: 9010852593865095087, guid: 2e1c104e9af1a8441bbcc0c9386d09cc, type: 3}
+  spawnSize: {x: 0, y: 13, z: 0}
 --- !u!1 &598045736
 GameObject:
   m_ObjectHideFlags: 0

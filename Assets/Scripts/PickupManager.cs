@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class PickupManager : GameBehaviour
 {
-    private List<GameObject> pickupsOnScreen = new List<GameObject>();
+    [SerializeField] private List<GameObject> pickupsOnScreen = new List<GameObject>();
     private PickupSpawner _pickupSpawner;
 
     private void Awake()
@@ -16,8 +16,8 @@ public class PickupManager : GameBehaviour
     private void OnEnable()
     {
         GameManager.OnLevelCountDownStart += ClearPickups;
-        GameManager.OnPlasmaDropDistanceRequested += GenerateNewPlasmaDropDistance;
-        GameManager.OnWeaponUpgradeDropDistanceRequested += GenerateNewWeaponUpgradeDropDistance;
+        DistanceManager.OnPlasmaDropDistanceRequested += GenerateNewPlasmaDropDistance;
+        DistanceManager.OnWeaponUpgradeDropDistanceRequested += GenerateNewWeaponUpgradeDropDistance;
         PickupSpawner.OnPickupSpawned += AddPickup;
         Pickup.OnPickup += RemovePickup;
     }
@@ -25,8 +25,8 @@ public class PickupManager : GameBehaviour
     private void OnDisable()
     {
         GameManager.OnLevelCountDownStart -= ClearPickups;
-        GameManager.OnPlasmaDropDistanceRequested -= GenerateNewPlasmaDropDistance;
-        GameManager.OnWeaponUpgradeDropDistanceRequested -= GenerateNewWeaponUpgradeDropDistance;
+        DistanceManager.OnPlasmaDropDistanceRequested -= GenerateNewPlasmaDropDistance;
+        DistanceManager.OnWeaponUpgradeDropDistanceRequested -= GenerateNewWeaponUpgradeDropDistance;
         PickupSpawner.OnPickupSpawned -= AddPickup;
         Pickup.OnPickup -= RemovePickup;
     }
