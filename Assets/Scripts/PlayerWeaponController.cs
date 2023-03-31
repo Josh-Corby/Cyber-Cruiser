@@ -115,8 +115,9 @@ public class PlayerWeaponController : GameBehaviour
 
         switch (upgradeType)
         {
-            case WeaponUpgradeType.Scatter:
-                _playerWeapon.MultiShotUpgrade();
+            case WeaponUpgradeType.Scatter_Fixed:
+            case WeaponUpgradeType.Scatter_Random:
+                _playerWeapon.ScatterUpgrade(upgradeType);
                 break;
             case WeaponUpgradeType.Pulverizer:
                 _playerWeapon.PulverizerUpgrade();

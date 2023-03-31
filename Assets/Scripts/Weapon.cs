@@ -209,11 +209,21 @@ public class Weapon : GameBehaviour
         readyToFire = true;
     }
 
-    public void MultiShotUpgrade()
+    public void ScatterUpgrade(WeaponUpgradeType scatterType)
     {
+        switch (scatterType)
+        {
+            case WeaponUpgradeType.Scatter_Fixed:
+                _isMultiFireSpreadRandom = false;
+
+                break;
+            case WeaponUpgradeType.Scatter_Random:
+                _isMultiFireSpreadRandom = true;
+
+                break;
+        }
         _multiFire = true;
         _multiFireShots = 3;
-        _isMultiFireSpreadRandom = true;
         _useSpread = true;
         _spreadAngle = 30;
     }

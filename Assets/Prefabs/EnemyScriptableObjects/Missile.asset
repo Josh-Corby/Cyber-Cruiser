@@ -15,7 +15,7 @@ MonoBehaviour:
   unitName: Missile
   maxHealth: 1
   explodeOnDeath: 1
-  explosionRadius: 1
+  explosionRadius: 3
   explosionDamage: 1
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
   moveTypes: 0
