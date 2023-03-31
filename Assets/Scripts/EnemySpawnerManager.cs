@@ -63,7 +63,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void OnEnable()
     {
-        Boss.OnBossDied += (v) => { StartCoroutine(ProcessBossDied()); };
+        Boss.OnBossDied += (p,v) => { StartCoroutine(ProcessBossDied()); };
         GameManager.OnLevelCountDownStart += RestartLevel;
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
@@ -79,7 +79,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void OnDisable()
     {
-        Boss.OnBossDied -= (v) => { StartCoroutine(ProcessBossDied()); };
+        Boss.OnBossDied -= (p,v) => { StartCoroutine(ProcessBossDied()); };
         GameManager.OnLevelCountDownStart -= RestartLevel;
         GameplayUIManager.OnCountdownDone -= StartSpawningEnemies;
         PlayerManager.OnPlayerDeath -= StopSpawningEnemies;

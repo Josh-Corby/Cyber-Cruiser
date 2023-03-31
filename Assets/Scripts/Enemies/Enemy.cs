@@ -96,14 +96,13 @@ public class Enemy : GameBehaviour, IDamageable
     }
     protected void Explode()
     {
+        GameObject explosionEffect = Instantiate(_explosionEffect, transform);
+        explosionEffect.GetComponent<ExplosionGraphic>().explosionRadius = _explosionRadius;
+        explosionEffect.transform.SetParent(null);
+        explosionEffect.transform.localScale = Vector3.one * 30;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _explosionRadius);
         foreach (Collider2D collider in colliders)
         {
-            GameObject explosionEffect = Instantiate(_explosionEffect, transform);
-            explosionEffect.GetComponent<ExplosionGraphic>().explosionRadius = _explosionRadius;
-            explosionEffect.transform.SetParent(null);
-            explosionEffect.transform.localScale = Vector3.one * 10;
-
             if (!collider.TryGetComponent<PlayerManager>(out var player))
             {
                 continue;

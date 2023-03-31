@@ -3,7 +3,7 @@ using UnityEngine;
 public class Bullet : GameBehaviour
 {
     public float speed;
-    [SerializeField] private float damage;
+    public float damage;
     [SerializeField] private GameObject collisionParticles;
     [HideInInspector] public SpriteRenderer spriteRenderer;
 

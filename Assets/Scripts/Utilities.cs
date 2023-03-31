@@ -57,7 +57,7 @@ public class Utilities : MonoBehaviour
 
     #region Number Related
     /// <summary>
-    /// Gets a percentage of a vale
+    /// Gets a percentage of a value
     /// </summary>
     /// <param name="_initialValue">The value to get a percentage from</param>
     /// <param name="_percentage">The percentage to take off the main value</param>

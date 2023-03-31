@@ -447,7 +447,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3537538281721821470}
     - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: maxShieldStrength
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: _shieldMaxStrength
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: _shieldsActiveOnSpawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: _shieldCollisionDamage
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

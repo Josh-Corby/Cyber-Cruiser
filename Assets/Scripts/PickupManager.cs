@@ -4,59 +4,146 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PickupManager : GameBehaviour
+public class PickupManager : GameBehaviour<PickupManager>
 {
-    [SerializeField] private List<GameObject> pickupsOnScreen = new List<GameObject>();
-    private PickupSpawner _pickupSpawner;
 
-    private void Awake()
-    {
-        _pickupSpawner = GetComponentInChildren<PickupSpawner>();
-    }
-    private void OnEnable()
+    [SerializeField] private List<GameObject> pickupsOnScreen = new List<GameObject>();
+
+    [SerializeField] private PickupSpawner _pickupSpawner;
+    [SerializeField] private PickupSpawner _upgradeSpawner;
+
+    [SerializeField] private GameObject _plasmaPickup;
+    [SerializeField] protected GameObject _healthPickup;
+    [SerializeField] private GameObject[] _weaponUpgradePrefabs;
+    [SerializeField] private GameObject _pickupIndicator;
+    private float _indicatorAngle;
+    protected readonly float _indicatorTimer = 2f;
+
+
+    protected void OnEnable()
     {
         GameManager.OnLevelCountDownStart += ClearPickups;
         DistanceManager.OnPlasmaDropDistanceRequested += GenerateNewPlasmaDropDistance;
         DistanceManager.OnWeaponUpgradeDropDistanceRequested += GenerateNewWeaponUpgradeDropDistance;
-        PickupSpawner.OnPickupSpawned += AddPickup;
+        DistanceManager.OnPlasmaDistanceReached += SpawnPickupAtRandomPosition;
+        DistanceManager.OnWeaponUpgradeDistanceReached += () => { StartCoroutine(SpawnWeaponUpgrade()); };
+        Boss.OnBossDied += SpawnPickupAtPosition;
         Pickup.OnPickup += RemovePickup;
     }
 
-    private void OnDisable()
+    protected void OnDisable()
     {
         GameManager.OnLevelCountDownStart -= ClearPickups;
         DistanceManager.OnPlasmaDropDistanceRequested -= GenerateNewPlasmaDropDistance;
         DistanceManager.OnWeaponUpgradeDropDistanceRequested -= GenerateNewWeaponUpgradeDropDistance;
-        PickupSpawner.OnPickupSpawned -= AddPickup;
+        DistanceManager.OnPlasmaDistanceReached -= SpawnPickupAtRandomPosition;
+        DistanceManager.OnWeaponUpgradeDistanceReached -= () => { StartCoroutine(SpawnWeaponUpgrade()); };
+        Boss.OnBossDied -= SpawnPickupAtPosition;
         Pickup.OnPickup -= RemovePickup;
     }
 
-    public void GenerateNewPlasmaDropDistance(int currentDistanceMilestone, Action<int> callback)
+    protected void GenerateNewPlasmaDropDistance(int currentDistanceMilestone, Action<int> callback)
     {
         int plasmaDropDistance = Random.Range(currentDistanceMilestone + 15, currentDistanceMilestone + 99);
         callback(plasmaDropDistance);
-        Debug.Log("Plasma spawn distance is " + plasmaDropDistance);
+        //Debug.Log("Plasma spawn distance is " + plasmaDropDistance);
     }
 
-    private void GenerateNewWeaponUpgradeDropDistance(int previousBossDistance, int currentBossDistance, Action<int> callback)
+    protected void GenerateNewWeaponUpgradeDropDistance(int previousBossDistance, int currentBossDistance, Action<int> callback)
     {
         int weaponUpgradeDropDistance = Random.Range(previousBossDistance + 15, currentBossDistance);
         callback(weaponUpgradeDropDistance);
         Debug.Log("Weapon upgrade drop distance is " + weaponUpgradeDropDistance);
     }
 
+    protected void SpawnPickupAtRandomPosition(PickupType pickupType)
+    {
+        GameObject pickup = null;
+        switch (pickupType)
+        {
+            case PickupType.Plasma:
+                pickup = _plasmaPickup;
+                break;
+            case PickupType.Health:
+                pickup = _healthPickup;
+                break;
+            case PickupType.Weapon:
+                pickup = GetRandomWeaponUpgrade();
+                break;
+        }
 
-    private void AddPickup(GameObject pickup)
+        switch (pickupType)
+        {
+            case PickupType.Plasma:
+            case PickupType.Health:
+                _pickupSpawner.SpawnPickupAtRandomPosition(pickup);
+                break;
+            case PickupType.Weapon:
+                _upgradeSpawner.SpawnPickupAtRandomPosition(pickup);
+                break;
+        }
+
+        AddPickup(pickup);
+    }
+
+    private void SpawnPickupAtPosition(PickupType pickupType, Vector3 position)
+    {
+        GameObject pickup = null;
+        switch (pickupType)
+        {
+            case PickupType.Plasma:
+                pickup = _plasmaPickup;
+                break;
+            case PickupType.Health:
+                pickup = _healthPickup;
+                break;
+            case PickupType.Weapon:
+                pickup = GetRandomWeaponUpgrade();
+                break;
+        }
+
+        switch (pickupType)
+        {
+            case PickupType.Plasma:
+            case PickupType.Health:
+                _pickupSpawner.SpawnPickupAtPosition(pickup, position);
+                break;
+            case PickupType.Weapon:
+                _upgradeSpawner.SpawnPickupAtPosition(pickup, position);
+                break;
+        }
+
+        AddPickup(pickup);
+    }
+
+    protected GameObject GetRandomWeaponUpgrade()
+    {
+        int randomIndex = Random.Range(0, _weaponUpgradePrefabs.Length);
+        GameObject randomUpgradePrefab = _weaponUpgradePrefabs[randomIndex];
+        return randomUpgradePrefab;
+    }
+
+    private IEnumerator SpawnWeaponUpgrade()
+    {
+        Vector2 position = _upgradeSpawner.GetRandomPosition();
+        CreateIndicator(position, _upgradeSpawner);
+        yield return new WaitForSeconds(_indicatorTimer);
+        GameObject pickup = GetRandomWeaponUpgrade();
+        _upgradeSpawner.SpawnPickupAtPosition(pickup, position);
+        AddPickup(pickup);
+    }
+
+    public void AddPickup(GameObject pickup)
     {
         pickupsOnScreen.Add(pickup);
     }
 
-    private void RemovePickup(GameObject pickup)
+    public void RemovePickup(GameObject pickup)
     {
         pickupsOnScreen.Remove(pickup);
     }
 
-    private void ClearPickups()
+    protected void ClearPickups()
     {
         if (pickupsOnScreen.Count > 0)
         {
@@ -69,5 +156,25 @@ public class PickupManager : GameBehaviour
             }
         }
         pickupsOnScreen.Clear();
+    }
+
+    protected void CreateIndicator(Vector2 position, PickupSpawner spawner)
+    {
+        GameObject Indicator = Instantiate(_pickupIndicator, spawner.gameObject.transform.position, Quaternion.identity);
+
+        Indicator.transform.position += spawner._pickupIndicatorPosition;
+
+        if (spawner._pickupIndicatorPosition.x == 0)
+        {
+            Indicator.transform.position += new Vector3(position.x, 0);
+        }
+
+        if (spawner._pickupIndicatorPosition.y == 0)
+        {
+            Indicator.transform.position += new Vector3(0, position.y);
+        }
+
+        Indicator.transform.rotation = Quaternion.Euler(0, 0, _indicatorAngle);
+        Indicator.GetComponent<Indicator>().timer = _indicatorTimer;
     }
 }

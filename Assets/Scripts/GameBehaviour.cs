@@ -4,6 +4,7 @@ public class GameBehaviour : Utilities
 {
     protected static EnemySpawnerManager ESM { get { return EnemySpawnerManager.INSTANCE; } }
     protected static PlayerManager PM { get { return PlayerManager.INSTANCE; } }
+    protected static PickupManager PUM { get { return PickupManager.INSTANCE; } }
     protected static GameManager GM { get { return GameManager.INSTANCE; } }
     protected static GameplayUIManager GUIM { get { return GameplayUIManager.INSTANCE; } }
 }

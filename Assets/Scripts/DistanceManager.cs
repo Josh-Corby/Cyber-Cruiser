@@ -108,7 +108,7 @@ public class DistanceManager : GameBehaviour
         GameplayUIManager.OnCountdownDone += StartIncreasingDistance;
         GameplayUIManager.OnCountdownDone += RequestFirstPickupDistances;
         PlayerManager.OnPlayerDeath += StopIncreasingDistance;
-        Boss.OnBossDied += (v) => { StartIncreasingDistance(); };
+        Boss.OnBossDied += (p,v) => { StartIncreasingDistance(); };
     }
 
     private void OnDisable()
@@ -117,7 +117,7 @@ public class DistanceManager : GameBehaviour
         GameplayUIManager.OnCountdownDone -= StartIncreasingDistance;
         GameplayUIManager.OnCountdownDone -= RequestFirstPickupDistances;
         PlayerManager.OnPlayerDeath -= StopIncreasingDistance;
-        Boss.OnBossDied -= (v) => { StartIncreasingDistance(); };
+        Boss.OnBossDied -= (p,v) => { StartIncreasingDistance(); };
     }
 
     private void Update()

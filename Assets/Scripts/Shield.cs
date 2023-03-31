@@ -5,29 +5,39 @@ public class Shield : MonoBehaviour
 {
     [SerializeField] private ShieldControllerBase _shieldController;
     [SerializeField] private Collider2D _shieldCollider;
-    [SerializeField] private SpriteRenderer _shieldRenderer;
-    [SerializeField] protected int _shieldCollisionDamage;
+    public SpriteRenderer _spriteRenderer;
 
+    public Color SpriteRendererColour
+    {
+        get
+        {
+            return _spriteRenderer.color;
+        }
+        set
+        {
+            _spriteRenderer.color = value;
+        }
+    }
     private void Awake()
     {
         _shieldController = GetComponentInParent<ShieldControllerBase>();
         _shieldCollider = GetComponent<Collider2D>();
-        _shieldRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _shieldController.ProcessCollision(collision.gameObject,_shieldCollisionDamage);
+        _shieldController.ProcessCollision(collision.gameObject);
     }
 
     public void EnableShields()
     {
         _shieldCollider.enabled = true;
-        _shieldRenderer.enabled = true;
+        _spriteRenderer.enabled = true;
     }
 
     public void DisableShields()
     {
         _shieldCollider.enabled = false;
-        _shieldRenderer.enabled = false;
+        _spriteRenderer.enabled = false;
     }
 }

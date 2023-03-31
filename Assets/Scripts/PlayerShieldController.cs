@@ -4,20 +4,44 @@ using UnityEngine;
 
 public class PlayerShieldController : ShieldControllerBase, IShield
 {
-    [SerializeField] private int shieldActiveDuration;
-    [SerializeField] private float shieldActiveTimer;
-    [SerializeField] private float shieldTimerReductionOnCollision;
-
     private const string PLAYER_PROJECTILE_LAYER_NAME = "PlayerProjectile";
 
+
+    [SerializeField] private int _shieldActiveDuration;
+    [SerializeField] private float _shieldActiveTimer;
+
+    public int ShieldActiveDuration
+    {
+        get
+        {
+            return _shieldActiveDuration;
+        }
+        set
+        {
+            _shieldActiveDuration = value;
+        }
+    }
+
+    public float ShieldActiveTimer
+    {
+        get
+        {
+            return _shieldActiveTimer;
+        }
+
+        set
+        {
+            _shieldActiveTimer = value;
+        }
+    }
 
     private void Update()
     {
         if (shieldsActive)
         {
-            if(shieldActiveTimer >= 0)
+            if(ShieldActiveTimer >= 0)
             {
-                shieldActiveTimer -= Time.deltaTime;
+                ShieldActiveTimer -= Time.deltaTime;
             }
             else
             {
@@ -26,25 +50,26 @@ public class PlayerShieldController : ShieldControllerBase, IShield
         }
     }
 
-    public override void ProcessCollision(GameObject collider, int damage)
+    public override void ProcessCollision(GameObject collider)
     {
         if (collider.TryGetComponent<Boss>(out var boss))
         {
             return;
         }
-        base.ProcessCollision(collider, damage);
+
+        base.ProcessCollision(collider);
     }
 
     public override void ActivateShields()
     {
-        shieldActiveTimer = shieldActiveDuration;
+        ShieldActiveTimer = ShieldActiveDuration;
         base.ActivateShields();
     }
 
 
-    public override void ReduceShields()
+    public override void ReduceShields(float damage)
     {
-        shieldActiveTimer -= shieldTimerReductionOnCollision;
+        ShieldActiveTimer -= damage;
     }
 
     public override void ReflectProjectile(Bullet bulletToReflect)

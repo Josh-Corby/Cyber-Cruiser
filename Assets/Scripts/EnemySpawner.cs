@@ -20,11 +20,7 @@ public class EnemySpawner : GameBehaviour
 
     public EnemyCategory[] enemyCategories;
     [SerializeField] private float totalCategoryWeight;
-    /*
-    private GameObject EnemyIndicator;
-    private Vector3 EnemyIndicatorPosition;
-    private float IndicatorAngle;
-    */
+  
    
     public int EnemiesToSpawn
     {
@@ -227,29 +223,7 @@ public class EnemySpawner : GameBehaviour
     }
 
 
-    /*
-    private void CreateIndicator(Vector2 position)
-    {
-        GameObject Indicator = Instantiate(EnemyIndicator, transform.position, Quaternion.identity);
-
-        Indicator.transform.position += EnemyIndicatorPosition;
-
-        if (EnemyIndicatorPosition.x == 0)
-        {
-            Indicator.transform.position += new Vector3(position.x, 0);
-        }
-
-
-        if (EnemyIndicatorPosition.y == 0)
-        {
-            Indicator.transform.position += new Vector3(0, position.y);
-        }
-
-        Indicator.transform.rotation = Quaternion.Euler(0, 0, IndicatorAngle);
-        Indicator.GetComponent<EnemyIndicator>().IndicatorTimer(spawnDelay));
-    }
-
-    */
+  
 }
 [System.Serializable]
 public struct EnemySpawnerInfo

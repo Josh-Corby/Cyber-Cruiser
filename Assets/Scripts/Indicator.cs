@@ -2,12 +2,12 @@ using UnityEngine;
 using System.Collections;
 using DG.Tweening;
 
-public class EnemyIndicator : MonoBehaviour
+public class Indicator : MonoBehaviour
 {
     private float tweenTime = 1f;
     private Transform myTransform;
-
     private Tween myTween;
+    [HideInInspector] public float timer;
 
     private void Start()
     {
@@ -15,11 +15,13 @@ public class EnemyIndicator : MonoBehaviour
 
         float distance = 1f;
         myTween = myTransform.DOLocalMove(myTransform.localPosition + (myTransform.up * distance), tweenTime).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+        StartCoroutine(IndicatorTimer());
     }
 
-    public IEnumerator IndicatorTimer(float time)
+
+    public IEnumerator IndicatorTimer()
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(timer);
         myTween.Kill();
         Destroy(gameObject);
     }

@@ -1,15 +1,78 @@
 using UnityEngine;
 
-public abstract class ShieldControllerBase : MonoBehaviour, IShield
+public abstract class ShieldControllerBase : GameBehaviour, IShield
 {
     [SerializeField] protected Collider2D _unitCollider;
     [SerializeField] protected Shield _shields;
-
     [SerializeField] protected bool _shieldsActiveOnSpawn;
+
+    [SerializeField] protected int _shieldMaxStrength;
+    [SerializeField] protected float _shieldCurrentStrength;
+    [SerializeField] protected float _shieldCollisionDamage;
+
+    [SerializeField] protected float _shieldRendererMaxAlpha;
+    [SerializeField] protected float _shieldRendererCurrentAlpha;
+    [SerializeField] protected float _shieldAlphaReductionOnDamage;
 
     public bool shieldsActive;
     public bool reflectorShield;
 
+    public int ShieldMaxStrength
+    {
+        get
+        {
+            return _shieldMaxStrength;
+        }
+        set
+        {
+            _shieldMaxStrength = value;
+        }
+    }
+
+    public float ShieldCurrentStrength {
+        get
+        {
+            return _shieldCurrentStrength;
+        }
+        set
+        {
+            _shieldCurrentStrength = value;
+        }
+    }
+
+    public float ShieldCollisionDamage
+    {
+        get
+        {
+            return _shieldCollisionDamage;
+        }
+        set{}
+    }
+
+    public float ShieldRendererMaxAlpha 
+    {
+        get
+        {
+            return _shieldRendererMaxAlpha;
+        }
+        set
+        {
+            _shieldRendererMaxAlpha = value;
+        }
+    }
+
+    public float ShieldRendererCurrentAlpha
+    {
+        get
+        {
+            return _shieldRendererCurrentAlpha;
+        }
+        set
+        {
+            _shieldRendererCurrentAlpha = value;
+            _shields.SpriteRendererColour = new Color(_shields.SpriteRendererColour.r, _shields.SpriteRendererColour.g, _shields.SpriteRendererColour.b, value);
+        }
+    }
     protected void Awake()
     {
         _unitCollider = GetComponentInParent<Collider2D>();
@@ -25,6 +88,12 @@ public abstract class ShieldControllerBase : MonoBehaviour, IShield
         {
             ActivateShields();
         }
+        SetRendererMaxAlpha();
+    }
+
+    protected void SetRendererMaxAlpha()
+    {
+        ShieldRendererMaxAlpha = _shields.SpriteRendererColour.a;
     }
 
     public virtual void ActivateShields()
@@ -32,6 +101,7 @@ public abstract class ShieldControllerBase : MonoBehaviour, IShield
         shieldsActive = true;
         _shields.EnableShields();
         _unitCollider.enabled = false;
+        ShieldCurrentStrength = ShieldMaxStrength;
     }
 
     public virtual void DeactivateShields()
@@ -41,20 +111,17 @@ public abstract class ShieldControllerBase : MonoBehaviour, IShield
         _unitCollider.enabled = true;
     }
 
-
-    public virtual void ProcessCollision(GameObject collider, int damage)
+    public virtual void ProcessCollision(GameObject collider)
     {
-        DeactivateShields();
         if (collider.TryGetComponent<IDamageable>(out var damageable))
         {
-            damageable.Damage(damage);
-            DeactivateShields();
+            damageable.Damage(ShieldCollisionDamage);
+            ReduceShields(1);
         }
 
         else if (collider.TryGetComponent<IShield>(out var shield))
         {
-            shield.DeactivateShields();
-            DeactivateShields();
+            shield.ReduceShields(ShieldCollisionDamage);
         }
 
         else if (collider.TryGetComponent<Bullet>(out var bullet))
@@ -65,21 +132,30 @@ public abstract class ShieldControllerBase : MonoBehaviour, IShield
             }
             else
             {
-                ReduceShields();
+                ReduceShields(bullet.damage);
                 Destroy(bullet.gameObject);
             }
         }
     }
 
-
-    public virtual void ReduceShields()
+    public virtual void ReduceShields(float damage)
     {
-        throw new System.NotImplementedException();
+        ShieldCurrentStrength -= damage;
+
+        if(ShieldCurrentStrength <= 0)
+        {
+            DeactivateShields();
+            return;
+        }
+
+        float currentPercentStrength = ShieldCurrentStrength / ShieldMaxStrength;
+        float targetAlpha = ShieldRendererMaxAlpha * currentPercentStrength;
+        ShieldRendererCurrentAlpha = targetAlpha;
     }
+
 
     public virtual void ReflectProjectile(Bullet bulletToReflect)
     {
-        //Debug.Log(bulletToReflect + "reflected");
         bulletToReflect.gameObject.transform.right = transform.right;
         bulletToReflect.speed /= 2;
     }
