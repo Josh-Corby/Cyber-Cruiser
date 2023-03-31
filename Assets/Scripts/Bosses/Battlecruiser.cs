@@ -10,8 +10,7 @@ public class Battlecruiser : Boss, IBoss
     private readonly int _mineDelay = 1;
 
     private float _beamAttackDuration;
-    private readonly float _mineAttackDuration = 0f;
-    private readonly float _timeAfterAttackFinish = 2f;
+    private readonly float _timeAfterAttackFinish = 1f;
 
     [SerializeField] private GameObject _pulverizerBeam;
     [SerializeField] private BeamAttack _beamAttack;
@@ -39,10 +38,10 @@ public class Battlecruiser : Boss, IBoss
     //release seeker mines
     private IEnumerator ReleaseMines()
     {
-        _attackTimer = _mineAttackDuration + _timeAfterAttackFinish;
+        _attackTimer =  _timeAfterAttackFinish;
         for (int i = 0; i < _minesToFire; i++)
         {
-            GameObject seekerMine = Instantiate(_seekerMinePrefab, _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
+            GameObject seekerMine = Instantiate(_seekerMinePrefab, _mineReleasePoint.transform.position, transform.rotation);
             seekerMine.transform.SetParent(null);
             ESM.enemiesAlive.Add(seekerMine);
             yield return new WaitForSeconds(_mineDelay);

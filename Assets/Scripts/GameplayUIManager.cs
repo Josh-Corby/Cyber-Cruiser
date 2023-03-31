@@ -148,12 +148,14 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 
     public void EnableBossWarningUI(GameObject boss)
     {
+        Debug.Log(boss.name + " spawning");
         _bossWarningText.text = "Warning!! " + boss.name + " approaching";
         _bossWarningUI.SetActive(true);
     }
 
     private void DisableBossWarningUI()
     {
+        _bossWarningText.text = "";
         _bossWarningUI.SetActive(false);
     }
     private void EnableBossUI(Enemy boss)

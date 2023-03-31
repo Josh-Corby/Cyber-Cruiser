@@ -24,8 +24,6 @@ public class Pickup : GameBehaviour
     [SerializeField] private int _healthAmount;
     [SerializeField] private float _upgradeDuration;
 
-
-
     public void PickupEffect()
     {
         switch (_pickupType)
@@ -48,9 +46,7 @@ public class Pickup : GameBehaviour
                         OnWeaponUpgradePickup(_upgradeType, _upgradeDuration);
                         break;
                 }
-
                 break;
-  
         }
         OnPickup(gameObject);
     }

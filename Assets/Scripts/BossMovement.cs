@@ -6,7 +6,7 @@ public class BossMovement : GameBehaviour
     public static event Action<BossMovement> OnMovePositionRequested = null;
 
     [SerializeField] private bool _staticMovement;
-    [HideInInspector] public float speed;
+    public float speed;
 
     private GameObject _goalPoint;
     private bool _goalPositionReached;

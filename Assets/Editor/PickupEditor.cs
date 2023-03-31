@@ -31,7 +31,7 @@ public class PickupEditor : Editor
 
         EditorGUILayout.PropertyField(_pickupType);
         EditorGUILayout.PropertyField(_speed);
-        switch (pickup._pickupType) 
+        switch (pickup._pickupType)
         {
             case PickupType.Plasma:
                 EditorGUILayout.PropertyField(_plasmaAmount);

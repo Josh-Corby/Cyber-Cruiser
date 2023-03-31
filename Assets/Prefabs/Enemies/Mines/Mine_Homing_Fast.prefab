@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2653145768784104836}
   - component: {fileID: 3537538281721821471}
-  - component: {fileID: 214051522497304033}
+  - component: {fileID: -3341130447909709801}
   - component: {fileID: 3537538281721821472}
-  - component: {fileID: 283805157547236424}
-  - component: {fileID: -3806085156021533184}
+  - component: {fileID: 3537538281721821469}
+  - component: {fileID: -341527346657981128}
   m_Layer: 7
-  m_Name: Mine_Cluster
+  m_Name: Mine_Homing_Fast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +93,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &214051522497304033
+--- !u!58 &-3341130447909709801
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,7 +130,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!114 &283805157547236424
+--- !u!114 &3537538281721821469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,16 +139,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2653145768784104840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116ea7c7f86f827488ce7399f86fcbdf, type: 3}
+  m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitInfo: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
+  _unitInfo: {fileID: 11400000, guid: d260877db33c38c4da731825ceff7076, type: 2}
   unitName: 
   _currentHealth: 0
-  objectsToSpawn: 4
-  laserProjectile: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
-  spawnEnemies: 1
---- !u!114 &-3806085156021533184
+--- !u!114 &-341527346657981128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

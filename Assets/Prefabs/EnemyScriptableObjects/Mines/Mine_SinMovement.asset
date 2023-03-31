@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
-  m_Name: Mine_Cluster
+  m_Name: Mine_SinMovement
   m_EditorClassIdentifier: 
   unitName: Mine
   maxHealth: 1
@@ -18,16 +18,16 @@ MonoBehaviour:
   explosionRadius: 3
   explosionDamage: 1
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  moveTypes: 0
+  moveTypes: 3
   speed: 3
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0
   seekPlayerY: 0
   seekSpeed: 0
-  sinUpDownMovement: 0
-  sinFrequency: 2.6
-  sinMagnitude: 0.03
+  sinUpDownMovement: 1
+  sinFrequency: 6
+  sinMagnitude: 0.1
   homeOnPlayer: 0
   homeTurnSpeed: 0
   homeTime: 0

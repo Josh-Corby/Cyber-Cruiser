@@ -57,6 +57,13 @@ public class PlayerShieldController : ShieldControllerBase, IShield
             return;
         }
 
+        else if (collider.TryGetComponent<Pickup>(out var pickup))
+        {
+            pickup.PickupEffect();
+            Destroy(pickup.gameObject);
+            return;
+        }
+
         base.ProcessCollision(collider);
     }
 

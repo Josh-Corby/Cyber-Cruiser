@@ -98,8 +98,12 @@ public class EnemyEditor : Editor
                 break;
         }
 
+        EditorGUILayout.PropertyField(upDownMovement);
+        EditorGUILayout.PropertyField(seekPlayerY);
+        EditorGUILayout.PropertyField(sinUpDownMovement);
+        EditorGUILayout.PropertyField(homeOnPlayer);
         enemySO.upDownMovement = enemySO.moveTypes == MovementTypes.UpDown;
-        enemySO.seekPlayerY = enemySO.moveTypes == MovementTypes.UpDown;
+        enemySO.seekPlayerY = enemySO.moveTypes == MovementTypes.SeekPlayerY;
         enemySO.sinUpDownMovement = enemySO.moveTypes == MovementTypes.SinUpDown;
         enemySO.homeOnPlayer = enemySO.moveTypes == MovementTypes.HomeOnPlayer;
 

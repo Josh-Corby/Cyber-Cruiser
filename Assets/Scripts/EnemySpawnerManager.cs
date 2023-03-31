@@ -216,13 +216,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         }
         if (bossReadyToSpawn)
         {
-            if(enemiesAlive.Count == 0)
-            {
-                if (spawnBossCoroutine == null)
-                {
-                    spawnBossCoroutine = StartCoroutine(SpawnBoss());
-                }
-            }
+            CheckEnemiesAliveForBossSpawn();
         }
     }
 
@@ -256,8 +250,21 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     {
         StopSpawningEnemies();
         bossReadyToSpawn = true;
+        CheckEnemiesAliveForBossSpawn();
     }
 
+    private void CheckEnemiesAliveForBossSpawn()
+    {
+        if (enemiesAlive.Count == 0)
+        {
+            if (spawnBossCoroutine != null)
+            {
+                StopCoroutine(spawnBossCoroutine);
+            }
+            Debug.Log("Spawning boss");
+            spawnBossCoroutine = StartCoroutine(SpawnBoss());
+        }
+    }
     /// <summary>
     /// Select a random gameobject from bosses left to spawn
     /// </summary>
@@ -277,6 +284,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private IEnumerator SpawnBoss()
     {
+        bossReadyToSpawn = false;
         GameObject bossToSpawn = GetRandomBossToSpawn();
         GUIM.EnableBossWarningUI(bossToSpawn);
         yield return new WaitForSeconds(BOSS_WAIT_TIME);
@@ -285,6 +293,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private IEnumerator ProcessBossDied()
     {
+
         Debug.Log("Boss dead");
         //make enemies spawn faster
         _enemySpawnInterval -= SPAWN_ENEMY_REDUCTION;

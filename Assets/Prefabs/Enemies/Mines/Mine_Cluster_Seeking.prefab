@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 283805157547236424}
   - component: {fileID: -3806085156021533184}
   m_Layer: 7
-  m_Name: Mine_Cluster
+  m_Name: Mine_Cluster_Seeking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,11 +142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 116ea7c7f86f827488ce7399f86fcbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitInfo: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
+  _unitInfo: {fileID: 11400000, guid: 65c673e9b4286a84c842b1eaa39280d5, type: 2}
   unitName: 
   _currentHealth: 0
   objectsToSpawn: 4
-  laserProjectile: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
+  laserProjectile: {fileID: 2653145768784104840, guid: ca42a5524754e0343806dc7d6f4deaf8, type: 3}
   spawnEnemies: 1
 --- !u!114 &-3806085156021533184
 MonoBehaviour:

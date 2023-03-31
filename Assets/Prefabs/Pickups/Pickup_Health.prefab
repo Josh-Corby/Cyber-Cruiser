@@ -114,8 +114,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pickupType: 3
+  _pickupType: 2
+  _upgradeType: 0
   _speed: 3
   _plasmaAmount: 0
   _healthAmount: 5
-  _upgradeDuration: 20
+  _upgradeDuration: 0

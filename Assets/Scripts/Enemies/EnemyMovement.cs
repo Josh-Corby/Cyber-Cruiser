@@ -11,29 +11,29 @@ public class EnemyMovement : GameBehaviour
     [HideInInspector] public float _speed;
 
     [Header("Up down movement")]
-    protected bool _upDownMovement;
-    protected float _upDownSpeed;
-    private bool isBackForthMovingUp;
-    protected float _upDownMoveDistance;
+    [SerializeField] protected bool _upDownMovement;
+    [SerializeField] protected float _upDownSpeed;
+    [SerializeField] private bool isBackForthMovingUp;
+    [SerializeField] protected float _upDownMoveDistance;
 
     [Header("Seek movement")]
-    protected bool _seekPlayerY;
-    protected float _seekSpeed;
+    [SerializeField] protected bool _seekPlayerY;
+    [SerializeField] protected float _seekSpeed;
 
     [Header("Sin up down movement")]
-    private bool _sinUpDownMovement;
-    private float _sinFrequency;
-    private float _sinMagnitude;
-    private float _sinRandomSeed;
+    [SerializeField] private bool _sinUpDownMovement;
+    [SerializeField] private float _sinFrequency;
+    [SerializeField] private float _sinMagnitude;
+    [SerializeField] private float _sinRandomSeed;
 
     [Header("Homing movement")]
-    protected bool _homeOnPlayer;
-    protected float _homeTurnSpeed;
-    protected float _homeTime;
-    private float homeCounter;
-    protected bool _homeDelay;
-    protected float _homeDelayTime;
-    private float _homeDelayCounter;
+    [SerializeField] protected bool _homeOnPlayer;
+    [SerializeField] protected float _homeTurnSpeed;
+    [SerializeField] protected float _homeTime;
+    [SerializeField] private float homeCounter;
+    [SerializeField] protected bool _homeDelay;
+    [SerializeField] protected float _homeDelayTime;
+    [SerializeField] private float _homeDelayCounter;
     #endregion
 
     protected virtual void Awake()

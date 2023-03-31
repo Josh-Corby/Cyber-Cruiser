@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 1686505066082717662}
   m_LocalRotation: {x: -0, y: -0, z: 0.00000008940696, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2025374825834261598}
@@ -157,12 +157,12 @@ MonoBehaviour:
   _unitInfo: {fileID: 11400000, guid: 45c00a2ce362ab249b4c9699c248f74d, type: 2}
   unitName: 
   _currentHealth: 0
-  _attackCooldown: 1
+  _attackCooldown: 0.75
   _attackTimer: 0
   laserLaunchers:
   - {fileID: 5710954070109479895}
   - {fileID: 1958697201700664333}
-  minePrefab: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
+  minePrefab: {fileID: 2653145768784104840, guid: fdd78f68fc2b8c348bca6ba2d0f31766, type: 3}
 --- !u!114 &-4316434092633255210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _staticMovement: 0
-  speed: 2
+  speed: 4
 --- !u!1 &3534197723866894886
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponInfo: {fileID: 11400000, guid: 9818121d79463934baba9740bb6cab5d, type: 2}
+  _weaponInfo: {fileID: 11400000, guid: cd856ec32a1ec4a4cb4e89a8a5ba24c7, type: 2}
   readyToFire: 0
   _holdToFire: 0
 --- !u!1 &3807874348917580334
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponInfo: {fileID: 11400000, guid: 9818121d79463934baba9740bb6cab5d, type: 2}
+  _weaponInfo: {fileID: 11400000, guid: cd856ec32a1ec4a4cb4e89a8a5ba24c7, type: 2}
   readyToFire: 0
   _holdToFire: 0
 --- !u!1 &7020472227476826103

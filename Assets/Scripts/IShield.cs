@@ -19,5 +19,5 @@ public interface IShield
 
     public float ShieldRendererCurrentAlpha { get; set; }
 
-
+    
 }

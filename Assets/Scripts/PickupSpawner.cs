@@ -20,12 +20,14 @@ public class PickupSpawner : GameBehaviour
 
     public void SpawnPickupAtPosition(GameObject pickup, Vector3 position)
     {
-        GameObject _pickup = Instantiate(pickup, position, transform.rotation);
+        GameObject spawnedPickup = Instantiate(pickup, position, transform.rotation);
+        PUM.AddPickup(spawnedPickup);
     }
 
     public void SpawnPickupAtRandomPosition(GameObject pickup)
     {
-        GameObject _pickup = Instantiate(pickup, GetRandomPosition(), transform.rotation);
+        GameObject spawnedPickup = Instantiate(pickup, GetRandomPosition(), transform.rotation);
+        PUM.AddPickup(spawnedPickup);
     }
 
     private void OnDrawGizmosSelected()

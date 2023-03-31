@@ -58,62 +58,34 @@ public class PickupManager : GameBehaviour<PickupManager>
 
     protected void SpawnPickupAtRandomPosition(PickupType pickupType)
     {
-        GameObject pickup = null;
         switch (pickupType)
         {
             case PickupType.Plasma:
-                pickup = _plasmaPickup;
+                _pickupSpawner.SpawnPickupAtRandomPosition(_plasmaPickup);
                 break;
             case PickupType.Health:
-                pickup = _healthPickup;
+                _pickupSpawner.SpawnPickupAtRandomPosition(_healthPickup);
                 break;
             case PickupType.Weapon:
-                pickup = GetRandomWeaponUpgrade();
+                _upgradeSpawner.SpawnPickupAtRandomPosition(GetRandomWeaponUpgrade());
                 break;
         }
-
-        switch (pickupType)
-        {
-            case PickupType.Plasma:
-            case PickupType.Health:
-                _pickupSpawner.SpawnPickupAtRandomPosition(pickup);
-                break;
-            case PickupType.Weapon:
-                _upgradeSpawner.SpawnPickupAtRandomPosition(pickup);
-                break;
-        }
-
-        AddPickup(pickup);
     }
 
     private void SpawnPickupAtPosition(PickupType pickupType, Vector3 position)
     {
-        GameObject pickup = null;
         switch (pickupType)
         {
             case PickupType.Plasma:
-                pickup = _plasmaPickup;
+                _pickupSpawner.SpawnPickupAtPosition(_plasmaPickup, position);
                 break;
             case PickupType.Health:
-                pickup = _healthPickup;
+                _pickupSpawner.SpawnPickupAtPosition(_healthPickup, position);
                 break;
             case PickupType.Weapon:
-                pickup = GetRandomWeaponUpgrade();
+                _upgradeSpawner.SpawnPickupAtPosition(GetRandomWeaponUpgrade(), position);
                 break;
         }
-
-        switch (pickupType)
-        {
-            case PickupType.Plasma:
-            case PickupType.Health:
-                _pickupSpawner.SpawnPickupAtPosition(pickup, position);
-                break;
-            case PickupType.Weapon:
-                _upgradeSpawner.SpawnPickupAtPosition(pickup, position);
-                break;
-        }
-
-        AddPickup(pickup);
     }
 
     protected GameObject GetRandomWeaponUpgrade()
@@ -130,7 +102,6 @@ public class PickupManager : GameBehaviour<PickupManager>
         yield return new WaitForSeconds(_indicatorTimer);
         GameObject pickup = GetRandomWeaponUpgrade();
         _upgradeSpawner.SpawnPickupAtPosition(pickup, position);
-        AddPickup(pickup);
     }
 
     public void AddPickup(GameObject pickup)
