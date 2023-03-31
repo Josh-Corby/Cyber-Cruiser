@@ -5,6 +5,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
     [SerializeField] protected Collider2D _unitCollider;
     [SerializeField] protected Shield _shields;
     [SerializeField] protected bool _shieldsActiveOnSpawn;
+    [SerializeField] protected bool isShieldImmuneToDamage;
 
     [SerializeField] protected int _shieldMaxStrength;
     [SerializeField] protected float _shieldCurrentStrength;
@@ -12,7 +13,6 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
 
     [SerializeField] protected float _shieldRendererMaxAlpha;
     [SerializeField] protected float _shieldRendererCurrentAlpha;
-    [SerializeField] protected float _shieldAlphaReductionOnDamage;
 
     public bool shieldsActive;
     public bool reflectorShield;
@@ -29,7 +29,8 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
         }
     }
 
-    public float ShieldCurrentStrength {
+    public float ShieldCurrentStrength
+    {
         get
         {
             return _shieldCurrentStrength;
@@ -46,10 +47,10 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
         {
             return _shieldCollisionDamage;
         }
-        set{}
+        set { }
     }
 
-    public float ShieldRendererMaxAlpha 
+    public float ShieldRendererMaxAlpha
     {
         get
         {
@@ -80,7 +81,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
     }
     protected void Start()
     {
-        if(!_shieldsActiveOnSpawn)
+        if (!_shieldsActiveOnSpawn)
         {
             DeactivateShields();
         }
@@ -116,12 +117,19 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
         if (collider.TryGetComponent<IDamageable>(out var damageable))
         {
             damageable.Damage(ShieldCollisionDamage);
-            ReduceShields(1);
+            if (!isShieldImmuneToDamage)
+            {
+                ReduceShields(1);
+            }
         }
 
         else if (collider.TryGetComponent<IShield>(out var shield))
         {
             shield.ReduceShields(ShieldCollisionDamage);
+            if (!isShieldImmuneToDamage)
+            {
+                ReduceShields(shield.ShieldCollisionDamage);
+            }
         }
 
         else if (collider.TryGetComponent<Bullet>(out var bullet))
@@ -132,7 +140,10 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
             }
             else
             {
-                ReduceShields(bullet.damage);
+                if (!isShieldImmuneToDamage)
+                {
+                    ReduceShields(bullet.damage);
+                }
                 Destroy(bullet.gameObject);
             }
         }
@@ -142,7 +153,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
     {
         ShieldCurrentStrength -= damage;
 
-        if(ShieldCurrentStrength <= 0)
+        if (ShieldCurrentStrength <= 0)
         {
             DeactivateShields();
             return;

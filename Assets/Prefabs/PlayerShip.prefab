@@ -249,11 +249,16 @@ MonoBehaviour:
   _unitCollider: {fileID: 0}
   _shields: {fileID: 0}
   _shieldsActiveOnSpawn: 0
+  _shieldMaxStrength: 0
+  _shieldCurrentStrength: 0
+  _shieldCollisionDamage: 0
+  _shieldRendererMaxAlpha: 0
+  _shieldRendererCurrentAlpha: 0
+  _shieldAlphaReductionOnDamage: 0
   shieldsActive: 0
   reflectorShield: 0
-  shieldActiveDuration: 5
-  shieldActiveTimer: 0
-  shieldTimerReductionOnCollision: 1
+  _shieldActiveDuration: 0
+  _shieldActiveTimer: 0
 --- !u!1 &8907491432247727163
 GameObject:
   m_ObjectHideFlags: 0
