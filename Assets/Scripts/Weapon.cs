@@ -228,8 +228,5 @@ public class Weapon : GameBehaviour
         _spreadAngle = 30;
     }
 
-    public void PulverizerUpgrade()
-    {
-
-    }
+   
 }

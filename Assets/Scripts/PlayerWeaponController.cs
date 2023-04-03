@@ -6,6 +6,7 @@ using System;
 public class PlayerWeaponController : GameBehaviour
 {
     [SerializeField] private Weapon _playerWeapon;
+    [SerializeField] private BeamAttack _beamAttack;
     [SerializeField] private bool _fireInput;
     private bool _controlsEnabled;
     private float _weaponUpgradeCounter;
@@ -19,6 +20,7 @@ public class PlayerWeaponController : GameBehaviour
     private void Awake()
     {
         _playerWeapon = GetComponentInChildren<Weapon>();
+        _beamAttack = GetComponentInChildren<BeamAttack>();
     }
     private void OnEnable()
     {
@@ -59,6 +61,14 @@ public class PlayerWeaponController : GameBehaviour
             {
                 CheckForFireInput();
             }
+
+            if (!_fireInput)
+            {
+                if (_beamAttack.isBeamActive)
+                {
+                    _beamAttack.ResetBeam();
+                }
+            }
         }
     }
 
@@ -78,6 +88,12 @@ public class PlayerWeaponController : GameBehaviour
 
     private void FireWeapon()
     {
+        if (_beamAttack.enabled)
+        {
+            _beamAttack.isBeamActive = true;
+            return;
+        }
+
         if (_playerWeapon.readyToFire)
         {
             _playerWeapon.CheckFireTypes();
@@ -120,7 +136,7 @@ public class PlayerWeaponController : GameBehaviour
                 _playerWeapon.ScatterUpgrade(upgradeType);
                 break;
             case WeaponUpgradeType.Pulverizer:
-                _playerWeapon.PulverizerUpgrade();
+                PulverizerUpgrade();
                 break;
         }
 
@@ -136,9 +152,17 @@ public class PlayerWeaponController : GameBehaviour
         ResetPlayerWeapon();
     }
 
+    private void PulverizerUpgrade()
+    {
+        _playerWeapon.enabled = false;
+        _beamAttack.enabled = true;
+    }
+
     public void ResetPlayerWeapon()
     {
         OnWeaponUpgradeFinished(GUIM.weaponUpgradeSlider);
+        _beamAttack.enabled = false;
+        _playerWeapon.enabled = true;
         _playerWeapon.AssignWeaponInfo();
     }
 }

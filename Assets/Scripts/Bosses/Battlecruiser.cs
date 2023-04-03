@@ -61,5 +61,6 @@ public class Battlecruiser : Boss, IBoss
         _beamAttack.ResetBeam();
         _beamAttack.lineRenderer.enabled = true;
         _attackTimer = _beamAttackDuration + _timeAfterAttackFinish;
+        _beamAttack.isBeamActive = true;
     }
 }
