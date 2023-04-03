@@ -15,7 +15,6 @@ public class BeamAttack : MonoBehaviour
     [SerializeField] private LayerMask _beamCollisionMask;
     [SerializeField] private float _beamWidth;
 
-    private float tempx;
     private void Start()
     {
         lineRenderer.startWidth = _beamWidth;
@@ -39,11 +38,7 @@ public class BeamAttack : MonoBehaviour
             {
                 _beamSize += _beamSpeed * Time.deltaTime;
                 Vector3 targetPosition = transform.localPosition + transform.right * _beamSize;
-                //need to store potential negative values of x for raycasting
-                tempx = targetPosition.x;
                 lineRenderer.SetPosition(1, new Vector3(Mathf.Abs(targetPosition.x), targetPosition.y));
-                //lineRenderer.SetPosition(1, new Vector3(Mathf.Abs(lineRenderer.GetPosition(1).x), lineRenderer.GetPosition(1).y));
-
 
                 BeamCollision();
             }
@@ -93,7 +88,7 @@ public class BeamAttack : MonoBehaviour
 
     private Vector2 GetDirectionBetweenPoints()
     {
-        Vector2 directionBetweenPoints = new Vector2(tempx, GetPointWorldPosition(1).y) - GetPointWorldPosition(0).normalized;
+        Vector2 directionBetweenPoints = GetPointWorldPosition(1) - GetPointWorldPosition(0).normalized;
         directionBetweenPoints.x = -Mathf.Abs(directionBetweenPoints.x);
         Debug.Log(directionBetweenPoints);
         return directionBetweenPoints;
@@ -102,7 +97,6 @@ public class BeamAttack : MonoBehaviour
     private float GetDistanceXBetweenPoints()
     {
         float distanceBetweenPoints = lineRenderer.GetPosition(0).x + Mathf.Abs(lineRenderer.GetPosition(1).x);
-            //GetPointWorldPosition(0).x + Mathf.Abs(GetPointWorldPosition(1).x);
         Debug.Log(distanceBetweenPoints);
         return distanceBetweenPoints;
     }
