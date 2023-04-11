@@ -14,9 +14,20 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
     [SerializeField] protected float _shieldRendererMaxAlpha;
     [SerializeField] protected float _shieldRendererCurrentAlpha;
 
-    public bool shieldsActive;
+    public bool _shieldsActive;
     public bool reflectorShield;
 
+    protected virtual bool ShieldsActive
+    {
+        get
+        {
+            return _shieldsActive;
+        }
+        set
+        {
+            _shieldsActive = value;
+        }
+    }
     public int ShieldMaxStrength
     {
         get
@@ -99,7 +110,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
 
     public virtual void ActivateShields()
     {
-        shieldsActive = true;
+        ShieldsActive = true;
         _shields.EnableShields();
         _unitCollider.enabled = false;
         ShieldCurrentStrength = ShieldMaxStrength;
@@ -107,7 +118,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
 
     public virtual void DeactivateShields()
     {
-        shieldsActive = false;
+        ShieldsActive = false;
         _shields.DisableShields();
         _unitCollider.enabled = true;
     }

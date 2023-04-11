@@ -15,11 +15,11 @@ MonoBehaviour:
   unitName: Mine
   maxHealth: 1
   explodeOnDeath: 1
-  explosionRadius: 3
+  explosionRadius: 2
   explosionDamage: 1
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
   moveTypes: 4
-  speed: 5
+  speed: 4
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
   sinFrequency: 2.6
   sinMagnitude: 0.03
   homeOnPlayer: 1
-  homeTurnSpeed: 1
-  homeTime: 2
+  homeTurnSpeed: 2
+  homeTime: 3
   homeDelay: 0
   homeDelayTime: 0

@@ -15,13 +15,13 @@ MonoBehaviour:
   weaponName: RobodactylWeapon
   objectToFire: {fileID: 760453196464390188, guid: 0bc4f44e95491144f93d1772d1d05593, type: 3}
   isObjectEnemy: 0
-  timeBetweenShots: 0.1
-  holdToFire: 1
+  timeBetweenShots: 1
+  holdToFire: 0
   useSpread: 1
   spreadAngle: 30
-  burstFire: 1
-  bursts: 3
-  timeBetweenBurstShots: 0.1
+  burstFire: 0
+  bursts: 1
+  timeBetweenBurstShots: 0.8
   multiFire: 1
-  multiFireShots: 3
+  multiFireShots: 2
   isMultiFireSpreadRandom: 0

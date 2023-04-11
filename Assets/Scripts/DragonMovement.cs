@@ -10,20 +10,29 @@ public class DragonMovement : EnemyMovement
 
     [HideInInspector] public Vector3 bottomLeftPoint;
 
-    [SerializeField] private float targetRotation;
+    private const float TARGET_ROTATION = 90f;
     [Range(50,360)] private float rotationSpeed;
 
+    private Vector3 startRotation;
     protected override void Start()
     {
         ChooseRandomMoveType();
         base.Start();
+
+        float x = transform.rotation.x;
+        float y = transform.rotation.y;
+        float z = transform.rotation.z;
+        startRotation = new Vector3 (x, y, z);
     }
 
     protected override void Update()
     {
         if (arcMove)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, targetRotation), rotationSpeed * Time.deltaTime);
+            Quaternion targetRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, TARGET_ROTATION);
+            Quaternion rotation =  Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(startRotation.x, startRotation.y, rotation.eulerAngles.z);
+
         }
 
         base.Update();
@@ -40,14 +49,18 @@ public class DragonMovement : EnemyMovement
 
             Vector3 vectorToBottomLeft = bottomLeftPoint - transform.position;
             float angle = Mathf.Atan2(vectorToBottomLeft.y, vectorToBottomLeft.x) * Mathf.Rad2Deg - 90;
-            transform.rotation = Quaternion.Euler(0,0,angle);
+            transform.rotation = Quaternion.Euler(startRotation.x, startRotation.y,angle);
         }
 
         if (movementTypeID == 1)
         {
             arcMove = true;
-            rotationSpeed = 50;
-            //rotationSpeed = Random.Range(50, 361);
+            rotationSpeed = Random.Range(50, 361);
         }
+    }
+
+    protected override void DeathMovement()
+    {
+        transform.position += _speed * Time.deltaTime * Vector3.down;
     }
 }

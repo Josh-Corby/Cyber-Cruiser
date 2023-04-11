@@ -11,7 +11,7 @@ public class PlayerShipController : MonoBehaviour
 
     [SerializeField] private bool lerpMovement;
 
-    [SerializeField] private bool controlsEnabled;
+    [SerializeField] private bool _controlsEnabled;
 
     private float minAngle = -20;
     private float maxAngle = 20;
@@ -19,6 +19,17 @@ public class PlayerShipController : MonoBehaviour
     [SerializeField] private float distanceToStopRotation = 5f;
     private Quaternion targetRotation;
 
+    public bool ControlsEnabled
+    {
+        get
+        {
+            return _controlsEnabled;
+        }
+        set
+        {
+            _controlsEnabled = value;
+        }
+    }
     private void OnEnable()
     {
         InputManager.OnMouseMove += RecieveInput;
@@ -49,7 +60,7 @@ public class PlayerShipController : MonoBehaviour
     private void Update()
     {
 
-        if (!controlsEnabled) return;  
+        if (!_controlsEnabled) return;  
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(input);
         mousePosition.z = 0f;
@@ -102,14 +113,14 @@ public class PlayerShipController : MonoBehaviour
 
     private void EnableControls()
     {
-        controlsEnabled = true;
+        _controlsEnabled = true;
         mouseInput.SetActive(true);
         Cursor.visible = false;
     }
 
     private void DisableControls()
     {
-        controlsEnabled = false;
+        _controlsEnabled = false;
         mouseInput.SetActive(false);
         Cursor.visible = true;
     }

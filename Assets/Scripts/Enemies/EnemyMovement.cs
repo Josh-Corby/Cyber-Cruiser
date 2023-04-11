@@ -202,7 +202,7 @@ public class EnemyMovement : GameBehaviour
         direction = transform.up;
     }
 
-    private void DeathMovement()
+    protected virtual void DeathMovement()
     {
         transform.position += _speed * Time.deltaTime * Vector3.down;
     }

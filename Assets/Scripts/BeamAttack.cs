@@ -8,6 +8,7 @@ public class BeamAttack : MonoBehaviour
     public LineRenderer lineRenderer;
     private float _beamSize;
     public float beamDuration;
+    [SerializeField] private float beamDamage;
 
     [SerializeField] private float _beamSpeed;
     [SerializeField] bool _isBeamTimed;
@@ -15,21 +16,37 @@ public class BeamAttack : MonoBehaviour
     [SerializeField] private LayerMask _beamCollisionMask;
     [SerializeField] private float _beamWidth;
 
+
+    private void OnDisable()
+    {
+        ResetBeam();
+    }
+
     private void Start()
     {
         lineRenderer.startWidth = _beamWidth;
         lineRenderer.endWidth = _beamWidth;
     }
+
     private void Update()
     {
         if (isBeamActive)
         {
             ExtendBeam();
         }
+        else
+        {
+            ResetBeam();
+        }
     }
 
     public void ExtendBeam()
     {
+        if(lineRenderer.enabled == false)
+        {
+            lineRenderer.enabled = true;
+        }
+
         if (_isBeamTimed)
         {
             _beamTimer -= Time.deltaTime;
@@ -58,10 +75,11 @@ public class BeamAttack : MonoBehaviour
 
     public void ResetBeam()
     {
-        lineRenderer.SetPosition(0, Vector2.zero);
+        lineRenderer.SetPosition(0, transform.localPosition);
         lineRenderer.SetPosition(1, transform.localPosition);
         _beamSize = 0;
         _beamTimer = beamDuration;
+        lineRenderer.enabled = false;
     }
 
     private void BeamCollision()
@@ -70,10 +88,16 @@ public class BeamAttack : MonoBehaviour
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(1, 1), 180, transform.right, GetDistanceXBetweenPoints(), _beamCollisionMask);
         if (hit.collider != null)
         {
-            Debug.Log("Enemy hit");
+            //Debug.Log("Enemy hit");
             if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
             {
-                damageable.Damage(1);
+                damageable.Damage(beamDamage);
+            }
+
+            if(hit.collider.TryGetComponent<Shield>(out var shield))
+            {
+                Debug.Log("beam hit shield");
+                shield._shieldController.ReduceShields(beamDamage);
             }
         }
     }
@@ -90,15 +114,14 @@ public class BeamAttack : MonoBehaviour
     {
         Vector2 directionBetweenPoints = GetPointWorldPosition(1) - GetPointWorldPosition(0).normalized;
         directionBetweenPoints.x = -Mathf.Abs(directionBetweenPoints.x);
-        Debug.Log(directionBetweenPoints);
+        //Debug.Log(directionBetweenPoints);
         return directionBetweenPoints;
     }
 
     private float GetDistanceXBetweenPoints()
     {
         float distanceBetweenPoints = lineRenderer.GetPosition(0).x + Mathf.Abs(lineRenderer.GetPosition(1).x);
-        Debug.Log(distanceBetweenPoints);
+        //Debug.Log(distanceBetweenPoints);
         return distanceBetweenPoints;
     }
-
 }

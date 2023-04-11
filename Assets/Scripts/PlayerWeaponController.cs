@@ -9,19 +9,170 @@ public class PlayerWeaponController : GameBehaviour
     [SerializeField] private BeamAttack _beamAttack;
     [SerializeField] private bool _fireInput;
     private bool _controlsEnabled;
+    private bool _isWeaponUpgradeActive;
     private float _weaponUpgradeCounter;
+    private bool _isHeatDecreasing;
+
+    [SerializeField] private int _heatMax = 100;
+    [SerializeField] private float _currentHeat;
+    [SerializeField] private float _heatPerShot;
+    [SerializeField] private float _heatLossOverTime;
+    [SerializeField] private float _cooldownHeatLoss;
+    [SerializeField] private bool _isOverheated;
+    [SerializeField] private float _timebeforeHeatLoss;
+    [SerializeField] private float _timeSinceLastShot;
 
     private Coroutine _weaponUpgradeCoroutine;
 
     public static event Action<UISlider, float> OnWeaponUpgradeStart = null;
     public static event Action<UISlider, float> OnWeaponUpgradeTimerTick = null;
     public static event Action<UISlider> OnWeaponUpgradeFinished = null;
+    public static event Action<UISlider, float, int> OnWeaponHeatInitialized = null;
+    public static event Action<UISlider, float> OnHeatChange = null;
+    public static event Action<UISlider, bool> OnOverheatStatusChange = null;
+
+    public int HeatMax
+    {
+        get
+        {
+            return _heatMax;
+        }
+        set
+        {
+            _heatMax = value;
+        }
+    }
+
+    public float CurrentHeat
+    {
+        get
+        {
+            return _currentHeat;
+        }
+        set
+        {
+            _currentHeat = value;
+
+            if (_currentHeat >= HeatMax)
+            {
+                _currentHeat = HeatMax;
+                IsOverheated = true;
+                OnOverheatStatusChange(GUIM.weaponHeatBar, true);
+            }
+
+            else if (_currentHeat < 0)
+            {
+                _currentHeat = 0;
+            }
+
+            OnHeatChange(GUIM.weaponHeatBar, _currentHeat);
+        }
+    }
+
+    public float HeatPerShot
+    {
+        get
+        {
+            return _heatPerShot;
+        }
+        set
+        {
+            _heatPerShot = value;
+        }
+    }
+
+    public float HeatLossOverTime
+    {
+        get
+        {
+            return _heatLossOverTime;
+        }
+        set
+        {
+            _heatLossOverTime = value;
+        }
+    }
+
+    public float CooldownHeatLoss
+    {
+        get
+        {
+            return _cooldownHeatLoss;
+        }
+        set
+        {
+            _cooldownHeatLoss = value;
+        }
+    }
+
+    public float TimeBeforeHeatLoss
+    {
+        get
+        {
+            return _timebeforeHeatLoss;
+        }
+        set
+        {
+            _timebeforeHeatLoss = value;
+        }
+    }
+
+    public float TimeSinceLastShot
+    {
+        get
+        {
+            return _timeSinceLastShot;
+        }
+        set
+        {
+            _timeSinceLastShot = value;
+            IsHeatDecreasing = _timeSinceLastShot >= TimeBeforeHeatLoss;
+        }
+    }
+
+    public bool IsHeatDecreasing
+    {
+        get
+        {
+            return _isHeatDecreasing;
+        }
+        set
+        {
+            _isHeatDecreasing = value;
+        }
+    }
+    public bool IsOverheated
+    {
+        get
+        {
+            return _isOverheated;
+        }
+        set
+        {
+            _isOverheated = value;
+            OnOverheatStatusChange(GUIM.weaponHeatBar, _isOverheated);
+        }
+    }
+
+    public bool IsWeaponUpgradeActive
+    {
+        get
+        {
+            return _isWeaponUpgradeActive;
+        }
+
+        set
+        {
+            _isWeaponUpgradeActive = value;
+        }
+    }
 
     private void Awake()
     {
         _playerWeapon = GetComponentInChildren<Weapon>();
         _beamAttack = GetComponentInChildren<BeamAttack>();
     }
+
     private void OnEnable()
     {
         InputManager.OnFire += SetFireInput;
@@ -51,24 +202,64 @@ public class PlayerWeaponController : GameBehaviour
     private void Start()
     {
         _fireInput = false;
+        CurrentHeat = 0;
+        HeatMax = 100;
+        OnWeaponHeatInitialized(GUIM.weaponHeatBar, CurrentHeat, HeatMax);
     }
 
     private void Update()
     {
-        if (_controlsEnabled)
+        if (!GM.isPaused)
         {
-            if (_fireInput)
-            {
-                CheckForFireInput();
-            }
+            CheckHeat();
+        }
+    }
 
-            if (!_fireInput)
+    private void CheckHeat()
+    {
+        if (!IsOverheated)
+        {
+
+            if (_controlsEnabled)
             {
-                if (_beamAttack.isBeamActive)
+                if (_fireInput)
                 {
-                    _beamAttack.ResetBeam();
+                    CheckForFireInput();
+                }
+
+                if (!_fireInput)
+                {
+                    if (_beamAttack.isBeamActive)
+                    {
+                        _beamAttack.ResetBeam();
+                    }
                 }
             }
+
+            TimeSinceLastShot += Time.deltaTime;
+
+            if (IsHeatDecreasing)
+            {
+                if (CurrentHeat > 0)
+                {
+                    CurrentHeat -= HeatLossOverTime;
+                }
+            }
+        }
+
+        if (IsOverheated)
+        {
+
+            if (CurrentHeat > 0)
+            {
+                CurrentHeat -= CooldownHeatLoss;
+            }
+            else
+            {
+                CurrentHeat = 0;
+                IsOverheated = false;
+            }
+            return;
         }
     }
 
@@ -84,6 +275,7 @@ public class PlayerWeaponController : GameBehaviour
             CancelFireInput();
         }
         FireWeapon();
+
     }
 
     private void FireWeapon()
@@ -97,6 +289,11 @@ public class PlayerWeaponController : GameBehaviour
         if (_playerWeapon.readyToFire)
         {
             _playerWeapon.CheckFireTypes();
+            if (!IsWeaponUpgradeActive)
+            {
+                CurrentHeat += HeatPerShot;
+                TimeSinceLastShot = 0;
+            }
         }
     }
 
@@ -139,7 +336,8 @@ public class PlayerWeaponController : GameBehaviour
                 PulverizerUpgrade();
                 break;
         }
-
+        CurrentHeat = 0;
+        IsWeaponUpgradeActive = true;
         _weaponUpgradeCounter = duration;
         OnWeaponUpgradeStart(GUIM.weaponUpgradeSlider, duration);
         while (_weaponUpgradeCounter > 0)
@@ -161,8 +359,12 @@ public class PlayerWeaponController : GameBehaviour
     public void ResetPlayerWeapon()
     {
         OnWeaponUpgradeFinished(GUIM.weaponUpgradeSlider);
+        _beamAttack.isBeamActive = false;
         _beamAttack.enabled = false;
+
         _playerWeapon.enabled = true;
         _playerWeapon.AssignWeaponInfo();
+        IsWeaponUpgradeActive = false;
+        CurrentHeat = 0;
     }
 }

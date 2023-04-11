@@ -3,7 +3,7 @@ using System;
 
 public class Shield : MonoBehaviour
 {
-    [SerializeField] private ShieldControllerBase _shieldController;
+    public ShieldControllerBase _shieldController;
     [SerializeField] private Collider2D _shieldCollider;
     public SpriteRenderer _spriteRenderer;
 

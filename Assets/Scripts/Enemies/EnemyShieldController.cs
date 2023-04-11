@@ -8,7 +8,7 @@ public class EnemyShieldController : ShieldControllerBase, IShield
     {
         base.ReflectProjectile(bulletToReflect);
         bulletToReflect.gameObject.layer = LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME);
-        bulletToReflect.spriteRenderer.color = Color.magenta;    
+        bulletToReflect.spriteRenderer.color = Color.black;    
         ReduceShields(bulletToReflect.damage);
     }
 

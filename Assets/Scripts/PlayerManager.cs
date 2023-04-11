@@ -2,12 +2,18 @@ using UnityEngine;
 using System;
 using System.Collections;
 
+public enum PlayerHealthState
+{
+    Healthy, Low, Critical
+}
 public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 {
     private const string PLAYER_PLASMA = "PlayerPlasma";
     private const float I_FRAMES_DURATION = 0.3f;
 
+    private PlayerHealthState _playerHealthState;
     [HideInInspector] public GameObject player;
+    [HideInInspector] public PlayerShipController playerShipController;
     private PlayerShieldController shieldController;
     [SerializeField] private int plasmaCost;
     private float _currentHealth;
@@ -20,6 +26,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     public static event Action<int> OnPlasmaChange = null;
     public static event Action<UISlider, float> OnPlayerMaxHealthChange = null;
     public static event Action<UISlider, float> OnPlayerCurrentHealthChange = null;
+    public static event Action<PlayerHealthState> OnPlayerHealthStateChange = null;
 
     public float PlayerCurrentHealth
     {
@@ -30,15 +37,42 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         set
         {
             _currentHealth = value;
-            if (_currentHealth > _maxHealth)
+
+            if (_currentHealth >= PlayerMaxHealth)
             {
-                _currentHealth = _maxHealth;
+                _currentHealth = PlayerMaxHealth;
+                PlayerHealthState = PlayerHealthState.Healthy;
             }
+
+            if(_currentHealth <= 2 && _currentHealth >1)
+            {
+                PlayerHealthState = PlayerHealthState.Low;
+            }
+
+            if(_currentHealth <= 1)
+            {
+                PlayerHealthState = PlayerHealthState.Critical;
+            }
+
+
             OnPlayerCurrentHealthChange(GUIM.playerHealthBar, _currentHealth);
             if (_currentHealth <= 0)
             {
                 Destroy();
             }       
+        }
+    }
+
+    public PlayerHealthState PlayerHealthState
+    {
+        set
+        {
+            _playerHealthState = value;
+            OnPlayerHealthStateChange(_playerHealthState);
+        }
+        get
+        {
+            return _playerHealthState;
         }
     }
 
@@ -72,6 +106,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         _playerCollider = GetComponent<Collider2D>();
         shieldController = GetComponentInChildren<PlayerShieldController>();
+        playerShipController = GetComponent<PlayerShipController>();
         player = gameObject;
     }
 
@@ -101,7 +136,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void FullHeal()
     {
-        PlayerCurrentHealth = _maxHealth;
+        PlayerCurrentHealth = PlayerMaxHealth;
         OnPlayerCurrentHealthChange(GUIM.playerHealthBar, _currentHealth);
     }
 
@@ -172,7 +207,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void CheckShieldsState()
     {
-        if (shieldController.shieldsActive)
+        if (shieldController._shieldsActive)
         {
             Debug.Log("Shields already Active");
             return;

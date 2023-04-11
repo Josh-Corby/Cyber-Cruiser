@@ -11,6 +11,7 @@ public class Enemy : GameBehaviour, IDamageable
     private EnemyMovement _unitMovement;
     private EnemyWeaponController _weapon;
     private SpriteRenderer _spriteRenderer;
+    private GameObject _crashParticles;
 
     public string unitName;
     protected float _maxHealth;
@@ -19,7 +20,6 @@ public class Enemy : GameBehaviour, IDamageable
     private float _explosionRadius;
     private float _explosionDamage;
     private GameObject _explosionEffect;
-
 
     protected const string DEAD_ENEMY_LAYER_NAME = "DeadEnemy";
 
@@ -48,6 +48,12 @@ public class Enemy : GameBehaviour, IDamageable
     protected virtual void Awake()
     {
         AssignEnemyInfo();
+
+        if (!_explodeOnDeath)
+        {
+            _crashParticles = transform.GetChild(0).gameObject;
+            _crashParticles.SetActive(false);
+        }  
     }
     protected virtual void Start()
     {
@@ -99,7 +105,7 @@ public class Enemy : GameBehaviour, IDamageable
         GameObject explosionEffect = Instantiate(_explosionEffect, transform);
         explosionEffect.GetComponent<ExplosionGraphic>().explosionRadius = _explosionRadius;
         explosionEffect.transform.SetParent(null);
-        explosionEffect.transform.localScale = Vector3.one * 30;
+        explosionEffect.transform.localScale = Vector3.one * 22;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _explosionRadius);
         foreach (Collider2D collider in colliders)
         {
@@ -131,6 +137,7 @@ public class Enemy : GameBehaviour, IDamageable
             _spriteRenderer.color = Color.grey;
             _spriteRenderer.sortingOrder = -1;
         }
+        _crashParticles.SetActive(true);
         //change object layer to layer that only collides with cull area
         gameObject.layer = LayerMask.NameToLayer(DEAD_ENEMY_LAYER_NAME);
         //remove enemy from enemies alive so it doesn't make boss spawner wait for it

@@ -41,7 +41,7 @@ public class Battlecruiser : Boss, IBoss
         _attackTimer =  _timeAfterAttackFinish;
         for (int i = 0; i < _minesToFire; i++)
         {
-            GameObject seekerMine = Instantiate(_seekerMinePrefab, _mineReleasePoint.transform.position, transform.rotation);
+            GameObject seekerMine = Instantiate(_seekerMinePrefab, _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
             seekerMine.transform.SetParent(null);
             ESM.enemiesAlive.Add(seekerMine);
             yield return new WaitForSeconds(_mineDelay);

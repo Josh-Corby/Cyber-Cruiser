@@ -44,14 +44,17 @@ TagManager:
   - name: Background
     uniqueID: 2367641593
     locked: 0
-  - name: Pickups
-    uniqueID: 701405901
+  - name: Midground
+    uniqueID: 3936967075
     locked: 0
   - name: Effects
     uniqueID: 1362004309
     locked: 0
   - name: Enemies
     uniqueID: 4189217035
+    locked: 0
+  - name: Pickups
+    uniqueID: 701405901
     locked: 0
   - name: Projectiles
     uniqueID: 1731554085

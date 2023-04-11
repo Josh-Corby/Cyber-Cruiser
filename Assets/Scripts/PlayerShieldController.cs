@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerShieldController : ShieldControllerBase, IShield
 {
@@ -9,6 +10,10 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 
     [SerializeField] private int _shieldActiveDuration;
     [SerializeField] private float _shieldActiveTimer;
+
+    public static event Action<UISlider, float> OnPlayerShieldsActivated = null;
+    public static event Action<UISlider> OnPlayerShieldsDeactivated = null;
+    public static event Action<UISlider, float> OnPlayerShieldsValueChange = null;
 
     public int ShieldActiveDuration
     {
@@ -32,12 +37,33 @@ public class PlayerShieldController : ShieldControllerBase, IShield
         set
         {
             _shieldActiveTimer = value;
+            OnPlayerShieldsValueChange(GUIM.playerShieldBar, _shieldActiveTimer);
+        }
+    }
+
+    protected override bool ShieldsActive
+    {
+        get
+        {
+            return _shieldsActive;
+        }
+        set
+        {
+            _shieldsActive = value;
+            if (!_shieldsActive)
+            {
+                OnPlayerShieldsDeactivated(GUIM.playerShieldBar);
+            }
+            if (_shieldsActive)
+            {
+                OnPlayerShieldsActivated(GUIM.playerShieldBar, ShieldActiveDuration);
+            }
         }
     }
 
     private void Update()
     {
-        if (shieldsActive)
+        if (ShieldsActive)
         {
             if(ShieldActiveTimer >= 0)
             {

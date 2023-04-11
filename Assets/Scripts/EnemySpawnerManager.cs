@@ -7,8 +7,8 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 {
-    private const float SPAWN_ENEMY_INTERVAL_BASE = 1.5f;
-    private const float SPAWN_ENEMY_REDUCTION = 0.1f;
+    private const float SPAWN_ENEMY_INTERVAL_BASE = 2f;
+    private const float SPAWN_ENEMY_REDUCTION = 0.2f;
     private const float BOSS_WAIT_TIME = 2f;
 
     public bool spawnEnemies;
@@ -23,6 +23,9 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [SerializeField] private EnemySpawner bossSpawner;
     [SerializeField] private GameObject[] bossPrefabs;
 
+    public EnemySpawner _topTentacleSpawner;
+    public EnemySpawner _bottomTentacleSpawner;
+
     public List<GameObject> enemiesAlive = new();
     [HideInInspector] public List<GameObject> gunshipsAlive = new();
     private List<GameObject> _bossesToSpawn = new();
@@ -34,7 +37,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
     [SerializeField] private float _totalSpawnWeight;
 
-    public static event Action<GameObject> OnBossSelected = null;
 
     public float EnemySpawnInterval
     {
@@ -65,6 +67,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     {
         Boss.OnBossDied += (p,v) => { StartCoroutine(ProcessBossDied()); };
         GameManager.OnLevelCountDownStart += RestartLevel;
+        GameManager.OnLevelCountDownStart += CancelBossSpawn;
+
         GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
 
@@ -81,6 +85,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     {
         Boss.OnBossDied -= (p,v) => { StartCoroutine(ProcessBossDied()); };
         GameManager.OnLevelCountDownStart -= RestartLevel;
+        GameManager.OnLevelCountDownStart -= CancelBossSpawn;
+
         GameplayUIManager.OnCountdownDone -= StartSpawningEnemies;
         PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
 
@@ -289,6 +295,14 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         GUIM.EnableBossWarningUI(bossToSpawn);
         yield return new WaitForSeconds(BOSS_WAIT_TIME);
         bossSpawner.StartBossSpawn(bossToSpawn);
+    }
+
+    private void CancelBossSpawn()
+    {
+        if(spawnBossCoroutine != null)
+        {
+            StopCoroutine(spawnBossCoroutine);
+        }
     }
 
     private IEnumerator ProcessBossDied()

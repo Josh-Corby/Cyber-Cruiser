@@ -7,7 +7,9 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 {
     public UISlider bossHealthBar;
     public UISlider playerHealthBar;
+    public UISlider playerShieldBar;
     public UISlider weaponUpgradeSlider;
+    public UISlider weaponHeatBar;
 
     [SerializeField] private GameObject _gameplayPanel;
     [SerializeField] private GameObject _gameOverPanel;
@@ -15,8 +17,9 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     [SerializeField] private GameObject _bossWarningUI;
     [SerializeField] private GameObject _bossHealthBarUI;
     [SerializeField] private GameObject _playerHealthBarUI;
+    [SerializeField] private GameObject _playerShieldBarUI;
     [SerializeField] private GameObject _weaponUpgradeBarUI;
-
+    [SerializeField] private GameObject _weaponHeatBar;
     [SerializeField] private TMP_Text _waveCountdownText;
     [SerializeField] private TMP_Text _plasmaCountText;
     [SerializeField] private TMP_Text _distanceCounterText;
@@ -26,6 +29,7 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     private Coroutine _waveCountdownCoroutine;
 
     public static event Action OnCountdownDone = null;
+    public static event Action<Action> OnMaxHeatRequested = null;
 
     public string BossName
     {
@@ -57,15 +61,12 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
         }
     }
 
-    private void Awake()
-    {
-        bossHealthBar = _bossHealthBarUI.GetComponent<UISlider>();
-        playerHealthBar = _playerHealthBarUI.GetComponent<UISlider>();
-    }
+
     private void OnEnable()
     {
         EnemySpawner.OnBossSpawned += EnableBossUI;
         EnemySpawner.OnBossSpawned += (e) => { DisableBossWarningUI(); };
+
         Boss.OnBossDamage += ChangeSliderValue;
         Boss.OnBossDied += (p,v) => { DisableBossUI(); };
 
@@ -75,19 +76,29 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
         PlayerWeaponController.OnWeaponUpgradeStart += EnableSlider;
         PlayerWeaponController.OnWeaponUpgradeTimerTick += ChangeSliderValue;
         PlayerWeaponController.OnWeaponUpgradeFinished += DisableSlider;
+        PlayerWeaponController.OnWeaponHeatInitialized += EnableAndSetSlider;
+        PlayerWeaponController.OnHeatChange += ChangeSliderValue;
+        PlayerWeaponController.OnOverheatStatusChange += OverheatUI;
+
+        PlayerShieldController.OnPlayerShieldsActivated += EnableSlider;
+        PlayerShieldController.OnPlayerShieldsDeactivated += DisableSlider;
+        PlayerShieldController.OnPlayerShieldsValueChange += ChangeSliderValue;
 
         GameManager.OnLevelCountDownStart += StartMission;
         GameManager.OnGamePaused += EnablePauseUI;
         GameManager.OnGameResumed += DisablePauseUI;
+
         PlayerManager.OnPlayerDeath += GameOverUI;
-        DistanceManager.OnDistanceChanged += UpdateDistanceText;
-        PlayerManager.OnPlasmaChange += UpdatePlasmaText;     
+        PlayerManager.OnPlasmaChange += UpdatePlasmaText;
+
+        DistanceManager.OnDistanceChanged += UpdateDistanceText; 
     }
 
     private void OnDisable()
     {
         EnemySpawner.OnBossSpawned -= EnableBossUI;
         EnemySpawner.OnBossSpawned -= (e) => { DisableBossWarningUI(); };
+
         Boss.OnBossDamage -= ChangeSliderValue;
         Boss.OnBossDied -= (p,v) => { DisableBossUI(); };
 
@@ -97,13 +108,22 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
         PlayerWeaponController.OnWeaponUpgradeStart -= EnableSlider;
         PlayerWeaponController.OnWeaponUpgradeTimerTick -= ChangeSliderValue;
         PlayerWeaponController.OnWeaponUpgradeFinished -= DisableSlider;
+        PlayerWeaponController.OnWeaponHeatInitialized -= EnableAndSetSlider;
+        PlayerWeaponController.OnHeatChange -= ChangeSliderValue;
+        PlayerWeaponController.OnOverheatStatusChange -= OverheatUI;
+
+        PlayerShieldController.OnPlayerShieldsActivated -= EnableSlider;
+        PlayerShieldController.OnPlayerShieldsDeactivated -= DisableSlider;
+        PlayerShieldController.OnPlayerShieldsValueChange -= ChangeSliderValue;
 
         GameManager.OnLevelCountDownStart -= StartMission;
         GameManager.OnGamePaused -= EnablePauseUI;
         GameManager.OnGameResumed -= DisablePauseUI;
+
         PlayerManager.OnPlayerDeath -= GameOverUI;
-        DistanceManager.OnDistanceChanged -= UpdateDistanceText;
         PlayerManager.OnPlasmaChange -= UpdatePlasmaText;
+
+        DistanceManager.OnDistanceChanged -= UpdateDistanceText;
     }
 
     private void StartMission()
@@ -133,7 +153,13 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     private void EnableSlider(UISlider slider, float maxValue)
     {
         slider.gameObject.SetActive(true);
-        slider.SetSliderValues(maxValue);
+        slider.SetSliderMaxValue(maxValue);
+    }
+
+    private void EnableAndSetSlider(UISlider slider, float currentValue, int maxValue)
+    {
+        slider.gameObject.SetActive(true);
+        slider.SetSliderValues(currentValue, maxValue);
     }
 
     private void DisableSlider(UISlider slider)
@@ -143,7 +169,22 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 
     private void ChangeSliderValue(UISlider slider, float value)
     {
-        slider.SetSliderValue(value);
+        if (slider.gameObject.activeSelf)
+        {
+            slider.SetSliderValue(value);
+        }
+    }
+
+    private void OverheatUI(UISlider slider, bool status)
+    {
+        if (status)
+        {
+            slider.SetFillColour(Color.red);
+        }
+        else if (!status)
+        {
+            slider.SetFillColour(Color.cyan);
+        }
     }
 
     public void EnableBossWarningUI(GameObject boss)

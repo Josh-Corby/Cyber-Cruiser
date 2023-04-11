@@ -33,7 +33,7 @@ public class GameManager : GameBehaviour<GameManager>
         isPaused = false;
         Time.timeScale = 1f;
         OnLevelCountDownStart?.Invoke();
-        gameplayObjects.SetActive(true);
+        //gameplayObjects.SetActive(true);
     }
 
     public void TogglePause()
