@@ -31,6 +31,11 @@ public class Weapon : GameBehaviour
         AssignWeaponInfo();
     }
 
+    protected virtual void OnEnable()
+    {
+        readyToFire = true;
+
+    }
     public void AssignWeaponInfo()
     {
         _weaponName = _weaponInfo.weaponName;
@@ -47,10 +52,6 @@ public class Weapon : GameBehaviour
         _isMultiFireSpreadRandom = _weaponInfo.isMultiFireSpreadRandom;
     }
 
-    protected virtual void Start()
-    {
-        readyToFire = true;
-    }
 
     private void Update()
     {

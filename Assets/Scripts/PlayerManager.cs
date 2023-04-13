@@ -9,6 +9,7 @@ public enum PlayerHealthState
 public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 {
     private const string PLAYER_PLASMA = "PlayerPlasma";
+    private const string PLAYER_ION = "PlayerIon";
     private const float I_FRAMES_DURATION = 0.3f;
 
     private PlayerHealthState _playerHealthState;
@@ -19,6 +20,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     private float _currentHealth;
     [SerializeField] private float _maxHealth;
     [SerializeField] private int _playerPlasma;
+    [SerializeField] private int _playerIon;
     [SerializeField] private Collider2D _playerCollider;
     private bool _hasPlayerTakenDamage;
 
@@ -102,6 +104,18 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         }
     }
 
+    public int PlayerIon
+    {
+        get
+        {
+            return _playerIon;
+        }
+        set
+        {
+            _playerIon = value;
+        }
+    }
+
     private void Awake()
     {
         _playerCollider = GetComponent<Collider2D>();
@@ -112,37 +126,45 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void OnEnable()
     {
-        GameManager.OnLevelCountDownStart += FullHeal;
+        GameManager.OnMissionStart += FullHeal;
         InputManager.OnShield += CheckShieldsState;
-        Pickup.OnPlasmaPickup += AddPlasma;
-        Pickup.OnHealthPickup += Heal;
+        Pickup.OnResourcePickup += AddResources;
     }
 
     private void OnDisable()
     {
-        GameManager.OnLevelCountDownStart -= FullHeal;
+        GameManager.OnMissionStart -= FullHeal;
         InputManager.OnShield -= CheckShieldsState;
-        Pickup.OnPlasmaPickup -= AddPlasma;
-        Pickup.OnHealthPickup -= Heal;
+        Pickup.OnResourcePickup -= AddResources;
     }
 
     private void Start()
     {
         OnPlayerMaxHealthChange(GUIM.playerHealthBar, _maxHealth);
         FullHeal();
-        RestoreSavedPlasma();
+        RestoreSavedValues();
         _hasPlayerTakenDamage = false;
+    }
+
+    private void AddResources(int healthAmount, int plasmaAmount, int ionAmount)
+    {
+        Heal(healthAmount);
+        AddPlasma(plasmaAmount);
     }
 
     private void FullHeal()
     {
         PlayerCurrentHealth = PlayerMaxHealth;
-        OnPlayerCurrentHealthChange(GUIM.playerHealthBar, _currentHealth);
+    }
+
+    private void IncreaseValue()
+    {
+
     }
 
     public void Heal(int heal)
     {
-        PlayerCurrentHealth  = _maxHealth;
+        PlayerCurrentHealth += heal;
     }
 
     public void Damage(float damage)
@@ -162,6 +184,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         _playerCollider.enabled = true;
         _hasPlayerTakenDamage = false;
     }
+
     public void Destroy()
     {
         //Debug.Log("Player dead");
@@ -178,9 +201,11 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         PlayerPlasma -= amount;
     }
 
-    private void RestoreSavedPlasma()
+
+    private void RestoreSavedValues()
     {
         PlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
+        PlayerIon = PlayerPrefs.GetInt(nameof(PLAYER_ION));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -242,5 +267,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), PlayerPlasma);
+        PlayerPrefs.SetInt(nameof(PLAYER_ION), PlayerIon);
     }
 }

@@ -1,6 +1,8 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using TMPro;
+using Random = UnityEngine.Random;
 
 public class DistanceManager : GameBehaviour
 {
@@ -11,22 +13,17 @@ public class DistanceManager : GameBehaviour
     private int _distanceInt;
     private bool _isDistanceIncreasing;
 
-    private int _previousBossDistance = 0;
-    private int _currentBossDistance;
+    private int _previousBossDistance, _currentBossDistance;
 
     private int _currentDistanceMilestone;
     private bool isDistanceMilestoneIncreased;
+    [SerializeField] private TMP_Text _distanceCounterText;
 
-    private int _plasmaDropDistance;
-    private int _weaponUpgradeDropDistance;
-    private bool _isPlasmaSpawned = false;
-    private bool _isWeaponUpgradeSpawned = false;
+    private int _plasmaDropDistance, _weaponUpgradeDropDistance;
+    private bool _isPlasmaSpawned, _isWeaponUpgradeSpawned = false;
 
     public static event Action<PickupType> OnPlasmaDistanceReached = null;
     public static event Action OnWeaponUpgradeDistanceReached = null;
-    public static event Action<int> OnDistanceChanged = null;
-    public static event Action<int, Action<int>> OnPlasmaDropDistanceRequested = null;
-    public static event Action<int, int, Action<int>> OnWeaponUpgradeDropDistanceRequested = null;
 
     public int DistanceInt
     {
@@ -37,7 +34,7 @@ public class DistanceManager : GameBehaviour
         set
         {
             _distanceInt = value;
-            OnDistanceChanged(_distanceInt);
+            UpdateDistanceText();
         }
     }
 
@@ -104,90 +101,115 @@ public class DistanceManager : GameBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnLevelCountDownStart += ResetValues;
-        GameplayUIManager.OnCountdownDone += StartIncreasingDistance;
-        GameplayUIManager.OnCountdownDone += RequestFirstPickupDistances;
+        GameManager.OnMissionStart += ResetValues;
+        WaveCountdownManager.OnCountdownDone += StartIncreasingDistance;
+        WaveCountdownManager.OnCountdownDone += GenerateFirstPickupDistances;
         PlayerManager.OnPlayerDeath += StopIncreasingDistance;
-        Boss.OnBossDied += (p,v) => { StartIncreasingDistance(); };
+        Boss.OnBossDied += (p, v) => { StartIncreasingDistance(); };
+        PickupManager.OnPlasmaSpawned += () => { StartCoroutine(PlasmaSpawned()); } ;
+        PickupManager.OnWeaponUpgradeSpawned += () => { StartCoroutine(WeaponUpgradeSpawned()); };
     }
 
     private void OnDisable()
     {
-        GameManager.OnLevelCountDownStart -= ResetValues;
-        GameplayUIManager.OnCountdownDone -= StartIncreasingDistance;
-        GameplayUIManager.OnCountdownDone -= RequestFirstPickupDistances;
+        GameManager.OnMissionStart -= ResetValues;
+        WaveCountdownManager.OnCountdownDone -= StartIncreasingDistance;
+        WaveCountdownManager.OnCountdownDone -= GenerateFirstPickupDistances;
         PlayerManager.OnPlayerDeath -= StopIncreasingDistance;
-        Boss.OnBossDied -= (p,v) => { StartIncreasingDistance(); };
+        Boss.OnBossDied -= (p, v) => { StartIncreasingDistance(); };
+        PickupManager.OnPlasmaSpawned -= () => { StartCoroutine(PlasmaSpawned()); };
+        PickupManager.OnWeaponUpgradeSpawned -= () => { StartCoroutine(WeaponUpgradeSpawned()); };
     }
 
     private void Update()
     {
         if (!IsDistanceIncreasing) return;
 
-        if (IsDistanceIncreasing)
+        IncreaseDistance();
+        CheckDistance();
+    }
+
+    private void IncreaseDistance()
+    {
+        DistanceFloat += Time.deltaTime * 10;
+        DistanceInt = Mathf.RoundToInt(DistanceFloat);
+    }
+
+    private void CheckDistance()
+    {
+        //increment distance milestone every 100 units
+        if (DistanceInt % MILESTONE_DISTANCE == 0 && !isDistanceMilestoneIncreased)
         {
-            DistanceFloat += Time.deltaTime * 10;
-            DistanceInt = Mathf.RoundToInt(DistanceFloat);
+            StartCoroutine(IncreaseDistanceMilestone());
+            GenerateNewPlasmaDropDistance();
+        }
 
-            //increment distance milestone every 100 units
-            if (DistanceInt % MILESTONE_DISTANCE == 0 && !isDistanceMilestoneIncreased)
-            {
-                StartCoroutine(IncreaseDistanceMilestone());
-                RequestNewPlasmaDropDistance();
-            }
+        //start boss fight at boss distance
+        if (DistanceInt > 0 && DistanceInt % CurrentBossDistance == 0)
+        {
+            BossDistanceReached();
+        }
 
-            //start boss fight at boss distance
-            if (DistanceInt > 0 && DistanceInt % CurrentBossDistance == 0)
-            {
-                PreviousBossDistance = DistanceInt;
-                CurrentBossDistance += _bossSpawnDistance;
-                Debug.Log("boss distance reached");
-                StopIncreasingDistance();
-                ESM.SetupForBossSpawn();
-                RequestNewWeaponUpgradeDropDistance();
-            }
+        //spawn plasma at seeded distance
+        if (DistanceInt == _plasmaDropDistance && !_isPlasmaSpawned)
+        {
+            PlasmaDistanceReached();
+        }
 
-            //spawn plasma at seeded distance
-            if (DistanceInt == _plasmaDropDistance && !_isPlasmaSpawned)
-            {
-                OnPlasmaDistanceReached(PickupType.Plasma);
-                _isPlasmaSpawned = true;
-            }
-
-            if (_distanceInt == _weaponUpgradeDropDistance && !_isWeaponUpgradeSpawned)
-            {
-                OnWeaponUpgradeDistanceReached?.Invoke();
-                _isWeaponUpgradeSpawned = true;
-            }
+        //spawn weapon pack at seeded distance
+        if (_distanceInt == _weaponUpgradeDropDistance && !_isWeaponUpgradeSpawned)
+        {
+            WeaponUpgradeDistanceReached();
         }
     }
 
-    private void RequestNewPlasmaDropDistance()
+    private void PlasmaDistanceReached()
     {
-        OnPlasmaDropDistanceRequested(_currentDistanceMilestone, SetPlasmaDropDistance);
+        _isPlasmaSpawned = true;
+        OnPlasmaDistanceReached(PickupType.Plasma);
+    }
+
+    private void WeaponUpgradeDistanceReached()
+    {
+        _isWeaponUpgradeSpawned = true;
+        OnWeaponUpgradeDistanceReached?.Invoke();
+    }
+
+    private IEnumerator PlasmaSpawned()
+    {
+        yield return new WaitForSeconds(0.1f);
         _isPlasmaSpawned = false;
     }
 
-    private void SetPlasmaDropDistance(int value)
+    private IEnumerator WeaponUpgradeSpawned()
     {
-        _plasmaDropDistance = value;
-    }
-
-    private void RequestNewWeaponUpgradeDropDistance()
-    {
-        OnWeaponUpgradeDropDistanceRequested(_previousBossDistance, _currentBossDistance, SetWeaponUpgradeDropDistance);
+        yield return new WaitForSeconds(0.1f);
         _isWeaponUpgradeSpawned = false;
     }
 
-    private void SetWeaponUpgradeDropDistance(int value)
+    private void BossDistanceReached()
     {
-        _weaponUpgradeDropDistance = value;
+        PreviousBossDistance = DistanceInt;
+        CurrentBossDistance += _bossSpawnDistance;
+        StopIncreasingDistance();
+        ESM.SetupForBossSpawn();
+        GenerateNewWeaponUpgradeDropDistance();
     }
 
-    private void RequestFirstPickupDistances()
+    protected void GenerateNewPlasmaDropDistance()
     {
-        RequestNewPlasmaDropDistance();
-        RequestNewWeaponUpgradeDropDistance();
+        _plasmaDropDistance = Random.Range(CurrentDistanceMilestone + 15, CurrentDistanceMilestone + 99);
+    }
+
+    protected void GenerateNewWeaponUpgradeDropDistance()
+    {
+        _weaponUpgradeDropDistance = Random.Range(PreviousBossDistance + 15, CurrentBossDistance);
+    }
+
+    private void GenerateFirstPickupDistances()
+    {
+        GenerateNewPlasmaDropDistance();
+        GenerateNewWeaponUpgradeDropDistance();
     }
 
     private IEnumerator IncreaseDistanceMilestone()
@@ -220,5 +242,10 @@ public class DistanceManager : GameBehaviour
     private void StopIncreasingDistance()
     {
         IsDistanceIncreasing = false;
+    }
+
+    private void UpdateDistanceText()
+    {
+        _distanceCounterText.text = DistanceInt.ToString();
     }
 }

@@ -5,13 +5,12 @@ using Random = UnityEngine.Random;
 
 public class Boss : Enemy, IDamageable
 {
-    public static event Action<UISlider, float> OnBossDamage = null;
+    public static event Action<float> OnBossDamage = null;
     public static event Action<PickupType, Vector3> OnBossDied = null;
 
     private BossMovement _movement;
 
-    [SerializeField] protected float _attackCooldown;
-    [SerializeField] protected float _attackTimer;
+    [SerializeField] protected float _attackCooldown, _attackTimer;
 
     private IBoss bossMoveset;
 
@@ -70,7 +69,7 @@ public class Boss : Enemy, IDamageable
 
     public override void Damage(float damage)
     {
-        OnBossDamage(GUIM.bossHealthBar, CurrentHealth);
+        OnBossDamage(CurrentHealth);
         base.Damage(damage);
     }
 

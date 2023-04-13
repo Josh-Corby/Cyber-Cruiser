@@ -1,28 +1,102 @@
 using UnityEngine;
 using System;
+using System.Collections;
 
-public class UIManager : MonoBehaviour
+public class UIManager : GameBehaviour
 {
-    public static event Action OnLevelEntry = null;
+    public static event Action OnMissionStart = null;
+    public static event Action<bool> OnGameplayPanelToggled = null;
 
-    [SerializeField] private GameObject mainMenuPanel;
-    [SerializeField] private GameObject gameplayPanel;
+    [SerializeField] private GameObject _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel, _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel;
+    private GameObject[] _panels;
+
+    public bool GameplayPanel
+    {
+        set
+        {
+            _gameplayPanel.SetActive(value);
+            OnGameplayPanelToggled(_gameplayPanel.activeSelf); 
+        }
+        get
+        {
+            return _gameplayPanel.activeSelf;
+        }
+    }
+
+    private void OnEnable()
+    {
+        GameManager.OnGamePaused += EnablePauseUI;
+        GameManager.OnGameResumed += DisablePauseUI;
+        PlayerManager.OnPlayerDeath += GameOverUI;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGamePaused -= EnablePauseUI;
+        GameManager.OnGameResumed -= DisablePauseUI;
+        PlayerManager.OnPlayerDeath -= GameOverUI;
+    }
 
     private void Start()
     {
-        MainMenu();
+        InitializePanelsArray();
+        EnableMainMenu();
     }
 
-    public void MainMenu()
+    private void InitializePanelsArray()
     {
-        mainMenuPanel.SetActive(true);
-        gameplayPanel.SetActive(false);
+        _panels = new GameObject[] { _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel, _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel };
     }
 
-    public void StartGame()
+    private void DisablePanels()
     {
-        mainMenuPanel.SetActive(false);
-        gameplayPanel.SetActive(true);
-        OnLevelEntry?.Invoke();
+        if(GameplayPanel == true)
+        {
+            GameplayPanel = false;
+        }
+        foreach (GameObject panel in _panels)
+        {
+            if (panel.activeSelf)
+            {
+                panel.SetActive(false);
+            }     
+        }
+    }
+
+    public void EnableMainMenu()
+    {
+        DisablePanels();
+        _titlePanel.SetActive(true);
+    }
+
+    public void StartMission()
+    {
+        DisablePanels();
+        GameplayPanel = true;
+        OnMissionStart?.Invoke();
+    }
+
+    public void EnablePanel(GameObject panelToEnable)
+    {
+        DisablePanels();
+        panelToEnable.SetActive(true);
+    }
+
+    private void GameOverUI()
+    {
+        Cursor.visible = true;
+        _gameOverPanel.SetActive(true);
+    }
+
+    private void EnablePauseUI()
+    {
+        Cursor.visible = true;
+        _pausePanel.SetActive(true);
+    }
+
+    private void DisablePauseUI()
+    {
+        Cursor.visible = false;
+        _pausePanel.SetActive(false);
     }
 }

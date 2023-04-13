@@ -37,6 +37,7 @@ public class CyberKraken : Boss, IBoss
             if (_attackTimer <= 0)
             {
                 ChooseRandomAttack();
+                _attackTimer = _attackCooldown;
             }
         }
     }
@@ -49,8 +50,6 @@ public class CyberKraken : Boss, IBoss
         {
             krakenTentacle.goalTransform = i == 0 ? _topGoalPosition : _bottomGoalPosition;
         }
-
-        _isAttacking = true;
     }
 
     //release tentacle towards the player and grab them
@@ -60,7 +59,6 @@ public class CyberKraken : Boss, IBoss
 
         GameObject grappleTentacle = Instantiate(_grappleTentaclePrefab, _grappleTentacleSpawnPoint.transform, false);
         grappleTentacle.transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, GetDirectionToPlayer());
-        _isAttacking = true;
     }
 
     private float GetDirectionToPlayer()

@@ -17,7 +17,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private bool bossReadyToSpawn;
 
     [SerializeField] private int enemiesToSpawn;
-    [SerializeField] private float _enemySpawnInterval;
+    private float _enemySpawnInterval;
 
     private List<EnemySpawner> _enemySpawners = new();
     [SerializeField] private EnemySpawner bossSpawner;
@@ -37,6 +37,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
     [SerializeField] private float _totalSpawnWeight;
 
+    public static event Action<GameObject> OnBossSelected = null;
 
     public float EnemySpawnInterval
     {
@@ -66,10 +67,10 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void OnEnable()
     {
         Boss.OnBossDied += (p,v) => { StartCoroutine(ProcessBossDied()); };
-        GameManager.OnLevelCountDownStart += RestartLevel;
-        GameManager.OnLevelCountDownStart += CancelBossSpawn;
+        GameManager.OnMissionStart += RestartLevel;
+        GameManager.OnMissionStart += CancelBossSpawn;
 
-        GameplayUIManager.OnCountdownDone += StartSpawningEnemies;
+        WaveCountdownManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
 
         EnemySpawner.OnEnemySpawned += AddEnemy;
@@ -84,10 +85,10 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void OnDisable()
     {
         Boss.OnBossDied -= (p,v) => { StartCoroutine(ProcessBossDied()); };
-        GameManager.OnLevelCountDownStart -= RestartLevel;
-        GameManager.OnLevelCountDownStart -= CancelBossSpawn;
+        GameManager.OnMissionStart -= RestartLevel;
+        GameManager.OnMissionStart -= CancelBossSpawn;
 
-        GameplayUIManager.OnCountdownDone -= StartSpawningEnemies;
+        WaveCountdownManager.OnCountdownDone -= StartSpawningEnemies;
         PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
 
         EnemySpawner.OnEnemySpawned -= AddEnemy;
@@ -267,7 +268,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
             {
                 StopCoroutine(spawnBossCoroutine);
             }
-            Debug.Log("Spawning boss");
             spawnBossCoroutine = StartCoroutine(SpawnBoss());
         }
     }
@@ -292,7 +292,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     {
         bossReadyToSpawn = false;
         GameObject bossToSpawn = GetRandomBossToSpawn();
-        GUIM.EnableBossWarningUI(bossToSpawn);
+        OnBossSelected(bossToSpawn);
         yield return new WaitForSeconds(BOSS_WAIT_TIME);
         bossSpawner.StartBossSpawn(bossToSpawn);
     }
@@ -307,8 +307,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private IEnumerator ProcessBossDied()
     {
-
-        Debug.Log("Boss dead");
         //make enemies spawn faster
         _enemySpawnInterval -= SPAWN_ENEMY_REDUCTION;
         //make enemies move faster

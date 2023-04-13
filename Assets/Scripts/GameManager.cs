@@ -7,7 +7,7 @@ public class GameManager : GameBehaviour<GameManager>
 {
     public bool isPaused = false;
     [SerializeField] private GameObject gameplayObjects;
-    public static event Action OnLevelCountDownStart = null;
+    public static event Action OnMissionStart = null;
     public static event Action OnGamePaused = null;
     public static event Action OnGameResumed = null;
   
@@ -19,21 +19,26 @@ public class GameManager : GameBehaviour<GameManager>
     private void OnEnable()
     {
         InputManager.OnPause += TogglePause;
-        UIManager.OnLevelEntry += StartLevel;    
+        UIManager.OnMissionStart += StartLevel;
+        UIManager.OnGameplayPanelToggled += ToggleGameplayObjects;
     }
 
     private void OnDisable()
     {
         InputManager.OnPause -= TogglePause;
-        UIManager.OnLevelEntry -= StartLevel;
+        UIManager.OnMissionStart -= StartLevel;
+        UIManager.OnGameplayPanelToggled -= ToggleGameplayObjects;
     }
 
     public void StartLevel()
     {
         isPaused = false;
         Time.timeScale = 1f;
-        OnLevelCountDownStart?.Invoke();
-        //gameplayObjects.SetActive(true);
+        OnMissionStart?.Invoke();
+    }
+    private void ToggleGameplayObjects(bool value)
+    {
+        gameplayObjects.SetActive(value);
     }
 
     public void TogglePause()

@@ -4063,12 +4063,11 @@ MonoBehaviour:
   bossGoalPosition: {fileID: 1997121481}
   dragonMovePoint: {fileID: 73215885}
   enemiesToSpawn: 3
-  _enemySpawnInterval: 2
   bossSpawner: {fileID: 1370326090}
   bossPrefabs:
-  - {fileID: 1686505066082717662, guid: 63caa24a17e837c4ebb6b3b44dc28a9e, type: 3}
-  - {fileID: 519574247064427714, guid: bca44de9894fa0c499e8513a60373653, type: 3}
   - {fileID: 1686505066082717662, guid: 66c6e72b98ecf6d43abdb0bc88401953, type: 3}
+  - {fileID: 519574247064427714, guid: bca44de9894fa0c499e8513a60373653, type: 3}
+  - {fileID: 1686505066082717662, guid: 63caa24a17e837c4ebb6b3b44dc28a9e, type: 3}
   _topTentacleSpawner: {fileID: 1963753079}
   _bottomTentacleSpawner: {fileID: 788720089}
   enemiesAlive: []
@@ -7315,7 +7314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 634649626243274674, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: beamDamage
-      value: 0.3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 634649626243274674, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: isBeamTimed

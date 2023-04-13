@@ -19,12 +19,12 @@ public class PickupManager : GameBehaviour<PickupManager>
     private float _indicatorAngle;
     protected readonly float _indicatorTimer = 2f;
 
+    public static event Action OnPlasmaSpawned = null;
+    public static event Action OnWeaponUpgradeSpawned = null;
 
     protected void OnEnable()
     {
-        GameManager.OnLevelCountDownStart += ClearPickups;
-        DistanceManager.OnPlasmaDropDistanceRequested += GenerateNewPlasmaDropDistance;
-        DistanceManager.OnWeaponUpgradeDropDistanceRequested += GenerateNewWeaponUpgradeDropDistance;
+        GameManager.OnMissionStart += ClearPickups;
         DistanceManager.OnPlasmaDistanceReached += SpawnPickupAtRandomPosition;
         DistanceManager.OnWeaponUpgradeDistanceReached += () => { StartCoroutine(SpawnWeaponUpgrade()); };
         Boss.OnBossDied += SpawnPickupAtPosition;
@@ -33,27 +33,11 @@ public class PickupManager : GameBehaviour<PickupManager>
 
     protected void OnDisable()
     {
-        GameManager.OnLevelCountDownStart -= ClearPickups;
-        DistanceManager.OnPlasmaDropDistanceRequested -= GenerateNewPlasmaDropDistance;
-        DistanceManager.OnWeaponUpgradeDropDistanceRequested -= GenerateNewWeaponUpgradeDropDistance;
+        GameManager.OnMissionStart -= ClearPickups;
         DistanceManager.OnPlasmaDistanceReached -= SpawnPickupAtRandomPosition;
         DistanceManager.OnWeaponUpgradeDistanceReached -= () => { StartCoroutine(SpawnWeaponUpgrade()); };
         Boss.OnBossDied -= SpawnPickupAtPosition;
         Pickup.OnPickup -= RemovePickup;
-    }
-
-    protected void GenerateNewPlasmaDropDistance(int currentDistanceMilestone, Action<int> callback)
-    {
-        int plasmaDropDistance = Random.Range(currentDistanceMilestone + 15, currentDistanceMilestone + 99);
-        callback(plasmaDropDistance);
-        //Debug.Log("Plasma spawn distance is " + plasmaDropDistance);
-    }
-
-    protected void GenerateNewWeaponUpgradeDropDistance(int previousBossDistance, int currentBossDistance, Action<int> callback)
-    {
-        int weaponUpgradeDropDistance = Random.Range(previousBossDistance + 15, currentBossDistance);
-        callback(weaponUpgradeDropDistance);
-        Debug.Log("Weapon upgrade drop distance is " + weaponUpgradeDropDistance);
     }
 
     protected void SpawnPickupAtRandomPosition(PickupType pickupType)
@@ -62,12 +46,14 @@ public class PickupManager : GameBehaviour<PickupManager>
         {
             case PickupType.Plasma:
                 _pickupSpawner.SpawnPickupAtRandomPosition(_plasmaPickup);
+                OnPlasmaSpawned?.Invoke();
                 break;
             case PickupType.Health:
                 _pickupSpawner.SpawnPickupAtRandomPosition(_healthPickup);
                 break;
             case PickupType.Weapon:
                 _upgradeSpawner.SpawnPickupAtRandomPosition(GetRandomWeaponUpgrade());
+                OnWeaponUpgradeSpawned?.Invoke();
                 break;
         }
     }

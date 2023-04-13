@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class EnemyWeaponController : Weapon
 {
-
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
         EnableWeapon();
     }
 

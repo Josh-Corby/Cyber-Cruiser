@@ -8,7 +8,7 @@ public class PlayerWeaponController : GameBehaviour
     [SerializeField] private Weapon _playerWeapon;
     [SerializeField] private BeamAttack _beamAttack;
     [SerializeField] private bool _fireInput;
-    private bool _controlsEnabled;
+    [SerializeField] private bool _controlsEnabled;
     private bool _isWeaponUpgradeActive;
     private float _weaponUpgradeCounter;
     private bool _isHeatDecreasing;
@@ -141,6 +141,7 @@ public class PlayerWeaponController : GameBehaviour
             _isHeatDecreasing = value;
         }
     }
+
     public bool IsOverheated
     {
         get
@@ -183,7 +184,7 @@ public class PlayerWeaponController : GameBehaviour
         GameManager.OnGameResumed += EnableControls;
 
         Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
-        GameManager.OnLevelCountDownStart += ResetPlayerWeapon;
+        GameManager.OnMissionStart += ResetPlayerWeapon;
     }
 
     private void OnDisable()
@@ -196,7 +197,7 @@ public class PlayerWeaponController : GameBehaviour
         GameManager.OnGameResumed -= EnableControls;
 
         Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
-        GameManager.OnLevelCountDownStart -= ResetPlayerWeapon;
+        GameManager.OnMissionStart -= ResetPlayerWeapon;
     }
 
     private void Start()
@@ -275,7 +276,6 @@ public class PlayerWeaponController : GameBehaviour
             CancelFireInput();
         }
         FireWeapon();
-
     }
 
     private void FireWeapon()

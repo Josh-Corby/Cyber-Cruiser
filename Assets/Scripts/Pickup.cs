@@ -8,20 +8,21 @@ public enum PickupType
 
 public enum WeaponUpgradeType
 {
-    None, Scatter_Random,Scatter_Fixed, Pulverizer
+    None, Scatter_Random, Scatter_Fixed, Pulverizer
 }
+
 public class Pickup : GameBehaviour
 {
-    public static event Action<int> OnPlasmaPickup = null;
-    public static event Action<int> OnHealthPickup = null;
+    public static event Action<int, int, int> OnResourcePickup = null;
     public static event Action<GameObject> OnPickup = null;
     public static event Action<WeaponUpgradeType, float> OnWeaponUpgradePickup = null;
 
     public PickupType _pickupType;
     public WeaponUpgradeType _upgradeType;
     [SerializeField] private float _speed;
-    [SerializeField] private int _plasmaAmount;
     [SerializeField] private int _healthAmount;
+    [SerializeField] private int _plasmaAmount;
+    [SerializeField] private int _ionAmount;
     [SerializeField] private float _upgradeDuration;
 
     public void PickupEffect()
@@ -29,13 +30,11 @@ public class Pickup : GameBehaviour
         switch (_pickupType)
         {
             case PickupType.Plasma:
-                OnPlasmaPickup(_plasmaAmount);           
-                break;
             case PickupType.Health:
-                OnHealthPickup(_healthAmount);
+                OnResourcePickup(_healthAmount, _plasmaAmount, _ionAmount);
                 break;
             case PickupType.Weapon:
-                switch (_upgradeType) 
+                switch (_upgradeType)
                 {
                     case WeaponUpgradeType.None:
                         return;

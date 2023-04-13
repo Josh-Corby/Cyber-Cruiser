@@ -727,5 +727,28 @@ public class Utilities : MonoBehaviour
         return totalWeight;
     }
 
- 
+    public void EnableSlider(UISlider slider, float maxValue)
+    {
+        slider.gameObject.SetActive(true);
+        slider.SetSliderMaxValue(maxValue);
+    }
+
+    public void EnableAndSetSlider(UISlider slider, float currentValue, int maxValue)
+    {
+        slider.gameObject.SetActive(true);
+        slider.SetSliderValues(currentValue, maxValue);
+    }
+
+    public void DisableSlider(UISlider slider)
+    {
+        slider.gameObject.SetActive(false);
+    }
+
+    public void ChangeSliderValue(UISlider slider, float value)
+    {
+        if (slider.gameObject.activeSelf)
+        {
+            slider.SetSliderValue(value);
+        }
+    }
 }

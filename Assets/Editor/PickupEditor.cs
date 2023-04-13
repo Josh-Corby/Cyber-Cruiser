@@ -8,8 +8,9 @@ public class PickupEditor : Editor
     SerializedProperty _pickupType;
     SerializedProperty _upgradeType;
     SerializedProperty _speed;
-    SerializedProperty _plasmaAmount;
     SerializedProperty _healthAmount;
+    SerializedProperty _plasmaAmount;
+    SerializedProperty _ionAmount;
     SerializedProperty _upgradeDuration;
     #endregion
 
@@ -18,8 +19,9 @@ public class PickupEditor : Editor
         _pickupType = serializedObject.FindProperty(nameof(_pickupType));
         _upgradeType = serializedObject.FindProperty(nameof(_upgradeType));
         _speed = serializedObject.FindProperty(nameof(_speed));
-        _plasmaAmount = serializedObject.FindProperty(nameof(_plasmaAmount));
         _healthAmount = serializedObject.FindProperty(nameof(_healthAmount));
+        _plasmaAmount = serializedObject.FindProperty(nameof(_plasmaAmount));
+        _ionAmount = serializedObject.FindProperty(nameof(_ionAmount));
         _upgradeDuration = serializedObject.FindProperty(nameof(_upgradeDuration));
     }
 
@@ -33,11 +35,11 @@ public class PickupEditor : Editor
         EditorGUILayout.PropertyField(_speed);
         switch (pickup._pickupType)
         {
-            case PickupType.Plasma:
-                EditorGUILayout.PropertyField(_plasmaAmount);
-                break;
             case PickupType.Health:
+            case PickupType.Plasma:
                 EditorGUILayout.PropertyField(_healthAmount);
+                EditorGUILayout.PropertyField(_plasmaAmount);
+                EditorGUILayout.PropertyField(_ionAmount);
                 break;
             case PickupType.Weapon:
                 EditorGUILayout.PropertyField(_upgradeType);

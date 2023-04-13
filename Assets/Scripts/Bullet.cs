@@ -14,12 +14,12 @@ public class Bullet : GameBehaviour
     }
     private void OnEnable()
     {
-        GameManager.OnLevelCountDownStart += DestroyBullet;
+        GameManager.OnMissionStart += DestroyBullet;
     }
 
     private void OnDisable()
     {
-        GameManager.OnLevelCountDownStart -= DestroyBullet;
+        GameManager.OnMissionStart -= DestroyBullet;
     }
 
     private void Update()

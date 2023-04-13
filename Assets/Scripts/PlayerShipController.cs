@@ -36,13 +36,11 @@ public class PlayerShipController : MonoBehaviour
         InputManager.OnControlsEnabled += EnableControls;
         InputManager.OnControlsDisabled += DisableControls;
 
-        GameManager.OnLevelCountDownStart += StartLevelPosition;
+        GameManager.OnMissionStart += StartLevelPosition;
         GameManager.OnGamePaused += DisableControls;
         GameManager.OnGameResumed += EnableControls;
 
         Cursor.lockState = CursorLockMode.Confined;
-
-        //EnableControls();
     }
 
     private void OnDisable()
@@ -51,7 +49,7 @@ public class PlayerShipController : MonoBehaviour
         InputManager.OnControlsEnabled -= EnableControls;
         InputManager.OnControlsDisabled -= DisableControls;
 
-        GameManager.OnLevelCountDownStart -= StartLevelPosition;
+        GameManager.OnMissionStart -= StartLevelPosition;
         GameManager.OnGamePaused -= DisableControls;
         GameManager.OnGameResumed -= EnableControls;
     }

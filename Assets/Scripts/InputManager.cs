@@ -25,18 +25,14 @@ public class InputManager : MonoBehaviour
             controls.Controls.Shoot.canceled += i => OnFire(false);
             controls.Controls.Shield.performed += i => OnShield?.Invoke();
             controls.Controls.Pause.performed += i => OnPause?.Invoke();
-
-     
-            GameManager.OnLevelCountDownStart += EnableControls;
-            //GameplayUIManager.OnCountdownDone += EnableControls;
-            PlayerManager.OnPlayerDeath += DisableControls;
         }
+        GameManager.OnMissionStart += EnableControls;
+        PlayerManager.OnPlayerDeath += DisableControls;
     }
 
     private void OnDisable()
     {
-        GameManager.OnLevelCountDownStart -= EnableControls;
-        //GameplayUIManager.OnCountdownDone -= EnableControls;
+        GameManager.OnMissionStart -= EnableControls;
         PlayerManager.OnPlayerDeath -= DisableControls;
         DisableControls();
     }

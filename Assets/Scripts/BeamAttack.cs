@@ -84,7 +84,6 @@ public class BeamAttack : MonoBehaviour
 
     private void BeamCollision()
     {
-        //RaycastHit2D hit = Physics2D.CircleCast(transform.position, _beamWidth / 2, GetDirectionBetweenPoints(), GetDistanceXBetweenPoints(), _beamCollisionMask);
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(1, 1), 180, transform.right, GetDistanceXBetweenPoints(), _beamCollisionMask);
         if (hit.collider != null)
         {
@@ -121,7 +120,8 @@ public class BeamAttack : MonoBehaviour
     private float GetDistanceXBetweenPoints()
     {
         float distanceBetweenPoints = lineRenderer.GetPosition(0).x + Mathf.Abs(lineRenderer.GetPosition(1).x);
-        //Debug.Log(distanceBetweenPoints);
+        distanceBetweenPoints *= transform.parent.localScale.x;
+        Debug.Log(distanceBetweenPoints);
         return distanceBetweenPoints;
     }
 }
