@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PulseDetonator
   m_EditorClassIdentifier: 
   AddOnType: 3
-  Description: 
-  IonCost: 0
+  Description: Replace Plasma Shield with screen-wide explosion
+  IonCost: 1

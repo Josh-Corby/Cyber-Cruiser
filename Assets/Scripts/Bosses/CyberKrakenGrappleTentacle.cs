@@ -1,10 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
 {
     private bool _isPlayerGrappled;
+
+    public static event Action OnGrappleEnd = null;
 
     private void Update()
     {
@@ -44,7 +45,7 @@ public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
 
     private void ResetPlayerMovement()
     {
-        PM.playerShipController.ControlsEnabled = true;
+        OnGrappleEnd?.Invoke();
     }
 
     private void MoveBackward()

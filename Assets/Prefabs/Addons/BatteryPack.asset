@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: BatteryPack
   m_EditorClassIdentifier: 
   AddOnType: 0
-  Name: 
-  Description: 
-  IonCost: 0
+  Description: Weapon pack lasts extra 5 seconds
+  IonCost: 1

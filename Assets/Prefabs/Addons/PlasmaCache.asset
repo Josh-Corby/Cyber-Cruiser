@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlasmaCache
   m_EditorClassIdentifier: 
   AddOnType: 2
-  Description: 
-  IonCost: 0
+  Description: Reduce cost of plasma shield by 1
+  IonCost: 1

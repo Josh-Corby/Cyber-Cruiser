@@ -223,9 +223,16 @@ public class PlayerWeaponController : GameBehaviour
 
     private void Start()
     {
+        InitializeWeapon();
+    }
+
+    private void InitializeWeapon()
+    {
         _fireInput = false;
         CurrentHeat = 0;
         HeatMax = 100;
+        HeatPerShot = PSM.HeatPerShot;
+        WeaponUpgradeDuration = PSM.WeaponUpgradeDuration;
         OnWeaponHeatInitialized(GUIM.weaponHeatBar, CurrentHeat, HeatMax);
     }
 
@@ -333,16 +340,16 @@ public class PlayerWeaponController : GameBehaviour
         _controlsEnabled = false;
     }
 
-    private void WeaponUpgrade(WeaponUpgradeType upgradeType, float duration)
+    private void WeaponUpgrade(WeaponUpgradeType upgradeType)
     {
         if (_weaponUpgradeCoroutine != null)
         {
             StopCoroutine(_weaponUpgradeCoroutine);
         }
-        _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimer(upgradeType, duration));
+        _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimer(upgradeType));
     }
 
-    private IEnumerator WeaponUpgradeTimer(WeaponUpgradeType upgradeType, float duration)
+    private IEnumerator WeaponUpgradeTimer(WeaponUpgradeType upgradeType)
     {
         //reset in case a different type of pickup is picked up while an upgrade is currently active
         ResetPlayerWeapon();
@@ -357,16 +364,18 @@ public class PlayerWeaponController : GameBehaviour
                 PulverizerUpgrade();
                 break;
         }
+
         CurrentHeat = 0;
         IsWeaponUpgradeActive = true;
-        _weaponUpgradeCounter = duration;
-        OnWeaponUpgradeStart(GUIM.weaponUpgradeSlider, duration);
+        _weaponUpgradeCounter = _weaponUpgradeDuration;
+        OnWeaponUpgradeStart(GUIM.weaponUpgradeSlider, _weaponUpgradeDuration);
         while (_weaponUpgradeCounter > 0)
         {
             _weaponUpgradeCounter -= Time.deltaTime;
             OnWeaponUpgradeTimerTick(GUIM.weaponUpgradeSlider, _weaponUpgradeCounter);
             yield return new WaitForSeconds(0.01f);
         }
+
         //reset player weapon to its original values after upgrade duration is over
         ResetPlayerWeapon();
     }
@@ -382,7 +391,6 @@ public class PlayerWeaponController : GameBehaviour
         OnWeaponUpgradeFinished(GUIM.weaponUpgradeSlider);
         _beamAttack.isBeamActive = false;
         _beamAttack.enabled = false;
-
         _playerWeapon.enabled = true;
         _playerWeapon.AssignWeaponInfo();
         IsWeaponUpgradeActive = false;

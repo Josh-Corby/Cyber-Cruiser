@@ -8,7 +8,6 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     [SerializeField] private GameObject _playerHealthBarUI, _playerShieldBarUI, _weaponUpgradeBarUI;
     [SerializeField] private TMP_Text _plasmaCountText;
 
-    public static event Action<Action> OnMaxHeatRequested = null;
 
     public string PlasmaCount
     {
@@ -20,7 +19,7 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 
     private void OnEnable()
     {
-        PlayerManager.OnPlayerMaxHealthChange += EnableSlider;
+        PlayerManager.OnPlayerMaxHealthSet += EnableSlider;
         PlayerManager.OnPlayerCurrentHealthChange += ChangeSliderValue;
 
         PlayerWeaponController.OnWeaponUpgradeStart += EnableSlider;
@@ -38,7 +37,7 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 
     private void OnDisable()
     {
-        PlayerManager.OnPlayerMaxHealthChange -= EnableSlider;
+        PlayerManager.OnPlayerMaxHealthSet -= EnableSlider;
         PlayerManager.OnPlayerCurrentHealthChange -= ChangeSliderValue;
 
         PlayerWeaponController.OnWeaponUpgradeStart -= EnableSlider;
@@ -70,6 +69,4 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     {
         PlasmaCount = plasmaCount.ToString();
     }
-
- 
 }

@@ -13,18 +13,20 @@ public enum WeaponUpgradeType
 
 public class Pickup : GameBehaviour
 {
-    public static event Action<int, int, int> OnResourcePickup = null;
-    public static event Action<GameObject> OnPickup = null;
-    public static event Action<WeaponUpgradeType, float> OnWeaponUpgradePickup = null;
-
+    #region Fields
     public PickupType _pickupType;
     public WeaponUpgradeType _upgradeType;
     [SerializeField] private float _speed;
     [SerializeField] private int _healthAmount;
     [SerializeField] private int _plasmaAmount;
     [SerializeField] private int _ionAmount;
-    [SerializeField] private float _upgradeDuration;
+    #endregion
 
+    #region Actions
+    public static event Action<int, int, int> OnResourcePickup = null;
+    public static event Action<GameObject> OnPickup = null;
+    public static event Action<WeaponUpgradeType> OnWeaponUpgradePickup = null;
+    #endregion
     public void PickupEffect()
     {
         switch (_pickupType)
@@ -42,7 +44,7 @@ public class Pickup : GameBehaviour
                     case WeaponUpgradeType.Scatter_Fixed:
                     case WeaponUpgradeType.Scatter_Random:
                     case WeaponUpgradeType.Pulverizer:
-                        OnWeaponUpgradePickup(_upgradeType, _upgradeDuration);
+                        OnWeaponUpgradePickup(_upgradeType);
                         break;
                 }
                 break;

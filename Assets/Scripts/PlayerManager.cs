@@ -1,34 +1,57 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum PlayerHealthState
 {
     Healthy, Low, Critical
 }
+
 public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 {
-    private const string PLAYER_PLASMA = "PlayerPlasma";
-    private const float I_FRAMES_DURATION = 0.3f;
+    #region References
+    public GameObject player;
+    private PlayerShipController playerShipController;
+    private Collider2D _playerCollider;
+    private PlayerShieldController _shieldController;
+    #endregion
 
-    private PlayerHealthState _playerHealthState;
-    [HideInInspector] public GameObject player;
-    [HideInInspector] public PlayerShipController playerShipController;
-    private PlayerShieldController shieldController;
-    [SerializeField] private int plasmaCost;
-    private float _currentHealth;
-    [SerializeField] private float _maxHealth;
+    #region Fields
     [SerializeField] private int _playerPlasma;
+    [SerializeField] private int _plasmaCost;
+    [SerializeField] private float _maxHealth;
+    [SerializeField] private float _currentHealth;
+    [SerializeField] private PlayerHealthState _playerHealthState;
+    [SerializeField] private GameObject _batteryPack, _hydrocoolant, _plasmaCache;
 
-    [SerializeField] private Collider2D _playerCollider;
+    private float _iFramesDuration;
     private bool _hasPlayerTakenDamage;
+    [SerializeField] private bool _isBatteryPack, _isHydrocoolant, _isPlasmaCache;
+    [SerializeField] private List<GameObject> _addOnObjects = new();    
+    #endregion
 
-    public static event Action OnPlayerDeath = null;
-    public static event Action<int> OnIonPickup = null;
-    public static event Action<int> OnPlasmaChange = null;
-    public static event Action<UISlider, float> OnPlayerMaxHealthChange = null;
-    public static event Action<UISlider, float> OnPlayerCurrentHealthChange = null;
-    public static event Action<PlayerHealthState> OnPlayerHealthStateChange = null;
+    #region Properties
+    public int PlayerPlasma
+    {
+        get
+        {
+            return _playerPlasma;
+        }
+        set
+        {
+            _playerPlasma = value;
+            OnPlasmaChange(_playerPlasma);
+        }
+    }
+
+    public int PlasmaCost
+    {
+        set
+        {
+            _plasmaCost = value;
+        }
+    }
 
     public float PlayerCurrentHealth
     {
@@ -46,35 +69,21 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
                 PlayerHealthState = PlayerHealthState.Healthy;
             }
 
-            if(_currentHealth <= 2 && _currentHealth >1)
+            if (_currentHealth <= 2 && _currentHealth > 1)
             {
                 PlayerHealthState = PlayerHealthState.Low;
             }
 
-            if(_currentHealth <= 1)
+            if (_currentHealth <= 1)
             {
                 PlayerHealthState = PlayerHealthState.Critical;
             }
-
 
             OnPlayerCurrentHealthChange(GUIM.playerHealthBar, _currentHealth);
             if (_currentHealth <= 0)
             {
                 Destroy();
-            }       
-        }
-    }
-
-    public PlayerHealthState PlayerHealthState
-    {
-        set
-        {
-            _playerHealthState = value;
-            OnPlayerHealthStateChange(_playerHealthState);
-        }
-        get
-        {
-            return _playerHealthState;
+            }
         }
     }
 
@@ -87,51 +96,89 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         set
         {
             _maxHealth = value;
-            OnPlayerMaxHealthChange(GUIM.playerHealthBar, _maxHealth);
+            OnPlayerMaxHealthSet(GUIM.playerHealthBar, _maxHealth);
         }
     }
 
-    public int PlayerPlasma
+    public PlayerHealthState PlayerHealthState
     {
-        get
-        {
-            return _playerPlasma;
-        }
         set
         {
-            _playerPlasma = value;
-            OnPlasmaChange(_playerPlasma);
+            _playerHealthState = value;
+            OnPlayerHealthStateChange(value);
+        }
+        get
+        {
+            return _playerHealthState;
         }
     }
+    #endregion
+
+    #region Actions
+    public static event Action OnPlayerDeath = null;
+    public static event Action<int> OnIonPickup = null;
+    public static event Action<int> OnPlasmaChange = null;
+    public static event Action<UISlider, float> OnPlayerMaxHealthSet = null;
+    public static event Action<UISlider, float> OnPlayerCurrentHealthChange = null;
+    public static event Action<PlayerHealthState> OnPlayerHealthStateChange = null;
+    #endregion
 
     private void Awake()
     {
-        _playerCollider = GetComponent<Collider2D>();
-        shieldController = GetComponentInChildren<PlayerShieldController>();
-        playerShipController = GetComponent<PlayerShipController>();
-        player = gameObject;
+        _playerCollider = player.GetComponent<Collider2D>();
+        _shieldController = player.GetComponentInChildren<PlayerShieldController>();
+        playerShipController = player.GetComponent<PlayerShipController>();
     }
 
     private void OnEnable()
     {
-        GameManager.OnMissionStart += FullHeal;
         InputManager.OnShield += CheckShieldsState;
         Pickup.OnResourcePickup += AddResources;
+        DisableAddOnSprites();
+        SetAddOnBools();
     }
 
     private void OnDisable()
     {
-        GameManager.OnMissionStart -= FullHeal;
         InputManager.OnShield -= CheckShieldsState;
         Pickup.OnResourcePickup -= AddResources;
     }
 
     private void Start()
     {
-        OnPlayerMaxHealthChange(GUIM.playerHealthBar, _maxHealth);
-        FullHeal();
-        RestorePlasma();
+        SetStats();   
         _hasPlayerTakenDamage = false;
+    }
+
+    private void SetStats()
+    {
+        PlayerMaxHealth = PSM.PlayerCurrentMaxHealth;
+        PlayerPlasma = PSM.PlayerPlasma;
+        PlasmaCost = PSM.PlasmaCost;
+        _iFramesDuration = PSM.IFramesDuration;
+        FullHeal();
+    }
+
+    private void DisableAddOnSprites()
+    {
+        foreach (GameObject sprite in _addOnObjects)
+        {
+            sprite.SetActive(false);
+        }
+    }
+    private void SetAddOnBools()
+    {
+        _isBatteryPack = PSM.IsBatteryPack;
+        _isHydrocoolant = PSM.IsHydrocoolant;
+        _isPlasmaCache = PSM.IsPlasmaCache;
+        SetAddOnSprites();
+    }
+
+    private void SetAddOnSprites()
+    {
+        _batteryPack.SetActive(_isBatteryPack);
+        _hydrocoolant.SetActive(_isHydrocoolant);
+        _plasmaCache.SetActive(_isPlasmaCache);
     }
 
     private void AddResources(int healthAmount, int plasmaAmount, int ionAmount)
@@ -146,6 +193,40 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         PlayerCurrentHealth = PlayerMaxHealth;
     }
 
+    private void CheckShieldsState()
+    {
+        if (_shieldController._shieldsActive)
+        {
+            Debug.Log("Shields already Active");
+            return;
+        }
+
+        else
+        {
+            CheckPlasma();
+        }
+    }
+
+    private void CheckPlasma()
+    {
+        if (PlayerPlasma >= _plasmaCost)
+        {
+            PlayerPlasma -= _plasmaCost;
+            ActivateShields();
+            return;
+        }
+
+        else
+        {
+            Debug.Log("Not enough plasma");
+        }
+    }
+
+    private void ActivateShields()
+    {
+        _shieldController.ActivateShields();
+    }
+
     public void Damage(float damage)
     {
         if (!_hasPlayerTakenDamage)
@@ -153,13 +234,13 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             _hasPlayerTakenDamage = true;
             PlayerCurrentHealth -= damage;
             StartCoroutine(PlayerDamage());
-        }    
+        }
     }
 
     private IEnumerator PlayerDamage()
     {
-        _playerCollider.enabled = false;     
-        yield return new WaitForSeconds(I_FRAMES_DURATION);
+        _playerCollider.enabled = false;
+        yield return new WaitForSeconds(_iFramesDuration);
         _playerCollider.enabled = true;
         _hasPlayerTakenDamage = false;
     }
@@ -167,11 +248,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     public void Destroy()
     {
         OnPlayerDeath?.Invoke();
-    }
-
-    private void RestorePlasma()
-    {
-        PlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -188,50 +264,11 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             return;
         }
 
-        else if(collider.TryGetComponent<Pickup>(out var pickup))
+        else if (collider.TryGetComponent<Pickup>(out var pickup))
         {
             pickup.PickupEffect();
             Destroy(pickup.gameObject);
             return;
         }
-    }
-
-    private void CheckShieldsState()
-    {
-        if (shieldController._shieldsActive)
-        {
-            Debug.Log("Shields already Active");
-            return;
-        }
-
-        else
-        {
-            CheckPlasma();
-        }
-    }
-
-    private void CheckPlasma()
-    {
-        if (PlayerPlasma >= plasmaCost)
-        {
-            PlayerPlasma -= plasmaCost;
-            ActivateShields();
-            return;
-        }
-
-        else
-        {
-            Debug.Log("Not enough plasma");
-        }
-    }
-
-    private void ActivateShields()
-    {
-        shieldController.ActivateShields();
-    }
-
-    private void OnApplicationQuit()
-    {
-        PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), PlayerPlasma);
     }
 }

@@ -2,22 +2,24 @@ using UnityEngine;
 
 public class PlayerShipController : MonoBehaviour
 {
+    #region References
     [SerializeField] private GameObject playerSprite;
-
-    [SerializeField] private Vector2 input;
     [SerializeField] private GameObject mouseInput;
     [SerializeField] private Transform spawnPosition;
+    #endregion
+
+    #region Fields
+    [SerializeField] private Vector2 input;
     [SerializeField] private float baseSpeed;
-
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float distanceToStopRotation = 5f;
     [SerializeField] private bool lerpMovement;
-
     [SerializeField] private bool _controlsEnabled;
 
     private float minAngle = -20;
     private float maxAngle = 20;
-    [SerializeField] private float rotationSpeed = 5f;
-    [SerializeField] private float distanceToStopRotation = 5f;
     private Quaternion targetRotation;
+    #endregion
 
     public bool ControlsEnabled
     {
@@ -30,17 +32,17 @@ public class PlayerShipController : MonoBehaviour
             _controlsEnabled = value;
         }
     }
+
     private void OnEnable()
     {
         InputManager.OnMouseMove += RecieveInput;
         InputManager.OnControlsEnabled += EnableControls;
         InputManager.OnControlsDisabled += DisableControls;
-
         GameManager.OnMissionStart += StartLevelPosition;
         GameManager.OnGamePaused += DisableControls;
         GameManager.OnGameResumed += EnableControls;
-
-        Cursor.lockState = CursorLockMode.Confined;
+        CyberKrakenGrappleTentacle.OnGrappleEnd += EnableControls;
+        Cursor.lockState = CursorLockMode.Confined;   
     }
 
     private void OnDisable()
@@ -48,18 +50,22 @@ public class PlayerShipController : MonoBehaviour
         InputManager.OnMouseMove -= RecieveInput;
         InputManager.OnControlsEnabled -= EnableControls;
         InputManager.OnControlsDisabled -= DisableControls;
-
         GameManager.OnMissionStart -= StartLevelPosition;
         GameManager.OnGamePaused -= DisableControls;
         GameManager.OnGameResumed -= EnableControls;
+        CyberKrakenGrappleTentacle.OnGrappleEnd -= EnableControls;
     }
-
 
     private void Update()
     {
+        if (ControlsEnabled)
+        {
+            PlayerMovement();
+        }
+    }
 
-        if (!_controlsEnabled) return;  
-
+    private void PlayerMovement()
+    {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(input);
         mousePosition.z = 0f;
         mouseInput.transform.position = mousePosition;
@@ -73,7 +79,6 @@ public class PlayerShipController : MonoBehaviour
         {
             transform.position = Vector2.Lerp(transform.position, mousePosition, baseSpeed);
         }
-
 
         float yDiff = Mathf.Abs(mousePosition.y - transform.position.y);
         if (yDiff > distanceToStopRotation)

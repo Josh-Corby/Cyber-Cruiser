@@ -14,6 +14,7 @@ public class AddOn : MonoBehaviour
     private int _ionCost;
     private AddOnTypes _addOnType;
     private bool _isAddOnEnabled;
+
     public string Name
     {
         get
@@ -32,7 +33,7 @@ public class AddOn : MonoBehaviour
 
     public static event Action<AddOn> OnMouseEnter = null;
     public static event Action OnMouseExit = null;
-    public static event Action<AddOnTypes, bool> OnAddOnToggled = null;
+    public static event Action<AddOnTypes, int, bool> OnAddOnToggled = null;
 
     private void Awake()
     {
@@ -60,6 +61,6 @@ public class AddOn : MonoBehaviour
     public void ToggleAddOn()
     {
         _isAddOnEnabled = !_isAddOnEnabled;
-        OnAddOnToggled(_addOnType, _isAddOnEnabled);
+        OnAddOnToggled(_addOnType, _ionCost, _isAddOnEnabled);
     }
 }

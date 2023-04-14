@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Hydrocoolant
   m_EditorClassIdentifier: 
   AddOnType: 1
-  Description: 
-  IonCost: 0
+  Description: Weapons take longer to Overheat
+  IonCost: 1
