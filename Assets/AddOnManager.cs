@@ -26,19 +26,18 @@ public class AddOnManager : GameBehaviour
         }
     }
 
-
     private void OnEnable()
     {
         PlayerManager.OnIonPickup += ChangeIon;
         AddOn.OnMouseEnter += SetCurrentAddOn;
-        AddOn.OnMouseExit += ClearAddon;
+        AddOn.OnMouseExit += ClearAddOn;
     }
 
     private void OnDisable()
     {
         PlayerManager.OnIonPickup -= ChangeIon;
         AddOn.OnMouseEnter -= SetCurrentAddOn;
-        AddOn.OnMouseExit -= ClearAddon;
+        AddOn.OnMouseExit -= ClearAddOn;
 
     }
 
@@ -60,18 +59,23 @@ public class AddOnManager : GameBehaviour
     private void SetCurrentAddOn(AddOn addOn)
     {
         _currentAddon = addOn;
-        SetAddonUI();
+        SetAddOnUI();
     }
 
-    private void SetAddonUI()
+    private void SetAddOnUI()
     {
         _addOnName.text = _currentAddon.Name;
         _addOnDescription.text = _currentAddon.Description;
     }
 
-    private void ClearAddon()
+    private void ClearAddOn()
     {
         _currentAddon = null;
+        ClearAddOnUI();
+    }
+
+    private void ClearAddOnUI()
+    {
         _addOnName.text = "";
         _addOnDescription.text = "";
     }

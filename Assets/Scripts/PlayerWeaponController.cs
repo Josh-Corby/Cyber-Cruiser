@@ -5,32 +5,31 @@ using System;
 
 public class PlayerWeaponController : GameBehaviour
 {
+    #region References
     [SerializeField] private Weapon _playerWeapon;
     [SerializeField] private BeamAttack _beamAttack;
+    #endregion
+
+    #region Fields
     [SerializeField] private bool _fireInput;
     [SerializeField] private bool _controlsEnabled;
-    private bool _isWeaponUpgradeActive;
-    private float _weaponUpgradeCounter;
-    private bool _isHeatDecreasing;
-
     [SerializeField] private int _heatMax = 100;
     [SerializeField] private float _currentHeat;
     [SerializeField] private float _heatPerShot;
     [SerializeField] private float _heatLossOverTime;
     [SerializeField] private float _cooldownHeatLoss;
-    [SerializeField] private bool _isOverheated;
     [SerializeField] private float _timebeforeHeatLoss;
     [SerializeField] private float _timeSinceLastShot;
-
+    [SerializeField] private bool _isOverheated;
+   
+    private float _weaponUpgradeDuration;
+    private float _weaponUpgradeCounter;
+    private bool _isWeaponUpgradeActive;
+    private bool _isHeatDecreasing;
     private Coroutine _weaponUpgradeCoroutine;
+    #endregion
 
-    public static event Action<UISlider, float> OnWeaponUpgradeStart = null;
-    public static event Action<UISlider, float> OnWeaponUpgradeTimerTick = null;
-    public static event Action<UISlider> OnWeaponUpgradeFinished = null;
-    public static event Action<UISlider, float, int> OnWeaponHeatInitialized = null;
-    public static event Action<UISlider, float> OnHeatChange = null;
-    public static event Action<UISlider, bool> OnOverheatStatusChange = null;
-
+    #region Properties
     public int HeatMax
     {
         get
@@ -130,6 +129,18 @@ public class PlayerWeaponController : GameBehaviour
         }
     }
 
+    public float WeaponUpgradeDuration
+    {
+        get
+        {
+            return _weaponUpgradeDuration;
+        }
+        set
+        {
+            _weaponUpgradeDuration = value;
+        }
+    }
+
     public bool IsHeatDecreasing
     {
         get
@@ -167,6 +178,16 @@ public class PlayerWeaponController : GameBehaviour
             _isWeaponUpgradeActive = value;
         }
     }
+    #endregion
+
+    #region Actions
+    public static event Action<UISlider, float> OnWeaponUpgradeStart = null;
+    public static event Action<UISlider, float> OnWeaponUpgradeTimerTick = null;
+    public static event Action<UISlider> OnWeaponUpgradeFinished = null;
+    public static event Action<UISlider, float, int> OnWeaponHeatInitialized = null;
+    public static event Action<UISlider, float> OnHeatChange = null;
+    public static event Action<UISlider, bool> OnOverheatStatusChange = null;
+    #endregion
 
     private void Awake()
     {
