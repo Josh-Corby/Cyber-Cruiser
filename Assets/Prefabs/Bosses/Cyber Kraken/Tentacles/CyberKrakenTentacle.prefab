@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2908703759080032890}
-  - component: {fileID: -8893736984944124940}
   m_Layer: 0
   m_Name: CyberKrakenTentacle
   m_TagString: Untagged
@@ -33,20 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-8893736984944124940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2481888040287939771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7a4c3988df6e0140a8879ab21b33bca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goalTransform: {fileID: 0}
-  speed: 10
 --- !u!1 &4300760658401945032
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,6 +44,7 @@ GameObject:
   - component: {fileID: 3344306858032566623}
   - component: {fileID: 3344306858032566622}
   - component: {fileID: 3344306858032566624}
+  - component: {fileID: 1600342719209759295}
   m_Layer: 7
   m_Name: Tentacle
   m_TagString: Untagged
@@ -73,17 +59,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4300760658401945032}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.7071077, w: 0.7071059}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.54164845, y: 6.2747416, z: 1}
+  m_LocalScale: {x: 6.274742, y: 0.5416484, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2908703759080032890}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 3.14}
+  m_AnchoredPosition: {x: -0, y: 3.14}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &3344306858032566623
@@ -185,3 +171,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
+--- !u!114 &1600342719209759295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4300760658401945032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4ec44b13509e4f48b1ba08ef6dfeaca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  _positionOffset: {fileID: 0}
+  _moveForward: 0
+  _isWaiting: 0
+  _waitTime: 2

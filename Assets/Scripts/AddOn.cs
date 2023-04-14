@@ -1,0 +1,58 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System;
+
+public enum AddOnTypes
+{
+    BatteryPack, Hydrocoolant, PlasmaCache, PulseDetonator
+}
+public class AddOn : MonoBehaviour
+{
+    [SerializeField] private AddOnScriptableObject _addOnInfo;
+    private string _name, _description;
+    private int _ionCost;
+    private AddOnTypes _addOnType;
+
+    public string Name
+    {
+        get
+        {
+            return _name;
+        }
+    }
+
+    public string Description
+    {
+        get
+        {
+            return _description;
+        }
+    }
+
+    public static event Action<AddOn> OnMouseEnter = null;
+    public static event Action OnMouseExit = null;
+
+    private void Awake()
+    {
+        AssignAddOnInfo();
+    }
+
+    private void AssignAddOnInfo()
+    {
+        _addOnType = _addOnInfo.AddOnType;
+        _name = _addOnType.ToString();
+        _description = _addOnInfo.Description;
+        _ionCost = _addOnInfo.IonCost;
+    }
+
+    public void MouseEnter()
+    {
+        OnMouseEnter(this);
+    }
+
+    public void MouseExit()
+    {
+        OnMouseExit?.Invoke();
+    }
+}

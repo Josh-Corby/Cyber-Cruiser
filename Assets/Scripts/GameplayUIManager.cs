@@ -5,7 +5,7 @@ using TMPro;
 public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 {
     public UISlider playerHealthBar, playerShieldBar, weaponUpgradeSlider, weaponHeatBar;
-    [SerializeField] private GameObject _playerHealthBarUI, _playerShieldBarUI, _weaponUpgradeBarUI, _weaponHeatBarUI;
+    [SerializeField] private GameObject _playerHealthBarUI, _playerShieldBarUI, _weaponUpgradeBarUI;
     [SerializeField] private TMP_Text _plasmaCountText;
 
     public static event Action<Action> OnMaxHeatRequested = null;

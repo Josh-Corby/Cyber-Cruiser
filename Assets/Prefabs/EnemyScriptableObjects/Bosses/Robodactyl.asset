@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
   m_Name: Robodactyl
   m_EditorClassIdentifier: 
-  unitName: Roboactyl
+  unitName: Robodactyl
   maxHealth: 50
   explodeOnDeath: 1
   explosionRadius: 1

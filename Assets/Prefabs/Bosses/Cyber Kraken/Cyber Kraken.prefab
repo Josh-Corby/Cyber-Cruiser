@@ -244,16 +244,13 @@ MonoBehaviour:
   _unitInfo: {fileID: 11400000, guid: f9f7b71e06d9e7347a816ac37c62f91f, type: 2}
   unitName: Cyber Kraken
   _currentHealth: 0
-  _attackCooldown: 2
+  _attackCooldown: 1
   _attackTimer: 2
   _topSpawner: {fileID: 0}
   _bottomSpawner: {fileID: 0}
-  _topGoalPosition: {fileID: 126286746}
-  _bottomGoalPosition: {fileID: 1704955920}
   _spawnedTentacle: {fileID: 2481888040287939771, guid: 34ddddad777a73a418af6f5565072acc, type: 3}
-  _grappleTentacleSpawnPoint: {fileID: 8537070395581111515}
-  _grappleTentacleGoalTransform: {fileID: 0}
   _grappleTentaclePrefab: {fileID: 2481888040287939771, guid: 2b5f6b2e33250eb4c94eb74ead9bc5fd, type: 3}
+  _grappleTentacleSpawnPoint: {fileID: 8537070395581111515}
 --- !u!1 &8537070395581111515
 GameObject:
   m_ObjectHideFlags: 0

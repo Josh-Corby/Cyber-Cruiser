@@ -7,14 +7,11 @@ public class CyberKraken : Boss, IBoss
     [SerializeField] private EnemySpawner _topSpawner;
     [SerializeField] private EnemySpawner _bottomSpawner;
 
-    [SerializeField] private Transform _topGoalPosition;
-    [SerializeField] private Transform _bottomGoalPosition;
-
     [SerializeField] private GameObject _spawnedTentacle;
 
-    [SerializeField] private GameObject _grappleTentacleSpawnPoint;
-    [SerializeField] private GameObject _grappleTentacleGoalTransform;
     [SerializeField] private GameObject _grappleTentaclePrefab;
+    [SerializeField] private GameObject _grappleTentacleSpawnPoint;
+
 
     private bool _isAttacking;
 
@@ -46,10 +43,6 @@ public class CyberKraken : Boss, IBoss
     {
         int i = Random.Range(0, 2);
         GameObject tentacle = i == 0 ? _topSpawner.SpawnEnemyAtRandomPosition(_spawnedTentacle) : _bottomSpawner.SpawnEnemyAtRandomPosition(_spawnedTentacle);
-        if (tentacle.TryGetComponent<CyberKrakenTentacle>(out var krakenTentacle))
-        {
-            krakenTentacle.goalTransform = i == 0 ? _topGoalPosition : _bottomGoalPosition;
-        }
     }
 
     //release tentacle towards the player and grab them

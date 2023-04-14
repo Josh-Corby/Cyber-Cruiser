@@ -48,7 +48,7 @@ public class UIManager : GameBehaviour
         _panels = new GameObject[] { _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel, _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel };
     }
 
-    private void DisablePanels()
+    public void DisablePanels()
     {
         if(GameplayPanel == true)
         {

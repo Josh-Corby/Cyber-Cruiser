@@ -10,7 +10,7 @@ public class GameManager : GameBehaviour<GameManager>
     public static event Action OnMissionStart = null;
     public static event Action OnGamePaused = null;
     public static event Action OnGameResumed = null;
-  
+
   
     private void Awake()
     {
