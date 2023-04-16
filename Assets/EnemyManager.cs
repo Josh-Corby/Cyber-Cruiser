@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : GameBehaviour<EnemyManager>
 {
-    [HideInInspector] public List<GameObject> _enemiesAlive = new();
+    public List<GameObject> _enemiesAlive = new();
     [HideInInspector] public List<GameObject> gunshipsAlive = new();
 
     private void OnEnable()
@@ -76,7 +76,10 @@ public class EnemyManager : GameBehaviour<EnemyManager>
         {
             if (ESM.bossReadyToSpawn)
             {
-                CheckEnemiesAliveForBossSpawn();
+                if (AreAllEnemiesDead())
+                {
+                    ESM.StartBossSpawn();
+                }
             }
         }
     }
@@ -96,7 +99,7 @@ public class EnemyManager : GameBehaviour<EnemyManager>
         gunshipsAlive.Clear();
     }
 
-    public bool CheckEnemiesAliveForBossSpawn()
+    public bool AreAllEnemiesDead()
     {
         return _enemiesAlive.Count == 0;
     }

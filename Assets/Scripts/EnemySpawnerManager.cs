@@ -198,14 +198,19 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         StopSpawningEnemies();
         bossReadyToSpawn = true;
 
-        if (EM.CheckEnemiesAliveForBossSpawn())
+        if (EM.AreAllEnemiesDead())
         {
-            if (spawnBossCoroutine != null)
-            {
-                StopCoroutine(spawnBossCoroutine);
-            }
-            spawnBossCoroutine = StartCoroutine(SpawnBoss());
+            StartBossSpawn();
         }
+    }
+
+    public void StartBossSpawn()
+    {
+        if (spawnBossCoroutine != null)
+        {
+            StopCoroutine(spawnBossCoroutine);
+        }
+        spawnBossCoroutine = StartCoroutine(SpawnBoss());
     }
 
     private IEnumerator SpawnBoss()

@@ -23,6 +23,7 @@ public class Weapon : GameBehaviour
     private bool _multiFire;
     private int _multiFireShots;
     private bool _isMultiFireSpreadRandom;
+    [HideInInspector] public bool isHoming;
 
     private void Awake()
     {
@@ -34,7 +35,6 @@ public class Weapon : GameBehaviour
     protected virtual void OnEnable()
     {
         readyToFire = true;
-
     }
     public void AssignWeaponInfo()
     {
@@ -140,6 +140,7 @@ public class Weapon : GameBehaviour
         Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-_spreadAngle, _spreadAngle));
         return directionWithSpread;
     }
+
     private Quaternion GetFixedSpreadAngle(int index)
     {
         //get total weapon spread
@@ -153,55 +154,68 @@ public class Weapon : GameBehaviour
         return directionWithSpread;
 
         /*
-         * formula explanation
-         * 
-         * i value to angle = total spread / number of bullets -1 * i
-         * final angle = increment - angle
-         * 
-         * example equations
-         * fire 3
-         * spread angle of 10
-         * total spread if 20
-         * i values are   0,1 ,2
-         * increments are 0,10,20
-         * bullets should fire at angles -10,0,10
-         * 
-         * i = 0
-         * angle = 20 / 2 * 0 = 0 - 10 = -10
-         * i = 1
-         * angle = 20 / 2 * 1 = 10 - 10 = 0
-         * i = 2
-         * angle = 20 / 2 * 2 = 20 - 10 = 10
-         * 
-         * fire 5
-         * spread angle of 10
-         * total spread of 20
-         * 
-         * i values       0,1,2 ,3 ,4
-         * increments are 0,5,10,15,20
-         * bullets should fire at -10,-5,0,5,10
-         * 
-         * i = 0
-         * angle = 20 / 4 * 0 = 0 - 10 = -10
-         * i = 1
-         * angle = 20 / 4 * 1 = 5 - 10 = -5
-         * i = 2
-         * angle = 20 / 4 * 2 = 10 - 10 = 0
-         * i = 3
-         * angle = 20 / 4 * 3 = 15 - 10 = 5
-         * i = 4
-         * angle = 20 / 4 * 4 = 20 - 10 = 10
+          formula explanation
+          
+          i value to angle = total spread / number of bullets -1 * i
+          final angle = increment - angle
+          
+          example equations
+          fire 3
+          spread angle of 10
+          total spread if 20
+          i values are   0,1 ,2
+          increments are 0,10,20
+          bullets should fire at angles -10,0,10
+          
+          i = 0
+          angle = 20 / 2 * 0 = 0 - 10 = -10
+          i = 1
+          angle = 20 / 2 * 1 = 10 - 10 = 0
+          i = 2
+          angle = 20 / 2 * 2 = 20 - 10 = 10
+          
+          fire 5
+          spread angle of 10
+          total spread of 20
+          
+          i values       0,1,2 ,3 ,4
+          increments are 0,5,10,15,20
+          bullets should fire at -10,-5,0,5,10
+          
+          i = 0
+          angle = 20 / 4 * 0 = 0 - 10 = -10
+          i = 1
+          angle = 20 / 4 * 1 = 5 - 10 = -5
+          i = 2
+          angle = 20 / 4 * 2 = 10 - 10 = 0
+          i = 3
+          angle = 20 / 4 * 3 = 15 - 10 = 5
+          i = 4
+         angle = 20 / 4 * 4 = 20 - 10 = 10
          */
     }
 
     public void FireWithSpread(Quaternion directionWithSpread)
     {
         GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, directionWithSpread);
+        if (isHoming)
+        {
+            ApplyHoming(bullet.GetComponent<Bullet>());
+        } 
     }
 
     public void FireWithoutSpread()
     {
         GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, _firePointTransform.rotation);
+        if (isHoming)
+        {
+            ApplyHoming(bullet.GetComponent<Bullet>());
+        }
+    }
+
+    private void ApplyHoming(Bullet bullet)
+    {
+        bullet.isHoming = true;
     }
 
     private IEnumerator ResetShooting()

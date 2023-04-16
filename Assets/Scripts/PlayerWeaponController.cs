@@ -11,21 +11,25 @@ public class PlayerWeaponController : GameBehaviour
     #endregion
 
     #region Fields
-    [SerializeField] private bool _fireInput;
-    [SerializeField] private bool _controlsEnabled;
-    [SerializeField] private int _heatMax = 100;
+
     [SerializeField] private float _currentHeat;
     [SerializeField] private float _heatPerShot;
     [SerializeField] private float _heatLossOverTime;
     [SerializeField] private float _cooldownHeatLoss;
     [SerializeField] private float _timebeforeHeatLoss;
-    [SerializeField] private float _timeSinceLastShot;
-    [SerializeField] private bool _isOverheated;
-   
+
+    private int _heatMax = 100;
+    private float _timeSinceLastShot;
     private float _weaponUpgradeDuration;
     private float _weaponUpgradeCounter;
+
+    private bool _isOverheated;
+    private bool _isHoming;
+    private bool _fireInput;
+    private bool _controlsEnabled;
     private bool _isWeaponUpgradeActive;
     private bool _isHeatDecreasing;
+
     private Coroutine _weaponUpgradeCoroutine;
     #endregion
 
@@ -176,6 +180,15 @@ public class PlayerWeaponController : GameBehaviour
         set
         {
             _isWeaponUpgradeActive = value;
+        }
+    }
+
+    public bool IsHoming
+    {
+        set
+        {
+            _isHoming = value;
+            _playerWeapon.isHoming = _isHoming;
         }
     }
     #endregion
@@ -373,6 +386,9 @@ public class PlayerWeaponController : GameBehaviour
             case WeaponUpgradeType.Pulverizer:
                 PulverizerUpgrade();
                 break;
+            case WeaponUpgradeType.Homing:
+                IsHoming = true;
+                break;
         }
 
         CurrentHeat = 0;
@@ -399,6 +415,7 @@ public class PlayerWeaponController : GameBehaviour
     public void ResetPlayerWeapon()
     {
         OnWeaponUpgradeFinished(GUIM.weaponUpgradeSlider);
+        IsHoming = false;
         _beamAttack.isBeamActive = false;
         _beamAttack.enabled = false;
         _playerWeapon.enabled = true;

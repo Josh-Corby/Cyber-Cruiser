@@ -8,7 +8,7 @@ public enum PickupType
 
 public enum WeaponUpgradeType
 {
-    None, Scatter_Random, Scatter_Fixed, Pulverizer
+    None, Scatter_Random, Scatter_Fixed, Pulverizer, Homing
 }
 
 public class Pickup : GameBehaviour
@@ -27,6 +27,7 @@ public class Pickup : GameBehaviour
     public static event Action<GameObject> OnPickup = null;
     public static event Action<WeaponUpgradeType> OnWeaponUpgradePickup = null;
     #endregion
+
     public void PickupEffect()
     {
         switch (_pickupType)
@@ -44,6 +45,7 @@ public class Pickup : GameBehaviour
                     case WeaponUpgradeType.Scatter_Fixed:
                     case WeaponUpgradeType.Scatter_Random:
                     case WeaponUpgradeType.Pulverizer:
+                    case WeaponUpgradeType.Homing:
                         OnWeaponUpgradePickup(_upgradeType);
                         break;
                 }
