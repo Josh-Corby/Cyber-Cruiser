@@ -5,14 +5,11 @@ using TMPro;
 
 public class AddOnManager : GameBehaviour
 {
-
     [SerializeField] private TMP_Text _ionText;
 
     [SerializeField] private AddOn _currentAddon;
     [SerializeField] private TMP_Text _addOnName;
     [SerializeField] private TMP_Text _addOnDescription;
-
-  
 
     private void OnEnable()
     {
@@ -55,6 +52,4 @@ public class AddOnManager : GameBehaviour
         _addOnName.text = "";
         _addOnDescription.text = "";
     }
-
-
 }

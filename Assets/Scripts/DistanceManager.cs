@@ -22,9 +22,7 @@ public class DistanceManager : GameBehaviour
     private int _plasmaDropDistance, _weaponUpgradeDropDistance;
     private bool _isPlasmaSpawned, _isWeaponUpgradeSpawned = false;
 
-    public static event Action<PickupType> OnPlasmaDistanceReached = null;
-    public static event Action OnWeaponUpgradeDistanceReached = null;
-
+    #region Properties
     public int DistanceInt
     {
         get
@@ -98,6 +96,13 @@ public class DistanceManager : GameBehaviour
             _isDistanceIncreasing = value;
         }
     }
+    #endregion
+
+    #region Actions
+    public static event Action<PickupType> OnPlasmaDistanceReached = null;
+    public static event Action OnWeaponUpgradeDistanceReached = null;
+    public static event Action OnBossDistanceReached = null;
+    #endregion
 
     private void OnEnable()
     {
@@ -157,7 +162,7 @@ public class DistanceManager : GameBehaviour
         }
 
         //spawn weapon pack at seeded distance
-        if (_distanceInt == _weaponUpgradeDropDistance && !_isWeaponUpgradeSpawned)
+        if (DistanceInt == _weaponUpgradeDropDistance && !_isWeaponUpgradeSpawned)
         {
             WeaponUpgradeDistanceReached();
         }
@@ -192,18 +197,21 @@ public class DistanceManager : GameBehaviour
         PreviousBossDistance = DistanceInt;
         CurrentBossDistance += _bossSpawnDistance;
         StopIncreasingDistance();
-        ESM.SetupForBossSpawn();
         GenerateNewWeaponUpgradeDropDistance();
+        OnBossDistanceReached?.Invoke();
     }
 
     protected void GenerateNewPlasmaDropDistance()
     {
         _plasmaDropDistance = Random.Range(CurrentDistanceMilestone + 15, CurrentDistanceMilestone + 99);
+        _isPlasmaSpawned = false;
     }
 
     protected void GenerateNewWeaponUpgradeDropDistance()
     {
         _weaponUpgradeDropDistance = Random.Range(PreviousBossDistance + 15, CurrentBossDistance);
+        Debug.Log(_weaponUpgradeDropDistance);
+        _isWeaponUpgradeSpawned = false;
     }
 
     private void GenerateFirstPickupDistances()

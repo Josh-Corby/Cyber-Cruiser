@@ -23,6 +23,5 @@ public class Robodactyl : Boss, IBoss
         Debug.Log("Mine spawned");
         GameObject mine = Instantiate(minePrefab, _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
         mine.transform.parent = null;
-        ESM.enemiesAlive.Add(mine);
     }
 }

@@ -7,8 +7,6 @@ using Random = UnityEngine.Random;
 public class EnemySpawner : GameBehaviour
 {
     private const int MIN_ENEMY_SPAWN_DISTANCE = 10;
-    public static event Action<List<GameObject>, GameObject> OnEnemySpawned = null;
-    public static event Action<Enemy> OnBossSpawned = null;
 
     [Range(0,1)]
     [HideInInspector] public float spawnerWeight;
@@ -20,8 +18,8 @@ public class EnemySpawner : GameBehaviour
 
     public EnemyCategory[] enemyCategories;
     [SerializeField] private float totalCategoryWeight;
-  
-   
+
+    #region Properties
     public int EnemiesToSpawn
     {
         get
@@ -45,7 +43,10 @@ public class EnemySpawner : GameBehaviour
             _speedModifier = value;
         }
     }
-   
+    #endregion
+    #region Actions
+    public static event Action<Enemy> OnBossSpawned = null;
+    #endregion
     public void StartSpawnProcess()
     {
         spawnPositions.Clear();
@@ -138,17 +139,14 @@ public class EnemySpawner : GameBehaviour
     {
         GameObject enemy = Instantiate(_enemy, position, transform.rotation);
         AddSpeedModifier(enemy);
-
         //Rotate enemies to face correct direction on spawn
         enemy.transform.up = transform.right;
-        OnEnemySpawned(ESM.enemiesAlive, enemy);
     }
 
     public GameObject SpawnEnemyAtRandomPosition(GameObject _enemy)
     {
         GameObject enemy = Instantiate(_enemy, GetRandomSpawnPosition(), transform.rotation);
         enemy.transform.up = transform.right;
-        OnEnemySpawned(ESM.enemiesAlive, enemy);
         return enemy;
     }
 
@@ -180,7 +178,7 @@ public class EnemySpawner : GameBehaviour
     {
         GameObject boss = Instantiate(bossToSpawn, spawnPosition, transform.rotation);
         AddSpeedModifier(boss);
-        OnEnemySpawned(ESM.enemiesAlive, boss);
+
         Enemy bossInfo = boss.GetComponent<Enemy>();
         boss.name = bossInfo.unitName;
         OnBossSpawned(bossInfo);

@@ -95,7 +95,7 @@ public class BeamAttack : MonoBehaviour
 
             if(hit.collider.TryGetComponent<Shield>(out var shield))
             {
-                Debug.Log("beam hit shield");
+                //Debug.Log("beam hit shield");
                 shield._shieldController.ReduceShields(beamDamage);
             }
         }
@@ -121,7 +121,7 @@ public class BeamAttack : MonoBehaviour
     {
         float distanceBetweenPoints = lineRenderer.GetPosition(0).x + Mathf.Abs(lineRenderer.GetPosition(1).x);
         distanceBetweenPoints *= transform.parent.localScale.x;
-        Debug.Log(distanceBetweenPoints);
+        //Debug.Log(distanceBetweenPoints);
         return distanceBetweenPoints;
     }
 }

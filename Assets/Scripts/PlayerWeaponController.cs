@@ -201,11 +201,10 @@ public class PlayerWeaponController : GameBehaviour
         InputManager.OnControlsEnabled += EnableControls;
         InputManager.OnControlsDisabled += DisableControls;
 
-        GameManager.OnGamePaused += DisableControls;
-        GameManager.OnGameResumed += EnableControls;
+        GameManager.OnIsGamePaused += ToggleControls;
+        GameManager.OnMissionStart += ResetPlayerWeapon;
 
         Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
-        GameManager.OnMissionStart += ResetPlayerWeapon;
     }
 
     private void OnDisable()
@@ -214,11 +213,10 @@ public class PlayerWeaponController : GameBehaviour
         InputManager.OnControlsEnabled -= EnableControls;
         InputManager.OnControlsDisabled -= DisableControls;
 
-        GameManager.OnGamePaused -= DisableControls;
-        GameManager.OnGameResumed -= EnableControls;
-
-        Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
+        GameManager.OnIsGamePaused -= ToggleControls;
         GameManager.OnMissionStart -= ResetPlayerWeapon;
+
+        Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;  
     }
 
     private void Start()
@@ -328,6 +326,18 @@ public class PlayerWeaponController : GameBehaviour
     private void CancelFireInput()
     {
         _fireInput = false;
+    }
+
+    private void ToggleControls(bool value)
+    {
+        if (value)
+        {
+            DisableControls();
+        }
+        else
+        {
+            EnableControls();
+        }
     }
 
     private void EnableControls()

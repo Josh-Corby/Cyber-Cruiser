@@ -1,11 +1,9 @@
 using UnityEngine;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 
 public class Enemy : GameBehaviour, IDamageable
 {
-    public static event Action<List<GameObject>, GameObject> OnEnemyDied = null;
+    public static event Action<GameObject, bool> OnEnemyAliveStateChange = null;
 
     [SerializeField] protected EnemyScriptableObject _unitInfo;
     private EnemyMovement _unitMovement;
@@ -34,6 +32,7 @@ public class Enemy : GameBehaviour, IDamageable
             _currentHealth = value;
         }
     }
+
     public float MaxHealth
     {
         get
@@ -45,6 +44,7 @@ public class Enemy : GameBehaviour, IDamageable
             _maxHealth = value;
         }
     }
+
     protected virtual void Awake()
     {
         AssignEnemyInfo();
@@ -53,8 +53,9 @@ public class Enemy : GameBehaviour, IDamageable
         {
             _crashParticles = transform.GetChild(0).gameObject;
             _crashParticles.SetActive(false);
-        }  
+        }
     }
+
     protected virtual void Start()
     {
         _currentHealth = _maxHealth;
@@ -62,7 +63,6 @@ public class Enemy : GameBehaviour, IDamageable
 
     private void AssignEnemyInfo()
     {
-       
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _weapon = GetComponentInChildren<EnemyWeaponController>();
         unitName = _unitInfo.unitName;
@@ -80,8 +80,8 @@ public class Enemy : GameBehaviour, IDamageable
         {
             _unitMovement = enemyMovement;
             _unitMovement.AssignEnemyMovementInfo(_unitInfo);
-            
-        } 
+        }
+        OnEnemyAliveStateChange(gameObject, true);
     }
 
     public virtual void Damage(float damage)
@@ -100,6 +100,7 @@ public class Enemy : GameBehaviour, IDamageable
             }
         }
     }
+
     protected void Explode()
     {
         GameObject explosionEffect = Instantiate(_explosionEffect, transform);
@@ -123,10 +124,10 @@ public class Enemy : GameBehaviour, IDamageable
 
     protected void Die()
     {
-        if(TryGetComponent<EnemyMovement>(out var movement))
+        if (TryGetComponent<EnemyMovement>(out var movement))
         {
             movement.isEnemyDead = true;
-        }  
+        }
 
         if (_weapon != null)
         {
@@ -141,18 +142,12 @@ public class Enemy : GameBehaviour, IDamageable
         //change object layer to layer that only collides with cull area
         gameObject.layer = LayerMask.NameToLayer(DEAD_ENEMY_LAYER_NAME);
         //remove enemy from enemies alive so it doesn't make boss spawner wait for it
-        if (ESM.enemiesAlive.Contains(gameObject))
-        {
-            OnEnemyDied(ESM.enemiesAlive, gameObject);
-        }
+        OnEnemyAliveStateChange(gameObject, false);
     }
 
     public virtual void Destroy()
     {
-        if (ESM.enemiesAlive.Contains(gameObject))
-        {       
-            OnEnemyDied(ESM.enemiesAlive, gameObject);
-        }     
+        OnEnemyAliveStateChange(gameObject, false);
         Destroy(gameObject);
     }
 

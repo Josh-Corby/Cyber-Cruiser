@@ -7,10 +7,10 @@ public class GameManager : GameBehaviour<GameManager>
 {
     public bool isPaused = false;
     [SerializeField] private GameObject gameplayObjects;
-    public static event Action OnMissionStart = null;
-    public static event Action OnGamePaused = null;
-    public static event Action OnGameResumed = null;
 
+    public static event Action<bool> OnIsGamePaused = null;
+    public static event Action OnMissionStart = null;
+    public static event Action OnMissionEnd = null;
   
     private void Awake()
     {
@@ -36,9 +36,15 @@ public class GameManager : GameBehaviour<GameManager>
         Time.timeScale = 1f;
         OnMissionStart?.Invoke();
     }
+
     private void ToggleGameplayObjects(bool value)
     {
         gameplayObjects.SetActive(value);
+    }
+
+    public void EndMission()
+    {
+        OnMissionEnd?.Invoke();
     }
 
     public void TogglePause()
@@ -47,14 +53,13 @@ public class GameManager : GameBehaviour<GameManager>
 
         if (isPaused)
         {
-            OnGamePaused?.Invoke();
             PauseGame();
         }
         else if (!isPaused)
         {
             ResumeGame();
-            OnGameResumed?.Invoke();
         }
+        OnIsGamePaused(isPaused);
     }
 
     private void PauseGame()

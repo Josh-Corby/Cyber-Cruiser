@@ -17,8 +17,8 @@ public class CyberKraken : Boss, IBoss
 
     protected override void Awake()
     {
-        _topSpawner = ESM._topTentacleSpawner;
-        _bottomSpawner = ESM._bottomTentacleSpawner;
+        _topSpawner = ESM._topSpawner;
+        _bottomSpawner = ESM._bottomSpawner;
         base.Awake();
     }
 

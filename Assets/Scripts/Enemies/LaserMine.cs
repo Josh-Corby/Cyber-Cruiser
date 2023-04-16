@@ -1,11 +1,7 @@
 using UnityEngine;
-using System;
-using System.Collections.Generic;
 
 public class LaserMine : Enemy, IDamageable
 {
-    public static event Action<List<GameObject>, GameObject> OnEnemySpawned = null;
-
     [SerializeField] private int objectsToSpawn;
     [SerializeField] private GameObject laserProjectile;
     private bool bulletCollision = false;
@@ -47,10 +43,6 @@ public class LaserMine : Enemy, IDamageable
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
 
             GameObject _go = Instantiate(laserProjectile, spawnPos, spawnRotation);
-            OnEnemySpawned(ESM.enemiesAlive, _go);
-
         }
-    }
-
-    
+    }  
 }

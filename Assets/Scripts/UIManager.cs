@@ -25,15 +25,13 @@ public class UIManager : GameBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnGamePaused += EnablePauseUI;
-        GameManager.OnGameResumed += DisablePauseUI;
+        GameManager.OnIsGamePaused += TogglePauseUI;
         PlayerManager.OnPlayerDeath += GameOverUI;
     }
 
     private void OnDisable()
     {
-        GameManager.OnGamePaused -= EnablePauseUI;
-        GameManager.OnGameResumed -= DisablePauseUI;
+        GameManager.OnIsGamePaused -= TogglePauseUI;
         PlayerManager.OnPlayerDeath -= GameOverUI;
     }
 
@@ -86,6 +84,18 @@ public class UIManager : GameBehaviour
     {
         Cursor.visible = true;
         _gameOverPanel.SetActive(true);
+    }
+
+    private void TogglePauseUI(bool value)
+    {
+        if (value)
+        {
+            EnablePauseUI();
+        }
+        else
+        {
+            DisablePauseUI();
+        }
     }
 
     private void EnablePauseUI()

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameBehaviour : Utilities
 {
+    protected static EnemyManager EM { get { return EnemyManager.INSTANCE; } }
     protected static EnemySpawnerManager ESM { get { return EnemySpawnerManager.INSTANCE; } }
     protected static PlayerManager PM { get { return PlayerManager.INSTANCE; } }
     protected static PlayerStatsManager PSM { get { return PlayerStatsManager.INSTANCE; } }

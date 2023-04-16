@@ -6,7 +6,6 @@ using System;
 public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 {
     #region Fields
-
     [SerializeField] private int _playerIon;
     [SerializeField] private int _playerPlasma;
     [SerializeField] private int _plasmaCost;
@@ -118,6 +117,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         set
         {
             _isBatteryPack = value;
+            ToggleBatteryPack(_isBatteryPack);
         }
     }
 
@@ -130,6 +130,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         set
         {
             _isHydrocoolant = value;
+            ToggleHydrocoolant(_isHydrocoolant);
         }
     }
 
@@ -142,6 +143,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         set
         {
             _isPlasmaCache = value;
+            TogglePlasmaCache(_isPlasmaCache);
         }
     }
 
@@ -154,6 +156,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         set
         {
             _isPulseDetonator = value;
+            TogglePulseDetonator(_isPulseDetonator);
         }
     }
     #endregion
@@ -168,6 +171,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         AddOn.OnAddOnToggled += ToggleAddOnBool;
         PlayerManager.OnIonPickup += ChangeIon;
         PlayerManager.OnPlasmaChange += SetPlasma;
+        GameManager.OnMissionEnd += DisableAllAddOns;
     }
 
     private void OnDisable()
@@ -175,6 +179,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         AddOn.OnAddOnToggled -= ToggleAddOnBool;
         PlayerManager.OnIonPickup -= ChangeIon;
         PlayerManager.OnPlasmaChange -= SetPlasma;
+        GameManager.OnMissionEnd -= DisableAllAddOns;
     }
 
     private void Start()
@@ -199,6 +204,26 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         PlayerPlasma = value;
     }
 
+    private void DisableAllAddOns()
+    {
+        if (IsBatteryPack)
+        {
+            IsBatteryPack = false;
+        }
+        if (IsHydrocoolant)
+        {
+            IsHydrocoolant = false;
+        }
+        if (IsPlasmaCache)
+        {
+            IsPlasmaCache = false;
+        }
+        if (IsPulseDetonator)
+        {
+            IsPulseDetonator = false;
+        }
+    }
+
     private void ToggleAddOnBool(AddOnTypes addOnType, int cost, bool value)
     {
         //If AddOn is being bought check if player can afford it
@@ -216,16 +241,16 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         switch (addOnType)
         {
             case AddOnTypes.BatteryPack:
-                ToggleBatteryPack(value);
+                IsBatteryPack = value;
                 break;
             case AddOnTypes.Hydrocoolant:
-                ToggleHydrocoolant(value);
+                IsHydrocoolant = value;
                 break;
             case AddOnTypes.PlasmaCache:
-                TogglePlasmaCache(value);
+                IsPlasmaCache = value;
                 break;
             case AddOnTypes.PulseDetonator:
-                TogglePulseDetonator(value);
+                IsPulseDetonator = value;
                 break;
         }
     }
@@ -238,26 +263,22 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     #region AddOnEffects
     private void ToggleBatteryPack(bool value)
     {
-        WeaponUpgradeDuration += value ? 5: -5;
-        IsBatteryPack = value;
+        WeaponUpgradeDuration += value ? 5 : -5;
     }
 
     private void ToggleHydrocoolant(bool value)
     {
         HeatPerShot += value ? -0.25f : 0.25f;
-        IsHydrocoolant = value;
     }
 
     private void TogglePlasmaCache(bool value)
     {
         PlasmaCost += value ? -1 : 1;
-        IsPlasmaCache = value;
     }
 
     //pulse detonator not implemented yet
     private void TogglePulseDetonator(bool value)
     {
-        IsPulseDetonator = value;
     }
     #endregion
 

@@ -39,8 +39,7 @@ public class PlayerShipController : MonoBehaviour
         InputManager.OnControlsEnabled += EnableControls;
         InputManager.OnControlsDisabled += DisableControls;
         GameManager.OnMissionStart += StartLevelPosition;
-        GameManager.OnGamePaused += DisableControls;
-        GameManager.OnGameResumed += EnableControls;
+        GameManager.OnIsGamePaused += ToggleControls;
         CyberKrakenGrappleTentacle.OnGrappleEnd += EnableControls;
         Cursor.lockState = CursorLockMode.Confined;   
     }
@@ -51,8 +50,7 @@ public class PlayerShipController : MonoBehaviour
         InputManager.OnControlsEnabled -= EnableControls;
         InputManager.OnControlsDisabled -= DisableControls;
         GameManager.OnMissionStart -= StartLevelPosition;
-        GameManager.OnGamePaused -= DisableControls;
-        GameManager.OnGameResumed -= EnableControls;
+        GameManager.OnIsGamePaused -= ToggleControls;
         CyberKrakenGrappleTentacle.OnGrappleEnd -= EnableControls;
     }
 
@@ -114,6 +112,17 @@ public class PlayerShipController : MonoBehaviour
         input = _input;
     }
 
+    public void ToggleControls(bool value)
+    {
+        if (value)
+        {
+            DisableControls();
+        }
+        else
+        {
+            EnableControls();
+        }
+    }
     private void EnableControls()
     {
         _controlsEnabled = true;

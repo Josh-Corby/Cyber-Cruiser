@@ -11,7 +11,6 @@ public class PickupEditor : Editor
     SerializedProperty _healthAmount;
     SerializedProperty _plasmaAmount;
     SerializedProperty _ionAmount;
-    SerializedProperty _upgradeDuration;
     #endregion
 
     private void OnEnable()
@@ -22,7 +21,6 @@ public class PickupEditor : Editor
         _healthAmount = serializedObject.FindProperty(nameof(_healthAmount));
         _plasmaAmount = serializedObject.FindProperty(nameof(_plasmaAmount));
         _ionAmount = serializedObject.FindProperty(nameof(_ionAmount));
-        _upgradeDuration = serializedObject.FindProperty(nameof(_upgradeDuration));
     }
 
     public override void OnInspectorGUI()
@@ -43,7 +41,6 @@ public class PickupEditor : Editor
                 break;
             case PickupType.Weapon:
                 EditorGUILayout.PropertyField(_upgradeType);
-                EditorGUILayout.PropertyField(_upgradeDuration);
                 break;
         }
         serializedObject.ApplyModifiedProperties();

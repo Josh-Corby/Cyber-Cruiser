@@ -24,14 +24,14 @@ public class GunshipMovement : EnemyMovement
     {
         //check how many other gunships are currently alive to check what movetype should be assigned
 
-        if (ESM.gunshipsAlive.Count == 1)
+        if (EM.gunshipsAlive.Count == 1)
         {
             gunshipMoveType = GunshipMoveTypes.PlayerFollow;
             SetEnemyMovementType(gunshipMoveType);
         }
 
         //if there are currently any other gunships alive go through them to check what movetype should be assigned to this gunship
-        else if (ESM.gunshipsAlive.Count > 1)
+        else if (EM.gunshipsAlive.Count > 1)
         {
             CheckForPlayerFollow();
         }
@@ -40,7 +40,7 @@ public class GunshipMovement : EnemyMovement
     private void CheckForPlayerFollow()
     {
         //check if any of the other currently alive gunships are directly following the player
-        foreach (GameObject gunship in ESM.gunshipsAlive)
+        foreach (GameObject gunship in EM.gunshipsAlive)
         {
             if (gunship.GetComponent<GunshipMovement>().gunshipMoveType == GunshipMoveTypes.PlayerFollow)
             {
@@ -57,7 +57,7 @@ public class GunshipMovement : EnemyMovement
     private void CheckForSlowPlayerFollow()
     {
         //chekc if any of the other currently alive gunships are slow following the player
-        foreach (GameObject gunship in ESM.gunshipsAlive)
+        foreach (GameObject gunship in EM.gunshipsAlive)
         {
             if (gunship.GetComponent<GunshipMovement>().gunshipMoveType == GunshipMoveTypes.SlowPlayerFollow)
             {
