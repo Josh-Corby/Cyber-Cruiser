@@ -156,7 +156,6 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         set
         {
             _isPulseDetonator = value;
-            TogglePulseDetonator(_isPulseDetonator);
         }
     }
     #endregion
@@ -274,11 +273,6 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     private void TogglePlasmaCache(bool value)
     {
         PlasmaCost += value ? -1 : 1;
-    }
-
-    //pulse detonator not implemented yet
-    private void TogglePulseDetonator(bool value)
-    {
     }
     #endregion
 

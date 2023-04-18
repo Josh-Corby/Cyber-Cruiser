@@ -8,7 +8,7 @@ public enum PickupType
 
 public enum WeaponUpgradeType
 {
-    None, Scatter_Random, Scatter_Fixed, Pulverizer, Homing
+    None, Scatter_Random, Scatter_Fixed, Pulverizer, Homing, ChainLightning
 }
 
 public class Pickup : GameBehaviour
@@ -46,6 +46,7 @@ public class Pickup : GameBehaviour
                     case WeaponUpgradeType.Scatter_Random:
                     case WeaponUpgradeType.Pulverizer:
                     case WeaponUpgradeType.Homing:
+                    case WeaponUpgradeType.ChainLightning:
                         OnWeaponUpgradePickup(_upgradeType);
                         break;
                 }

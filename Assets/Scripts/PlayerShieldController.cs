@@ -7,9 +7,11 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 {
     private const string PLAYER_PROJECTILE_LAYER_NAME = "PlayerProjectile";
 
-
     [SerializeField] private int _shieldActiveDuration;
     [SerializeField] private float _shieldActiveTimer;
+
+    [SerializeField] private bool _isPulseDetonator;
+    private PulseDetonator _pulseDetonator;
 
     public static event Action<UISlider, float> OnPlayerShieldsActivated = null;
     public static event Action<UISlider> OnPlayerShieldsDeactivated = null;
@@ -61,11 +63,24 @@ public class PlayerShieldController : ShieldControllerBase, IShield
         }
     }
 
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+
+        _isPulseDetonator = PSM.IsPulseDetonator;
+        if (_isPulseDetonator)
+        {
+            _pulseDetonator = GetComponentInChildren<PulseDetonator>();
+        }
+    }
+
     private void Update()
     {
         if (ShieldsActive)
         {
-            if(ShieldActiveTimer >= 0)
+            if (ShieldActiveTimer >= 0)
             {
                 ShieldActiveTimer -= Time.deltaTime;
             }
@@ -95,14 +110,27 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 
     public override void ActivateShields()
     {
-        ShieldActiveTimer = ShieldActiveDuration;
-        base.ActivateShields();
+        if (_isPulseDetonator)
+        {
+            _pulseDetonator.Detonate();
+        }
+
+        if (!_isPulseDetonator)
+        {
+            ShieldActiveTimer = ShieldActiveDuration;
+            base.ActivateShields();
+        }
     }
 
 
     public override void ReduceShields(float damage)
     {
         ShieldActiveTimer -= damage;
+    }
+
+    private void PulseDetonation()
+    {
+
     }
 
     public override void ReflectProjectile(Bullet bulletToReflect)

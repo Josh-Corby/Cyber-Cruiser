@@ -36,6 +36,7 @@ public class Weapon : GameBehaviour
     {
         readyToFire = true;
     }
+
     public void AssignWeaponInfo()
     {
         _weaponName = _weaponInfo.weaponName;
@@ -51,7 +52,6 @@ public class Weapon : GameBehaviour
         _multiFireShots = _weaponInfo.multiFireShots;
         _isMultiFireSpreadRandom = _weaponInfo.isMultiFireSpreadRandom;
     }
-
 
     private void Update()
     {

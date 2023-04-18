@@ -17,6 +17,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
     public bool _shieldsActive;
     public bool reflectorShield;
 
+    #region Properties
     protected virtual bool ShieldsActive
     {
         get
@@ -28,6 +29,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
             _shieldsActive = value;
         }
     }
+
     public int ShieldMaxStrength
     {
         get
@@ -85,11 +87,14 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
             _shields.SpriteRendererColour = new Color(_shields.SpriteRendererColour.r, _shields.SpriteRendererColour.g, _shields.SpriteRendererColour.b, value);
         }
     }
-    protected void Awake()
+    #endregion
+
+    protected virtual void Awake()
     {
         _unitCollider = GetComponentInParent<Collider2D>();
         _shields = GetComponentInChildren<Shield>();
     }
+
     protected void Start()
     {
         if (!_shieldsActiveOnSpawn)

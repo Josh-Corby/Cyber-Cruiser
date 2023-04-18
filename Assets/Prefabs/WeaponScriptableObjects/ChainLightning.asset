@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6690d9937eefb004b80a60b01e3719af, type: 3}
   m_Name: ChainLightning
   m_EditorClassIdentifier: 
-  weaponName: Neutron Laser
-  objectToFire: {fileID: 760453196464390188, guid: aefca9002aa15e2478302a3f2253c1b1, type: 3}
-  timeBetweenShots: 0.1
-  holdToFire: 1
+  weaponName: ChainLightning
+  objectToFire: {fileID: 7804011280605575531, guid: 94b73fff4d492b64280382c32d1a646d, type: 3}
+  isObjectEnemy: 0
+  timeBetweenShots: 1
+  holdToFire: 0
   useSpread: 0
   spreadAngle: 10
   burstFire: 0

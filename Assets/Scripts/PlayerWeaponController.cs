@@ -6,7 +6,9 @@ using System;
 public class PlayerWeaponController : GameBehaviour
 {
     #region References
-    [SerializeField] private Weapon _playerWeapon;
+    [SerializeField] private Weapon _baseWeapon;
+    [SerializeField] private Weapon _chainLightning;
+    [SerializeField] private Weapon _currentWeapon;
     [SerializeField] private BeamAttack _beamAttack;
     #endregion
 
@@ -188,7 +190,7 @@ public class PlayerWeaponController : GameBehaviour
         set
         {
             _isHoming = value;
-            _playerWeapon.isHoming = _isHoming;
+            _currentWeapon.isHoming = _isHoming;
         }
     }
     #endregion
@@ -204,7 +206,7 @@ public class PlayerWeaponController : GameBehaviour
 
     private void Awake()
     {
-        _playerWeapon = GetComponentInChildren<Weapon>();
+        _currentWeapon = _baseWeapon;
         _beamAttack = GetComponentInChildren<BeamAttack>();
     }
 
@@ -238,7 +240,7 @@ public class PlayerWeaponController : GameBehaviour
     }
 
     private void InitializeWeapon()
-    {
+    {     
         _fireInput = false;
         CurrentHeat = 0;
         HeatMax = 100;
@@ -310,7 +312,7 @@ public class PlayerWeaponController : GameBehaviour
 
     private void CheckForFireInput()
     {
-        if (!_playerWeapon._holdToFire)
+        if (!_currentWeapon._holdToFire)
         {
             CancelFireInput();
         }
@@ -325,9 +327,9 @@ public class PlayerWeaponController : GameBehaviour
             return;
         }
 
-        if (_playerWeapon.readyToFire)
+        if (_currentWeapon.readyToFire)
         {
-            _playerWeapon.CheckFireTypes();
+            _currentWeapon.CheckFireTypes();
             if (!IsWeaponUpgradeActive)
             {
                 CurrentHeat += HeatPerShot;
@@ -381,13 +383,16 @@ public class PlayerWeaponController : GameBehaviour
         {
             case WeaponUpgradeType.Scatter_Fixed:
             case WeaponUpgradeType.Scatter_Random:
-                _playerWeapon.ScatterUpgrade(upgradeType);
+                _currentWeapon.ScatterUpgrade(upgradeType);
                 break;
             case WeaponUpgradeType.Pulverizer:
                 PulverizerUpgrade();
                 break;
             case WeaponUpgradeType.Homing:
                 IsHoming = true;
+                break;
+            case WeaponUpgradeType.ChainLightning:
+                _currentWeapon = _chainLightning;
                 break;
         }
 
@@ -408,7 +413,7 @@ public class PlayerWeaponController : GameBehaviour
 
     private void PulverizerUpgrade()
     {
-        _playerWeapon.enabled = false;
+        _currentWeapon.enabled = false;
         _beamAttack.enabled = true;
     }
 
@@ -418,9 +423,10 @@ public class PlayerWeaponController : GameBehaviour
         IsHoming = false;
         _beamAttack.isBeamActive = false;
         _beamAttack.enabled = false;
-        _playerWeapon.enabled = true;
-        _playerWeapon.AssignWeaponInfo();
+        _currentWeapon.enabled = true;
+        _currentWeapon.AssignWeaponInfo();
         IsWeaponUpgradeActive = false;
         CurrentHeat = 0;
+        _currentWeapon = _baseWeapon;
     }
 }
