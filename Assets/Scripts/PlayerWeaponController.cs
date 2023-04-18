@@ -217,7 +217,7 @@ public class PlayerWeaponController : GameBehaviour
         InputManager.OnControlsDisabled += DisableControls;
 
         GameManager.OnIsGamePaused += ToggleControls;
-        GameManager.OnMissionStart += ResetPlayerWeapon;
+        GameManager.OnMissionEnd += ResetPlayerWeapon;
 
         Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
     }
@@ -229,7 +229,7 @@ public class PlayerWeaponController : GameBehaviour
         InputManager.OnControlsDisabled -= DisableControls;
 
         GameManager.OnIsGamePaused -= ToggleControls;
-        GameManager.OnMissionStart -= ResetPlayerWeapon;
+        GameManager.OnMissionEnd -= ResetPlayerWeapon;
 
         Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;  
     }

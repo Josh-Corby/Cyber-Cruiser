@@ -6,17 +6,15 @@ using System;
 public class PlayerShieldController : ShieldControllerBase, IShield
 {
     private const string PLAYER_PROJECTILE_LAYER_NAME = "PlayerProjectile";
-
-    [SerializeField] private int _shieldActiveDuration;
-    [SerializeField] private float _shieldActiveTimer;
-
-    [SerializeField] private bool _isPulseDetonator;
     private PulseDetonator _pulseDetonator;
 
-    public static event Action<UISlider, float> OnPlayerShieldsActivated = null;
-    public static event Action<UISlider> OnPlayerShieldsDeactivated = null;
-    public static event Action<UISlider, float> OnPlayerShieldsValueChange = null;
+    #region Fields
+    [SerializeField] private int _shieldActiveDuration;
+    [SerializeField] private float _shieldActiveTimer;
+    [SerializeField] private bool _isPulseDetonator;
+    #endregion
 
+    #region Properties
     public int ShieldActiveDuration
     {
         get
@@ -62,18 +60,35 @@ public class PlayerShieldController : ShieldControllerBase, IShield
             }
         }
     }
+    #endregion
 
+    #region Actions
+    public static event Action<UISlider> OnPlayerShieldsDeactivated = null;
+    public static event Action<UISlider, float> OnPlayerShieldsActivated = null;
+    public static event Action<UISlider, float> OnPlayerShieldsValueChange = null;
+    #endregion
 
     protected override void Awake()
     {
         base.Awake();
-
 
         _isPulseDetonator = PSM.IsPulseDetonator;
         if (_isPulseDetonator)
         {
             _pulseDetonator = GetComponentInChildren<PulseDetonator>();
         }
+    }
+
+    private void OnEnable()
+    {
+        InputManager.OnShield += CheckShieldsState;
+        GameManager.OnMissionEnd += DeactivateShields;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.OnShield -= CheckShieldsState;
+        GameManager.OnMissionEnd -= DeactivateShields;
     }
 
     private void Update()
@@ -88,6 +103,36 @@ public class PlayerShieldController : ShieldControllerBase, IShield
             {
                 DeactivateShields();
             }
+        }
+    }
+
+    private void CheckShieldsState()
+    {
+        if (GM.isPaused) return;
+
+        if (_shieldsActive)
+        {
+            Debug.Log("Shields already Active");
+            return;
+        }
+
+        if (PM.CheckPlasma())
+        {
+            ActivateShields();
+        }
+    }
+
+    public override void ActivateShields()
+    {
+        if (_isPulseDetonator)
+        {
+            _pulseDetonator.Detonate();
+        }
+
+        if (!_isPulseDetonator)
+        {
+            ShieldActiveTimer = ShieldActiveDuration;
+            base.ActivateShields();
         }
     }
 
@@ -108,29 +153,9 @@ public class PlayerShieldController : ShieldControllerBase, IShield
         base.ProcessCollision(collider);
     }
 
-    public override void ActivateShields()
-    {
-        if (_isPulseDetonator)
-        {
-            _pulseDetonator.Detonate();
-        }
-
-        if (!_isPulseDetonator)
-        {
-            ShieldActiveTimer = ShieldActiveDuration;
-            base.ActivateShields();
-        }
-    }
-
-
     public override void ReduceShields(float damage)
     {
         ShieldActiveTimer -= damage;
-    }
-
-    private void PulseDetonation()
-    {
-
     }
 
     public override void ReflectProjectile(Bullet bulletToReflect)

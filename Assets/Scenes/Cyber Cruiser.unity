@@ -5703,7 +5703,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1018978276807733186, guid: 01d59c3d11219454ab5f209bcfb4783b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1272293830387473350, guid: 01d59c3d11219454ab5f209bcfb4783b, type: 3}
       propertyPath: m_Type
@@ -7276,6 +7276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
+  _spawnEnemyIntervalBase: 2
   bossGoalPosition: {fileID: 1997121481}
   dragonMovePoint: {fileID: 73215885}
   bossReadyToSpawn: 0
@@ -7286,8 +7287,8 @@ MonoBehaviour:
   - {fileID: 519574247064427714, guid: bca44de9894fa0c499e8513a60373653, type: 3}
   - {fileID: 1686505066082717662, guid: 63caa24a17e837c4ebb6b3b44dc28a9e, type: 3}
   - {fileID: 1686505066082717662, guid: a66577e6ad684484ab66edd9c0cc193f, type: 3}
-  _topSpawner: {fileID: 0}
-  _bottomSpawner: {fileID: 0}
+  _topSpawner: {fileID: 47135018}
+  _bottomSpawner: {fileID: 984547534}
   _enemySpawnerInfo:
   - spawner: {fileID: 984547534}
     SpawnerWeight: 0.25
@@ -7313,8 +7314,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
-  _enemiesAlive: []
   gunshipsAlive: []
+  _enemiesAlive: []
+  _crashingEnemies: []
 --- !u!1 &1131932179
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,16 +6,11 @@ public class PlayerDamageParticles : MonoBehaviour
 {
     [SerializeField] private GameObject[] _damageParticles;
 
-    private void Awake()
-    {
-        {
-            DisableParticles();
-        }
-    }
 
     private void OnEnable()
     {
         PlayerManager.OnPlayerHealthStateChange += ToggleDamageParticles;
+        DisableParticles();
     }
 
     private void OnDisable()

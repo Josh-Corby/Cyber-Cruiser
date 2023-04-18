@@ -17,7 +17,6 @@ public class InputManager : MonoBehaviour
     {
         if (controls == null)
         {
-
             controls = new PlayerControls();
 
             controls.Controls.MouseVectorInput.performed += i => OnMouseMove(i.ReadValue<Vector2>());

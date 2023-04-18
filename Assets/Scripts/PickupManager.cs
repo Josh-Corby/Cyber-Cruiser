@@ -16,6 +16,7 @@ public class PickupManager : GameBehaviour<PickupManager>
     [SerializeField] protected GameObject _healthPickup;
     [SerializeField] private GameObject[] _weaponUpgradePrefabs;
     [SerializeField] private GameObject _pickupIndicator;
+
     private float _indicatorAngle;
     protected readonly float _indicatorTimer = 2f;
 
@@ -24,7 +25,7 @@ public class PickupManager : GameBehaviour<PickupManager>
 
     protected void OnEnable()
     {
-        GameManager.OnMissionStart += ClearPickups;
+        GameManager.OnMissionEnd += ClearPickups;
         DistanceManager.OnPlasmaDistanceReached += SpawnPickupAtRandomPosition;
         DistanceManager.OnWeaponUpgradeDistanceReached += () => { StartCoroutine(SpawnWeaponUpgrade()); };
         Boss.OnBossDied += SpawnPickupAtPosition;
@@ -33,7 +34,7 @@ public class PickupManager : GameBehaviour<PickupManager>
 
     protected void OnDisable()
     {
-        GameManager.OnMissionStart -= ClearPickups;
+        GameManager.OnMissionEnd -= ClearPickups;
         DistanceManager.OnPlasmaDistanceReached -= SpawnPickupAtRandomPosition;
         DistanceManager.OnWeaponUpgradeDistanceReached -= () => { StartCoroutine(SpawnWeaponUpgrade()); };
         Boss.OnBossDied -= SpawnPickupAtPosition;

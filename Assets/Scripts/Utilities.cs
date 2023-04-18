@@ -313,6 +313,30 @@ public class Utilities : MonoBehaviour
         return list;
     }
 
+    /// <summary>
+    /// Clear a list. If it is a list of gameobjects, destroy the objects
+    /// </summary>
+    /// <typeparam name="T">The type of he list</typeparam>
+    /// <param name="list">List to clear</param>
+    public void ClearList<T>(List<T> list)
+    {
+        if (list.Count > 0)
+        {
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                T objectToRemove = list[i];
+                if (objectToRemove != null)
+                {
+                    if(objectToRemove is GameObject)
+                    {
+                        GameObject GO = objectToRemove as GameObject;
+                        Destroy(GO);
+                    }
+                }
+            }
+        }
+        list.Clear();
+    }
     #endregion
 
     #region Enums

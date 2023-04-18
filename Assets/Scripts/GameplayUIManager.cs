@@ -33,6 +33,8 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
         PlayerShieldController.OnPlayerShieldsDeactivated += DisableSlider;
         PlayerShieldController.OnPlayerShieldsValueChange += ChangeSliderValue;
         PlayerManager.OnPlasmaChange += UpdatePlasmaText;
+
+        _weaponUpgradeBarUI.SetActive(false);
     }
 
     private void OnDisable()

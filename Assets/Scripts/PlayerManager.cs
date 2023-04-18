@@ -12,9 +12,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 {
     #region References
     public GameObject player;
-    private PlayerShipController playerShipController;
     private Collider2D _playerCollider;
-    private PlayerShieldController _shieldController;
     #endregion
 
     #region Fields
@@ -47,6 +45,10 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     public int PlasmaCost
     {
+        get
+        {
+            return _plasmaCost;
+        }
         set
         {
             _plasmaCost = value;
@@ -105,7 +107,11 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         set
         {
             _playerHealthState = value;
-            OnPlayerHealthStateChange(value);
+
+            if(OnPlayerHealthStateChange != null)
+            {
+                OnPlayerHealthStateChange(value);
+            }
         }
         get
         {
@@ -123,31 +129,23 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     public static event Action<PlayerHealthState> OnPlayerHealthStateChange = null;
     #endregion
 
-    private void Awake()
+    new private void Awake()
     {
         _playerCollider = player.GetComponent<Collider2D>();
-        _shieldController = player.GetComponentInChildren<PlayerShieldController>();
-        playerShipController = player.GetComponent<PlayerShipController>();
     }
 
     private void OnEnable()
     {
-        InputManager.OnShield += CheckShieldsState;
         Pickup.OnResourcePickup += AddResources;
         DisableAddOnSprites();
         SetAddOnBools();
+        SetStats();
+        _hasPlayerTakenDamage = false;
     }
 
     private void OnDisable()
     {
-        InputManager.OnShield -= CheckShieldsState;
         Pickup.OnResourcePickup -= AddResources;
-    }
-
-    private void Start()
-    {
-        SetStats();   
-        _hasPlayerTakenDamage = false;
     }
 
     private void SetStats()
@@ -166,6 +164,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             sprite.SetActive(false);
         }
     }
+
     private void SetAddOnBools()
     {
         _isBatteryPack = PSM.IsBatteryPack;
@@ -193,38 +192,21 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         PlayerCurrentHealth = PlayerMaxHealth;
     }
 
-    private void CheckShieldsState()
+    public bool CheckPlasma()
     {
-        if (_shieldController._shieldsActive)
-        {
-            Debug.Log("Shields already Active");
-            return;
-        }
-
-        else
-        {
-            CheckPlasma();
-        }
-    }
-
-    private void CheckPlasma()
-    {
-        if (PlayerPlasma >= _plasmaCost)
-        {
-            PlayerPlasma -= _plasmaCost;
-            ActivateShields();
-            return;
-        }
-
-        else
+        if(PlayerPlasma < PlasmaCost)
         {
             Debug.Log("Not enough plasma");
+            return false;
         }
-    }
 
-    private void ActivateShields()
-    {
-        _shieldController.ActivateShields();
+        if (PlayerPlasma >= PlasmaCost)
+        {
+            PlayerPlasma -= PlasmaCost;
+            return true;
+        }
+
+        else return false;
     }
 
     public void Damage(float damage)

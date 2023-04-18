@@ -2,25 +2,27 @@ using UnityEngine;
 
 public class Bullet : GameBehaviour
 {
-    private const string PLAYER_LAYER = "Player";
     private const string ENEMY_LAYER = "Enemy";
 
+    #region References
+    public GameObject homingTarget = null;
+    [HideInInspector] public SpriteRenderer spriteRenderer;
+    [SerializeField] private GameObject collisionParticles;
+    private BulletHoming _homingTrigger;
+    #endregion
+
+    #region Fields
     public float speed;
     public float damage;
     public bool isHoming;
-    private float _minHomeRange;
     [SerializeField] protected float _homeTurnSpeed;
     [SerializeField] protected float _homeTime;
-    [SerializeField] private float homeCounter;
     [SerializeField] protected bool _homeDelay;
     [SerializeField] protected float _homeDelayTime;
+    [SerializeField] private float homeCounter;
     [SerializeField] private float _homeDelayCounter;
     [HideInInspector] public Vector2 direction;
-    [SerializeField] private GameObject collisionParticles;
-    [HideInInspector] public SpriteRenderer spriteRenderer;
-
-    public GameObject homingTarget = null;
-    private BulletHoming _homingTrigger;
+    #endregion
 
     private void Awake()
     {
@@ -30,12 +32,12 @@ public class Bullet : GameBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnMissionStart += DestroyBullet;
+        GameManager.OnMissionEnd += DestroyBullet;
     }
 
     private void OnDisable()
     {
-        GameManager.OnMissionStart -= DestroyBullet;
+        GameManager.OnMissionEnd -= DestroyBullet;
     }
 
     private void Start()
@@ -96,6 +98,7 @@ public class Bullet : GameBehaviour
         {
             homingTarget = PM.player;
         }
+        else return;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

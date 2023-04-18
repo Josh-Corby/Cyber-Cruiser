@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class EnemyManager : GameBehaviour<EnemyManager>
 {
-    public List<GameObject> _enemiesAlive = new();
     [HideInInspector] public List<GameObject> gunshipsAlive = new();
-
+    [SerializeField] private List<GameObject> _enemiesAlive = new();
+    [SerializeField] private List<GameObject> _crashingEnemies = new();
+   
     private void OnEnable()
     {
+        Enemy.OnEnemyCrash += AddCrashingEnemy;
         Enemy.OnEnemyAliveStateChange += IsEnemyAlive;
         Gunship.OnGunshipAliveStateChange += IsGunshipAlive;
-        GameManager.OnMissionStart += ClearEnemiesAlive;
+        GameManager.OnMissionEnd += ClearLists;
     }
 
     private void OnDisable()
     {
+        Enemy.OnEnemyCrash -= AddCrashingEnemy;
         Enemy.OnEnemyAliveStateChange -= IsEnemyAlive;
         Gunship.OnGunshipAliveStateChange -= IsGunshipAlive;
-        GameManager.OnMissionStart -= ClearEnemiesAlive;
+        GameManager.OnMissionEnd -= ClearLists;
     }
 
     private void IsEnemyAlive(GameObject enemy, bool aliveState)
@@ -45,6 +48,10 @@ public class EnemyManager : GameBehaviour<EnemyManager>
         }
     }
 
+    private void AddCrashingEnemy(GameObject enemy)
+    {
+        _crashingEnemies.Add(enemy);
+    }
 
     /// <summary>
     /// Add given object to given list
@@ -84,18 +91,10 @@ public class EnemyManager : GameBehaviour<EnemyManager>
         }
     }
 
-    private void ClearEnemiesAlive()
+    private void ClearLists()
     {
-        if (_enemiesAlive.Count > 0)
-        {
-            for (int i = _enemiesAlive.Count - 1; i >= 0; i--)
-            {
-                GameObject enemyToRemove = _enemiesAlive[i];
-                _enemiesAlive.RemoveAt(i);
-
-                Destroy(enemyToRemove);
-            }
-        }
+        ClearList(_enemiesAlive);
+        ClearList(_crashingEnemies);
         gunshipsAlive.Clear();
     }
 

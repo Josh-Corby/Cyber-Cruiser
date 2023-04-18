@@ -7,8 +7,8 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 {
-    private const float SPAWN_ENEMY_INTERVAL_BASE = 2f;
-    private const float SPAWN_ENEMY_REDUCTION = 0.2f;
+    [SerializeField] private float _spawnEnemyIntervalBase = 2f;
+    private const float SPAWN_ENEMY_REDUCTION = 0.4f;
     private const float BOSS_WAIT_TIME = 2f;
 
     private bool _spawnEnemies;
@@ -90,7 +90,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         StopSpawningEnemies();
         CancelBossSpawn();
         ResetBossesToSpawn();
-        _enemySpawnInterval = SPAWN_ENEMY_INTERVAL_BASE;
+        _enemySpawnInterval = _spawnEnemyIntervalBase;
         ResetSpawnersModifiers();
     }
 

@@ -27,7 +27,7 @@ public class BossUI : GameBehaviour
     private void OnEnable()
     {
         EnemySpawnerManager.OnBossSelected += EnableBossWarningUI;
-        GameManager.OnMissionStart += DisableBossUI;
+        GameManager.OnMissionEnd += DisableBossUI;
         EnemySpawner.OnBossSpawned += (e) => { DisableBossWarningUI(); };
         EnemySpawner.OnBossSpawned += EnableBossUI;
         Boss.OnBossDied += (p, v) => { DisableBossUI(); };
@@ -37,7 +37,7 @@ public class BossUI : GameBehaviour
     private void OnDisable()
     {
         EnemySpawnerManager.OnBossSelected -= EnableBossWarningUI;
-        GameManager.OnMissionStart -= DisableBossUI;
+        GameManager.OnMissionEnd -= DisableBossUI;
         EnemySpawner.OnBossSpawned -= (e) => { DisableBossWarningUI(); }; 
         Boss.OnBossDamage -= UpdateBossHealthBar;
         EnemySpawner.OnBossSpawned -= EnableBossUI;
