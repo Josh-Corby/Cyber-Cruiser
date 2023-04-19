@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GunshipMovement : EnemyMovement
 {
@@ -14,24 +15,31 @@ public class GunshipMovement : EnemyMovement
     private readonly float fastSeekSpeed = 6;
     private readonly float slowSeekSpeed = 3;
 
+    public static event Action<GameObject> OnGunshipSpawned = null;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        OnGunshipSpawned(gameObject);
+    }
     protected override void Start()
     {
         ChooseMovementType();
         base.Start();
     }
 
+    //check how many other gunships are currently alive to check what movetype should be assigned
     private void ChooseMovementType()
     {
-        //check how many other gunships are currently alive to check what movetype should be assigned
-
-        if (EM.gunshipsAlive.Count == 1)
+        //if this gunship is the only one in the list default
+        if (EM.gunshipsToProcess.Count == 1)
         {
             gunshipMoveType = GunshipMoveTypes.PlayerFollow;
             SetEnemyMovementType(gunshipMoveType);
         }
 
         //if there are currently any other gunships alive go through them to check what movetype should be assigned to this gunship
-        else if (EM.gunshipsAlive.Count > 1)
+        else if (EM.gunshipsToProcess.Count > 1)
         {
             CheckForPlayerFollow();
         }
@@ -40,9 +48,11 @@ public class GunshipMovement : EnemyMovement
     private void CheckForPlayerFollow()
     {
         //check if any of the other currently alive gunships are directly following the player
-        foreach (GameObject gunship in EM.gunshipsAlive)
+        foreach (GunshipMovement gunship in EM.gunshipsToProcess)
         {
-            if (gunship.GetComponent<GunshipMovement>().gunshipMoveType == GunshipMoveTypes.PlayerFollow)
+            if (gunship == this) continue;
+
+            if (gunship.gunshipMoveType == GunshipMoveTypes.PlayerFollow)
             {
                 //if any of the gunships are directly following the player move on to slow follow check
                 CheckForSlowPlayerFollow();
@@ -57,9 +67,11 @@ public class GunshipMovement : EnemyMovement
     private void CheckForSlowPlayerFollow()
     {
         //chekc if any of the other currently alive gunships are slow following the player
-        foreach (GameObject gunship in EM.gunshipsAlive)
+        foreach (GunshipMovement gunship in EM.gunshipsToProcess)
         {
-            if (gunship.GetComponent<GunshipMovement>().gunshipMoveType == GunshipMoveTypes.SlowPlayerFollow)
+            if (gunship == this) continue;
+
+            if (gunship.gunshipMoveType == GunshipMoveTypes.SlowPlayerFollow)
             {
                 //if any of the gunships are slow following the player, this gunships movetype is set to updown
                 gunshipMoveType = GunshipMoveTypes.UpDown;

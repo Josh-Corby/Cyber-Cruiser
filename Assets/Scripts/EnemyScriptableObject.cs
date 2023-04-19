@@ -24,7 +24,9 @@ public class EnemyScriptableObject : ScriptableObject
     public float upDownSpeed;
     public float upDownDistance;
 
+    public bool seekPlayer;
     public bool seekPlayerY;
+    public bool seekPlayerX;
     public float seekSpeed;
 
     public bool sinUpDownMovement;
@@ -40,5 +42,5 @@ public class EnemyScriptableObject : ScriptableObject
 
 public enum MovementTypes
 {
-    Default, UpDown, SeekPlayerY, SinUpDown, HomeOnPlayer
+    Default, UpDown, SeekPlayer, SinUpDown, HomeOnPlayer
 }

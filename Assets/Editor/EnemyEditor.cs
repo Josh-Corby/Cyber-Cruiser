@@ -4,7 +4,6 @@ using UnityEditor;
 public class EnemyEditor : Editor
 {
     #region SerializedProperties
-
     SerializedProperty unitName;
     SerializedProperty maxHealth;
     SerializedProperty explodeOnDeath;
@@ -16,7 +15,9 @@ public class EnemyEditor : Editor
     SerializedProperty upDownMovement;
     SerializedProperty upDownSpeed;
     SerializedProperty upDownDistance;
+    SerializedProperty seekPlayer;
     SerializedProperty seekPlayerY;
+    SerializedProperty seekPlayerX;
     SerializedProperty seekSpeed;
     SerializedProperty sinUpDownMovement;
     SerializedProperty sinFrequency;
@@ -43,11 +44,16 @@ public class EnemyEditor : Editor
         upDownMovement = serializedObject.FindProperty(nameof(upDownMovement));
         upDownSpeed = serializedObject.FindProperty(nameof(upDownSpeed));
         upDownDistance = serializedObject.FindProperty(nameof(upDownDistance));
+
+        seekPlayer = serializedObject.FindProperty(nameof(seekPlayer));
         seekPlayerY = serializedObject.FindProperty(nameof(seekPlayerY));
+        seekPlayerX = serializedObject.FindProperty(nameof(seekPlayerX));
         seekSpeed = serializedObject.FindProperty(nameof(seekSpeed));
+      
         sinUpDownMovement = serializedObject.FindProperty(nameof(sinUpDownMovement));
         sinFrequency = serializedObject.FindProperty(nameof(sinFrequency));
         sinMagnitude = serializedObject.FindProperty(nameof(sinMagnitude));
+      
         homeOnPlayer = serializedObject.FindProperty(nameof(homeOnPlayer));
         homeTurnSpeed = serializedObject.FindProperty(nameof(homeTurnSpeed));
         homeTime = serializedObject.FindProperty(nameof(homeTime));
@@ -80,7 +86,9 @@ public class EnemyEditor : Editor
                 EditorGUILayout.PropertyField(upDownSpeed);
                 EditorGUILayout.PropertyField(upDownDistance);
                 break;
-            case MovementTypes.SeekPlayerY:
+            case MovementTypes.SeekPlayer:
+                EditorGUILayout.PropertyField(seekPlayerY);
+                EditorGUILayout.PropertyField(seekPlayerX);
                 EditorGUILayout.PropertyField(seekSpeed);
                 break;
             case MovementTypes.SinUpDown:
@@ -97,13 +105,8 @@ public class EnemyEditor : Editor
                 }
                 break;
         }
-
-        EditorGUILayout.PropertyField(upDownMovement);
-        EditorGUILayout.PropertyField(seekPlayerY);
-        EditorGUILayout.PropertyField(sinUpDownMovement);
-        EditorGUILayout.PropertyField(homeOnPlayer);
         enemySO.upDownMovement = enemySO.moveTypes == MovementTypes.UpDown;
-        enemySO.seekPlayerY = enemySO.moveTypes == MovementTypes.SeekPlayerY;
+        enemySO.seekPlayer = enemySO.moveTypes == MovementTypes.SeekPlayer;
         enemySO.sinUpDownMovement = enemySO.moveTypes == MovementTypes.SinUpDown;
         enemySO.homeOnPlayer = enemySO.moveTypes == MovementTypes.HomeOnPlayer;
 

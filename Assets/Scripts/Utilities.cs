@@ -314,6 +314,32 @@ public class Utilities : MonoBehaviour
     }
 
     /// <summary>
+    /// Add given object to given list
+    /// </summary>
+    /// <param name="listToAddTo"></param>
+    /// <param name="t"></param>
+    public void AddToList<T>(List<T> listToAddTo, T t)
+    {
+        if (!listToAddTo.Contains(t))
+        {
+            listToAddTo.Add(t);
+        }
+    }
+
+    /// <summary>
+    /// remove given object from given list
+    /// </summary>
+    /// <param name="listToRemoveFrom"></param>
+    /// <param name="t"></param>
+    public void RemoveFromList<T>(List<T> listToRemoveFrom, T t)
+    {
+        if (listToRemoveFrom.Contains(t))
+        {
+            listToRemoveFrom.Remove(t);
+        }    
+    }
+
+    /// <summary>
     /// Clear a list. If it is a list of gameobjects, destroy the objects
     /// </summary>
     /// <typeparam name="T">The type of he list</typeparam>

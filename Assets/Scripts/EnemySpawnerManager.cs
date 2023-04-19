@@ -7,34 +7,36 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 {
-    [SerializeField] private float _spawnEnemyIntervalBase = 2f;
-    private const float SPAWN_ENEMY_REDUCTION = 0.4f;
-    private const float BOSS_WAIT_TIME = 2f;
-
-    private bool _spawnEnemies;
-    public GameObject bossGoalPosition;
-    public Transform dragonMovePoint;
-    [HideInInspector] public bool bossReadyToSpawn;
-
-    [SerializeField] private int enemiesToSpawn;
-    private float _enemySpawnInterval;
-
-    private List<EnemySpawner> _enemySpawners = new();
+    [Header("Spawners")]
+    public EnemySpawner _topSpawner;
+    public EnemySpawner _bottomSpawner;
     [SerializeField] private EnemySpawner bossSpawner;
     [SerializeField] private GameObject[] bossPrefabs;
 
-    public EnemySpawner _topSpawner;
-    public EnemySpawner _bottomSpawner;
+    [Header("Spawn Rate Info")]
+    [SerializeField] private int enemiesToSpawn;
+    [SerializeField] private float _spawnEnemyIntervalBase;
+    [SerializeField] private float _enemySpawnInterval;
+    [SerializeField] private float _spawnEnemyReduction = 0.4f;
+    [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
+    [SerializeField] private float _totalSpawnWeight;
 
-    private List<GameObject> _bossesToSpawn = new();
+    [Header("Transform References")]
+    public GameObject bossGoalPosition;
+    public Transform dragonMovePoint;
+
+    [HideInInspector] public bool bossReadyToSpawn;
+    private const float BOSS_WAIT_TIME = 2f;
+    private bool _spawnEnemies; 
+
+    private List<EnemySpawner> _enemySpawners = new();
     private List<EnemySpawner> _spawnersSpawning = new();
+    private List<GameObject> _bossesToSpawn = new();
 
     private Coroutine spawnEnemiesCoroutine;
     private Coroutine spawnBossCoroutine;
 
-    [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
-    [SerializeField] private float _totalSpawnWeight;
-
+    #region Properties
     public float EnemySpawnInterval
     {
         get
@@ -46,8 +48,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
             _enemySpawnInterval = value;
         }
     }
+    #endregion
 
+    #region Actions
+    public static event Action OnSpawnEnemyGroup = null;
     public static event Action<GameObject> OnBossSelected = null;
+    #endregion
 
     private void Awake()
     {
@@ -131,6 +137,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         {
             yield return new WaitForSeconds(_enemySpawnInterval);
             _spawnersSpawning.Clear();
+            OnSpawnEnemyGroup?.Invoke();
             for (int i = 0; i < enemiesToSpawn; i++)
             {
                 GetRandomWeightedSpawners();
@@ -250,7 +257,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private IEnumerator ProcessBossDied()
     {
         //make enemies spawn faster
-        _enemySpawnInterval -= SPAWN_ENEMY_REDUCTION;
+        _enemySpawnInterval -= _spawnEnemyReduction;
         //make enemies move faster
         foreach (EnemySpawner spawner in _enemySpawners)
         {

@@ -169,7 +169,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     {
         AddOn.OnAddOnToggled += ToggleAddOnBool;
         PlayerManager.OnIonPickup += ChangeIon;
-        PlayerManager.OnPlasmaChange += SetPlasma;
+        PlayerManager.OnPlasmaChange += ChangePlasma;
         GameManager.OnMissionEnd += DisableAllAddOns;
     }
 
@@ -177,7 +177,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     {
         AddOn.OnAddOnToggled -= ToggleAddOnBool;
         PlayerManager.OnIonPickup -= ChangeIon;
-        PlayerManager.OnPlasmaChange -= SetPlasma;
+        PlayerManager.OnPlasmaChange -= ChangePlasma;
         GameManager.OnMissionEnd -= DisableAllAddOns;
     }
 
@@ -193,12 +193,12 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         PlasmaCost = 5;
     }
 
-    private void ChangeIon(int value)
+    public void ChangeIon(int value)
     {
         PlayerIonAmount += value;
     }
 
-    private void SetPlasma(int value)
+    public void ChangePlasma(int value)
     {
         PlayerPlasma = value;
     }

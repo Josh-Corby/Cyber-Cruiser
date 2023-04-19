@@ -65,5 +65,14 @@ public class BulletHoming : MonoBehaviour
             }
             _enemiesInHomingRange.Remove(enemy.gameObject);
         }
+
+        if(collision.TryGetComponent<Shield>(out var shield))
+        {
+            if (bullet.homingTarget = shield.gameObject)
+            {
+                bullet.homingTarget = null;
+            }
+            _enemiesInHomingRange.Remove(shield.gameObject);
+        }
     }
 }

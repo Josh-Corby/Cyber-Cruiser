@@ -6,18 +6,18 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawner : GameBehaviour
 {
-    private const int MIN_ENEMY_SPAWN_DISTANCE = 10;
+    private const int MIN_ENEMY_SPAWN_DISTANCE = 2;
 
-    [Range(0,1)]
-    [HideInInspector] public float spawnerWeight;
+    #region Fields
+    public EnemyCategory[] enemyCategories;
+    [SerializeField] private Vector3 spawnArea;
+    [Range(0, 1)][HideInInspector] public float spawnerWeight;
     private List<Vector3> spawnPositions = new();
     private bool isSpawnPositionValid;
-    [SerializeField] private Vector3 spawnArea;
-    private float _speedModifier;
     private int _enemiesToSpawn;
-
-    public EnemyCategory[] enemyCategories;
+    private float _speedModifier;
     [SerializeField] private float totalCategoryWeight;
+    #endregion
 
     #region Properties
     public int EnemiesToSpawn
@@ -44,9 +44,11 @@ public class EnemySpawner : GameBehaviour
         }
     }
     #endregion
+
     #region Actions
     public static event Action<Enemy> OnBossSpawned = null;
     #endregion
+
     public void StartSpawnProcess()
     {
         spawnPositions.Clear();
@@ -55,8 +57,9 @@ public class EnemySpawner : GameBehaviour
             EnemyCategory randomCategory = GetRandomWeightedCategory();
             GameObject randomEnemy = GetRandomWeightedType(randomCategory);
             Vector3 spawnPosition = ValidateSpawnPosition(GetRandomSpawnPosition());
-            SpawnEnemy(randomEnemy, spawnPosition);     
-        }    
+            spawnPositions.Add(spawnPosition);
+            SpawnEnemy(randomEnemy, spawnPosition);
+        }
         EnemiesToSpawn = 0;
     }
 
@@ -66,14 +69,14 @@ public class EnemySpawner : GameBehaviour
 
         for (int i = 0; i < enemyCategories.Length; i++)
         {
-            if(value < enemyCategories[i].CategoryWeight)
+            if (value < enemyCategories[i].CategoryWeight)
             {
                 GetRandomWeightedType(enemyCategories[i]);
                 return enemyCategories[i];
             }
             value -= enemyCategories[i].CategoryWeight;
         }
-        return enemyCategories[enemyCategories.Length-1];
+        return enemyCategories[enemyCategories.Length - 1];
     }
 
     private GameObject GetRandomWeightedType(EnemyCategory category)
@@ -82,7 +85,7 @@ public class EnemySpawner : GameBehaviour
 
         for (int i = 0; i < category.CategoryTypes.Length; i++)
         {
-            if(value < category.CategoryTypes[i].spawnWeight)
+            if (value < category.CategoryTypes[i].spawnWeight)
             {
                 GameObject enemy = category.CategoryTypes[i].Enemy;
                 return enemy;
@@ -103,33 +106,35 @@ public class EnemySpawner : GameBehaviour
 
     private Vector3 ValidateSpawnPosition(Vector3 enemySpawnPosition)
     {
-        if(spawnPositions.Count == 0)
+        if (spawnPositions.Count == 0)
         {
+            spawnPositions.Add(enemySpawnPosition);
             return enemySpawnPosition;
         }
 
         isSpawnPositionValid = false;
-
         while (!isSpawnPositionValid)
         {
-            if(spawnPositions.Count > 0)
+            foreach (Vector3 spawnPosition in spawnPositions)
             {
-                foreach (Vector3 spawnPosition in spawnPositions)
+                if (spawnPosition == enemySpawnPosition)
                 {
-                    if (Vector3.Distance(enemySpawnPosition, spawnPosition) > MIN_ENEMY_SPAWN_DISTANCE)
-                    {
-                        continue;
-                    }
-
-                    else
-                    {
-                        enemySpawnPosition = GetRandomSpawnPosition();
-                        break;
-                    }
+                    continue;
                 }
-                isSpawnPositionValid = true;
+
+                if (Vector3.Distance(enemySpawnPosition, spawnPosition) > MIN_ENEMY_SPAWN_DISTANCE)
+                {
+                    continue;
+                }
+
+                else
+                {
+                    enemySpawnPosition = ValidateSpawnPosition(GetRandomSpawnPosition());
+                    break;
+                }
             }
 
+            isSpawnPositionValid = true;
             spawnPositions.Add(enemySpawnPosition);
         }
         return enemySpawnPosition;
@@ -198,9 +203,8 @@ public class EnemySpawner : GameBehaviour
 
     public void ValidateWeights()
     {
-        totalCategoryWeight = ValidateSpawnRates(enemyCategories, typeof(EnemyCategory), "CategoryWeight", totalCategoryWeight);     
+        totalCategoryWeight = ValidateSpawnRates(enemyCategories, typeof(EnemyCategory), "CategoryWeight", totalCategoryWeight);
     }
-
 
     public void ResetCategoryWeights()
     {
@@ -230,9 +234,6 @@ public class EnemySpawner : GameBehaviour
             }
         }
     }
-
-
-  
 }
 [System.Serializable]
 public struct EnemySpawnerInfo

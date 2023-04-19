@@ -4,26 +4,29 @@ using UnityEngine;
 
 public class Weapon : GameBehaviour
 {
+    #region References
     [SerializeField] private WeaponScriptableObject _weaponInfo;
-
     private GameObject _firePoint;
     private Transform _firePointTransform;
-    public bool readyToFire;
-    protected bool _autoFire;
-
-    private string _weaponName;
     private GameObject _objectToFire;
-    private float _timeBetweenShots;
+    #endregion
+
+    #region Fields
+    public bool readyToFire;
     [HideInInspector] public bool _holdToFire;
-    private bool _useSpread;
-    private float _spreadAngle;
-    private bool _burstFire;
-    private int _bursts;
-    private float _timeBetweenBurstShots;
-    private bool _multiFire;
-    private int _multiFireShots;
-    private bool _isMultiFireSpreadRandom;
     [HideInInspector] public bool isHoming;
+    protected bool _autoFire;
+    private int _bursts;
+    private int _multiFireShots;
+    private float _timeBetweenShots;
+    private float _spreadAngle;
+    private float _timeBetweenBurstShots;
+    private bool _useSpread;
+    private bool _burstFire;
+    private bool _multiFire;
+    private bool _isMultiFireSpreadRandom;
+    private string _weaponName;
+    #endregion
 
     private void Awake()
     {
@@ -242,6 +245,4 @@ public class Weapon : GameBehaviour
         _useSpread = true;
         _spreadAngle = 30;
     }
-
-   
 }

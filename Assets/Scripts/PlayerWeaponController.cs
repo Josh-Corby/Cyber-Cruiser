@@ -253,55 +253,72 @@ public class PlayerWeaponController : GameBehaviour
     {
         if (!GM.isPaused)
         {
-            CheckHeat();
+            CheckOverHeated();
         }
     }
 
-    private void CheckHeat()
+    private void CheckOverHeated()
     {
         if (!IsOverheated)
         {
-
-            if (_controlsEnabled)
-            {
-                if (_fireInput)
-                {
-                    CheckForFireInput();
-                }
-
-                if (!_fireInput)
-                {
-                    if (_beamAttack.isBeamActive)
-                    {
-                        _beamAttack.ResetBeam();
-                    }
-                }
-            }
-
-            TimeSinceLastShot += Time.deltaTime;
-
-            if (IsHeatDecreasing)
-            {
-                if (CurrentHeat > 0)
-                {
-                    CurrentHeat -= HeatLossOverTime;
-                }
-            }
+            CheckControlsEnabled();
+            return;
         }
 
         if (IsOverheated)
         {
+            Overheating();
+        }
+    }
 
+    private void Overheating()
+    {
+        if (CurrentHeat > 0)
+        {
+            CurrentHeat -= CooldownHeatLoss;
+        }
+        else
+        {
+            CurrentHeat = 0;
+            IsOverheated = false;
+        }
+    }
+
+    private void CheckControlsEnabled()
+    {
+        if (_controlsEnabled)
+        {
+            CheckForInput();
+        }
+
+        TimeSinceLastShot += Time.deltaTime;
+        HeatReduction();
+    }
+
+    private void HeatReduction()
+    {
+        if (IsHeatDecreasing)
+        {
             if (CurrentHeat > 0)
             {
-                CurrentHeat -= CooldownHeatLoss;
+                CurrentHeat -= HeatLossOverTime;
             }
-            else
+        }
+    }
+
+    private void CheckForInput()
+    {
+        if (_fireInput)
+        {
+            CheckHoldToFire();
+        }
+
+        if (!_fireInput)
+        {
+            if (_beamAttack.isBeamActive)
             {
-                CurrentHeat = 0;
-                IsOverheated = false;
+                _beamAttack.ResetBeam();
             }
-            return;
         }
     }
 
@@ -310,7 +327,7 @@ public class PlayerWeaponController : GameBehaviour
         _fireInput = input;
     }
 
-    private void CheckForFireInput()
+    private void CheckHoldToFire()
     {
         if (!_currentWeapon._holdToFire)
         {

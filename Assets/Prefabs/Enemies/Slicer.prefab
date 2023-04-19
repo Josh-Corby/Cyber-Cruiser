@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 3537538281721821469}
-  - component: {fileID: 2972984747280736079}
+  - component: {fileID: 5714144778390559109}
   m_Layer: 7
   m_Name: Slicer
   m_TagString: Untagged
@@ -155,7 +155,7 @@ MonoBehaviour:
   _unitInfo: {fileID: 11400000, guid: d60b4f6f9c2ff984fbc3222e72d154ca, type: 2}
   unitName: 
   _currentHealth: 0
---- !u!114 &2972984747280736079
+--- !u!114 &5714144778390559109
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,9 +164,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 2653145768784104840}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 365a316a2f7b6c445bfc232c6280bd6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c12d8548c1b27b49a3f87f17539d6e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isEnemyDead: 0
   direction: {x: 0, y: 0}
   _speed: 0
+  _upDownMovement: 0
+  _upDownSpeed: 0
+  isBackForthMovingUp: 0
+  _upDownMoveDistance: 0
+  _seekPlayer: 0
+  _seekPlayerY: 0
+  _seekPlayerX: 0
+  _seekSpeed: 0
+  _sinUpDownMovement: 0
+  _sinFrequency: 0
+  _sinMagnitude: 0
+  _sinRandomSeed: 0
+  _homeOnPlayer: 0
+  _homeTurnSpeed: 0
+  _homeTime: 0
+  homeCounter: 0
+  _homeDelay: 0
+  _homeDelayTime: 0
+  _homeDelayCounter: 0
+  _seekTime: 0.75

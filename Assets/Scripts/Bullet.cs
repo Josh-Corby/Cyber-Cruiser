@@ -27,7 +27,10 @@ public class Bullet : GameBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        _homingTrigger = GetComponentInChildren<BulletHoming>();
+        if (transform.childCount > 0)
+        {
+            _homingTrigger = GetComponentInChildren<BulletHoming>();
+        }
     }
 
     private void OnEnable()

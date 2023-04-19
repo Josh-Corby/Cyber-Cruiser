@@ -18,13 +18,15 @@ MonoBehaviour:
   explosionRadius: 1
   explosionDamage: 1
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  moveTypes: 0
-  speed: 6
+  moveTypes: 2
+  speed: 8
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0
+  seekPlayer: 1
   seekPlayerY: 0
-  seekSpeed: 0
+  seekPlayerX: 0
+  seekSpeed: 30
   sinUpDownMovement: 0
   sinFrequency: 0
   sinMagnitude: 0

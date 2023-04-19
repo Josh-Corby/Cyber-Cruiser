@@ -21,6 +21,7 @@ public class PlayerShipController : MonoBehaviour
     private Quaternion targetRotation;
     #endregion
 
+    #region Properties
     public bool ControlsEnabled
     {
         get
@@ -32,6 +33,7 @@ public class PlayerShipController : MonoBehaviour
             _controlsEnabled = value;
         }
     }
+    #endregion
 
     private void OnEnable()
     {
@@ -97,8 +99,12 @@ public class PlayerShipController : MonoBehaviour
         {
             targetRotation = Quaternion.Euler(0, 0, 0);
         }
-
         playerSprite.transform.rotation = Quaternion.RotateTowards(playerSprite.transform.rotation, targetRotation, rotationSpeed);
+    }
+
+    private void DeathMovement()
+    {
+        transform.position += baseSpeed * Time.deltaTime * Vector3.down;
     }
 
     private void StartLevelPosition()
@@ -123,6 +129,7 @@ public class PlayerShipController : MonoBehaviour
             EnableControls();
         }
     }
+
     private void EnableControls()
     {
         _controlsEnabled = true;

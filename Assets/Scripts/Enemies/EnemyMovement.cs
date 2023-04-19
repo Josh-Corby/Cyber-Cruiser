@@ -17,7 +17,10 @@ public class EnemyMovement : GameBehaviour
     [SerializeField] protected float _upDownMoveDistance;
 
     [Header("Seek movement")]
+
+    [SerializeField] protected bool _seekPlayer;
     [SerializeField] protected bool _seekPlayerY;
+    [SerializeField] protected bool _seekPlayerX;
     [SerializeField] protected float _seekSpeed;
 
     [Header("Sin up down movement")]
@@ -48,7 +51,9 @@ public class EnemyMovement : GameBehaviour
         _upDownSpeed = enemyInfo.upDownSpeed;
         _upDownMoveDistance = enemyInfo.upDownDistance;
 
+        _seekPlayer = enemyInfo.seekPlayer;
         _seekPlayerY = enemyInfo.seekPlayerY;
+        _seekPlayerX = enemyInfo.seekPlayerX;
         _seekSpeed = enemyInfo.seekSpeed;
 
         _sinUpDownMovement = enemyInfo.sinUpDownMovement;
@@ -82,7 +87,7 @@ public class EnemyMovement : GameBehaviour
     protected virtual void Update()
     {
         UnitMovement();
-    } 
+    }
 
     private void UnitMovement()
     {
@@ -118,9 +123,16 @@ public class EnemyMovement : GameBehaviour
             UpDownMovement();
         }
 
-        if (_seekPlayerY)
+        if (_seekPlayer)
         {
-            SeekPlayerY();
+            if (_seekPlayerY)
+            {
+                SeekPlayerY();
+            }
+            if (_seekPlayerX)
+            {
+                SeekPlayerX();
+            }
         }
 
         if (_sinUpDownMovement)
@@ -164,6 +176,11 @@ public class EnemyMovement : GameBehaviour
     private void SeekPlayerY()
     {
         transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, player.position.y), _seekSpeed * Time.deltaTime);
+    }
+
+    protected void SeekPlayerX()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.position.x, transform.position.y), _seekSpeed * Time.deltaTime);
     }
 
     private void SinUpDown()
