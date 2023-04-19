@@ -16,6 +16,7 @@ public class ChainLightning : MonoBehaviour
     private float _distanceToTarget;
     [SerializeField] private GameObject _chainTarget;
     [SerializeField] private float _speed;
+    [SerializeField] private float _chainSpeed;
     [SerializeField] private float _chainDelay;
 
 
@@ -56,11 +57,16 @@ public class ChainLightning : MonoBehaviour
     {
         if (_chainTarget == null)
         {
-            if(_currentChainBounces == 0)
+            if (_currentChainBounces == 0)
             {
-            transform.position += transform.right * _speed * Time.deltaTime;
-
+                transform.position += transform.right * _speed * Time.deltaTime;
             }
+        }
+
+        if (_chainTarget != null)
+        {
+            transform.LookAt(_chainTarget.transform.position);
+            transform.position = Vector2.MoveTowards(transform.position, _chainTarget.transform.position, _chainSpeed * Time.deltaTime);
         }
     }
 
@@ -71,7 +77,7 @@ public class ChainLightning : MonoBehaviour
         //targets in range found
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _chainRange, _enemyMask);
 
-        if(colliders.Length == 0)
+        if (colliders.Length == 0)
         {
             Destroy(gameObject);
         }
@@ -84,7 +90,7 @@ public class ChainLightning : MonoBehaviour
             }
         }
 
-        if(_objectsInRange.Count <= 0)
+        if (_objectsInRange.Count <= 0)
         {
             Destroy(gameObject);
         }
@@ -107,27 +113,23 @@ public class ChainLightning : MonoBehaviour
                 _chainTarget = enemy;
             }
         }
-        if(_chainTarget == null)
+        if (_chainTarget == null)
         {
             Destroy(gameObject);
         }
-        StartCoroutine(ChainToTarget());
-    }
-
-    private IEnumerator ChainToTarget()
-    {
-        Debug.Log("Chaining to " + _chainTarget.name);
-        yield return new WaitForSeconds(_chainDelay);
-        if (_chainTarget != null)
-        {
-            transform.position = _chainTarget.transform.position;
-        }
-        _chainTarget = null;
     }
 
     //enemy collision detection
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (_chainTarget != null)
+        {
+            if (collision.gameObject != _chainTarget)
+            {
+                return;
+            }
+        }
+      
         if (collision.TryGetComponent<Shield>(out var shield))
         {
             if (collision.gameObject.GetComponentInParent<Enemy>())
@@ -140,13 +142,20 @@ public class ChainLightning : MonoBehaviour
         {
             enemy.Damage(_chainDamage);
         }
+
+        else
+        {
+            Destroy(gameObject);
+        }
+
         _objectsBouncedTo.Add(collision.gameObject);
         _currentChainBounces += 1;
         if (_currentChainBounces < _totalChainBounces)
         {
             FindTargetsInRange();
         }
-        if(_currentChainBounces >= _totalChainBounces)
+
+        if (_currentChainBounces >= _totalChainBounces)
         {
             Destroy(gameObject);
         }
