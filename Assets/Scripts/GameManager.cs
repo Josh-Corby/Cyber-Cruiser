@@ -14,6 +14,7 @@ public class GameManager : GameBehaviour<GameManager>
   
     private void Awake()
     {
+        gameplayObjects.SetActive(false);
         Application.targetFrameRate = 60;
     }
     private void OnEnable()

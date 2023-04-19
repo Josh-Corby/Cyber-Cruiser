@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 192671712348854038}
   - component: {fileID: 6852309266542908364}
-  - component: {fileID: 9174431170911946141}
+  - component: {fileID: 2050032202392030802}
   - component: {fileID: 9191236957591735770}
   - component: {fileID: 8249280945201863387}
   m_Layer: 9
@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &192671712348854038
 Transform:
   m_ObjectHideFlags: 0
@@ -87,8 +87,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &9174431170911946141
-CircleCollider2D:
+--- !u!70 &2050032202392030802
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -101,8 +101,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.09
+  m_Size: {x: 0.18, y: 0.18}
+  m_Direction: 1
 --- !u!50 &9191236957591735770
 Rigidbody2D:
   serializedVersion: 4
@@ -138,5 +138,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shieldController: {fileID: 0}
   _shieldCollider: {fileID: 0}
-  _shieldRenderer: {fileID: 0}
-  _shieldCollisionDamage: 0
+  _spriteRenderer: {fileID: 0}

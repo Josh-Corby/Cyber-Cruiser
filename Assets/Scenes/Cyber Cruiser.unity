@@ -482,7 +482,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0.544
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 1
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!1 &62454170
 GameObject:
@@ -572,11 +572,11 @@ MonoBehaviour:
   - CategoryName: 
     CategoryWeight: 1
     CategoryTypes:
-    - Enemy: {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
+    - Enemy: {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 1
   totalCategoryWeight: 1
 --- !u!1 &71385176
 GameObject:
@@ -1861,6 +1861,7 @@ GameObject:
   - component: {fileID: 281578423}
   - component: {fileID: 281578422}
   - component: {fileID: 281578430}
+  - component: {fileID: 281578431}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1880,7 +1881,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1123161085}
   - {fileID: 2103134227}
   - {fileID: 1198973575}
   - {fileID: 2144563962}
@@ -2040,6 +2040,23 @@ MonoBehaviour:
   _isHydrocoolant: 0
   _isPlasmaCache: 0
   _isPulseDetonator: 0
+--- !u!114 &281578431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281578420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f612c95be118664aa8bee5d284961fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroy: 0
+  slicersSeeking: []
+  gunshipsToProcess: []
+  _enemiesAlive: []
+  _crashingEnemies: []
 --- !u!1 &294511056
 GameObject:
   m_ObjectHideFlags: 0
@@ -7699,55 +7716,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091934011}
   m_CullTransparentMesh: 1
---- !u!1 &1123161084
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1123161085}
-  - component: {fileID: 1123161087}
-  m_Layer: 0
-  m_Name: EnemyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1123161085
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1123161084}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 281578421}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1123161087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1123161084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f612c95be118664aa8bee5d284961fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroy: 0
-  slicersSeeking: []
-  gunshipsToProcess: []
-  _enemiesAlive: []
-  _crashingEnemies: []
 --- !u!1 &1131932179
 GameObject:
   m_ObjectHideFlags: 0
@@ -8285,7 +8253,7 @@ Transform:
   - {fileID: 539388723}
   - {fileID: 420019653}
   m_Father: {fileID: 281578421}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1198973576
 MonoBehaviour:
@@ -8306,7 +8274,7 @@ MonoBehaviour:
   _plasmaPickup: {fileID: 9010852593865095087, guid: 779ade78571d9ab48a240c09c3373d84, type: 3}
   _healthPickup: {fileID: 9010852593865095087, guid: 6f93701b93521ef4c917649eb38830e8, type: 3}
   _weaponUpgradePrefabs:
-  - {fileID: 9010852593865095087, guid: 7a01190f663ce964e9bb6f1e23f87ecd, type: 3}
+  - {fileID: 9010852593865095087, guid: aa94f5346460fae41876051545304d8e, type: 3}
   _pickupIndicator: {fileID: 4630231504149823482, guid: eccf7339e3ebce64b95a42c2273d0758, type: 3}
 --- !u!1 &1222381291
 GameObject:
@@ -10029,7 +9997,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1495971564
 Transform:
   m_ObjectHideFlags: 0
@@ -13330,7 +13298,7 @@ Transform:
   - {fileID: 73215885}
   - {fileID: 1503907328}
   m_Father: {fileID: 281578421}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2103134228
 MonoBehaviour:
@@ -13345,9 +13313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
-  _spawnEnemyIntervalBase: 2
-  bossGoalPosition: {fileID: 1997121481}
-  dragonMovePoint: {fileID: 73215885}
   _topSpawner: {fileID: 47135018}
   _bottomSpawner: {fileID: 984547534}
   bossSpawner: {fileID: 1370326090}
@@ -13356,20 +13321,26 @@ MonoBehaviour:
   - {fileID: 519574247064427714, guid: bca44de9894fa0c499e8513a60373653, type: 3}
   - {fileID: 1686505066082717662, guid: 63caa24a17e837c4ebb6b3b44dc28a9e, type: 3}
   - {fileID: 1686505066082717662, guid: a66577e6ad684484ab66edd9c0cc193f, type: 3}
-  bossReadyToSpawn: 0
-  enemiesToSpawn: 3
-  _totalSpawnWeight: 1
+  _enemiesToSpawn: 1
+  _spawnEnemyIntervalBase: 1
+  _enemySpawnInterval: 0
+  _spawnEnemyReduction: 0.3333
+  _timesToReduce: 1
   _enemySpawnerInfo:
   - spawner: {fileID: 984547534}
     SpawnerWeight: 0
   - spawner: {fileID: 1370326090}
     SpawnerWeight: 0
   - spawner: {fileID: 47135018}
-    SpawnerWeight: 1
+    SpawnerWeight: 0
   - spawner: {fileID: 485082065}
     SpawnerWeight: 0
   - spawner: {fileID: 71091565}
-    SpawnerWeight: 0
+    SpawnerWeight: 1
+  _totalSpawnWeight: 1
+  bossGoalPosition: {fileID: 1997121481}
+  dragonMovePoint: {fileID: 73215885}
+  bossReadyToSpawn: 0
 --- !u!1 &2126303669
 GameObject:
   m_ObjectHideFlags: 0
@@ -13534,7 +13505,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 281578421}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2144563963
 MonoBehaviour:
@@ -13734,22 +13705,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1495971564}
     m_Modifications:
-    - target: {fileID: 952484466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 952484466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 952484467, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 952484468, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _pulseDamage
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 1165463880448735964, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -13793,22 +13748,6 @@ PrefabInstance:
     - target: {fileID: 1165463880448735964, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1782198021080145978, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Color.a
-      value: 0.105882354
-      objectReference: {fileID: 0}
-    - target: {fileID: 3962957956296436269, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Radius
-      value: 0.09
-      objectReference: {fileID: 0}
-    - target: {fileID: 3962957956296436269, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4253268769838961451, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: mouseInput
