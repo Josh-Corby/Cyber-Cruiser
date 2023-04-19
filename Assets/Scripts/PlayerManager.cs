@@ -68,15 +68,19 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             if (_currentHealth >= PlayerMaxHealth)
             {
                 _currentHealth = PlayerMaxHealth;
+            }
+
+            if(_currentHealth > 2)
+            {
                 PlayerHealthState = PlayerHealthState.Healthy;
             }
 
-            if (_currentHealth <= 2 && _currentHealth > 1)
+            else if (_currentHealth <= 2 && _currentHealth > 1)
             {
                 PlayerHealthState = PlayerHealthState.Low;
             }
 
-            if (_currentHealth <= 1)
+            else if (_currentHealth <= 1)
             {
                 PlayerHealthState = PlayerHealthState.Critical;
             }

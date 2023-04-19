@@ -14,7 +14,7 @@ public class Bullet : GameBehaviour
     #region Fields
     public float speed;
     public float damage;
-    public bool isHoming;
+    [SerializeField] private bool _isHoming;
     [SerializeField] protected float _homeTurnSpeed;
     [SerializeField] protected float _homeTime;
     [SerializeField] protected bool _homeDelay;
@@ -24,9 +24,27 @@ public class Bullet : GameBehaviour
     [HideInInspector] public Vector2 direction;
     #endregion
 
+    public bool IsHoming
+    {
+        get
+        {
+            return _isHoming;
+        }
+        set
+        {
+            _isHoming = value;
+            if (_isHoming == false)
+            {
+                _homingTrigger.ClearEnemiesInRange();
+                _homingTrigger.enabled = false;
+            }
+        }
+    }
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+
         if (transform.childCount > 0)
         {
             _homingTrigger = GetComponentInChildren<BulletHoming>();
@@ -45,21 +63,24 @@ public class Bullet : GameBehaviour
 
     private void Start()
     {
-        if (isHoming)
+        if (_homingTrigger != null)
         {
-            _homingTrigger.gameObject.SetActive(true);
-            homeCounter = _homeTime;
-            CheckBulletLayer();
-        }
-        if (!isHoming)
-        {
-            _homingTrigger.gameObject.SetActive(false);
+            if (IsHoming)
+            {
+                _homingTrigger.gameObject.SetActive(true);
+                homeCounter = _homeTime;
+                CheckBulletLayer();
+            }
+            if (!IsHoming)
+            {
+                _homingTrigger.gameObject.SetActive(false);
+            }
         }
     }
 
     private void Update()
     {
-        if (isHoming)
+        if (IsHoming)
         {
             if (homingTarget != null)
             {
@@ -78,7 +99,7 @@ public class Bullet : GameBehaviour
         if (homeCounter <= 0)
         {
             direction = transform.up;
-            isHoming = false;
+            IsHoming = false;
             //Debug.Log("No longer rotating towards player");
             return;
         }

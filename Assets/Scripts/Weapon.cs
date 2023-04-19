@@ -218,7 +218,7 @@ public class Weapon : GameBehaviour
 
     private void ApplyHoming(Bullet bullet)
     {
-        bullet.isHoming = true;
+        bullet.IsHoming = true;
     }
 
     private IEnumerator ResetShooting()

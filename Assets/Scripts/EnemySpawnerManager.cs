@@ -14,10 +14,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [SerializeField] private GameObject[] bossPrefabs;
 
     [Header("Spawn Rate Info")]
-    [SerializeField] private int enemiesToSpawn;
+    [SerializeField] private int _enemiesToSpawn;
     [SerializeField] private float _spawnEnemyIntervalBase;
     [SerializeField] private float _enemySpawnInterval;
-    [SerializeField] private float _spawnEnemyReduction = 0.4f;
+    [SerializeField] private float _spawnEnemyReduction;
+    [SerializeField] private int _timesToReduce;
+    private int _timesReduced;
     [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
     [SerializeField] private float _totalSpawnWeight;
 
@@ -46,6 +48,18 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         set
         {
             _enemySpawnInterval = value;
+        }
+    }
+
+    public int EnemiesToSpawn
+    {
+        get
+        {
+            return _enemiesToSpawn;
+        }
+        private set
+        {
+            _enemiesToSpawn = value;
         }
     }
     #endregion
@@ -96,8 +110,9 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         StopSpawningEnemies();
         CancelBossSpawn();
         ResetBossesToSpawn();
-        _enemySpawnInterval = _spawnEnemyIntervalBase;
+        EnemySpawnInterval = _spawnEnemyIntervalBase;
         ResetSpawnersModifiers();
+        _timesReduced = 0;
     }
 
     private void ResetSpawnersModifiers()
@@ -138,7 +153,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
             yield return new WaitForSeconds(_enemySpawnInterval);
             _spawnersSpawning.Clear();
             OnSpawnEnemyGroup?.Invoke();
-            for (int i = 0; i < enemiesToSpawn; i++)
+            for (int i = 0; i < _enemiesToSpawn; i++)
             {
                 GetRandomWeightedSpawners();
             }
@@ -167,7 +182,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private List<EnemySpawner> GetRandomSpawners()
     {
         _spawnersSpawning.Clear();
-        for (int i = 0; i < enemiesToSpawn; i++)
+        for (int i = 0; i < _enemiesToSpawn; i++)
         {
             EnemySpawner currentspawner = _enemySpawners[Random.Range(0, _enemySpawners.Count - 1)];
             currentspawner.EnemiesToSpawn += 1;
@@ -256,8 +271,9 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private IEnumerator ProcessBossDied()
     {
-        //make enemies spawn faster
-        _enemySpawnInterval -= _spawnEnemyReduction;
+        //Increment difficulty
+        ChangeSpawnInterval();
+
         //make enemies move faster
         foreach (EnemySpawner spawner in _enemySpawners)
         {
@@ -268,6 +284,21 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         yield return new WaitForSeconds(BOSS_WAIT_TIME);
         //resume spawning enemies
         StartSpawningEnemies();
+    }
+
+    private void ChangeSpawnInterval()
+    { 
+        if(_timesReduced >= _timesToReduce)
+        {
+            EnemiesToSpawn += 1;
+            EnemySpawnInterval = _spawnEnemyIntervalBase;
+        }
+
+        if(_timesReduced < _timesToReduce)
+        {
+            EnemySpawnInterval -= _spawnEnemyReduction;
+            _timesReduced += 1;
+        }
     }
 
     public void OnInspectorUpdate()

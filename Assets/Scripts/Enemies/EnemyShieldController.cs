@@ -7,9 +7,9 @@ public class EnemyShieldController : ShieldControllerBase, IShield
     public override void ReflectProjectile(Bullet bulletToReflect)
     {
 
-        if (bulletToReflect.isHoming)
+        if (bulletToReflect.IsHoming)
         {
-            bulletToReflect.isHoming = false;
+            bulletToReflect.IsHoming = false;
         }
         base.ReflectProjectile(bulletToReflect);
         bulletToReflect.gameObject.layer = LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME);

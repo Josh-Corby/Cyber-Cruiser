@@ -25,16 +25,28 @@ public class BulletHoming : MonoBehaviour
     {
         _homingTarget = null;
         float minDistance = float.MaxValue;
-        foreach (GameObject enemy in _enemiesInHomingRange)
+
+        for (int i = 0; i < _enemiesInHomingRange.Count; i++)
         {
-            _distanceToTarget = Vector2.Distance(transform.position, enemy.transform.position);
+            if (_enemiesInHomingRange[i] == null)
+            {
+                _enemiesInHomingRange.Remove(_enemiesInHomingRange[i]);
+                continue;
+            }
+
+            _distanceToTarget = Vector2.Distance(transform.position, _enemiesInHomingRange[i].transform.position);
             if (_distanceToTarget < minDistance)
             {
                 minDistance = _distanceToTarget;
-                _homingTarget = enemy;
+                _homingTarget = _enemiesInHomingRange[i];
             }
         }
         bullet.homingTarget = _homingTarget;
+    }
+
+    public void ClearEnemiesInRange()
+    {
+        _enemiesInHomingRange.Clear();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
