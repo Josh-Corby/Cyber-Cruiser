@@ -60,7 +60,12 @@ public class Enemy : GameBehaviour, IDamageable
 
         if (!_explodeOnDeath)
         {
-            _crashParticles = transform.GetChild(0).gameObject;
+            
+            _crashParticles = transform.GetComponentInChildren<ParticleSystem>().gameObject;
+            if(_crashParticles == null)
+            {
+                return;
+            }
             _crashParticles.SetActive(false);
         }
     }
@@ -95,8 +100,9 @@ public class Enemy : GameBehaviour, IDamageable
 
     public virtual void Damage(float damage)
     {
-        _currentHealth -= damage;
-        if (_currentHealth <= 0)
+        Debug.Log("enemy damaged");
+        CurrentHealth -= damage;
+        if (CurrentHealth <= 0)
         {
             if (_explodeOnDeath)
             {

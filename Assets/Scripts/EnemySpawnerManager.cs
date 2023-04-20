@@ -14,10 +14,12 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [SerializeField] private GameObject[] bossPrefabs;
 
     [Header("Spawn Rate Info")]
+    [SerializeField] private int _enemiesToSpawnBase;
     [SerializeField] private int _enemiesToSpawn;
     [SerializeField] private float _spawnEnemyIntervalBase;
     [SerializeField] private float _enemySpawnInterval;
     [SerializeField] private float _spawnEnemyReduction;
+    [SerializeField] private float _offsetPerEnemy;
     [SerializeField] private int _timesToReduce;
     private int _timesReduced;
     [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
@@ -110,6 +112,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         StopSpawningEnemies();
         CancelBossSpawn();
         ResetBossesToSpawn();
+        EnemiesToSpawn = _enemiesToSpawnBase;
         EnemySpawnInterval = _spawnEnemyIntervalBase;
         ResetSpawnersModifiers();
         _timesReduced = 0;
@@ -291,7 +294,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         if(_timesReduced >= _timesToReduce)
         {
             EnemiesToSpawn += 1;
-            EnemySpawnInterval = _spawnEnemyIntervalBase;
+            EnemySpawnInterval = _spawnEnemyIntervalBase + (EnemiesToSpawn * _offsetPerEnemy);
         }
 
         if(_timesReduced < _timesToReduce)

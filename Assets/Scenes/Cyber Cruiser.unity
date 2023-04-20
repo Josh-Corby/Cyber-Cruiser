@@ -482,7 +482,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0.544
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!1 &62454170
 GameObject:
@@ -570,14 +570,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCategories:
   - CategoryName: 
-    CategoryWeight: 1
+    CategoryWeight: 0.5
     CategoryTypes:
-    - Enemy: {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
+    - Enemy: {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 1
-  totalCategoryWeight: 1
+  spawnerWeight: 0
+  totalCategoryWeight: 0.5
 --- !u!1 &71385176
 GameObject:
   m_ObjectHideFlags: 0
@@ -3240,7 +3240,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 0, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!1 &486426441
 GameObject:
@@ -6868,7 +6868,7 @@ MonoBehaviour:
       spawnWeight: 0.5
     TotalTypeWeights: 0
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!1 &985080741
 GameObject:
@@ -8275,6 +8275,10 @@ MonoBehaviour:
   _healthPickup: {fileID: 9010852593865095087, guid: 6f93701b93521ef4c917649eb38830e8, type: 3}
   _weaponUpgradePrefabs:
   - {fileID: 9010852593865095087, guid: aa94f5346460fae41876051545304d8e, type: 3}
+  - {fileID: 9010852593865095087, guid: 7a01190f663ce964e9bb6f1e23f87ecd, type: 3}
+  - {fileID: 9010852593865095087, guid: 888315a2ca640964989b3803c815bbee, type: 3}
+  - {fileID: 9010852593865095087, guid: 0b05c1059bb5125439a8d3baa6287b52, type: 3}
+  - {fileID: 9010852593865095087, guid: 2e1c104e9af1a8441bbcc0c9386d09cc, type: 3}
   _pickupIndicator: {fileID: 4630231504149823482, guid: eccf7339e3ebce64b95a42c2273d0758, type: 3}
 --- !u!1 &1222381291
 GameObject:
@@ -9466,7 +9470,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!4 &1370326091
 Transform:
@@ -13321,22 +13325,24 @@ MonoBehaviour:
   - {fileID: 519574247064427714, guid: bca44de9894fa0c499e8513a60373653, type: 3}
   - {fileID: 1686505066082717662, guid: 63caa24a17e837c4ebb6b3b44dc28a9e, type: 3}
   - {fileID: 1686505066082717662, guid: a66577e6ad684484ab66edd9c0cc193f, type: 3}
+  _enemiesToSpawnBase: 1
   _enemiesToSpawn: 1
   _spawnEnemyIntervalBase: 1
   _enemySpawnInterval: 0
   _spawnEnemyReduction: 0.3333
+  _offsetPerEnemy: 0.01
   _timesToReduce: 1
   _enemySpawnerInfo:
   - spawner: {fileID: 984547534}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 1370326090}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 47135018}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 485082065}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 71091565}
-    SpawnerWeight: 1
+    SpawnerWeight: 0
   _totalSpawnWeight: 1
   bossGoalPosition: {fileID: 1997121481}
   dragonMovePoint: {fileID: 73215885}
@@ -13705,6 +13711,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1495971564}
     m_Modifications:
+    - target: {fileID: 581542919418203060, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2828
+      objectReference: {fileID: 0}
+    - target: {fileID: 581542919418203060, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2828
+      objectReference: {fileID: 0}
+    - target: {fileID: 581542919418203060, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2828
+      objectReference: {fileID: 0}
+    - target: {fileID: 581542919418203060, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.017536
+      objectReference: {fileID: 0}
+    - target: {fileID: 703919016318476738, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2828
+      objectReference: {fileID: 0}
+    - target: {fileID: 703919016318476738, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2828
+      objectReference: {fileID: 0}
+    - target: {fileID: 703919016318476738, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2828
+      objectReference: {fileID: 0}
+    - target: {fileID: 703919016318476738, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.017536
+      objectReference: {fileID: 0}
     - target: {fileID: 1165463880448735964, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_RootOrder
       value: 3
