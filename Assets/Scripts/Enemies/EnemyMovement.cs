@@ -143,7 +143,7 @@ public class EnemyMovement : GameBehaviour
 
     private void MoveForward()
     {
-        transform.position += _speed * Time.deltaTime * transform.up;
+        transform.position += _speed * Time.deltaTime * transform.right;
     }
 
     private void UpDownMovement()
@@ -206,17 +206,17 @@ public class EnemyMovement : GameBehaviour
 
         if (homeCounter <= 0)
         {
-            direction = transform.up;
+            direction = transform.right;
             _homeOnPlayer = false;
             //Debug.Log("No longer rotating towards player");
             return;
         }
 
         Vector3 vectorToPlayer = player.position - transform.position;
-        float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg - 90;
+        float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, q, _homeTurnSpeed * Time.deltaTime);
-        direction = transform.up;
+        direction = transform.right;
     }
 
     protected virtual void DeathMovement()

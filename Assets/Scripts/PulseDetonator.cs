@@ -9,6 +9,10 @@ public class PulseDetonator : GameBehaviour
     private Vector2 _minSize = new Vector2(0.1f, 0.1f);
     private bool _isDetonating;
 
+    private void Start()
+    {
+        transform.localScale = _minSize;
+    }
     private void Update()
     {
         if (!GM.isPaused)

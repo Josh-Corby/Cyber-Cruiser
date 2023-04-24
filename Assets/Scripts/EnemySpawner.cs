@@ -145,13 +145,13 @@ public class EnemySpawner : GameBehaviour
         GameObject enemy = Instantiate(_enemy, position, transform.rotation);
         AddSpeedModifier(enemy);
         //Rotate enemies to face correct direction on spawn
-        enemy.transform.up = transform.right;
+        enemy.transform.right = transform.right;
     }
 
     public GameObject SpawnEnemyAtRandomPosition(GameObject _enemy)
     {
         GameObject enemy = Instantiate(_enemy, GetRandomSpawnPosition(), transform.rotation);
-        enemy.transform.up = transform.right;
+        enemy.transform.right = transform.right;
         return enemy;
     }
 

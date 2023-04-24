@@ -5,24 +5,23 @@ public class Shield : MonoBehaviour
 {
     public ShieldControllerBase _shieldController;
     [SerializeField] private Collider2D _shieldCollider;
-    public SpriteRenderer _spriteRenderer;
+    public SpriteRenderer _shieldSprite;
 
     public Color SpriteRendererColour
     {
         get
         {
-            return _spriteRenderer.color;
+            return _shieldSprite.color;
         }
         set
         {
-            _spriteRenderer.color = value;
+            _shieldSprite.color = value;
         }
     }
     private void Awake()
     {
         _shieldController = GetComponentInParent<ShieldControllerBase>();
         _shieldCollider = GetComponent<Collider2D>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -32,12 +31,12 @@ public class Shield : MonoBehaviour
     public void EnableShields()
     {
         _shieldCollider.enabled = true;
-        _spriteRenderer.enabled = true;
+        _shieldSprite.enabled = true;
     }
 
     public void DisableShields()
     {
         _shieldCollider.enabled = false;
-        _spriteRenderer.enabled = false;
+        _shieldSprite.enabled = false;
     }
 }
