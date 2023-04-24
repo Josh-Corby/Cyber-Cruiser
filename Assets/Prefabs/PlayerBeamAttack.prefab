@@ -8,18 +8,18 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3704976581961878825}
+  - component: {fileID: 701512982564696896}
   - component: {fileID: 3704976581961878824}
   - component: {fileID: 3704976581961878827}
   m_Layer: 0
-  m_Name: BeamAttack
+  m_Name: PlayerBeamAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &3704976581961878825
-RectTransform:
+--- !u!4 &701512982564696896
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -33,11 +33,6 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 8.32, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!120 &3704976581961878824
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -149,10 +144,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be82309f2de2f444dacf353d98f25543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBeamActive: 0
   lineRenderer: {fileID: 3704976581961878824}
-  beamSpeed: 10
   beamDuration: 0
-  beamTimer: 0
-  beamCollisionMask:
+  beamDamage: 0
+  _beamSpeed: 0
+  _isBeamTimed: 0
+  _beamTimer: 0
+  _beamCollisionMask:
     serializedVersion: 2
     m_Bits: 0
+  _beamWidth: 0

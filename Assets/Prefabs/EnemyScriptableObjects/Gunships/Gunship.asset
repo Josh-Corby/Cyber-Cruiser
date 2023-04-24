@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
   m_Name: Gunship
   m_EditorClassIdentifier: 
+  unitPrefab: {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
   unitName: Gunship
   maxHealth: 2
   explodeOnDeath: 0
   explosionRadius: 0
   explosionDamage: 0
   explosionEffect: {fileID: 0}
+  clusterOnDeath: 0
+  objectToSpawn: {fileID: 0}
+  amountOfObjects: 0
   moveTypes: 0
   speed: 2
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0
+  seekPlayer: 0
   seekPlayerY: 0
+  seekPlayerX: 0
   seekSpeed: 0
   sinUpDownMovement: 0
   sinFrequency: 0

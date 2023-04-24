@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2653145768784104836}
+  - component: {fileID: 3632376761437769799}
   - component: {fileID: 3537538281721821470}
   - component: {fileID: 3537538281721821472}
   - component: {fileID: -9113427439075011387}
@@ -20,8 +20,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2653145768784104836
-RectTransform:
+--- !u!4 &3632376761437769799
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -39,11 +39,6 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!61 &3537538281721821470
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -255,7 +250,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1364577553090038824}
-  m_Father: {fileID: 2653145768784104836}
+  m_Father: {fileID: 3632376761437769799}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -309,7 +304,7 @@ Transform:
   m_Children:
   - {fileID: 1136035492869544878}
   - {fileID: 169970130215730350}
-  m_Father: {fileID: 2653145768784104836}
+  m_Father: {fileID: 3632376761437769799}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6039875575232580999
@@ -432,7 +427,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 2653145768784104836}
+    m_TransformParent: {fileID: 3632376761437769799}
     m_Modifications:
     - target: {fileID: 304213227737204261, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_RootOrder
@@ -563,7 +558,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 2653145768784104836}
+    m_TransformParent: {fileID: 3632376761437769799}
     m_Modifications:
     - target: {fileID: 9015826194957877659, guid: 793e22f6840038c40a622558248ac7ae, type: 3}
       propertyPath: m_RootOrder

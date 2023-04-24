@@ -43,7 +43,7 @@ public class BossMovement : GameBehaviour
             {
                 transform.position = Vector2.MoveTowards(transform.position, _movePosition, speed * Time.deltaTime);
             }
-
+            
             if (Vector2.Distance(transform.position, _movePosition) <= 0.1f)
             {
                 RequestNewMovePosition();

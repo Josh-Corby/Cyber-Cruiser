@@ -54,7 +54,7 @@ public class BeamAttack : MonoBehaviour
             if (_beamTimer > 0)
             {
                 _beamSize += _beamSpeed * Time.deltaTime;
-                Vector3 targetPosition = transform.localPosition + transform.right * _beamSize;
+                Vector3 targetPosition = Vector3.zero + transform.right * _beamSize;
                 lineRenderer.SetPosition(1, new Vector3(Mathf.Abs(targetPosition.x), targetPosition.y));
 
                 BeamCollision();
@@ -68,15 +68,15 @@ public class BeamAttack : MonoBehaviour
         else
         {
             _beamSize += _beamSpeed * Time.deltaTime;
-            lineRenderer.SetPosition(1, transform.localPosition + transform.right * _beamSize);
+            lineRenderer.SetPosition(1, Vector3.zero + transform.right * _beamSize);
             BeamCollision();
         }
     }
 
     public void ResetBeam()
     {
-        lineRenderer.SetPosition(0, transform.localPosition);
-        lineRenderer.SetPosition(1, transform.localPosition);
+        lineRenderer.SetPosition(0, Vector3.zero);
+        lineRenderer.SetPosition(1, Vector3.zero);
         _beamSize = 0;
         _beamTimer = beamDuration;
         lineRenderer.enabled = false;
