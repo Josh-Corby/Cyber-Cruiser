@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class AddOnManager : GameBehaviour
+public class AddOnUIManager : GameBehaviour
 {
     [SerializeField] private TMP_Text _ionText;
 
