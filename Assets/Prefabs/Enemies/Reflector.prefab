@@ -458,6 +458,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2241936634859946288, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: _shieldSprite
+      value: 
+      objectReference: {fileID: 6566937797081205848}
+    - target: {fileID: 2241936634859946288, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: _shieldCollisionDamage
       value: 1
       objectReference: {fileID: 0}
@@ -507,6 +511,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+--- !u!212 &6566937797081205848 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 3638885222701631527, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+  m_PrefabInstance: {fileID: 7592393831686866047}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7882796501218378330 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 304213227737204261, guid: 786e06377470f484caa9a920ed543aa1, type: 3}

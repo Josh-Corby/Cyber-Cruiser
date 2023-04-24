@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
-  m_Name: Mine_SinMovement
+  m_Name: Gunship_Reflector
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
-  unitName: Mine
-  maxHealth: 1
-  explodeOnDeath: 1
-  explosionRadius: 2
-  explosionDamage: 1
-  explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
+  unitPrefab: {fileID: 2653145768784104840, guid: 5315175d49caa2c4d9ee273cc227786a, type: 3}
+  unitName: Reflector Gunship
+  maxHealth: 2
+  explodeOnDeath: 0
+  explosionRadius: 0
+  explosionDamage: 0
+  explosionEffect: {fileID: 0}
   clusterOnDeath: 0
   objectToSpawn: {fileID: 0}
   amountOfObjects: 0
-  moveTypes: 3
-  speed: 3
+  moveTypes: 0
+  speed: 2
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0
@@ -31,9 +31,9 @@ MonoBehaviour:
   seekPlayerY: 0
   seekPlayerX: 0
   seekSpeed: 0
-  sinUpDownMovement: 1
-  sinFrequency: 4.97
-  sinMagnitude: 0.27
+  sinUpDownMovement: 0
+  sinFrequency: 0
+  sinMagnitude: 0
   homeOnPlayer: 0
   homeTurnSpeed: 0
   homeTime: 0

@@ -6,7 +6,7 @@ public class Enemy : GameBehaviour, IDamageable
     protected const string DEAD_ENEMY_LAYER_NAME = "DeadEnemy";
 
     #region References
-    [SerializeField] protected EnemyScriptableObject _unitInfo;
+    public EnemyScriptableObject _unitInfo;
     private EnemyMovement _unitMovement;
     private EnemyWeaponController _weapon;
     private SpriteRenderer _spriteRenderer;
@@ -58,16 +58,7 @@ public class Enemy : GameBehaviour, IDamageable
     {
         AssignEnemyInfo();
 
-        if (!_explodeOnDeath)
-        {
-            
-            _crashParticles = transform.GetComponentInChildren<ParticleSystem>().gameObject;
-            if(_crashParticles == null)
-            {
-                return;
-            }
-            _crashParticles.SetActive(false);
-        }
+      
     }
 
     protected virtual void Start()
@@ -95,6 +86,18 @@ public class Enemy : GameBehaviour, IDamageable
             _unitMovement = enemyMovement;
             _unitMovement.AssignEnemyMovementInfo(_unitInfo);
         }
+
+        if (!_explodeOnDeath)
+        {
+
+            _crashParticles = transform.GetComponentInChildren<ParticleSystem>().gameObject;
+            if (_crashParticles == null)
+            {
+                return;
+            }
+            _crashParticles.SetActive(false);
+        }
+
         OnEnemyAliveStateChange(gameObject, true);
     }
 
@@ -195,7 +198,7 @@ public struct EnemyCategory
 [Serializable]
 public struct EnemyType
 {
-    public GameObject Enemy;
+    public EnemyScriptableObject EnemySO;
     [Range(0, 1)]
     public float spawnWeight;
 }

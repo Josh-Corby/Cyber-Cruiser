@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
-  m_Name: Mine_SinMovement
+  m_Name: Mine_Cluster_Laser
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
+  unitPrefab: {fileID: 2653145768784104840, guid: 26d025349807efb46bbcf7de90e66d47, type: 3}
   unitName: Mine
   maxHealth: 1
   explodeOnDeath: 1
   explosionRadius: 2
   explosionDamage: 1
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  clusterOnDeath: 0
-  objectToSpawn: {fileID: 0}
-  amountOfObjects: 0
-  moveTypes: 3
+  clusterOnDeath: 1
+  objectToSpawn: {fileID: 760453196464390188, guid: 130585e77da054b4ba24c84b35d78629, type: 3}
+  amountOfObjects: 4
+  moveTypes: 0
   speed: 3
   upDownMovement: 0
   upDownSpeed: 0
@@ -31,9 +31,9 @@ MonoBehaviour:
   seekPlayerY: 0
   seekPlayerX: 0
   seekSpeed: 0
-  sinUpDownMovement: 1
-  sinFrequency: 4.97
-  sinMagnitude: 0.27
+  sinUpDownMovement: 0
+  sinFrequency: 2.6
+  sinMagnitude: 0.03
   homeOnPlayer: 0
   homeTurnSpeed: 0
   homeTime: 0

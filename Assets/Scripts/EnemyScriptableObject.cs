@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyScriptableObject : ScriptableObject
 {
     [Header("Unit Info")]
+    public GameObject unitPrefab;
     public string unitName;
     public float maxHealth;
     public bool explodeOnDeath;
@@ -13,7 +14,9 @@ public class EnemyScriptableObject : ScriptableObject
     public float explosionDamage;
     public GameObject explosionEffect;
 
-
+    public bool clusterOnDeath;
+    public GameObject objectToSpawn;
+    public int amountOfObjects;
 
     [Header("Movement Info")]
     public MovementTypes moveTypes;

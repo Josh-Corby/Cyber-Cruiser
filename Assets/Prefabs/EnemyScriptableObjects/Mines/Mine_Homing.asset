@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
   m_Name: Mine_Homing
   m_EditorClassIdentifier: 
+  unitPrefab: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
   unitName: Mine
   maxHealth: 1
   explodeOnDeath: 1
   explosionRadius: 2
   explosionDamage: 1
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
+  clusterOnDeath: 0
+  objectToSpawn: {fileID: 0}
+  amountOfObjects: 0
   moveTypes: 4
   speed: 3
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0
+  seekPlayer: 0
   seekPlayerY: 0
+  seekPlayerX: 0
   seekSpeed: 3
   sinUpDownMovement: 0
   sinFrequency: 2.6

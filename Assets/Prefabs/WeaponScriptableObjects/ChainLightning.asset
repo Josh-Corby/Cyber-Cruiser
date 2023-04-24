@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: ChainLightning
   objectToFire: {fileID: 7804011280605575531, guid: 94b73fff4d492b64280382c32d1a646d, type: 3}
   isObjectEnemy: 0
-  timeBetweenShots: 1
+  timeBetweenShots: 0.2
   holdToFire: 0
   useSpread: 0
   spreadAngle: 10

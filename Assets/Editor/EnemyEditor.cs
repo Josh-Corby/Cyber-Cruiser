@@ -4,12 +4,17 @@ using UnityEditor;
 public class EnemyEditor : Editor
 {
     #region SerializedProperties
+    SerializedProperty unitPrefab;
     SerializedProperty unitName;
     SerializedProperty maxHealth;
     SerializedProperty explodeOnDeath;
     SerializedProperty explosionRadius;
     SerializedProperty explosionDamage;
     SerializedProperty explosionEffect;
+
+    SerializedProperty clusterOnDeath;
+    SerializedProperty objectToSpawn;
+    SerializedProperty amountOfObjects;
 
     SerializedProperty speed;
     SerializedProperty upDownMovement;
@@ -32,12 +37,17 @@ public class EnemyEditor : Editor
 
     private void OnEnable()
     {
+        unitPrefab = serializedObject.FindProperty(nameof(unitPrefab));
         unitName = serializedObject.FindProperty(nameof(unitName));
         maxHealth = serializedObject.FindProperty(nameof(maxHealth));
         explodeOnDeath = serializedObject.FindProperty(nameof(explodeOnDeath));
         explosionRadius = serializedObject.FindProperty(nameof(explosionRadius));
         explosionDamage = serializedObject.FindProperty(nameof(explosionDamage));
         explosionEffect = serializedObject.FindProperty(nameof(explosionEffect));
+
+        clusterOnDeath = serializedObject.FindProperty(nameof(clusterOnDeath));
+        objectToSpawn = serializedObject.FindProperty(nameof(objectToSpawn));
+        amountOfObjects = serializedObject.FindProperty(nameof(amountOfObjects));
 
         moveTypes = serializedObject.FindProperty(nameof(moveTypes));
         speed = serializedObject.FindProperty(nameof(speed));
@@ -67,6 +77,7 @@ public class EnemyEditor : Editor
 
         serializedObject.Update();
 
+        EditorGUILayout.PropertyField(unitPrefab);
         EditorGUILayout.PropertyField(unitName);
         EditorGUILayout.PropertyField(maxHealth);
         EditorGUILayout.PropertyField(explodeOnDeath);
@@ -75,6 +86,13 @@ public class EnemyEditor : Editor
             EditorGUILayout.PropertyField(explosionRadius);
             EditorGUILayout.PropertyField(explosionDamage);
             EditorGUILayout.PropertyField(explosionEffect);
+        }
+
+        EditorGUILayout.PropertyField(clusterOnDeath);
+        if (enemySO.clusterOnDeath)
+        {
+            EditorGUILayout.PropertyField(objectToSpawn);
+            EditorGUILayout.PropertyField(amountOfObjects);
         }
 
         EditorGUILayout.PropertyField(moveTypes);
@@ -105,6 +123,7 @@ public class EnemyEditor : Editor
                 }
                 break;
         }
+
         enemySO.upDownMovement = enemySO.moveTypes == MovementTypes.UpDown;
         enemySO.seekPlayer = enemySO.moveTypes == MovementTypes.SeekPlayer;
         enemySO.sinUpDownMovement = enemySO.moveTypes == MovementTypes.SinUpDown;

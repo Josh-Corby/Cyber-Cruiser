@@ -55,10 +55,13 @@ public class EnemySpawner : GameBehaviour
         for (int i = 0; i < EnemiesToSpawn; i++)
         {
             EnemyCategory randomCategory = GetRandomWeightedCategory();
-            GameObject randomEnemy = GetRandomWeightedType(randomCategory);
+            EnemyScriptableObject randomEnemyInfo = GetRandomWeightedType(randomCategory);
+            GameObject enemy = randomEnemyInfo.unitPrefab;
+            enemy.GetComponent<Enemy>()._unitInfo = randomEnemyInfo;
+
             Vector3 spawnPosition = ValidateSpawnPosition(GetRandomSpawnPosition());
             spawnPositions.Add(spawnPosition);
-            SpawnEnemy(randomEnemy, spawnPosition);
+            SpawnEnemy(enemy, spawnPosition);
         }
         EnemiesToSpawn = 0;
     }
@@ -79,7 +82,7 @@ public class EnemySpawner : GameBehaviour
         return enemyCategories[enemyCategories.Length - 1];
     }
 
-    private GameObject GetRandomWeightedType(EnemyCategory category)
+    private EnemyScriptableObject GetRandomWeightedType(EnemyCategory category)
     {
         float value = Random.value;
 
@@ -87,7 +90,8 @@ public class EnemySpawner : GameBehaviour
         {
             if (value < category.CategoryTypes[i].spawnWeight)
             {
-                GameObject enemy = category.CategoryTypes[i].Enemy;
+
+                EnemyScriptableObject enemy = category.CategoryTypes[i].EnemySO;
                 return enemy;
             }
             value -= category.CategoryTypes[i].spawnWeight;
@@ -140,18 +144,19 @@ public class EnemySpawner : GameBehaviour
         return enemySpawnPosition;
     }
 
-    private void SpawnEnemy(GameObject _enemy, Vector3 position)
+   
+    private void SpawnEnemy(GameObject enemy, Vector3 position)
     {
-        GameObject enemy = Instantiate(_enemy, position, transform.rotation);
+        Instantiate(enemy, position, transform.rotation);
         AddSpeedModifier(enemy);
-        //Rotate enemies to face correct direction on spawn
-        enemy.transform.right = transform.right;
+        //enemy.transform.right = transform.right;
     }
 
-    public GameObject SpawnEnemyAtRandomPosition(GameObject _enemy)
+    public GameObject SpawnEnemyAtRandomPosition(GameObject enemy)
     {
-        GameObject enemy = Instantiate(_enemy, GetRandomSpawnPosition(), transform.rotation);
-        enemy.transform.right = transform.right;
+        Instantiate(enemy,GetRandomSpawnPosition(), transform.rotation);
+        AddSpeedModifier(enemy);
+        //enemy.transform.right = transform.right;
         return enemy;
     }
 
