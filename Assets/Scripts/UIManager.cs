@@ -32,6 +32,7 @@ public class UIManager : GameBehaviour
     private void OnDisable()
     {
         GameManager.OnIsGamePaused -= TogglePauseUI;
+
         PlayerManager.OnPlayerDeath -= GameOverUI;
     }
 

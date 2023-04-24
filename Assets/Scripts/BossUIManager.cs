@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class BossUI : GameBehaviour
+public class BossUIManager : GameBehaviour
 {
     [SerializeField] private GameObject _bossWarningUI, _bossHealthBarUI;
     [SerializeField] private TMP_Text _bossNameText, _bossWarningText;
