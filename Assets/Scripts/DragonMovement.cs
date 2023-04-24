@@ -8,34 +8,29 @@ public class DragonMovement : EnemyMovement
     //1 for arc movement
     [SerializeField] private bool arcMove = false;
 
-    [HideInInspector] public Vector3 bottomLeftPoint;
+    public Transform bottomLeftPoint;
 
     private const float TARGET_ROTATION = 90f;
-    [Range(50,360)] private float rotationSpeed;
+    [Range(50, 360)] private float rotationSpeed;
 
-    private Vector3 startRotation;
+    [SerializeField] private Vector3 startRotation;
     protected override void Start()
     {
-        ChooseRandomMoveType();
-        base.Start();
+        startRotation = new Vector3(0, transform.eulerAngles.y, 0);
 
-        float x = transform.rotation.x;
-        float y = transform.rotation.y;
-        float z = transform.rotation.z;
-        startRotation = new Vector3 (x, y, z);
+        ChooseRandomMoveType();
+        //base.Start();   
     }
 
     protected override void Update()
     {
-        if (arcMove)
-        {
-            Quaternion targetRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, TARGET_ROTATION);
-            Quaternion rotation =  Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.Euler(startRotation.x, startRotation.y, rotation.eulerAngles.z);
-
-        }
-
-        base.Update();
+        //if (arcMove)
+        //{
+        //    Quaternion targetRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, TARGET_ROTATION);
+        //    Quaternion rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        //    transform.rotation = Quaternion.Euler(startRotation.x, startRotation.y, rotation.eulerAngles.z);
+        //}
+        //base.Update();
     }
 
     private void ChooseRandomMoveType()
@@ -44,12 +39,13 @@ public class DragonMovement : EnemyMovement
 
         if (movementTypeID == 0)
         {
-            //move to bottom left
-            bottomLeftPoint = ESM.dragonMovePoint.position;
+            //Code that I couldn't get to work
+            //bottomLeftPoint = ESM.dragonMovePoint;
+            //Vector3 vectorToBottomLeft = bottomLeftPoint.position - transform.position;
+            //float angle = Mathf.Atan2(vectorToBottomLeft.y, -vectorToBottomLeft.x) * Mathf.Rad2Deg;
 
-            Vector3 vectorToBottomLeft = bottomLeftPoint - transform.position;
-            float angle = Mathf.Atan2(vectorToBottomLeft.y, vectorToBottomLeft.x) * Mathf.Rad2Deg - 90;
-            transform.rotation = Quaternion.Euler(startRotation.x, startRotation.y,angle);
+            //Hard coded solution
+            transform.eulerAngles = new Vector3(0, 180, -29);           
         }
 
         if (movementTypeID == 1)

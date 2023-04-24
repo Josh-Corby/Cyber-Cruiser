@@ -149,14 +149,12 @@ public class EnemySpawner : GameBehaviour
     {
         Instantiate(enemy, position, transform.rotation);
         AddSpeedModifier(enemy);
-        //enemy.transform.right = transform.right;
     }
 
     public GameObject SpawnEnemyAtRandomPosition(GameObject enemy)
     {
         Instantiate(enemy,GetRandomSpawnPosition(), transform.rotation);
         AddSpeedModifier(enemy);
-        //enemy.transform.right = transform.right;
         return enemy;
     }
 

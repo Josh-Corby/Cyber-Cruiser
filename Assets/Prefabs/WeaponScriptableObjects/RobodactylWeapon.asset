@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RobodactylWeapon
   m_EditorClassIdentifier: 
   weaponName: RobodactylWeapon
-  objectToFire: {fileID: 760453196464390188, guid: 0bc4f44e95491144f93d1772d1d05593, type: 3}
+  objectToFire: {fileID: 760453196464390188, guid: 130585e77da054b4ba24c84b35d78629, type: 3}
   isObjectEnemy: 0
   timeBetweenShots: 1
   holdToFire: 0

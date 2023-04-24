@@ -144,6 +144,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3214141089439114286}
   - component: {fileID: 8450337475581012173}
+  - component: {fileID: 4928088142349246208}
+  - component: {fileID: 2859656384492823554}
   m_Layer: 0
   m_Name: Blimp_Art
   m_TagString: Untagged
@@ -218,6 +220,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4928088142349246208
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7450378292503469831}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 200d6c7d2cbc348449fb122a55454172, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &2859656384492823554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7450378292503469831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de4d7dd49e2a66d498f354a4567340c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8603883180212832860
 GameObject:
   m_ObjectHideFlags: 0
