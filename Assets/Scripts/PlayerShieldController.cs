@@ -7,7 +7,7 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 {
     private const string PLAYER_PROJECTILE_LAYER_NAME = "PlayerProjectile";
     private PulseDetonator _pulseDetonator;
-
+    [SerializeField] private GameObject _collisionParticles;
     #region Fields
     [SerializeField] private int _shieldActiveDuration;
     [SerializeField] private float _shieldActiveTimer;
@@ -163,6 +163,8 @@ public class PlayerShieldController : ShieldControllerBase, IShield
             return;
         }
 
+        GameObject collisionParticles = Instantiate(_collisionParticles, transform.position, Quaternion.identity);
+        collisionParticles.transform.parent = null;
         base.ProcessCollision(collider);
     }
 
