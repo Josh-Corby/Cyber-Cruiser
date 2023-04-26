@@ -15,6 +15,8 @@ public class PlayerShipController : MonoBehaviour
     [SerializeField] private float distanceToStopRotation = 5f;
     [SerializeField] private bool lerpMovement;
     [SerializeField] private bool _controlsEnabled;
+    private bool _isPlayerDead;
+    [SerializeField] private float _crashSpeed;
 
     private float minAngle = -20;
     private float maxAngle = 20;
@@ -37,13 +39,16 @@ public class PlayerShipController : MonoBehaviour
 
     private void OnEnable()
     {
+        _isPlayerDead = false;
         InputManager.OnMouseMove += RecieveInput;
         InputManager.OnControlsEnabled += EnableControls;
         InputManager.OnControlsDisabled += DisableControls;
         GameManager.OnMissionStart += StartLevelPosition;
         GameManager.OnIsGamePaused += ToggleControls;
         CyberKrakenGrappleTentacle.OnGrappleEnd += EnableControls;
-        Cursor.lockState = CursorLockMode.Confined;   
+        Cursor.lockState = CursorLockMode.Confined;
+
+        PlayerManager.OnPlayerDeath += PlayerDead;
     }
 
     private void OnDisable()
@@ -54,13 +59,21 @@ public class PlayerShipController : MonoBehaviour
         GameManager.OnMissionStart -= StartLevelPosition;
         GameManager.OnIsGamePaused -= ToggleControls;
         CyberKrakenGrappleTentacle.OnGrappleEnd -= EnableControls;
+        PlayerManager.OnPlayerDeath -= PlayerDead;
     }
+
+
 
     private void Update()
     {
         if (ControlsEnabled)
         {
             PlayerMovement();
+        }
+
+        else if (_isPlayerDead)
+        {
+            DeathMovement();
         }
     }
 
@@ -102,9 +115,13 @@ public class PlayerShipController : MonoBehaviour
         playerSprite.transform.rotation = Quaternion.RotateTowards(playerSprite.transform.rotation, targetRotation, rotationSpeed);
     }
 
+    private void PlayerDead()
+    {
+        _isPlayerDead = true;
+    }
     private void DeathMovement()
     {
-        transform.position += baseSpeed * Time.deltaTime * Vector3.down;
+        transform.position += _crashSpeed * Time.deltaTime * Vector3.down;
     }
 
     private void StartLevelPosition()

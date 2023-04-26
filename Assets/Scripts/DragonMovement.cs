@@ -10,27 +10,26 @@ public class DragonMovement : EnemyMovement
 
     public Transform bottomLeftPoint;
 
-    private const float TARGET_ROTATION = 90f;
     [Range(50, 360)] private float rotationSpeed;
 
     [SerializeField] private Vector3 startRotation;
+    private Vector3 _targetRotation = new(0, 180, 0);
     protected override void Start()
     {
         startRotation = new Vector3(0, transform.eulerAngles.y, 0);
 
-        ChooseRandomMoveType();
-        //base.Start();   
+        ChooseRandomMoveType(); 
     }
 
     protected override void Update()
     {
-        //if (arcMove)
-        //{
-        //    Quaternion targetRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, TARGET_ROTATION);
-        //    Quaternion rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        //    transform.rotation = Quaternion.Euler(startRotation.x, startRotation.y, rotation.eulerAngles.z);
-        //}
-        //base.Update();
+        if (arcMove)
+        {
+            Quaternion targetRotation = Quaternion.Euler(_targetRotation);
+            Quaternion rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(startRotation.x, startRotation.y, rotation.eulerAngles.z);
+        }
+        base.Update();
     }
 
     private void ChooseRandomMoveType()
