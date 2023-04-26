@@ -10,8 +10,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [Header("Spawners")]
     public EnemySpawner _topSpawner;
     public EnemySpawner _bottomSpawner;
-    [SerializeField] private EnemySpawner bossSpawner;
-    [SerializeField] private GameObject[] bossPrefabs;
+    [SerializeField] private EnemySpawner _bossSpawner;
+    [SerializeField] private EnemyScriptableObject[] _bosses;
 
     [Header("Spawn Rate Info")]
     [SerializeField] private int _enemiesToSpawnBase;
@@ -35,10 +35,10 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private List<EnemySpawner> _enemySpawners = new();
     private List<EnemySpawner> _spawnersSpawning = new();
-    private List<GameObject> _bossesToSpawn = new();
+    private List<EnemyScriptableObject> _bossesToSpawn = new();
 
-    private Coroutine spawnEnemiesCoroutine;
-    private Coroutine spawnBossCoroutine;
+    private Coroutine _spawnEnemiesCoroutine;
+    private Coroutine _spawnBossCoroutine;
 
     #region Properties
     public float EnemySpawnInterval
@@ -68,7 +68,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     #region Actions
     public static event Action OnSpawnEnemyGroup = null;
-    public static event Action<GameObject> OnBossSelected = null;
+    public static event Action<EnemyScriptableObject> OnBossSelected = null;
     #endregion
 
     private void Awake()
@@ -137,14 +137,14 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void StartSpawningEnemies()
     {
         _spawnEnemies = true;
-        spawnEnemiesCoroutine = StartCoroutine(SpawnEnemies());
+        _spawnEnemiesCoroutine = StartCoroutine(SpawnEnemies());
     }
 
     private void StopSpawningEnemies()
     {
-        if (spawnEnemiesCoroutine != null)
+        if (_spawnEnemiesCoroutine != null)
         {
-            StopCoroutine(spawnEnemiesCoroutine);
+            StopCoroutine(_spawnEnemiesCoroutine);
         }
         _spawnEnemies = false;
     }
@@ -209,7 +209,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void ResetBossesToSpawn()
     {
-        foreach (GameObject boss in bossPrefabs)
+        foreach (EnemyScriptableObject boss in _bosses)
         {
             if (!_bossesToSpawn.Contains(boss))
             {
@@ -231,30 +231,30 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     public void StartBossSpawn()
     {
-        if (spawnBossCoroutine != null)
+        if (_spawnBossCoroutine != null)
         {
-            StopCoroutine(spawnBossCoroutine);
+            StopCoroutine(_spawnBossCoroutine);
         }
-        spawnBossCoroutine = StartCoroutine(SpawnBoss());
+        _spawnBossCoroutine = StartCoroutine(SpawnBoss());
     }
 
     private IEnumerator SpawnBoss()
     {
         bossReadyToSpawn = false;
-        GameObject bossToSpawn = GetRandomBossToSpawn();
+        EnemyScriptableObject bossToSpawn = GetRandomBossToSpawn();
         OnBossSelected(bossToSpawn);
         yield return new WaitForSeconds(BOSS_WAIT_TIME);
-        bossSpawner.StartBossSpawn(bossToSpawn);
+        _bossSpawner.SpawnBoss(bossToSpawn);
     }
 
     /// <summary>
     /// Select a random gameobject from bosses left to spawn
     /// </summary>
     /// <returns>return boss selected</returns>
-    private GameObject GetRandomBossToSpawn()
+    private EnemyScriptableObject GetRandomBossToSpawn()
     {
         int index = Random.Range(0, _bossesToSpawn.Count - 1);
-        GameObject boss = _bossesToSpawn[index];
+        EnemyScriptableObject boss = _bossesToSpawn[index];
         _bossesToSpawn.RemoveAt(index);
 
         if (_bossesToSpawn.Count == 0)
@@ -266,9 +266,9 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void CancelBossSpawn()
     {
-        if(spawnBossCoroutine != null)
+        if(_spawnBossCoroutine != null)
         {
-            StopCoroutine(spawnBossCoroutine);
+            StopCoroutine(_spawnBossCoroutine);
         }
     }
 

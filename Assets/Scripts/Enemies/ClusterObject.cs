@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ClusterObject : Enemy, IDamageable
 {
-    private GameObject _objectToSpawn;
-    private int _amountOfObjects;  
+    [SerializeField] private GameObject _objectToSpawn;
+    private int _amountOfObjects;
     private float _spawnRadius = 0.5f;
 
     protected override void Awake()
@@ -14,7 +14,14 @@ public class ClusterObject : Enemy, IDamageable
 
     private void AssignInfo()
     {
-        _objectToSpawn = _unitInfo.objectToSpawn;
+        if (_unitInfo.spawnEnemy)
+        {
+            _objectToSpawn = EM.CreateEnemyFromSO(_unitInfo.enemyToSpawn);
+        }
+        else
+        {
+            _objectToSpawn = _unitInfo.objectToSpawn;
+        }
         _amountOfObjects = _unitInfo.amountOfObjects;
     }
 
@@ -25,7 +32,7 @@ public class ClusterObject : Enemy, IDamageable
 
     public override void Destroy()
     {
-            SpawnProjectile();
+        SpawnProjectile();
         base.Destroy();
     }
 
@@ -33,8 +40,7 @@ public class ClusterObject : Enemy, IDamageable
     {
         for (int i = 0; i < _amountOfObjects; i++)
         {
-            
-            float angle = i * (360/_amountOfObjects);
+            float angle = i * (360 / _amountOfObjects);
 
             float rad = angle * Mathf.Deg2Rad;
 
@@ -43,8 +49,7 @@ public class ClusterObject : Enemy, IDamageable
             Vector3 spawnPos = transform.position + new Vector3(x, y, 0);
 
             Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
-
             GameObject _go = Instantiate(_objectToSpawn, spawnPos, spawnRotation);
         }
-    }  
+    }
 }

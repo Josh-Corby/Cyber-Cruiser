@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 304213227737204261}
   - component: {fileID: 9111243653320469812}
   m_Layer: 0
-  m_Name: EnemyShieldController
+  m_Name: EnemyShields
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

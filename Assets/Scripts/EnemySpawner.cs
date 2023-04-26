@@ -46,7 +46,7 @@ public class EnemySpawner : GameBehaviour
     #endregion
 
     #region Actions
-    public static event Action<Enemy> OnBossSpawned = null;
+    public static event Action<EnemyScriptableObject> OnBossSpawned = null;
     #endregion
 
     public void StartSpawnProcess()
@@ -56,16 +56,13 @@ public class EnemySpawner : GameBehaviour
         {
             EnemyCategory randomCategory = GetRandomWeightedCategory();
             EnemyScriptableObject randomEnemyInfo = GetRandomWeightedType(randomCategory);
-            GameObject enemy = randomEnemyInfo.unitPrefab;
-            enemy.GetComponent<Enemy>()._unitInfo = randomEnemyInfo;
-
+            GameObject enemy = EM.CreateEnemyFromSO(randomEnemyInfo);
             Vector3 spawnPosition = ValidateSpawnPosition(GetRandomSpawnPosition());
             spawnPositions.Add(spawnPosition);
             SpawnEnemy(enemy, spawnPosition);
         }
         EnemiesToSpawn = 0;
     }
-
     private EnemyCategory GetRandomWeightedCategory()
     {
         float value = Random.value;
@@ -144,7 +141,6 @@ public class EnemySpawner : GameBehaviour
         return enemySpawnPosition;
     }
 
-   
     private void SpawnEnemy(GameObject enemy, Vector3 position)
     {
         Instantiate(enemy, position, transform.rotation);
@@ -153,7 +149,7 @@ public class EnemySpawner : GameBehaviour
 
     public GameObject SpawnEnemyAtRandomPosition(GameObject enemy)
     {
-        Instantiate(enemy,GetRandomSpawnPosition(), transform.rotation);
+        Instantiate(enemy, GetRandomSpawnPosition(), transform.rotation);
         AddSpeedModifier(enemy);
         return enemy;
     }
@@ -176,19 +172,12 @@ public class EnemySpawner : GameBehaviour
         }
     }
 
-    public void StartBossSpawn(GameObject bossToSpawn)
+    public void SpawnBoss(EnemyScriptableObject bossInfo)
     {
-        //CreateIndicator(transform.position);
-        SpawnBoss(transform.position, bossToSpawn);
-    }
-
-    private void SpawnBoss(Vector3 spawnPosition, GameObject bossToSpawn)
-    {
-        GameObject boss = Instantiate(bossToSpawn, spawnPosition, transform.rotation);
-        AddSpeedModifier(boss);
-
-        Enemy bossInfo = boss.GetComponent<Enemy>();
-        boss.name = bossInfo.unitName;
+        GameObject bossObject = bossInfo.unitPrefab;
+        bossObject.GetComponent<Enemy>()._unitInfo = bossInfo;
+        Instantiate(bossObject, transform.position, transform.rotation);
+        AddSpeedModifier(bossObject);
         OnBossSpawned(bossInfo);
     }
 

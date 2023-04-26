@@ -56,9 +56,7 @@ public class Enemy : GameBehaviour, IDamageable
 
     protected virtual void Awake()
     {
-        AssignEnemyInfo();
-
-      
+        AssignEnemyInfo();    
     }
 
     protected virtual void Start()
@@ -71,6 +69,7 @@ public class Enemy : GameBehaviour, IDamageable
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _weapon = GetComponentInChildren<EnemyWeaponController>();
         unitName = _unitInfo.unitName;
+        gameObject.name = unitName;
         _maxHealth = _unitInfo.maxHealth;
         _explodeOnDeath = _unitInfo.explodeOnDeath;
 

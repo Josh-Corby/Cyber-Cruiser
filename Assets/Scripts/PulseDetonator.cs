@@ -8,10 +8,16 @@ public class PulseDetonator : GameBehaviour
     [SerializeField] private float _pulseDamage;
     private Vector2 _minSize = new Vector2(0.1f, 0.1f);
     private bool _isDetonating;
+    private Collider2D _col;
 
+    private void Awake()
+    {
+        _col = GetComponent<Collider2D>();
+    }
     private void Start()
     {
         transform.localScale = _minSize;
+        _col.enabled = false;
     }
     private void Update()
     {
@@ -26,6 +32,7 @@ public class PulseDetonator : GameBehaviour
     public void Detonate()
     {
         _isDetonating = true;
+        _col.enabled = true;
     }
 
     private void Detonation()
@@ -36,6 +43,7 @@ public class PulseDetonator : GameBehaviour
             return;
         }
         _isDetonating = false;
+        _col.enabled = false;
         transform.localScale = _minSize;
     }
 

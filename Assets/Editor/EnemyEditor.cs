@@ -13,6 +13,8 @@ public class EnemyEditor : Editor
     SerializedProperty explosionEffect;
 
     SerializedProperty clusterOnDeath;
+    SerializedProperty spawnEnemy;
+    SerializedProperty enemyToSpawn;
     SerializedProperty objectToSpawn;
     SerializedProperty amountOfObjects;
 
@@ -46,6 +48,8 @@ public class EnemyEditor : Editor
         explosionEffect = serializedObject.FindProperty(nameof(explosionEffect));
 
         clusterOnDeath = serializedObject.FindProperty(nameof(clusterOnDeath));
+        spawnEnemy = serializedObject.FindProperty(nameof(spawnEnemy));
+        enemyToSpawn = serializedObject.FindProperty(nameof(enemyToSpawn));
         objectToSpawn = serializedObject.FindProperty(nameof(objectToSpawn));
         amountOfObjects = serializedObject.FindProperty(nameof(amountOfObjects));
 
@@ -91,7 +95,15 @@ public class EnemyEditor : Editor
         EditorGUILayout.PropertyField(clusterOnDeath);
         if (enemySO.clusterOnDeath)
         {
-            EditorGUILayout.PropertyField(objectToSpawn);
+            EditorGUILayout.PropertyField(spawnEnemy);
+            if (enemySO.spawnEnemy)
+            {
+                EditorGUILayout.PropertyField(enemyToSpawn);
+            }
+            else
+            {
+                EditorGUILayout.PropertyField(objectToSpawn);
+            }
             EditorGUILayout.PropertyField(amountOfObjects);
         }
 

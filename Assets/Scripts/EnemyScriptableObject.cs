@@ -15,6 +15,8 @@ public class EnemyScriptableObject : ScriptableObject
     public GameObject explosionEffect;
 
     public bool clusterOnDeath;
+    public bool spawnEnemy;
+    public EnemyScriptableObject enemyToSpawn;
     public GameObject objectToSpawn;
     public int amountOfObjects;
 

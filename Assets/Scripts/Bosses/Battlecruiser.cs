@@ -5,7 +5,7 @@ using UnityEngine;
 public class Battlecruiser : Boss, IBoss
 {
     [SerializeField] private GameObject _mineReleasePoint;
-    [SerializeField] private GameObject _seekerMinePrefab;
+    [SerializeField] private EnemyScriptableObject _seekerMineInfo;
     private readonly int _minesToFire = 2;
     private readonly int _mineDelay = 1;
 
@@ -41,8 +41,9 @@ public class Battlecruiser : Boss, IBoss
         _attackTimer =  _timeAfterAttackFinish;
         for (int i = 0; i < _minesToFire; i++)
         {
-            GameObject seekerMine = Instantiate(_seekerMinePrefab, _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
-            seekerMine.transform.SetParent(null);
+            GameObject mineObject = EM.CreateEnemyFromSO(_seekerMineInfo);
+            GameObject seekermine = Instantiate(mineObject, _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
+            seekermine.transform.SetParent(null);
             yield return new WaitForSeconds(_mineDelay);
         }
         StopCoroutine(ReleaseMines());

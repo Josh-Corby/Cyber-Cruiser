@@ -86,4 +86,11 @@ public class EnemyManager : GameBehaviour<EnemyManager>
     {
         return _enemiesAlive.Count == 0;
     }
+
+    public GameObject CreateEnemyFromSO(EnemyScriptableObject enemyInfo)
+    {
+        GameObject enemy = enemyInfo.unitPrefab;
+        enemy.GetComponent<Enemy>()._unitInfo = enemyInfo;
+        return enemy;
+    }
 }

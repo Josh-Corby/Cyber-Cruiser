@@ -48,9 +48,9 @@ public class BossUIManager : GameBehaviour
     {
         DisableBossUI();
     }
-    public void EnableBossWarningUI(GameObject boss)
+    public void EnableBossWarningUI(EnemyScriptableObject bossInfo)
     {
-        BossWarningText = "Warning!! " + boss.name + " approaching";
+        BossWarningText = "Warning!! " + bossInfo.unitName + " approaching";
         _bossWarningUI.SetActive(true);
     }
 
@@ -60,10 +60,10 @@ public class BossUIManager : GameBehaviour
         _bossWarningUI.SetActive(false);
     }
 
-    private void EnableBossUI(Enemy boss)
+    private void EnableBossUI(EnemyScriptableObject boss)
     {
-        BossNameText = boss.gameObject.name;
-        EnableSlider(_bossHealthBar, boss.MaxHealth);
+        BossNameText = boss.unitName;
+        EnableSlider(_bossHealthBar, boss.maxHealth);
     }
 
     private void DisableBossUI()

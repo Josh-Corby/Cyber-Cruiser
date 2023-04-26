@@ -131,9 +131,22 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 
         if (!_isPulseDetonator)
         {
-            ShieldActiveTimer = ShieldActiveDuration;
-            base.ActivateShields();
+            base.ActivateShields();      
         }
+    }
+
+    public override void DeactivateShields()
+    {
+        ShieldActiveTimer = ShieldActiveDuration;
+
+        ShieldsActive = false;
+        _shields.DisableShields();
+        Invoke(nameof(EnablePlayerCollider), 0.5f);
+    }
+
+    private void EnablePlayerCollider()
+    {
+        _unitCollider.enabled = true;
     }
 
     public override void ProcessCollision(GameObject collider)
