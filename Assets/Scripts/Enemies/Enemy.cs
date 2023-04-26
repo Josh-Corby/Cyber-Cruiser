@@ -6,10 +6,11 @@ public class Enemy : GameBehaviour, IDamageable
     protected const string DEAD_ENEMY_LAYER_NAME = "DeadEnemy";
 
     #region References
-    public EnemyScriptableObject _unitInfo;
+    [HideInInspector] public EnemyScriptableObject _unitInfo;
     private EnemyMovement _unitMovement;
     private EnemyWeaponController _weapon;
     private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Sprite _deadSprite;
     private GameObject _crashParticles;
     private GameObject _explosionEffect;
     #endregion
@@ -20,7 +21,7 @@ public class Enemy : GameBehaviour, IDamageable
     protected float _maxHealth;
     private float _explosionRadius;
     private float _explosionDamage;
-    private bool _explodeOnDeath;
+    protected bool _explodeOnDeath;
     #endregion
 
     #region Properties
@@ -66,7 +67,7 @@ public class Enemy : GameBehaviour, IDamageable
 
     private void AssignEnemyInfo()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _weapon = GetComponentInChildren<EnemyWeaponController>();
         unitName = _unitInfo.unitName;
         gameObject.name = unitName;
@@ -138,7 +139,7 @@ public class Enemy : GameBehaviour, IDamageable
         Destroy();
     }
 
-    protected void Crash()
+    protected virtual void Crash()
     {
         if(_unitMovement != null)
         {
@@ -152,7 +153,7 @@ public class Enemy : GameBehaviour, IDamageable
 
         if (_spriteRenderer != null)
         {
-            _spriteRenderer.color = Color.grey;
+            _spriteRenderer.sprite = _deadSprite;
             _spriteRenderer.sortingOrder = -1;
         }
 

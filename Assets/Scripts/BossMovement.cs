@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public class BossMovement : GameBehaviour
+public class BossMovement : EnemyMovement
 {
     public static event Action<BossMovement> OnMovePositionRequested = null;
 
@@ -20,17 +20,29 @@ public class BossMovement : GameBehaviour
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
         _goalPoint = ESM.bossGoalPosition;
     }
-    private void Start()
+
+    protected override void Start()
     {
         _goalPositionReached = false;
     }
 
-    private void Update()
+    protected override void Update()
     {
+        if (GM.isPaused)
+        {
+            return;
+        }
+
+        if (isEnemyDead)
+        {
+            DeathMovement();
+            return;
+        }
+
         if (!_goalPositionReached)
         {
             MoveTowardGoalPosition();

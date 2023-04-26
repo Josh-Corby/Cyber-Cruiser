@@ -20,6 +20,8 @@ MonoBehaviour:
   explosionDamage: 1
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
   clusterOnDeath: 1
+  spawnEnemy: 1
+  enemyToSpawn: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
   objectToSpawn: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
   amountOfObjects: 4
   moveTypes: 0

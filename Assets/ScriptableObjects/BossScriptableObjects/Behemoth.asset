@@ -12,18 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
   m_Name: Behemoth
   m_EditorClassIdentifier: 
+  unitPrefab: {fileID: 980203594034234250, guid: 5742acc31e60e35449a79db534b7264b, type: 3}
   unitName: Behemoth
   maxHealth: 50
-  explodeOnDeath: 1
+  explodeOnDeath: 0
   explosionRadius: 1
   explosionDamage: 0
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
+  clusterOnDeath: 0
+  spawnEnemy: 0
+  enemyToSpawn: {fileID: 0}
+  objectToSpawn: {fileID: 0}
+  amountOfObjects: 0
   moveTypes: 0
   speed: 2
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0
+  seekPlayer: 0
   seekPlayerY: 0
+  seekPlayerX: 0
   seekSpeed: 0
   sinUpDownMovement: 0
   sinFrequency: 0

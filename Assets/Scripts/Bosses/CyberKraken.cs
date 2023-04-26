@@ -7,12 +7,12 @@ public class CyberKraken : Boss, IBoss
     [SerializeField] private EnemySpawner _topSpawner;
     [SerializeField] private EnemySpawner _bottomSpawner;
 
-    [SerializeField] private GameObject _spawnedTentacle;
+    [SerializeField] private GameObject _spawnedTentaclePrefab;
 
     [SerializeField] private GameObject _grappleTentaclePrefab;
     [SerializeField] private GameObject _grappleTentacleSpawnPoint;
 
-
+    private List<GameObject> _tentacles = new();
     private bool _isAttacking;
 
     protected override void Awake()
@@ -21,28 +21,22 @@ public class CyberKraken : Boss, IBoss
         _bottomSpawner = ESM._bottomSpawner;
         base.Awake();
     }
-
-    protected override void Update()
-    {
-        if (!_isAttacking)
-        {
-            if (_attackTimer > 0)
-            {
-                _attackTimer -= Time.deltaTime;
-            }
-
-            if (_attackTimer <= 0)
-            {
-                ChooseRandomAttack();
-                _attackTimer = _attackCooldown;
-            }
-        }
-    }
     //spawn tentacle at top or bottom of screen
     public void Attack1()
     {
         int i = Random.Range(0, 2);
-        GameObject tentacle = i == 0 ? _topSpawner.SpawnEnemyAtRandomPosition(_spawnedTentacle) : _bottomSpawner.SpawnEnemyAtRandomPosition(_spawnedTentacle);
+        if (i == 0)
+        {
+            GameObject topTentacle = Instantiate(_spawnedTentaclePrefab,_topSpawner.GetRandomSpawnPosition(),_topSpawner.transform.rotation);
+            topTentacle.transform.parent = gameObject.transform;
+            _tentacles.Add(topTentacle);
+        }
+        if (i == 1)
+        {
+            GameObject bottomTentacle = Instantiate(_spawnedTentaclePrefab, _bottomSpawner.GetRandomSpawnPosition(), _bottomSpawner.transform.rotation);
+            bottomTentacle.transform.parent = gameObject.transform;
+            _tentacles.Add(bottomTentacle);
+        }
     }
 
     //release tentacle towards the player and grab them
@@ -60,5 +54,15 @@ public class CyberKraken : Boss, IBoss
         float rotationZ = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
         //directionToPlayer.Normalize();
         return rotationZ;
+    }
+
+    protected override void Crash()
+    {
+        for (int i = _tentacles.Count; i < 0; i--)
+        {
+            Destroy(_tentacles[i]);
+        }
+        _tentacles.Clear();
+        base.Crash();
     }
 }

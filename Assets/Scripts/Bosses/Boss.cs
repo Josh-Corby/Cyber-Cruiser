@@ -16,8 +16,8 @@ public class Boss : Enemy, IDamageable
 
     protected override void Awake()
     {
-        base.Awake();
         _movement = GetComponent<BossMovement>();
+        base.Awake();
         SetBossSpeed();
         bossMoveset = GetComponent<IBoss>();
     }
@@ -35,7 +35,10 @@ public class Boss : Enemy, IDamageable
 
     protected virtual void Update()
     {
-
+        if (_movement.isEnemyDead)
+        {
+            return;
+        }
         if (_attackTimer > 0)
         {
             _attackTimer -= Time.deltaTime;
@@ -47,6 +50,7 @@ public class Boss : Enemy, IDamageable
             _attackTimer = _attackCooldown;
         }
     }
+
 
     protected void ChooseRandomAttack()
     {
@@ -71,6 +75,12 @@ public class Boss : Enemy, IDamageable
     {
         OnBossDamage(CurrentHealth);
         base.Damage(damage);
+    }
+
+    protected override void Crash()
+    {
+        base.Crash();
+        OnBossDied(PickupType.Health, transform.position);
     }
 
     public override void Destroy()

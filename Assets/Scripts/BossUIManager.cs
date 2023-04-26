@@ -1,11 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class BossUIManager : GameBehaviour
 {
     [SerializeField] private GameObject _bossWarningUI, _bossHealthBarUI;
-    [SerializeField] private TMP_Text _bossNameText, _bossWarningText;
+    [SerializeField] private TMP_Text _bossNameText;
     [SerializeField] private UISlider _bossHealthBar;
+    [SerializeField] private Image _bossWarningImage;
+
+    [Header("Boss Warnings")]
+    [SerializeField] private Sprite _battleCruiserWarning;
+    [SerializeField] private Sprite _behemothWarning;
+    [SerializeField] private Sprite _cyberKrakenWarning;
+    [SerializeField] private Sprite _robodactylWarning;
 
     public string BossNameText
     {
@@ -15,15 +23,6 @@ public class BossUIManager : GameBehaviour
             _bossNameText.enabled = true;
         }
     }
-
-    public string BossWarningText
-    {
-        set
-        {
-            _bossWarningText.text = value;
-        }
-    }
-
     private void OnEnable()
     {
         EnemySpawnerManager.OnBossSelected += EnableBossWarningUI;
@@ -50,13 +49,26 @@ public class BossUIManager : GameBehaviour
     }
     public void EnableBossWarningUI(EnemyScriptableObject bossInfo)
     {
-        BossWarningText = "Warning!! " + bossInfo.unitName + " approaching";
+        switch (bossInfo.unitName)
+        {
+            case "BattleCruiser":
+                _bossWarningImage.sprite = _battleCruiserWarning;
+                break;
+            case "Behemoth":
+                _bossWarningImage.sprite = _behemothWarning;
+                break;
+            case "Cyber Kraken":
+                _bossWarningImage.sprite = _cyberKrakenWarning;
+                break;
+            case "Robodactyl":
+                _bossWarningImage.sprite = _robodactylWarning;
+                break;
+        }
         _bossWarningUI.SetActive(true);
     }
 
     private void DisableBossWarningUI()
     {
-        BossWarningText = "";
         _bossWarningUI.SetActive(false);
     }
 

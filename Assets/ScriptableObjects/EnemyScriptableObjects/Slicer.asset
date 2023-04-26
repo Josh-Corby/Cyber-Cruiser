@@ -15,11 +15,13 @@ MonoBehaviour:
   unitPrefab: {fileID: 2653145768784104840, guid: 2fec4a945356f4243890bd799d60aa11, type: 3}
   unitName: Slicer
   maxHealth: 2
-  explodeOnDeath: 1
+  explodeOnDeath: 0
   explosionRadius: 1
   explosionDamage: 1
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
   clusterOnDeath: 0
+  spawnEnemy: 0
+  enemyToSpawn: {fileID: 0}
   objectToSpawn: {fileID: 0}
   amountOfObjects: 0
   moveTypes: 2

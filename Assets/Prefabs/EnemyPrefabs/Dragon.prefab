@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitInfo: {fileID: 11400000, guid: e03405c5a7fe28c46a87c2efa5d4d395, type: 2}
+  _deadSprite: {fileID: 21300000, guid: 1787fe64c0bd0ca43aa90d38605448d6, type: 3}
   unitName: 
   _currentHealth: 0
 --- !u!114 &8942100890769099280

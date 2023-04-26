@@ -13,6 +13,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
 
     [SerializeField] protected float _shieldRendererMaxAlpha;
     [SerializeField] protected float _shieldRendererCurrentAlpha;
+    [SerializeField] protected GameObject _collisionParticles;
 
     public bool _shieldsActive;
     public bool reflectorShield;
@@ -128,7 +129,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
         _unitCollider.enabled = true;
     }
 
-    public virtual void ProcessCollision(GameObject collider)
+    public virtual void ProcessCollision(GameObject collider, Vector2 collisionPoint)
     {
         if (collider.TryGetComponent<IDamageable>(out var damageable))
         {
@@ -136,6 +137,12 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
             if (!isShieldImmuneToDamage)
             {
                 ReduceShields(1);
+            }
+
+            if (_collisionParticles != null)
+            {
+                GameObject collisionParticles = Instantiate(_collisionParticles, collisionPoint, Quaternion.identity);
+                collisionParticles.transform.parent = null;
             }
         }
 

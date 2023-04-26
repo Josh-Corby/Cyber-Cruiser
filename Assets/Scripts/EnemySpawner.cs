@@ -96,7 +96,7 @@ public class EnemySpawner : GameBehaviour
         return null;
     }
 
-    private Vector3 GetRandomSpawnPosition()
+    public Vector3 GetRandomSpawnPosition()
     {
         float x = Random.Range(-spawnArea.x / 2, spawnArea.x / 2);
         float y = Random.Range(-spawnArea.y / 2, spawnArea.y / 2);

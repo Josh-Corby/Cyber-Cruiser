@@ -5,7 +5,6 @@ using UnityEngine;
 public class CyberKrakenTentacle : GameBehaviour
 {
     [SerializeField] protected float speed;
-    [SerializeField] protected GameObject _positionOffset;
 
     [SerializeField] protected Vector2 spawnPosition;
     [SerializeField] protected bool _moveForward;
@@ -14,12 +13,14 @@ public class CyberKrakenTentacle : GameBehaviour
     [SerializeField] protected float _waitTime;
     [SerializeField] protected float _waitTimer;
 
+    private BoxCollider2D _col;
+
     protected void Awake()
     {
-        _positionOffset = transform.parent.gameObject;
-        spawnPosition = _positionOffset.transform.position;
+        spawnPosition = transform.parent.position;
         _moveForward = true;
         _isWaiting = false;
+        _col = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -46,8 +47,8 @@ public class CyberKrakenTentacle : GameBehaviour
 
     protected void MoveForward()
     {
-        _positionOffset.transform.position += transform.right * speed * Time.deltaTime;
-        if (Vector2.Distance(_positionOffset.transform.position, spawnPosition) > transform.localScale.x)
+        transform.parent.position += transform.right * speed * Time.deltaTime;
+        if (Vector2.Distance(transform.parent.position, spawnPosition) > _col.size.x)
         {
             StartWaiting();
             _moveForward = false;
@@ -56,11 +57,11 @@ public class CyberKrakenTentacle : GameBehaviour
 
     private void MoveBackward()
     {
-        _positionOffset.transform.position -= transform.right * speed * Time.deltaTime;
+        transform.parent.position -= transform.right * speed * Time.deltaTime;
 
-        if (Vector2.Distance(_positionOffset.transform.position, spawnPosition) <0.5f)
+        if (Vector2.Distance(transform.parent.position, spawnPosition) <0.5f)
         {
-            Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
         }
     }
 

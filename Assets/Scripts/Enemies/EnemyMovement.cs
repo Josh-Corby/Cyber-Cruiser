@@ -6,7 +6,7 @@ public class EnemyMovement : GameBehaviour
 
     [HideInInspector] public bool isEnemyDead;
     [HideInInspector] public Vector2 direction;
-
+    [SerializeField] private Vector3 _startRotation;
     #region MovementInformation
     [HideInInspector] public float _speed;
 
@@ -69,6 +69,8 @@ public class EnemyMovement : GameBehaviour
 
     protected virtual void Start()
     {
+        _startRotation = new Vector3((int)transform.rotation.x, transform.eulerAngles.y, 0);
+
         if (_homeOnPlayer)
         {
             if (_homeDelay)
@@ -206,17 +208,17 @@ public class EnemyMovement : GameBehaviour
 
         if (homeCounter <= 0)
         {
-            direction = transform.right;
             _homeOnPlayer = false;
-            //Debug.Log("No longer rotating towards player");
             return;
         }
 
-        Vector3 vectorToPlayer = player.position - transform.position;
-        float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg;
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, _homeTurnSpeed * Time.deltaTime);
-        direction = transform.right;
+
+        Vector3 direction = player.transform.position - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+        //Quaternion targetRotation = Quaternion.Euler(0f, _startRotation.y, angle);
+
+        //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _homeTurnSpeed * Time.deltaTime);
     }
 
     protected virtual void DeathMovement()

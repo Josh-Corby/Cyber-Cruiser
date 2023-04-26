@@ -7,7 +7,7 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 {
     private const string PLAYER_PROJECTILE_LAYER_NAME = "PlayerProjectile";
     private PulseDetonator _pulseDetonator;
-    [SerializeField] private GameObject _collisionParticles;
+
     #region Fields
     [SerializeField] private int _shieldActiveDuration;
     [SerializeField] private float _shieldActiveTimer;
@@ -149,7 +149,8 @@ public class PlayerShieldController : ShieldControllerBase, IShield
         _unitCollider.enabled = true;
     }
 
-    public override void ProcessCollision(GameObject collider)
+
+    public override void ProcessCollision(GameObject collider, Vector2 collisionPoint)
     {
         if (collider.TryGetComponent<Boss>(out var boss))
         {
@@ -162,10 +163,7 @@ public class PlayerShieldController : ShieldControllerBase, IShield
             Destroy(pickup.gameObject);
             return;
         }
-
-        GameObject collisionParticles = Instantiate(_collisionParticles, transform.position, Quaternion.identity);
-        collisionParticles.transform.parent = null;
-        base.ProcessCollision(collider);
+        base.ProcessCollision(collider, collisionPoint);
     }
 
     public override void ReduceShields(float damage)

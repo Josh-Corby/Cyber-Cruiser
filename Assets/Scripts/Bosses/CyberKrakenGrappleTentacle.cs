@@ -12,6 +12,17 @@ public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
         TentacleMovement();
     }
 
+    private void OnDisable()
+    {
+        if (_isPlayerGrappled)
+        {
+            if (!PM.isDead)
+            {
+                ResetPlayerMovement();
+            }
+        }
+    }
+
     protected override void TentacleMovement()
     {
         if (!_isPlayerGrappled)
@@ -40,7 +51,7 @@ public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
 
     private void PullPlayer()
     {
-        PM.player.transform.position = _positionOffset.transform.position;
+        PM.player.transform.position = transform.parent.position;
     }
 
     private void ResetPlayerMovement()
@@ -50,15 +61,15 @@ public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
 
     private void MoveBackward()
     {
-        _positionOffset.transform.position -= transform.right * speed * Time.deltaTime;
+        transform.parent.position -= transform.right * speed * Time.deltaTime;
 
-        if (_positionOffset.transform.localPosition.x < -1)
+        if (Vector2.Distance(transform.parent.position, spawnPosition) <0.5f)
         {
             if (_isPlayerGrappled)
             {
                 ResetPlayerMovement();
             }
-            Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
         }
     }
 

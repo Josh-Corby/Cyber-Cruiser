@@ -20,10 +20,12 @@ MonoBehaviour:
   explosionDamage: 1
   explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
   clusterOnDeath: 0
+  spawnEnemy: 0
+  enemyToSpawn: {fileID: 0}
   objectToSpawn: {fileID: 0}
   amountOfObjects: 0
   moveTypes: 4
-  speed: 3
+  speed: 2
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0
@@ -35,7 +37,7 @@ MonoBehaviour:
   sinFrequency: 2.6
   sinMagnitude: 0.03
   homeOnPlayer: 1
-  homeTurnSpeed: 1
-  homeTime: 2
+  homeTurnSpeed: 100
+  homeTime: 3
   homeDelay: 0
   homeDelayTime: 0

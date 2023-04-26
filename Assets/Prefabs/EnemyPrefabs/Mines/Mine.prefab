@@ -85,7 +85,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitInfo: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
+  _unitInfo: {fileID: 11400000, guid: 65c673e9b4286a84c842b1eaa39280d5, type: 2}
+  _deadSprite: {fileID: 0}
   unitName: Mine
   _currentHealth: 0
 --- !u!114 &-3806085156021533184
@@ -102,6 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemyDead: 0
   direction: {x: 0, y: 0}
+  _startRotation: {x: 0, y: 0, z: 0}
   _speed: 0
   _upDownMovement: 0
   _upDownSpeed: 0
@@ -195,7 +197,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -105750261
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c46eb9ec6f995f8488292e729aa0a128, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -23,10 +23,13 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     [SerializeField] private PlayerHealthState _playerHealthState;
     [SerializeField] private GameObject _batteryPack, _hydrocoolant, _plasmaCache;
 
+    public bool isDead;
     private float _iFramesDuration;
     private bool _hasPlayerTakenDamage;
     [SerializeField] private bool _isBatteryPack, _isHydrocoolant, _isPlasmaCache;
-    [SerializeField] private List<GameObject> _addOnObjects = new();    
+    [SerializeField] private List<GameObject> _addOnObjects = new();
+
+    [SerializeField] private int _ramDamage;
     #endregion
 
     #region Properties
@@ -64,30 +67,35 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         set
         {
             _currentHealth = value;
-
-            if (_currentHealth >= PlayerMaxHealth)
+            if(_currentHealth > 0)
             {
-                _currentHealth = PlayerMaxHealth;
-            }
+                isDead = false;
+                if (_currentHealth >= PlayerMaxHealth)
+                {
+                    _currentHealth = PlayerMaxHealth;
+                }
 
-            if(_currentHealth > 2)
-            {
-                PlayerHealthState = PlayerHealthState.Healthy;
-            }
+                if (_currentHealth > 2)
+                {
+                    PlayerHealthState = PlayerHealthState.Healthy;
+                }
 
-            else if (_currentHealth <= 2 && _currentHealth > 1)
-            {
-                PlayerHealthState = PlayerHealthState.Low;
-            }
+                else if (_currentHealth <= 2 && _currentHealth > 1)
+                {
+                    PlayerHealthState = PlayerHealthState.Low;
+                }
 
-            else if (_currentHealth <= 1)
-            {
-                PlayerHealthState = PlayerHealthState.Critical;
+                else if (_currentHealth <= 1)
+                {
+                    PlayerHealthState = PlayerHealthState.Critical;
+                }
+
             }
 
             OnPlayerCurrentHealthChange(GUIM.playerHealthBar, _currentHealth);
             if (_currentHealth <= 0)
             {
+                isDead = true;
                 Destroy();
             }
         }
@@ -245,16 +253,19 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         if (collider.TryGetComponent<Enemy>(out var enemy))
         {
-            enemy.Damage(10);
+            enemy.Damage(_ramDamage);
             Damage(1);
-            return;
+        }
+
+        else if(collider.TryGetComponent<CyberKrakenTentacle>(out var tentacle))
+        {
+            Damage(1);
         }
 
         else if (collider.TryGetComponent<Pickup>(out var pickup))
         {
             pickup.PickupEffect();
             Destroy(pickup.gameObject);
-            return;
         }
     }
 }

@@ -25,8 +25,22 @@ public class Shield : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        _shieldController.ProcessCollision(collision.gameObject);
+        Vector2 closestPoint = Vector2.zero;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            float distance = Vector2.Distance(transform.position, contact.point);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPoint = contact.point;
+            }
+        }
+        _shieldController.ProcessCollision(collision.gameObject, closestPoint);
     }
+
 
     public void EnableShields()
     {
