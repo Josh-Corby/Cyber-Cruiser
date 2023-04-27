@@ -21,7 +21,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [SerializeField] private float _spawnEnemyReduction;
     [SerializeField] private float _offsetPerEnemy;
     [SerializeField] private int _timesToReduce;
-    private int _timesReduced;
+    [SerializeField] private int _timesReduced;
     [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
     [SerializeField] private float _totalSpawnWeight;
 
@@ -31,7 +31,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     [HideInInspector] public bool bossReadyToSpawn;
     private const float BOSS_WAIT_TIME = 2f;
-    private bool _spawnEnemies; 
+    private bool _spawnEnemies;
 
     private List<EnemySpawner> _enemySpawners = new();
     private List<EnemySpawner> _spawnersSpawning = new();
@@ -87,7 +87,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void OnEnable()
     {
         DistanceManager.OnBossDistanceReached += SetupForBossSpawn;
-        Boss.OnBossDied += (p,v) => { StartCoroutine(ProcessBossDied()); };
+        Boss.OnBossDied += (p, v) => { ProcessBossDied(); };
         GameManager.OnMissionStart += RestartLevel;
         WaveCountdownManager.OnCountdownDone += StartSpawningEnemies;
         PlayerManager.OnPlayerDeath += StopSpawningEnemies;
@@ -96,10 +96,10 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void OnDisable()
     {
         DistanceManager.OnBossDistanceReached -= SetupForBossSpawn;
-        Boss.OnBossDied -= (p,v) => { StartCoroutine(ProcessBossDied()); };
+        Boss.OnBossDied -= (p, v) => { ProcessBossDied(); };
         GameManager.OnMissionStart -= RestartLevel;
         WaveCountdownManager.OnCountdownDone -= StartSpawningEnemies;
-        PlayerManager.OnPlayerDeath -= StopSpawningEnemies;     
+        PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
     }
 
     private void Start()
@@ -169,7 +169,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         float value = Random.value;
         for (int i = 0; i < _enemySpawnerInfo.Length; i++)
         {
-            if(value < _enemySpawnerInfo[i].SpawnerWeight)
+            if (value < _enemySpawnerInfo[i].SpawnerWeight)
             {
                 if (!_spawnersSpawning.Contains(_enemySpawnerInfo[i].spawner))
                 {
@@ -199,7 +199,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void SpawnFromRandomSpawners()
     {
-        
+
         foreach (EnemySpawner spawner in _spawnersSpawning)
         {
             //Debug.Log("tell spawner to spawn");
@@ -266,13 +266,13 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void CancelBossSpawn()
     {
-        if(_spawnBossCoroutine != null)
+        if (_spawnBossCoroutine != null)
         {
             StopCoroutine(_spawnBossCoroutine);
         }
     }
 
-    private IEnumerator ProcessBossDied()
+    private void ProcessBossDied()
     {
         //Increment difficulty
         ChangeSpawnInterval();
@@ -283,21 +283,21 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
             SetSpawnersModifiers(0.1f);
         }
 
-        //wait set time before spawning enemies again
-        yield return new WaitForSeconds(BOSS_WAIT_TIME);
+        Invoke(nameof(StartSpawningEnemies), BOSS_WAIT_TIME);
         //resume spawning enemies
         StartSpawningEnemies();
     }
 
     private void ChangeSpawnInterval()
-    { 
-        if(_timesReduced >= _timesToReduce)
+    {
+        Debug.Log("Spawn interval change");
+        if (_timesReduced >= _timesToReduce)
         {
             EnemiesToSpawn += 1;
             EnemySpawnInterval = _spawnEnemyIntervalBase + (EnemiesToSpawn * _offsetPerEnemy);
         }
 
-        if(_timesReduced < _timesToReduce)
+        if (_timesReduced < _timesToReduce)
         {
             EnemySpawnInterval -= _spawnEnemyReduction;
             _timesReduced += 1;

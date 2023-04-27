@@ -85,7 +85,6 @@ public class Boss : Enemy, IDamageable
 
     public override void Destroy()
     {
-        OnBossDied(PickupType.Health, transform.position);
         base.Destroy();
     }
 }

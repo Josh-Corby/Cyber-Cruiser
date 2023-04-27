@@ -86,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitInfo: {fileID: 11400000, guid: 65c673e9b4286a84c842b1eaa39280d5, type: 2}
+  _spriteRenderer: {fileID: 6224517711084455413}
   _deadSprite: {fileID: 0}
   unitName: Mine
   _currentHealth: 0

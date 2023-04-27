@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RocketLauncher
   m_EditorClassIdentifier: 
   weaponName: 
-  objectToFire: {fileID: 2653145768784104840, guid: 709a567aa7ddbbb499d1205e0edd3970, type: 3}
+  objectToFire: {fileID: 2653145768784104840, guid: 0f1e8bf274a42564ca36a284fb8da74a, type: 3}
   isObjectEnemy: 1
   timeBetweenShots: 1
   holdToFire: 0

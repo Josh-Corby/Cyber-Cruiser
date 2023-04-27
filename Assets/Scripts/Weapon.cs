@@ -8,7 +8,7 @@ public class Weapon : GameBehaviour
     [SerializeField] private WeaponScriptableObject _weaponInfo;
     private GameObject _firePoint;
     private Transform _firePointTransform;
-    private GameObject _objectToFire;
+    [HideInInspector] public GameObject _objectToFire;
     #endregion
 
     #region Fields

@@ -170,6 +170,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEnemyDead: 0
+  direction: {x: 0, y: 0}
+  _startRotation: {x: 0, y: 0, z: 0}
+  _speed: 0
+  _upDownMovement: 0
+  _upDownSpeed: 0
+  isBackForthMovingUp: 0
+  _upDownMoveDistance: 0
+  _seekPlayer: 0
+  _seekPlayerY: 0
+  _seekPlayerX: 0
+  _seekSpeed: 0
+  _sinUpDownMovement: 0
+  _sinFrequency: 0
+  _sinMagnitude: 0
+  _sinRandomSeed: 0
+  _homeOnPlayer: 0
+  _homeTurnSpeed: 0
+  _homeTime: 0
+  homeCounter: 0
+  _homeDelay: 0
+  _homeDelayTime: 0
+  _homeDelayCounter: 0
   _staticMovement: 1
   speed: 2.5
 --- !u!114 &-4359868713181001793
@@ -185,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitInfo: {fileID: 11400000, guid: f9f7b71e06d9e7347a816ac37c62f91f, type: 2}
+  _spriteRenderer: {fileID: 1718110299894638061}
   _deadSprite: {fileID: 21300000, guid: fe09aa424bd722c428d1d277b78f36a9, type: 3}
   unitName: Cyber Kraken
   _currentHealth: 0

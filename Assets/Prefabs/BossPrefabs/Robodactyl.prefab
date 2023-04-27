@@ -249,6 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitInfo: {fileID: 11400000, guid: 45c00a2ce362ab249b4c9699c248f74d, type: 2}
+  _spriteRenderer: {fileID: 449709480489148748}
   _deadSprite: {fileID: 21300000, guid: 191ef783c66e6e648a1c9e6475bb7a07, type: 3}
   unitName: 
   _currentHealth: 0
@@ -257,7 +258,7 @@ MonoBehaviour:
   _laserLaunchers:
   - {fileID: 5710954070109479895}
   - {fileID: 1958697201700664333}
-  _mineInfo: {fileID: 11400000, guid: 2e4abaa962787cc4cb4e06baf2ae894a, type: 2}
+  _mineInfo: {fileID: 11400000, guid: cc0e1a3f7458d714da9b02da04b0e8d2, type: 2}
   _mineReleasePoint: {fileID: 837196206767586904}
 --- !u!114 &-4316434092633255210
 MonoBehaviour:
@@ -273,6 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemyDead: 0
   direction: {x: 0, y: 0}
+  _startRotation: {x: 0, y: 0, z: 0}
   _speed: 0
   _upDownMovement: 0
   _upDownSpeed: 0
@@ -341,6 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponInfo: {fileID: 11400000, guid: cd856ec32a1ec4a4cb4e89a8a5ba24c7, type: 2}
+  _objectToFire: {fileID: 0}
   readyToFire: 0
   _holdToFire: 0
   isHoming: 0
@@ -421,6 +424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponInfo: {fileID: 11400000, guid: cd856ec32a1ec4a4cb4e89a8a5ba24c7, type: 2}
+  _objectToFire: {fileID: 0}
   readyToFire: 0
   _holdToFire: 0
   isHoming: 0

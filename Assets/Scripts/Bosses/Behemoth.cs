@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class Behemoth : Boss, IBoss
 {
-    [SerializeField] private Weapon missileLauncher;
-    [SerializeField] private Weapon homingMissileLauncher;
+    [SerializeField] private Weapon _missileLauncher;
+    [SerializeField] private Weapon _homingMissileLauncher;
+
+    [SerializeField] private EnemyScriptableObject _missile;
+    [SerializeField] private EnemyScriptableObject _homingMissile;
+
 
     //missiles in random directions
     public void Attack1()
     {
-        missileLauncher.CheckFireTypes();
+        _missileLauncher.CheckFireTypes();
     }
 
     //shoot homing missiles at different directions
     public void Attack2()
     {
-        homingMissileLauncher.CheckFireTypes();
+        _homingMissileLauncher.CheckFireTypes();
     }
 }

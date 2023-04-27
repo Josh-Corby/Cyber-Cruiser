@@ -515,7 +515,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0.544
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!1 &62454170
 GameObject:
@@ -641,11 +641,11 @@ MonoBehaviour:
   - CategoryName: 
     CategoryWeight: 1
     CategoryTypes:
-    - EnemySO: {fileID: 11400000, guid: 65c673e9b4286a84c842b1eaa39280d5, type: 2}
+    - EnemySO: {fileID: 11400000, guid: b8253218195d4e048b086f691ebf997b, type: 2}
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 0.5
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!1 &71385176
 GameObject:
@@ -3196,7 +3196,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 0, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!1 &486426441
 GameObject:
@@ -7035,7 +7035,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCategories:
   - CategoryName: Missile
-    CategoryWeight: 0.5
+    CategoryWeight: 1
     CategoryTypes:
     - EnemySO: {fileID: 11400000, guid: e485d258fcdb9154abe4ade99eb035bc, type: 2}
       spawnWeight: 0.5
@@ -7043,8 +7043,8 @@ MonoBehaviour:
       spawnWeight: 0.5
     TotalTypeWeights: 0
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0.5
-  totalCategoryWeight: 0.5
+  spawnerWeight: 0.25
+  totalCategoryWeight: 1
 --- !u!1 &985080741
 GameObject:
   m_ObjectHideFlags: 0
@@ -9649,15 +9649,15 @@ MonoBehaviour:
     CategoryWeight: 0.25
     CategoryTypes:
     - EnemySO: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
-      spawnWeight: 0.167
+      spawnWeight: 0.2
     - EnemySO: {fileID: 11400000, guid: c100e462a93989e42b098cc67ee40810, type: 2}
-      spawnWeight: 0.167
+      spawnWeight: 0.2
     - EnemySO: {fileID: 11400000, guid: 65c673e9b4286a84c842b1eaa39280d5, type: 2}
-      spawnWeight: 0.167
+      spawnWeight: 0.2
     - EnemySO: {fileID: 11400000, guid: 2e4abaa962787cc4cb4e06baf2ae894a, type: 2}
-      spawnWeight: 0.167
+      spawnWeight: 0.2
     - EnemySO: {fileID: 11400000, guid: 94b40a3ddf049f84cad69b307d63e366, type: 2}
-      spawnWeight: 0.167
+      spawnWeight: 0.2
     TotalTypeWeights: 0
   - CategoryName: Reflector
     CategoryWeight: 0.25
@@ -9666,7 +9666,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!4 &1370326091
 Transform:
@@ -9698,7 +9698,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1401583081
 Transform:
   m_ObjectHideFlags: 0
@@ -10866,6 +10866,10 @@ MonoBehaviour:
   _healthPickup: {fileID: 9010852593865095087, guid: 6f93701b93521ef4c917649eb38830e8, type: 3}
   _weaponUpgradePrefabs:
   - {fileID: 9010852593865095087, guid: 2e1c104e9af1a8441bbcc0c9386d09cc, type: 3}
+  - {fileID: 9010852593865095087, guid: aa94f5346460fae41876051545304d8e, type: 3}
+  - {fileID: 9010852593865095087, guid: 888315a2ca640964989b3803c815bbee, type: 3}
+  - {fileID: 9010852593865095087, guid: 7a01190f663ce964e9bb6f1e23f87ecd, type: 3}
+  - {fileID: 9010852593865095087, guid: 0b05c1059bb5125439a8d3baa6287b52, type: 3}
   _pickupIndicator: {fileID: 4630231504149823482, guid: eccf7339e3ebce64b95a42c2273d0758, type: 3}
 --- !u!1001 &1654821707
 PrefabInstance:
@@ -13734,24 +13738,28 @@ MonoBehaviour:
   _bossSpawner: {fileID: 1370326090}
   _bosses:
   - {fileID: 11400000, guid: b3eead9fae217544fbca7e9c01d12c17, type: 2}
+  - {fileID: 11400000, guid: 78f9a89cd02828243b6c80b47d51d549, type: 2}
+  - {fileID: 11400000, guid: f9f7b71e06d9e7347a816ac37c62f91f, type: 2}
+  - {fileID: 11400000, guid: 45c00a2ce362ab249b4c9699c248f74d, type: 2}
   _enemiesToSpawnBase: 1
   _enemiesToSpawn: 2
   _spawnEnemyIntervalBase: 1
   _enemySpawnInterval: 0
-  _spawnEnemyReduction: 0.3333
+  _spawnEnemyReduction: 0.16667
   _offsetPerEnemy: 0.01
-  _timesToReduce: 1
+  _timesToReduce: 2
+  _timesReduced: 0
   _enemySpawnerInfo:
   - spawner: {fileID: 984547534}
-    SpawnerWeight: 0.5
+    SpawnerWeight: 0.25
   - spawner: {fileID: 1370326090}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 47135018}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 485082065}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 71091565}
-    SpawnerWeight: 0.5
+    SpawnerWeight: 0
   _totalSpawnWeight: 1
   bossGoalPosition: {fileID: 1997121481}
   dragonMovePoint: {fileID: 73215885}

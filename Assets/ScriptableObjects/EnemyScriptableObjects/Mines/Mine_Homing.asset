@@ -39,5 +39,5 @@ MonoBehaviour:
   homeOnPlayer: 1
   homeTurnSpeed: 100
   homeTime: 3
-  homeDelay: 0
-  homeDelayTime: 0
+  homeDelay: 1
+  homeDelayTime: 0.5

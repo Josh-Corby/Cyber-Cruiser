@@ -87,7 +87,6 @@ public class EnemySpawner : GameBehaviour
         {
             if (value < category.CategoryTypes[i].spawnWeight)
             {
-
                 EnemyScriptableObject enemy = category.CategoryTypes[i].EnemySO;
                 return enemy;
             }

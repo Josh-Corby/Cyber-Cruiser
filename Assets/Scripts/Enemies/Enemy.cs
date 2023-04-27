@@ -9,7 +9,8 @@ public class Enemy : GameBehaviour, IDamageable
     [HideInInspector] public EnemyScriptableObject _unitInfo;
     private EnemyMovement _unitMovement;
     private EnemyWeaponController _weapon;
-    private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
     [SerializeField] private Sprite _deadSprite;
     private GameObject _crashParticles;
     private GameObject _explosionEffect;
@@ -57,7 +58,7 @@ public class Enemy : GameBehaviour, IDamageable
 
     protected virtual void Awake()
     {
-        AssignEnemyInfo();    
+        AssignEnemyInfo();
     }
 
     protected virtual void Start()
@@ -67,7 +68,7 @@ public class Enemy : GameBehaviour, IDamageable
 
     private void AssignEnemyInfo()
     {
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _animator = GetComponentInChildren<Animator>();
         _weapon = GetComponentInChildren<EnemyWeaponController>();
         unitName = _unitInfo.unitName;
         gameObject.name = unitName;
@@ -103,7 +104,7 @@ public class Enemy : GameBehaviour, IDamageable
 
     public virtual void Damage(float damage)
     {
-        Debug.Log("enemy damaged");
+        //Debug.Log("enemy damaged");
         CurrentHealth -= damage;
         if (CurrentHealth <= 0)
         {
@@ -141,7 +142,7 @@ public class Enemy : GameBehaviour, IDamageable
 
     protected virtual void Crash()
     {
-        if(_unitMovement != null)
+        if (_unitMovement != null)
         {
             _unitMovement.isEnemyDead = true;
         }
@@ -151,20 +152,21 @@ public class Enemy : GameBehaviour, IDamageable
             _weapon.gameObject.SetActive(false);
         }
 
-        if (_spriteRenderer != null)
+        if (_animator != null)
         {
-            _spriteRenderer.sprite = _deadSprite;
-            _spriteRenderer.sortingOrder = -1;
+            _animator.enabled = false;
         }
 
+        _spriteRenderer.sprite = _deadSprite;
+        _spriteRenderer.sortingOrder = -1;
         _crashParticles.SetActive(true);
 
         //change object layer to layer that only collides with cull area
         gameObject.layer = LayerMask.NameToLayer(DEAD_ENEMY_LAYER_NAME);
 
+
         //remove enemy from enemies alive so it doesn't make boss spawner wait for it
         OnEnemyAliveStateChange(gameObject, false);
-
         OnEnemyCrash(gameObject);
     }
 
