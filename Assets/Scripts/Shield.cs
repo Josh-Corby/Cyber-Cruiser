@@ -5,24 +5,22 @@ public class Shield : MonoBehaviour
 {
     public ShieldControllerBase _shieldController;
     [SerializeField] private Collider2D _shieldCollider;
-    public SpriteRenderer _shieldSprite;
+    private SpriteRenderer _spriteRenderer;
+    private Color _tempColour;
+    private float _startAlpha;
 
-    public Color SpriteRendererColour
-    {
-        get
-        {
-            return _shieldSprite.color;
-        }
-        set
-        {
-            _shieldSprite.color = value;
-        }
-    }
     private void Awake()
     {
         _shieldController = GetComponentInParent<ShieldControllerBase>();
         _shieldCollider = GetComponent<Collider2D>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
+
+    private void Start()
+    {
+        _startAlpha = _spriteRenderer.color.a;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Vector2 closestCollision = GetClosestCollisionPoint(collision.contacts);
@@ -50,6 +48,20 @@ public class Shield : MonoBehaviour
     public void ToggleShields(bool value)
     {
         _shieldCollider.enabled = value;
-        _shieldSprite.enabled = value;
+        _spriteRenderer.enabled = value;
+    }
+
+    public void SetTargetAlpha(float currentStrength, float maxStrength)
+    {
+        float currentPercentStrength = currentStrength / maxStrength;
+        float targetAlpha = _startAlpha * currentPercentStrength;
+        ChangeSpriteRendererAlpha(targetAlpha);
+    }
+
+    public void ChangeSpriteRendererAlpha(float targetAlpha)
+    {
+        _tempColour = _spriteRenderer.color;
+        _tempColour.a = targetAlpha;
+        _spriteRenderer.color = _tempColour;
     }
 }

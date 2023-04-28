@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class ShieldControllerBase : GameBehaviour, IShield
+public class ShieldControllerBase : GameBehaviour
 {
     #region References
     [SerializeField] protected Collider2D _unitCollider;
@@ -9,8 +9,8 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
     #endregion
 
     #region Fields
-    public bool _shieldsActive;
-    public bool reflectorShield;
+    protected bool _shieldsActive;
+    protected bool reflectorShield;
 
     [SerializeField] protected bool _shieldsActiveOnSpawn;
     [SerializeField] protected bool isShieldImmuneToDamage;
@@ -18,86 +18,38 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
     [SerializeField] protected int _shieldMaxStrength;
     [SerializeField] protected float _shieldCurrentStrength;
     [SerializeField] protected float _shieldCollisionDamage;
-
-    [SerializeField] protected float _shieldRendererMaxAlpha;
-    [SerializeField] protected float _shieldRendererCurrentAlpha;
     #endregion
 
     #region Properties
-    protected virtual bool ShieldsActive
+    protected virtual bool IsShieldsActive
     {
-        get
-        {
-            return _shieldsActive;
-        }
+        get => _shieldsActive;
         set
         {
             if (value == true)
             {
                 ShieldCurrentStrength = ShieldMaxStrength;
             }
-
             _shieldsActive = value;
             _shields.ToggleShields(value);         
         }
     }
 
-    public int ShieldMaxStrength
+    protected int ShieldMaxStrength
     {
-        get
-        {
-            return _shieldMaxStrength;
-        }
-        set
-        {
-            _shieldMaxStrength = value;
-        }
+        get => _shieldMaxStrength;
+        set => _shieldMaxStrength = value;
     }
 
-    public float ShieldCurrentStrength
+    protected float ShieldCurrentStrength
     {
-        get
-        {
-            return _shieldCurrentStrength;
-        }
-        set
-        {
-            _shieldCurrentStrength = value;
-        }
+        get => _shieldCurrentStrength;
+        set => _shieldCurrentStrength = value;
     }
 
-    public float ShieldCollisionDamage
+    protected float ShieldCollisionDamage
     {
-        get
-        {
-            return _shieldCollisionDamage;
-        }
-        set { }
-    }
-
-    public float ShieldRendererMaxAlpha
-    {
-        get
-        {
-            return _shieldRendererMaxAlpha;
-        }
-        set
-        {
-            _shieldRendererMaxAlpha = value;
-        }
-    }
-
-    public float ShieldRendererCurrentAlpha
-    {
-        get
-        {
-            return _shieldRendererCurrentAlpha;
-        }
-        set
-        {
-            _shieldRendererCurrentAlpha = value;
-            _shields.SpriteRendererColour = new Color(_shields.SpriteRendererColour.r, _shields.SpriteRendererColour.g, _shields.SpriteRendererColour.b, value);
-        }
+        get => _shieldCollisionDamage;
     }
     #endregion
 
@@ -117,23 +69,17 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
         {
             ActivateShields();
         }
-        SetRendererMaxAlpha();
     }
 
-    protected void SetRendererMaxAlpha()
+    protected virtual void ActivateShields()
     {
-        ShieldRendererMaxAlpha = _shields.SpriteRendererColour.a;
-    }
-
-    public virtual void ActivateShields()
-    {
-        ShieldsActive = true;
+        IsShieldsActive = true;
         _unitCollider.enabled = false;
     }
 
-    public virtual void DeactivateShields()
+    protected virtual void DeactivateShields()
     {
-        ShieldsActive = false;
+        IsShieldsActive = false;
         _unitCollider.enabled = true;
     }
 
@@ -154,7 +100,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
             }
         }
 
-        else if (collider.TryGetComponent<IShield>(out var shield))
+        else if (collider.TryGetComponent<ShieldControllerBase>(out var shield))
         {
             shield.ReduceShields(ShieldCollisionDamage);
             if (!isShieldImmuneToDamage)
@@ -173,7 +119,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
             {
                 if (!isShieldImmuneToDamage)
                 {
-                    ReduceShields(bullet.damage);
+                    ReduceShields(bullet.Damage);
                 }
                 Destroy(bullet.gameObject);
             }
@@ -189,15 +135,13 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
             DeactivateShields();
             return;
         }
-
-        float currentPercentStrength = ShieldCurrentStrength / ShieldMaxStrength;
-        float targetAlpha = ShieldRendererMaxAlpha * currentPercentStrength;
-        ShieldRendererCurrentAlpha = targetAlpha;
+        _shields.SetTargetAlpha(ShieldCurrentStrength, ShieldMaxStrength);
     }
 
-    public virtual void ReflectProjectile(Bullet bulletToReflect)
+    protected virtual void ReflectProjectile(Bullet bulletToReflect)
     {
         bulletToReflect.gameObject.transform.right = transform.right;
-        bulletToReflect.speed /= 2;
+        bulletToReflect.Speed /= 2;
+        bulletToReflect.SwitchBulletTeam();
     }
 }

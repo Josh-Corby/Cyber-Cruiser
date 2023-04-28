@@ -801,4 +801,10 @@ public class Utilities : MonoBehaviour
             slider.SetSliderValue(value);
         }
     }
+
+    public int ChangeLayerFromString(string layerName)
+    {
+        int stringToLayer = LayerMask.NameToLayer(layerName);
+        return stringToLayer;
+    }
 }

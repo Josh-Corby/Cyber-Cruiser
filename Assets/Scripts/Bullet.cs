@@ -9,33 +9,42 @@ public class Bullet : GameBehaviour
     public GameObject homingTarget = null;
 
     [Header("Art")]
-    [HideInInspector] public SpriteRenderer spriteRenderer;
+    private SpriteRenderer _spriteRenderer;
     [SerializeField] private Sprite _playerProjectileSprite;
     [SerializeField] private Sprite _enemyProjectileSprite;
-    [SerializeField] private GameObject collisionParticles;
+    [SerializeField] private GameObject _collisionParticles;
 
     private BulletHoming _homingTrigger;
     #endregion
 
     #region Fields
-    public float speed;
-    public float damage;
+    [SerializeField] private float _speed;
+    private readonly float _damage;
+
     [SerializeField] private bool _isHoming;
     [SerializeField] protected float _homeTurnSpeed;
     [SerializeField] protected float _homeTime;
     [SerializeField] protected bool _homeDelay;
     [SerializeField] protected float _homeDelayTime;
-    [SerializeField] private float homeCounter;
+    [SerializeField] private float _homeCounter;
     [SerializeField] private float _homeDelayCounter;
-    [HideInInspector] public Vector2 direction;
+    private Vector2 direction;
     #endregion
+
+    public float Speed
+    {
+        get => _speed;
+        set => _speed = value;
+    }
+
+    public float Damage
+    {
+        get => _damage;
+    }
 
     public bool IsHoming
     {
-        get
-        {
-            return _isHoming;
-        }
+        get => _isHoming;
         set
         {
             _isHoming = value;
@@ -49,15 +58,12 @@ public class Bullet : GameBehaviour
 
     public Sprite ProjectileImage
     {
-        set
-        {
-            spriteRenderer.sprite = value;
-        }
+        set => _spriteRenderer.sprite = value;
     }
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
         if (transform.childCount > 0)
         {
@@ -82,7 +88,7 @@ public class Bullet : GameBehaviour
             if (IsHoming)
             {
                 _homingTrigger.gameObject.SetActive(true);
-                homeCounter = _homeTime;
+                _homeCounter = _homeTime;
                 CheckBulletLayer();
             }
             if (!IsHoming)
@@ -103,14 +109,14 @@ public class Bullet : GameBehaviour
                 return;
             }
         }
-        transform.position += transform.right * speed * Time.deltaTime;
+        transform.position += transform.right * _speed * Time.deltaTime;
     }
 
     private void RotateTowardsTarget()
     {
-        homeCounter -= Time.deltaTime;
+        _homeCounter -= Time.deltaTime;
 
-        if (homeCounter <= 0)
+        if (_homeCounter <= 0)
         {
             direction = transform.up;
             IsHoming = false;
@@ -127,7 +133,7 @@ public class Bullet : GameBehaviour
 
     private void MoveTowardsTarget()
     {
-        transform.position = Vector2.MoveTowards(transform.position, homingTarget.transform.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, homingTarget.transform.position, _speed * Time.deltaTime);
     }
 
     public void CheckBulletLayer()
@@ -141,20 +147,21 @@ public class Bullet : GameBehaviour
 
     public void SwitchBulletTeam()
     {
-        gameObject.layer = gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME) ?
-            ChangeLayerFromString(PLAYER_PROJECTILE_LAYER_NAME) : ChangeLayerFromString(ENEMY_PROJECTILE_LAYER_NAME);
+        //switch from player team
+        if(gameObject.layer == LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME))
+        {
+            gameObject.layer = ChangeLayerFromString(ENEMY_PROJECTILE_LAYER_NAME);
+            _spriteRenderer.sprite = _enemyProjectileSprite;
+        }
+
+        //switch to player team
+        else if(gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME))
+        {
+            gameObject.layer = ChangeLayerFromString(PLAYER_PROJECTILE_LAYER_NAME);
+            _spriteRenderer.sprite = _playerProjectileSprite;
+        }
     }
 
-    private int ChangeLayerFromString(string layerName)
-    {
-        int stringToLayer = LayerMask.NameToLayer(layerName);
-        return stringToLayer;
-    }
-
-    private void SwitchBulletSprite()
-    {
-
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -168,17 +175,16 @@ public class Bullet : GameBehaviour
             return;
         }
 
-        GameObject particles = Instantiate(collisionParticles, transform);
+        GameObject particles = Instantiate(_collisionParticles, transform);
         particles.transform.parent = null;
 
         if (!collider.TryGetComponent<IDamageable>(out var interactable))
         {
-
             Destroy(gameObject);
             return;
         }
 
-        interactable.Damage(damage);
+        interactable.Damage(Damage);
         Destroy(gameObject);
     }
 

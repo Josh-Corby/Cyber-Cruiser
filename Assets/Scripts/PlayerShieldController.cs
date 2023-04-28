@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class PlayerShieldController : ShieldControllerBase, IShield
+public class PlayerShieldController : ShieldControllerBase
 {
-
     private PulseDetonator _pulseDetonator;
 
     #region Fields
@@ -41,15 +40,13 @@ public class PlayerShieldController : ShieldControllerBase, IShield
         }
     }
 
-    protected override bool ShieldsActive
+    protected override bool IsShieldsActive
     {
-        get
-        {
-            return _shieldsActive;
-        }
+        get => _shieldsActive;
         set
         {
-            _shieldsActive = value;
+            base.IsShieldsActive = value;
+
             if (!_shieldsActive)
             {
                 OnPlayerShieldsDeactivated(GUIM.playerShieldBar);
@@ -93,7 +90,7 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 
     private void Update()
     {
-        if (ShieldsActive)
+        if (IsShieldsActive)
         {
             if (ShieldActiveTimer >= 0)
             {
@@ -110,7 +107,7 @@ public class PlayerShieldController : ShieldControllerBase, IShield
     {
         if (GM.isPaused) return;
 
-        if (ShieldsActive)
+        if (IsShieldsActive)
         {
             return;
         }
@@ -121,7 +118,7 @@ public class PlayerShieldController : ShieldControllerBase, IShield
         }
     }
 
-    public override void ActivateShields()
+    protected override void ActivateShields()
     {
         if (_isPulseDetonator)
         {
@@ -130,28 +127,22 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 
         if (!_isPulseDetonator)
         {
-            ShieldsActive = true;
-            _shields.ToggleShields(ShieldsActive);
+            IsShieldsActive = true;
             PM.IsPlayerColliderEnabled = false;
-            ShieldCurrentStrength = ShieldMaxStrength;
         }
     }
-     
-    public override void DeactivateShields()
+
+    protected override void DeactivateShields()
     {
         ShieldActiveTimer = ShieldActiveDuration;
 
-        ShieldsActive = false;
-        _shields.ToggleShields(ShieldsActive);
+        IsShieldsActive = false;
         PM.IsPlayerColliderEnabled = true;
     }
 
     public override void ProcessCollision(GameObject collider, Vector2 collisionPoint)
     {
-        if (collider.TryGetComponent<Boss>(out var boss))
-        {
-            return;
-        }
+        if (collider.GetComponent<Boss>()) return;
 
         else if (collider.TryGetComponent<Pickup>(out var pickup))
         {
@@ -165,11 +156,5 @@ public class PlayerShieldController : ShieldControllerBase, IShield
     public override void ReduceShields(float damage)
     {
         ShieldActiveTimer -= damage;
-    }
-
-    public override void ReflectProjectile(Bullet bulletToReflect)
-    {
-        base.ReflectProjectile(bulletToReflect);
-        //bulletToReflect.gameObject.layer = LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME);
     }
 }

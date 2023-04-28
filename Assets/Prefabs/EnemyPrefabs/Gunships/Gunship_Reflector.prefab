@@ -117,27 +117,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemyDead: 0
   direction: {x: 0, y: 0}
-  _startRotation: {x: 0, y: 0, z: 0}
-  _speed: 0
-  _upDownMovement: 0
-  _upDownSpeed: 0
-  isBackForthMovingUp: 0
-  _upDownMoveDistance: 0
-  _seekPlayer: 0
-  _seekPlayerY: 0
-  _seekPlayerX: 0
-  _seekSpeed: 0
-  _sinUpDownMovement: 0
-  _sinFrequency: 0
-  _sinMagnitude: 0
-  _sinRandomSeed: 0
-  _homeOnPlayer: 0
-  _homeTurnSpeed: 0
-  _homeTime: 0
-  homeCounter: 0
-  _homeDelay: 0
-  _homeDelayTime: 0
-  _homeDelayCounter: 0
   gunshipMoveType: 0
 --- !u!1 &2997536913237005337
 GameObject:
@@ -190,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponInfo: {fileID: 11400000, guid: 9818121d79463934baba9740bb6cab5d, type: 2}
+  _objectToFire: {fileID: 0}
   readyToFire: 0
   _holdToFire: 0
   isHoming: 0
@@ -250,7 +230,7 @@ Transform:
   m_GameObject: {fileID: 8391391984081162511}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3632376761437769799}
@@ -321,15 +301,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 304213227737204261, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.495
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 304213227737204261, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.495
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 304213227737204261, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.495
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 304213227737204261, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -371,72 +351,47 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2241936634859946288, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-      propertyPath: _shieldSprite
-      value: 
-      objectReference: {fileID: 3324337944816115621}
-    - target: {fileID: 2241936634859946288, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-      propertyPath: _shieldCollisionDamage
-      value: 1
+    - target: {fileID: 6168723573745385637, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 14
       objectReference: {fileID: 0}
-    - target: {fileID: 4847769822778804586, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-      propertyPath: m_Layer
-      value: 7
+    - target: {fileID: 6168723573745385637, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 14
       objectReference: {fileID: 0}
-    - target: {fileID: 4847769822778804586, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 6168723573745385637, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6498324827412908661, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_Name
       value: EnemyShieldController
       objectReference: {fileID: 0}
-    - target: {fileID: 6498324827412908661, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-      propertyPath: m_Layer
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8055569515623550205, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8055569515623550205, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8055569515623550205, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-      propertyPath: unitCollider
-      value: 
-      objectReference: {fileID: 3537538281721821470}
-    - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-      propertyPath: maxShieldStrength
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-      propertyPath: _shieldMaxStrength
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-      propertyPath: _shieldsActiveOnSpawn
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 9111243653320469812, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-      propertyPath: _shieldCollisionDamage
+    - target: {fileID: 8148292934779049401, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_Size.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148292934779049401, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: m_Size.y
+      value: 2.39
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
 --- !u!4 &1757891744639291815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 304213227737204261, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
-  m_PrefabInstance: {fileID: 2043932106745272194}
-  m_PrefabAsset: {fileID: 0}
---- !u!212 &3324337944816115621 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 3638885222701631527, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
   m_PrefabInstance: {fileID: 2043932106745272194}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6719808183740295988
