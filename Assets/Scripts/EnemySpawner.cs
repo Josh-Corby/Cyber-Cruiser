@@ -159,15 +159,8 @@ public class EnemySpawner : GameBehaviour
         {
             if (enemy.TryGetComponent<EnemyMovement>(out var enemyMovement))
             {
-                enemyMovement._speed += _speedModifier;
+                enemyMovement.ApplySpeedModifier(_speedModifier);
             }
-
-            else if (enemy.TryGetComponent<BossMovement>(out var bossMovement))
-            {
-                bossMovement.speed += _speedModifier;
-            }
-
-            else return;
         }
     }
 

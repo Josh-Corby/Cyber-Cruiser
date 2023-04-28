@@ -23,7 +23,7 @@ public class EnemyScriptableObject : ScriptableObject
     [Header("Movement Info")]
     public MovementTypes moveTypes;
     public float speed;
-
+    public float crashSpeed;
 
     public bool upDownMovement;
     public float upDownSpeed;

@@ -5,7 +5,7 @@ using System;
 
 public class PlayerShieldController : ShieldControllerBase, IShield
 {
-    private const string PLAYER_PROJECTILE_LAYER_NAME = "PlayerProjectile";
+
     private PulseDetonator _pulseDetonator;
 
     #region Fields
@@ -131,18 +131,18 @@ public class PlayerShieldController : ShieldControllerBase, IShield
         if (!_isPulseDetonator)
         {
             ShieldsActive = true;
-            _shields.EnableShields();
+            _shields.ToggleShields(ShieldsActive);
             PM.IsPlayerColliderEnabled = false;
             ShieldCurrentStrength = ShieldMaxStrength;
         }
     }
-
+     
     public override void DeactivateShields()
     {
         ShieldActiveTimer = ShieldActiveDuration;
 
         ShieldsActive = false;
-        _shields.DisableShields();
+        _shields.ToggleShields(ShieldsActive);
         PM.IsPlayerColliderEnabled = true;
     }
 
@@ -170,6 +170,6 @@ public class PlayerShieldController : ShieldControllerBase, IShield
     public override void ReflectProjectile(Bullet bulletToReflect)
     {
         base.ReflectProjectile(bulletToReflect);
-        bulletToReflect.gameObject.layer = LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME);
+        //bulletToReflect.gameObject.layer = LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME);
     }
 }

@@ -2,8 +2,16 @@ using UnityEngine;
 
 public abstract class ShieldControllerBase : GameBehaviour, IShield
 {
+    #region References
     [SerializeField] protected Collider2D _unitCollider;
     [SerializeField] protected Shield _shields;
+    [SerializeField] protected GameObject _collisionParticles;
+    #endregion
+
+    #region Fields
+    public bool _shieldsActive;
+    public bool reflectorShield;
+
     [SerializeField] protected bool _shieldsActiveOnSpawn;
     [SerializeField] protected bool isShieldImmuneToDamage;
 
@@ -13,10 +21,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
 
     [SerializeField] protected float _shieldRendererMaxAlpha;
     [SerializeField] protected float _shieldRendererCurrentAlpha;
-    [SerializeField] protected GameObject _collisionParticles;
-
-    public bool _shieldsActive;
-    public bool reflectorShield;
+    #endregion
 
     #region Properties
     protected virtual bool ShieldsActive
@@ -27,7 +32,13 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
         }
         set
         {
+            if (value == true)
+            {
+                ShieldCurrentStrength = ShieldMaxStrength;
+            }
+
             _shieldsActive = value;
+            _shields.ToggleShields(value);         
         }
     }
 
@@ -96,7 +107,6 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
         _shields = GetComponentInChildren<Shield>();
     }
 
-
     protected void Start()
     {
         if (!_shieldsActiveOnSpawn)
@@ -118,15 +128,12 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
     public virtual void ActivateShields()
     {
         ShieldsActive = true;
-        _shields.EnableShields();
         _unitCollider.enabled = false;
-        ShieldCurrentStrength = ShieldMaxStrength;
     }
 
     public virtual void DeactivateShields()
     {
         ShieldsActive = false;
-        _shields.DisableShields();
         _unitCollider.enabled = true;
     }
 
@@ -187,7 +194,6 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
         float targetAlpha = ShieldRendererMaxAlpha * currentPercentStrength;
         ShieldRendererCurrentAlpha = targetAlpha;
     }
-
 
     public virtual void ReflectProjectile(Bullet bulletToReflect)
     {

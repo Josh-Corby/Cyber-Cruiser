@@ -18,14 +18,9 @@ public class Boss : Enemy, IDamageable
     {
         _movement = GetComponent<BossMovement>();
         base.Awake();
-        SetBossSpeed();
         bossMoveset = GetComponent<IBoss>();
     }
 
-    private void SetBossSpeed()
-    {
-        _movement.speed = _unitInfo.speed;
-    }
 
     protected override void Start()
     {
@@ -50,7 +45,6 @@ public class Boss : Enemy, IDamageable
             _attackTimer = _attackCooldown;
         }
     }
-
 
     protected void ChooseRandomAttack()
     {

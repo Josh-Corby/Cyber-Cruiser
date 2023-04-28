@@ -25,10 +25,16 @@ public class Shield : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Vector2 closestCollision = GetClosestCollisionPoint(collision.contacts);
+        _shieldController.ProcessCollision(collision.gameObject, closestCollision);
+    }
+
+    private Vector2 GetClosestCollisionPoint(ContactPoint2D[] contacts)
+    {
         Vector2 closestPoint = Vector2.zero;
         float closestDistance = Mathf.Infinity;
 
-        foreach (ContactPoint2D contact in collision.contacts)
+        foreach (ContactPoint2D contact in contacts)
         {
             float distance = Vector2.Distance(transform.position, contact.point);
 
@@ -38,19 +44,12 @@ public class Shield : MonoBehaviour
                 closestPoint = contact.point;
             }
         }
-        _shieldController.ProcessCollision(collision.gameObject, closestPoint);
+        return closestPoint;
     }
 
-
-    public void EnableShields()
+    public void ToggleShields(bool value)
     {
-        _shieldCollider.enabled = true;
-        _shieldSprite.enabled = true;
-    }
-
-    public void DisableShields()
-    {
-        _shieldCollider.enabled = false;
-        _shieldSprite.enabled = false;
+        _shieldCollider.enabled = value;
+        _shieldSprite.enabled = value;
     }
 }

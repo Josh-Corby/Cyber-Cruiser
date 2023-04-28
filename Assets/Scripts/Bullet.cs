@@ -2,12 +2,18 @@ using UnityEngine;
 
 public class Bullet : GameBehaviour
 {
-    private const string ENEMY_LAYER = "Enemy";
+    private const string ENEMY_PROJECTILE_LAYER_NAME = "EnemyProjectile";
+    private const string PLAYER_PROJECTILE_LAYER_NAME = "PlayerProjectile";
 
     #region References
     public GameObject homingTarget = null;
+
+    [Header("Art")]
     [HideInInspector] public SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite _playerProjectileSprite;
+    [SerializeField] private Sprite _enemyProjectileSprite;
     [SerializeField] private GameObject collisionParticles;
+
     private BulletHoming _homingTrigger;
     #endregion
 
@@ -38,6 +44,14 @@ public class Bullet : GameBehaviour
                 _homingTrigger.ClearEnemiesInRange();
                 _homingTrigger.enabled = false;
             }
+        }
+    }
+
+    public Sprite ProjectileImage
+    {
+        set
+        {
+            spriteRenderer.sprite = value;
         }
     }
 
@@ -118,11 +132,28 @@ public class Bullet : GameBehaviour
 
     public void CheckBulletLayer()
     {
-        if (gameObject.layer == LayerMask.NameToLayer(ENEMY_LAYER))
+        if (gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME))
         {
             homingTarget = PM.player;
         }
         else return;
+    }
+
+    public void SwitchBulletTeam()
+    {
+        gameObject.layer = gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME) ?
+            ChangeLayerFromString(PLAYER_PROJECTILE_LAYER_NAME) : ChangeLayerFromString(ENEMY_PROJECTILE_LAYER_NAME);
+    }
+
+    private int ChangeLayerFromString(string layerName)
+    {
+        int stringToLayer = LayerMask.NameToLayer(layerName);
+        return stringToLayer;
+    }
+
+    private void SwitchBulletSprite()
+    {
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

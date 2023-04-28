@@ -6,8 +6,6 @@ public class BossMovement : EnemyMovement
     public static event Action<BossMovement> OnMovePositionRequested = null;
 
     [SerializeField] private bool _staticMovement;
-    public float speed;
-
     private GameObject _goalPoint;
     private bool _goalPositionReached;
 
@@ -53,7 +51,7 @@ public class BossMovement : EnemyMovement
         {
             if (_movePosition != null)
             {
-                transform.position = Vector2.MoveTowards(transform.position, _movePosition, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, _movePosition, _speed * Time.deltaTime);
             }
             
             if (Vector2.Distance(transform.position, _movePosition) <= 0.1f)
@@ -71,7 +69,7 @@ public class BossMovement : EnemyMovement
 
     private void MoveTowardGoalPosition()
     {
-        transform.position = Vector2.MoveTowards(transform.position, _goalPoint.transform.position, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, _goalPoint.transform.position, _speed * Time.deltaTime);
 
         if (Vector2.Distance(transform.position, _goalPoint.transform.position) <= 0.1)
         {

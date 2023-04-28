@@ -19,6 +19,7 @@ public class EnemyEditor : Editor
     SerializedProperty amountOfObjects;
 
     SerializedProperty speed;
+    SerializedProperty crashSpeed;
     SerializedProperty upDownMovement;
     SerializedProperty upDownSpeed;
     SerializedProperty upDownDistance;
@@ -55,6 +56,7 @@ public class EnemyEditor : Editor
 
         moveTypes = serializedObject.FindProperty(nameof(moveTypes));
         speed = serializedObject.FindProperty(nameof(speed));
+        crashSpeed = serializedObject.FindProperty(nameof(crashSpeed));
         upDownMovement = serializedObject.FindProperty(nameof(upDownMovement));
         upDownSpeed = serializedObject.FindProperty(nameof(upDownSpeed));
         upDownDistance = serializedObject.FindProperty(nameof(upDownDistance));
@@ -85,11 +87,17 @@ public class EnemyEditor : Editor
         EditorGUILayout.PropertyField(unitName);
         EditorGUILayout.PropertyField(maxHealth);
         EditorGUILayout.PropertyField(explodeOnDeath);
+
         if (enemySO.explodeOnDeath)
         {
             EditorGUILayout.PropertyField(explosionRadius);
             EditorGUILayout.PropertyField(explosionDamage);
             EditorGUILayout.PropertyField(explosionEffect);
+        }
+
+        else
+        {
+            EditorGUILayout.PropertyField(crashSpeed);
         }
 
         EditorGUILayout.PropertyField(clusterOnDeath);
