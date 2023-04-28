@@ -15,7 +15,7 @@ public class Weapon : GameBehaviour
     private bool _readyToFire;
     private bool _holdToFire;
     private bool _isHoming;
-    protected bool _autoFire;
+    private bool _autoFire;
     private int _bursts;
     private int _multiFireShots;
     private float _timeBetweenShots;
@@ -28,23 +28,14 @@ public class Weapon : GameBehaviour
     #endregion
 
     #region Properties
-    public bool ReadyToFire
-    {
-        get => _readyToFire;
-        private set => _readyToFire = value;
-    }
 
-    public bool HoldToFire
-    {
-        get => _holdToFire;
-        private set => _holdToFire = value;
-    }
+    public bool ReadyToFire { get => _readyToFire; private set => _readyToFire = value; }
 
-    public bool IsHoming
-    {
-        get => _isHoming;
-        set => _isHoming = value;
-    }
+    public bool HoldToFire { get => _holdToFire; private set => _holdToFire = value; }
+
+    public bool IsHoming { get => _isHoming; set => _isHoming = value; }
+
+    protected bool AutoFire { get => _autoFire; set => _autoFire = value; }
     #endregion
 
     private void Awake()
@@ -76,7 +67,7 @@ public class Weapon : GameBehaviour
 
     private void Update()
     {
-        if (_autoFire)
+        if (AutoFire)
         {
             if (ReadyToFire)
             {
@@ -222,7 +213,7 @@ public class Weapon : GameBehaviour
         if (IsHoming)
         {
             ApplyHoming(bullet.GetComponent<Bullet>());
-        } 
+        }
     }
 
     public void FireWithoutSpread()

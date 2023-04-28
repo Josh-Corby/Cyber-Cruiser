@@ -14,25 +14,11 @@ public class PlayerShieldController : ShieldControllerBase
     #endregion
 
     #region Properties
-    public int ShieldActiveDuration
-    {
-        get
-        {
-            return _shieldActiveDuration;
-        }
-        set
-        {
-            _shieldActiveDuration = value;
-        }
-    }
+    public int ShieldActiveDuration { get => _shieldActiveDuration; }
 
     public float ShieldActiveTimer
     {
-        get
-        {
-            return _shieldActiveTimer;
-        }
-
+        get => _shieldActiveTimer;
         set
         {
             _shieldActiveTimer = value;
@@ -105,7 +91,7 @@ public class PlayerShieldController : ShieldControllerBase
 
     private void CheckShieldsState()
     {
-        if (GM.isPaused) return;
+        if (GM.IsPaused) return;
 
         if (IsShieldsActive)
         {

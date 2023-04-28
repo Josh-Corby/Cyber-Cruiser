@@ -11,15 +11,11 @@ public class UISlider : MonoBehaviour
     [SerializeField] private float _sliderSpeed;
     [SerializeField] private bool _lerpSlider;
     [SerializeField] private bool _isSliderChangingValue;
-    [SerializeField] private float _targetValue;
+    private float _targetValue;
 
-    public float MaxValue
-    {
-        get => _slider.maxValue;
-        set => _slider.maxValue = value;
-    }
+    private float MaxValue { get => _slider.maxValue; set => _slider.maxValue = value; }
 
-    public float CurrentValue
+    private float CurrentValue
     {
         get => _slider.value;
         set
@@ -39,7 +35,7 @@ public class UISlider : MonoBehaviour
         }
     }
 
-    public float TargetValue
+    private float TargetValue
     {
         get => _targetValue;
         set
@@ -49,9 +45,8 @@ public class UISlider : MonoBehaviour
         }
     }
 
-    public Color SliderColour
+    private Color SliderColour
     {
-        get => _fillImage.color;
         set => _fillImage.color = value;
     }
 

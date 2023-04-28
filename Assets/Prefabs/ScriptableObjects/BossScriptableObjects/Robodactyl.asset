@@ -26,6 +26,7 @@ MonoBehaviour:
   amountOfObjects: 0
   moveTypes: 0
   speed: 6
+  crashSpeed: 4
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0

@@ -30,6 +30,7 @@ public class Bullet : GameBehaviour
     [SerializeField] private float _homeDelayCounter;
     #endregion
 
+    #region Properties
     public float Speed
     {
         get => _speed;
@@ -60,6 +61,7 @@ public class Bullet : GameBehaviour
         set => _spriteRenderer.sprite = value;
     }
 
+    #endregion
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();

@@ -9,13 +9,7 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     [SerializeField] private TMP_Text _plasmaCountText;
 
 
-    public string PlasmaCount
-    {
-        set
-        {
-            _plasmaCountText.text = value;
-        }
-    }
+    private string PlasmaCount { set => _plasmaCountText.text = value; }
 
     private void OnEnable()
     {

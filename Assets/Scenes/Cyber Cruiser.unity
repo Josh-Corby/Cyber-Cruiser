@@ -515,7 +515,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0.544
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0.25
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!1 &62454170
 GameObject:
@@ -641,11 +641,11 @@ MonoBehaviour:
   - CategoryName: 
     CategoryWeight: 1
     CategoryTypes:
-    - EnemySO: {fileID: 11400000, guid: b8253218195d4e048b086f691ebf997b, type: 2}
+    - EnemySO: {fileID: 11400000, guid: ad7e24798cfa38e40ac0e08a87e6b914, type: 2}
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 1
   totalCategoryWeight: 1
 --- !u!1 &71385176
 GameObject:
@@ -3196,7 +3196,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 0, z: 0}
-  spawnerWeight: 0.25
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!1 &486426441
 GameObject:
@@ -4170,11 +4170,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnSize: {x: 0, y: 13, z: 0}
   _pickupIndicatorPosition: {x: 0, y: 0, z: 0}
---- !u!212 &552903878 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 1902999791175045035, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-  m_PrefabInstance: {fileID: 8907491432400472847}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &595851870
 GameObject:
   m_ObjectHideFlags: 0
@@ -7043,7 +7038,7 @@ MonoBehaviour:
       spawnWeight: 0.5
     TotalTypeWeights: 0
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0.25
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!1 &985080741
 GameObject:
@@ -9666,7 +9661,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 0.25
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!4 &1370326091
 Transform:
@@ -13751,15 +13746,15 @@ MonoBehaviour:
   _timesReduced: 0
   _enemySpawnerInfo:
   - spawner: {fileID: 984547534}
-    SpawnerWeight: 0.25
-  - spawner: {fileID: 1370326090}
-    SpawnerWeight: 0.25
-  - spawner: {fileID: 47135018}
-    SpawnerWeight: 0.25
-  - spawner: {fileID: 485082065}
-    SpawnerWeight: 0.25
-  - spawner: {fileID: 71091565}
     SpawnerWeight: 0
+  - spawner: {fileID: 1370326090}
+    SpawnerWeight: 0
+  - spawner: {fileID: 47135018}
+    SpawnerWeight: 0
+  - spawner: {fileID: 485082065}
+    SpawnerWeight: 0
+  - spawner: {fileID: 71091565}
+    SpawnerWeight: 1
   _totalSpawnWeight: 1
   bossGoalPosition: {fileID: 1997121481}
   dragonMovePoint: {fileID: 73215885}
@@ -14217,34 +14212,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3609710684020795865, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _ramDamage
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _collisionParticles
-      value: 
-      objectReference: {fileID: 8611581191203232223, guid: bcd084b07ae840f49bc8526ab122ce58, type: 3}
-    - target: {fileID: 7448088386261638001, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _shieldSprite
-      value: 
-      objectReference: {fileID: 552903878}
-    - target: {fileID: 7448088386261638001, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _spriteRenderer
-      value: 
-      objectReference: {fileID: 552903878}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: mouseInput
       value: 
       objectReference: {fileID: 1751233348}
-    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _crashSpeed
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: spawnPosition
       value: 

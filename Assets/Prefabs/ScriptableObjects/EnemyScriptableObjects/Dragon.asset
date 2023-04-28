@@ -20,10 +20,13 @@ MonoBehaviour:
   explosionDamage: 0
   explosionEffect: {fileID: 0}
   clusterOnDeath: 0
+  spawnEnemy: 0
+  enemyToSpawn: {fileID: 0}
   objectToSpawn: {fileID: 0}
   amountOfObjects: 0
   moveTypes: 0
   speed: 16
+  crashSpeed: 16
   upDownMovement: 0
   upDownSpeed: 0
   upDownDistance: 0

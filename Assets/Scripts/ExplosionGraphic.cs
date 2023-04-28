@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class ExplosionGraphic : MonoBehaviour
 {
-    public float explosionRadius;
+    private float _explosionRadius;
+    
+    public float ExplosionRadius { get => _explosionRadius; set => _explosionRadius = value; }
 
     private void Start()
     {
@@ -16,6 +18,6 @@ public class ExplosionGraphic : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
+        Gizmos.DrawWireSphere(transform.position, _explosionRadius);
     }
 }

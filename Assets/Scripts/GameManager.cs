@@ -5,13 +5,18 @@ using TMPro;
 
 public class GameManager : GameBehaviour<GameManager>
 {
-    public bool isPaused = false;
+    private bool _isPaused = false;
     [SerializeField] private GameObject gameplayObjects;
 
+    #region Properties
+    public bool IsPaused { get => _isPaused; private set => _isPaused = value; }
+    #endregion
+
+    #region Actions
     public static event Action<bool> OnIsGamePaused = null;
     public static event Action OnMissionStart = null;
     public static event Action OnMissionEnd = null;
-  
+    #endregion
     private void Awake()
     {
         gameplayObjects.SetActive(false);
@@ -33,7 +38,7 @@ public class GameManager : GameBehaviour<GameManager>
 
     public void StartLevel()
     {
-        isPaused = false;
+        _isPaused = false;
         Time.timeScale = 1f;
         OnMissionStart?.Invoke();
     }
@@ -50,17 +55,17 @@ public class GameManager : GameBehaviour<GameManager>
 
     public void TogglePause()
     {
-        isPaused = !isPaused;
+        _isPaused = !_isPaused;
 
-        if (isPaused)
+        if (_isPaused)
         {
             PauseGame();
         }
-        else if (!isPaused)
+        else if (!_isPaused)
         {
             ResumeGame();
         }
-        OnIsGamePaused(isPaused);
+        OnIsGamePaused(_isPaused);
     }
 
     private void PauseGame()

@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-
 public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 {
     [Header("Spawners")]
@@ -39,32 +38,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private Coroutine _spawnEnemiesCoroutine;
     private Coroutine _spawnBossCoroutine;
-
-    #region Properties
-    public float EnemySpawnInterval
-    {
-        get
-        {
-            return _enemySpawnInterval;
-        }
-        set
-        {
-            _enemySpawnInterval = value;
-        }
-    }
-
-    public int EnemiesToSpawn
-    {
-        get
-        {
-            return _enemiesToSpawn;
-        }
-        private set
-        {
-            _enemiesToSpawn = value;
-        }
-    }
-    #endregion
 
     #region Actions
     public static event Action OnSpawnEnemyGroup = null;
@@ -112,8 +85,8 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         StopSpawningEnemies();
         CancelBossSpawn();
         ResetBossesToSpawn();
-        EnemiesToSpawn = _enemiesToSpawnBase;
-        EnemySpawnInterval = _spawnEnemyIntervalBase;
+        _enemiesToSpawn = _enemiesToSpawnBase;
+        _enemySpawnInterval = _spawnEnemyIntervalBase;
         ResetSpawnersModifiers();
         _timesReduced = 0;
     }
@@ -137,7 +110,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void StartSpawningEnemies()
     {
         _spawnEnemies = true;
-        _spawnEnemiesCoroutine = StartCoroutine(SpawnEnemies());
+        _spawnEnemiesCoroutine = StartCoroutine(SpawnEnemiesCoroutine());
     }
 
     private void StopSpawningEnemies()
@@ -149,7 +122,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         _spawnEnemies = false;
     }
 
-    private IEnumerator SpawnEnemies()
+    private IEnumerator SpawnEnemiesCoroutine()
     {
         while (_spawnEnemies)
         {
@@ -293,13 +266,13 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         Debug.Log("Spawn interval change");
         if (_timesReduced >= _timesToReduce)
         {
-            EnemiesToSpawn += 1;
-            EnemySpawnInterval = _spawnEnemyIntervalBase + (EnemiesToSpawn * _offsetPerEnemy);
+            _enemiesToSpawn += 1;
+            _enemySpawnInterval = _spawnEnemyIntervalBase + (_enemiesToSpawn * _offsetPerEnemy);
         }
 
         if (_timesReduced < _timesToReduce)
         {
-            EnemySpawnInterval -= _spawnEnemyReduction;
+            _enemySpawnInterval -= _spawnEnemyReduction;
             _timesReduced += 1;
         }
     }

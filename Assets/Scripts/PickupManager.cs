@@ -17,7 +17,7 @@ public class PickupManager : GameBehaviour<PickupManager>
     [SerializeField] private GameObject[] _weaponUpgradePrefabs;
     [SerializeField] private GameObject _pickupIndicator;
 
-    private float _indicatorAngle;
+    [SerializeField] private float _indicatorAngle;
     protected readonly float _indicatorTimer = 2f;
 
     public static event Action OnPlasmaSpawned = null;

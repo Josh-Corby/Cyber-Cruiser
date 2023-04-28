@@ -21,7 +21,7 @@ public class PulseDetonator : GameBehaviour
     }
     private void Update()
     {
-        if (!GM.isPaused)
+        if (!GM.IsPaused)
         {
             if (_isDetonating)
             {

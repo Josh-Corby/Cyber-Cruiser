@@ -20,29 +20,9 @@ public class EnemySpawner : GameBehaviour
     #endregion
 
     #region Properties
-    public int EnemiesToSpawn
-    {
-        get
-        {
-            return _enemiesToSpawn;
-        }
-        set
-        {
-            _enemiesToSpawn = value;
-        }
-    }
+    public int EnemiesToSpawn { get => _enemiesToSpawn; set => _enemiesToSpawn = value; }
 
-    public float SpeedModifier
-    {
-        get
-        {
-            return _speedModifier;
-        }
-        set
-        {
-            _speedModifier = value;
-        }
-    }
+    public float SpeedModifier { get => _speedModifier; set => _speedModifier = value; }
     #endregion
 
     #region Actions

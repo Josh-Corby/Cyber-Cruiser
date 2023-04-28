@@ -30,12 +30,12 @@ public class BossMovement : EnemyMovement
 
     protected override void Update()
     {
-        if (GM.isPaused)
+        if (GM.IsPaused)
         {
             return;
         }
 
-        if (isEnemyDead)
+        if (IsEnemyDead)
         {
             DeathMovement();
             return;

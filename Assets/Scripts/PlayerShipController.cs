@@ -18,23 +18,13 @@ public class PlayerShipController : GameBehaviour
     private bool _isPlayerDead;
     [SerializeField] private float _crashSpeed;
 
-    private float minAngle = -20;
-    private float maxAngle = 20;
+    private readonly float minAngle = -20;
+    private readonly float maxAngle = 20;
     private Quaternion targetRotation;
     #endregion
 
     #region Properties
-    public bool ControlsEnabled
-    {
-        get
-        {
-            return _controlsEnabled;
-        }
-        set
-        {
-            _controlsEnabled = value;
-        }
-    }
+    public bool ControlsEnabled { get => _controlsEnabled; set => _controlsEnabled = value; }
     #endregion
 
     private void OnEnable()

@@ -30,7 +30,7 @@ public class Boss : Enemy, IDamageable
 
     protected virtual void Update()
     {
-        if (_movement.isEnemyDead)
+        if (_movement.IsEnemyDead)
         {
             return;
         }
@@ -67,7 +67,7 @@ public class Boss : Enemy, IDamageable
 
     public override void Damage(float damage)
     {
-        OnBossDamage(CurrentHealth);
+        OnBossDamage(_currentHealth);
         base.Damage(damage);
     }
 

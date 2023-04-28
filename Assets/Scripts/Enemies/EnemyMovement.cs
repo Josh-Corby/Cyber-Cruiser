@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class EnemyMovement : GameBehaviour
 {
+    #region References
     private Transform _player;
+    #endregion
 
-    [HideInInspector] public bool isEnemyDead;
-    [HideInInspector] public Vector2 direction;
+    #region Fields
+    private bool _isEnemyDead;
 
     #region MovementInformation
-
     protected float _speed;
     protected float _crashSpeed;
 
@@ -40,25 +41,10 @@ public class EnemyMovement : GameBehaviour
     protected float _homeDelayTime;
     private float _homeDelayCounter;
     #endregion
+    #endregion
 
     #region Properties
-    protected bool SeekPlayer
-    {
-        get => _seekPlayer;
-        set => _seekPlayer = value;
-    }
-
-    protected bool SeekPlayerX
-    {
-        get => _seekPlayerX;
-        set => _seekPlayerX = value;
-    }
-
-    protected bool SeekPlayerY
-    {
-        get => _seekPlayerY;
-        set => _seekPlayerY = value;
-    }
+    public bool IsEnemyDead { get => _isEnemyDead; set => _isEnemyDead = value; }
     #endregion
 
     protected virtual void Awake()
@@ -119,12 +105,12 @@ public class EnemyMovement : GameBehaviour
 
     private void UnitMovement()
     {
-        if (GM.isPaused)
+        if (GM.IsPaused)
         {
             return;
         }
 
-        if (isEnemyDead)
+        if (_isEnemyDead)
         {
             MoveForward();
             DeathMovement();

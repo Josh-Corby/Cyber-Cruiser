@@ -15,21 +15,10 @@ public class AddOn : MonoBehaviour
     private AddOnTypes _addOnType;
     private bool _isAddOnEnabled;
 
-    public string Name
-    {
-        get
-        {
-            return _name;
-        }
-    }
+    public string Name { get => _name; }
 
-    public string Description
-    {
-        get
-        {
-            return _description;
-        }
-    }
+
+    public string Description { get => _description; }
 
     public static event Action<AddOn> OnMouseEnter = null;
     public static event Action OnMouseExit = null;

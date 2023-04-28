@@ -10,9 +10,8 @@ public class WaveCountdownManager : GameBehaviour
 
     public static event Action OnCountdownDone = null;
 
-    public string WaveCountdownText
+    private string WaveCountdownText
     {
-        get => _waveCountdownText.text;
         set => _waveCountdownText.text = value;
     }
 

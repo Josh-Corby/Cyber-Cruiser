@@ -37,35 +37,19 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     #region Properties
     public int PlayerPlasma
     {
-        get
-        {
-            return _playerPlasma;
-        }
-        set
+        get => _playerPlasma; 
+        private set
         {
             _playerPlasma = value;
             OnPlasmaChange(_playerPlasma);
         }
     }
 
-    public int PlasmaCost
-    {
-        get
-        {
-            return _plasmaCost;
-        }
-        set
-        {
-            _plasmaCost = value;
-        }
-    }
+    public int PlasmaCost { get => _plasmaCost; private set => _plasmaCost = value; }
 
-    public float PlayerCurrentHealth
+    private float PlayerCurrentHealth
     {
-        get
-        {
-            return _currentHealth;
-        }
+        get => _currentHealth;
         set
         {
             _currentHealth = value;
@@ -91,7 +75,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
                 {
                     PlayerHealthState = PlayerHealthState.Critical;
                 }
-
             }
 
             OnPlayerCurrentHealthChange(GUIM.playerHealthBar, _currentHealth);
@@ -105,11 +88,8 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     public float PlayerMaxHealth
     {
-        get
-        {
-            return _maxHealth;
-        }
-        set
+        get => _maxHealth;
+        private set
         {
             _maxHealth = value;
             OnPlayerMaxHealthSet(GUIM.playerHealthBar, _maxHealth);

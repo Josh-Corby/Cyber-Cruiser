@@ -20,101 +20,36 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     #endregion
 
     #region Properties
+
+
+    public int PlayerPlasma { get => _playerPlasma; private set => _playerPlasma = value; }
+
+    public int PlasmaCost { get => _plasmaCost; private set => _plasmaCost = value; }
+
+    public float PlayerCurrentMaxHealth { get => _playerCurrentMaxHealth; private set => _playerCurrentMaxHealth = value; }
+
+    public float HeatPerShot { get => _heatPerShot; private set => _heatPerShot = value; }
+
+    public float WeaponUpgradeDuration { get => _weaponUpgradeDuration; private set => _weaponUpgradeDuration = value; }
+
+    public float IFramesDuration { get => _iFramesDuration; private set => _iFramesDuration = value; }
+
+    public bool IsPulseDetonator { get => _isPulseDetonator; private set { _isPulseDetonator = value; } }
+
     public int PlayerIonAmount
     {
-        get
-        {
-            return _playerIon;
-        }
-        set
+        get => _playerIon;
+        private set
         {
             _playerIon = value;
             OnIonChange(_playerIon);
         }
     }
 
-    public int PlayerPlasma
-    {
-        get
-        {
-            return _playerPlasma;
-        }
-        set
-        {
-            _playerPlasma = value;
-            //OnPlasmaChange(_playerPlasma);
-        }
-    }
-
-    public int PlasmaCost
-    {
-        get
-        {
-            return _plasmaCost;
-        }
-        private set
-        {
-            _plasmaCost = value;
-        }
-    }
-
-    public float PlayerCurrentMaxHealth
-    {
-        get
-        {
-            return _playerCurrentMaxHealth;
-        }
-
-        private set
-        {
-            _playerCurrentMaxHealth = value;
-        }
-    }
-
-    public float HeatPerShot
-    {
-        get
-        {
-            return _heatPerShot;
-        }
-
-        set
-        {
-            _heatPerShot = value;
-        }
-    }
-
-    public float WeaponUpgradeDuration
-    {
-        get
-        {
-            return _weaponUpgradeDuration;
-        }
-        set
-        {
-            _weaponUpgradeDuration = value;
-        }
-    }
-
-    public float IFramesDuration
-    {
-        get
-        {
-            return _iFramesDuration;
-        }
-        private set
-        {
-            _iFramesDuration = value;
-        }
-    }
-
     public bool IsBatteryPack
     {
-        get
-        {
-            return _isBatteryPack;
-        }
-        set
+        get => _isBatteryPack;
+        private set
         {
             _isBatteryPack = value;
             ToggleBatteryPack(_isBatteryPack);
@@ -123,11 +58,8 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     public bool IsHydrocoolant
     {
-        get
-        {
-            return _isHydrocoolant;
-        }
-        set
+        get => _isHydrocoolant;
+        private set
         {
             _isHydrocoolant = value;
             ToggleHydrocoolant(_isHydrocoolant);
@@ -136,26 +68,11 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     public bool IsPlasmaCache
     {
-        get
-        {
-            return _isPlasmaCache;
-        }
-        set
+        get => _isPlasmaCache;
+        private set
         {
             _isPlasmaCache = value;
             TogglePlasmaCache(_isPlasmaCache);
-        }
-    }
-
-    public bool IsPulseDetonator
-    {
-        get
-        {
-            return _isPulseDetonator;
-        }
-        set
-        {
-            _isPulseDetonator = value;
         }
     }
     #endregion

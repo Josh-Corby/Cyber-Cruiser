@@ -36,25 +36,22 @@ public class PlayerWeaponController : GameBehaviour
     #endregion
 
     #region Properties
-    public int HeatMax
-    {
-        get
-        {
-            return _heatMax;
-        }
-        set
-        {
-            _heatMax = value;
-        }
-    }
+    public float GetTimeBeforeHeatLoss { get => _timebeforeHeatLoss; }
+
+    private float SetWeaponUpgradeDuration { set => _weaponUpgradeDuration = value; }
+
+    public int HeatMax { get => _heatMax; private set => _heatMax = value; }
+
+    public float HeatPerShot { get => _heatPerShot; private set => _heatPerShot = value; }
+
+    public bool IsHeatDecreasing { get => _isHeatDecreasing; set => _isHeatDecreasing = value; }
+
+    public bool IsWeaponUpgradeActive { get => _isWeaponUpgradeActive; set => _isWeaponUpgradeActive = value; }
 
     public float CurrentHeat
     {
-        get
-        {
-            return _currentHeat;
-        }
-        set
+        get => _currentHeat;
+        private set
         {
             _currentHeat = value;
 
@@ -69,102 +66,23 @@ public class PlayerWeaponController : GameBehaviour
             {
                 _currentHeat = 0;
             }
-
             OnHeatChange(GUIM.weaponHeatBar, _currentHeat);
-        }
-    }
-
-    public float HeatPerShot
-    {
-        get
-        {
-            return _heatPerShot;
-        }
-        set
-        {
-            _heatPerShot = value;
-        }
-    }
-
-    public float HeatLossOverTime
-    {
-        get
-        {
-            return _heatLossOverTime;
-        }
-        set
-        {
-            _heatLossOverTime = value;
-        }
-    }
-
-    public float CooldownHeatLoss
-    {
-        get
-        {
-            return _cooldownHeatLoss;
-        }
-        set
-        {
-            _cooldownHeatLoss = value;
-        }
-    }
-
-    public float TimeBeforeHeatLoss
-    {
-        get
-        {
-            return _timebeforeHeatLoss;
-        }
-        set
-        {
-            _timebeforeHeatLoss = value;
         }
     }
 
     public float TimeSinceLastShot
     {
-        get
-        {
-            return _timeSinceLastShot;
-        }
+        get => _timeSinceLastShot;
         set
         {
             _timeSinceLastShot = value;
-            IsHeatDecreasing = _timeSinceLastShot >= TimeBeforeHeatLoss;
-        }
-    }
-
-    public float WeaponUpgradeDuration
-    {
-        get
-        {
-            return _weaponUpgradeDuration;
-        }
-        set
-        {
-            _weaponUpgradeDuration = value;
-        }
-    }
-
-    public bool IsHeatDecreasing
-    {
-        get
-        {
-            return _isHeatDecreasing;
-        }
-        set
-        {
-            _isHeatDecreasing = value;
+            IsHeatDecreasing = _timeSinceLastShot >= GetTimeBeforeHeatLoss;
         }
     }
 
     public bool IsOverheated
     {
-        get
-        {
-            return _isOverheated;
-        }
+        get => _isOverheated;
         set
         {
             _isOverheated = value;
@@ -172,20 +90,7 @@ public class PlayerWeaponController : GameBehaviour
         }
     }
 
-    public bool IsWeaponUpgradeActive
-    {
-        get
-        {
-            return _isWeaponUpgradeActive;
-        }
-
-        set
-        {
-            _isWeaponUpgradeActive = value;
-        }
-    }
-
-    public bool IsHoming
+    private bool SetIsHoming
     {
         set
         {
@@ -231,7 +136,7 @@ public class PlayerWeaponController : GameBehaviour
         GameManager.OnIsGamePaused -= ToggleControls;
         GameManager.OnMissionEnd -= ResetPlayerWeapon;
 
-        Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;  
+        Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
     }
 
     private void Start()
@@ -240,18 +145,18 @@ public class PlayerWeaponController : GameBehaviour
     }
 
     private void InitializeWeapon()
-    {     
+    {
         _fireInput = false;
         CurrentHeat = 0;
         HeatMax = 100;
         HeatPerShot = PSM.HeatPerShot;
-        WeaponUpgradeDuration = PSM.WeaponUpgradeDuration;
+        SetWeaponUpgradeDuration = PSM.WeaponUpgradeDuration;
         OnWeaponHeatInitialized(GUIM.weaponHeatBar, CurrentHeat, HeatMax);
     }
 
     private void Update()
     {
-        if (!GM.isPaused)
+        if (!GM.IsPaused)
         {
             CheckOverHeated();
         }
@@ -275,7 +180,7 @@ public class PlayerWeaponController : GameBehaviour
     {
         if (CurrentHeat > 0)
         {
-            CurrentHeat -= CooldownHeatLoss;
+            CurrentHeat -= _cooldownHeatLoss;
         }
         else
         {
@@ -301,7 +206,7 @@ public class PlayerWeaponController : GameBehaviour
         {
             if (CurrentHeat > 0)
             {
-                CurrentHeat -= HeatLossOverTime;
+                CurrentHeat -= _heatLossOverTime;
             }
         }
     }
@@ -406,7 +311,7 @@ public class PlayerWeaponController : GameBehaviour
                 PulverizerUpgrade();
                 break;
             case WeaponUpgradeType.Homing:
-                IsHoming = true;
+                SetIsHoming = true;
                 break;
             case WeaponUpgradeType.ChainLightning:
                 _currentWeapon = _chainLightning;
@@ -437,7 +342,7 @@ public class PlayerWeaponController : GameBehaviour
     public void ResetPlayerWeapon()
     {
         OnWeaponUpgradeFinished(GUIM.weaponUpgradeSlider);
-        IsHoming = false;
+        SetIsHoming = false;
         _beamAttack.isBeamActive = false;
         _beamAttack.enabled = false;
         _currentWeapon.enabled = true;

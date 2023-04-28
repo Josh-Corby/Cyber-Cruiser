@@ -11,7 +11,7 @@ public class DistanceManager : GameBehaviour
 
     private float _distanceFloat;
     private int _distanceInt;
-    private bool _isDistanceIncreasing;
+    private bool IsDistanceIncreasing;
 
     private int _previousBossDistance, _currentBossDistance;
 
@@ -23,77 +23,13 @@ public class DistanceManager : GameBehaviour
     private bool _isPlasmaSpawned, _isWeaponUpgradeSpawned = false;
 
     #region Properties
-    public int DistanceInt
+    private int DistanceInt
     {
-        get
-        {
-            return _distanceInt;
-        }
+        get => _distanceInt;
         set
         {
             _distanceInt = value;
             UpdateDistanceText();
-        }
-    }
-
-    public float DistanceFloat
-    {
-        get
-        {
-            return _distanceFloat;
-        }
-
-        set
-        {
-            _distanceFloat = value;
-        }
-    }
-
-    public int CurrentDistanceMilestone
-    {
-        get
-        {
-            return _currentDistanceMilestone;
-        }
-        set
-        {
-            _currentDistanceMilestone = value;
-        }
-    }
-
-    public int PreviousBossDistance
-    {
-        get
-        {
-            return _previousBossDistance;
-        }
-        set
-        {
-            _previousBossDistance = value;
-        }
-    }
-
-    public int CurrentBossDistance
-    {
-        get
-        {
-            return _currentBossDistance;
-        }
-        set
-        {
-            _currentBossDistance = value;
-        }
-    }
-
-    public bool IsDistanceIncreasing
-    {
-        get
-        {
-            return _isDistanceIncreasing;
-        }
-        set
-        {
-            _isDistanceIncreasing = value;
         }
     }
     #endregion
@@ -136,8 +72,8 @@ public class DistanceManager : GameBehaviour
 
     private void IncreaseDistance()
     {
-        DistanceFloat += Time.deltaTime * 10;
-        DistanceInt = Mathf.RoundToInt(DistanceFloat);
+        _distanceFloat += Time.deltaTime * 10;
+        DistanceInt = Mathf.RoundToInt(_distanceFloat);
     }
 
     private void CheckDistance()
@@ -150,7 +86,7 @@ public class DistanceManager : GameBehaviour
         }
 
         //start boss fight at boss distance
-        if (DistanceInt > 0 && DistanceInt % CurrentBossDistance == 0)
+        if (DistanceInt > 0 && DistanceInt % _currentBossDistance == 0)
         {
             BossDistanceReached();
         }
@@ -194,8 +130,8 @@ public class DistanceManager : GameBehaviour
 
     private void BossDistanceReached()
     {
-        PreviousBossDistance = DistanceInt;
-        CurrentBossDistance += _bossSpawnDistance;
+        _previousBossDistance = DistanceInt;
+        _currentBossDistance += _bossSpawnDistance;
         StopIncreasingDistance();
         GenerateNewWeaponUpgradeDropDistance();
         OnBossDistanceReached?.Invoke();
@@ -203,13 +139,13 @@ public class DistanceManager : GameBehaviour
 
     protected void GenerateNewPlasmaDropDistance()
     {
-        _plasmaDropDistance = Random.Range(CurrentDistanceMilestone + 15, CurrentDistanceMilestone + 99);
+        _plasmaDropDistance = Random.Range(_currentDistanceMilestone + 15, _currentDistanceMilestone + 99);
         _isPlasmaSpawned = false;
     }
 
     protected void GenerateNewWeaponUpgradeDropDistance()
     {
-        _weaponUpgradeDropDistance = Random.Range(PreviousBossDistance + 15, CurrentBossDistance);
+        _weaponUpgradeDropDistance = Random.Range(_previousBossDistance + 15, _currentBossDistance);
         Debug.Log(_weaponUpgradeDropDistance);
         _isWeaponUpgradeSpawned = false;
     }
@@ -223,7 +159,7 @@ public class DistanceManager : GameBehaviour
     private IEnumerator IncreaseDistanceMilestone()
     {
         isDistanceMilestoneIncreased = true;
-        CurrentDistanceMilestone += MILESTONE_DISTANCE;
+        _currentDistanceMilestone += MILESTONE_DISTANCE;
 
         yield return new WaitForSeconds(1f);
         isDistanceMilestoneIncreased = false;
@@ -231,18 +167,18 @@ public class DistanceManager : GameBehaviour
 
     private void ResetValues()
     {
-        CurrentDistanceMilestone = 0;
-        PreviousBossDistance = 0;
-        DistanceFloat = 0;
+        _currentDistanceMilestone = 0;
+        _previousBossDistance = 0;
+        _distanceFloat = 0;
         DistanceInt = 0;
-        CurrentBossDistance = _bossSpawnDistance;
+        _currentBossDistance = _bossSpawnDistance;
         isDistanceMilestoneIncreased = false;
         IsDistanceIncreasing = false;
     }
 
     private void StartIncreasingDistance()
     {
-        DistanceFloat += 1;
+        _distanceFloat += 1;
         DistanceInt += 1;
         IsDistanceIncreasing = true;
     }

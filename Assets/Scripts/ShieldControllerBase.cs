@@ -10,14 +10,13 @@ public class ShieldControllerBase : GameBehaviour
 
     #region Fields
     protected bool _shieldsActive;
-    [SerializeField] protected bool _reflectorShield;
+    private int _shieldMaxStrength;
+    private float _shieldCurrentStrength;
+    private float _shieldCollisionDamage;
 
+    [SerializeField] protected bool _reflectorShield;
     [SerializeField] protected bool _shieldsActiveOnSpawn;
     [SerializeField] protected bool _isShieldImmuneToDamage;
-
-    [SerializeField] protected int _shieldMaxStrength;
-    [SerializeField] protected float _shieldCurrentStrength;
-    [SerializeField] protected float _shieldCollisionDamage;
     #endregion
 
     #region Properties
@@ -31,26 +30,15 @@ public class ShieldControllerBase : GameBehaviour
                 ShieldCurrentStrength = ShieldMaxStrength;
             }
             _shieldsActive = value;
-            _shields.ToggleShields(value);         
+            _shields.ToggleShields(value);
         }
     }
 
-    protected int ShieldMaxStrength
-    {
-        get => _shieldMaxStrength;
-        set => _shieldMaxStrength = value;
-    }
+    protected int ShieldMaxStrength { get => _shieldMaxStrength; set => _shieldMaxStrength = value; }
 
-    protected float ShieldCurrentStrength
-    {
-        get => _shieldCurrentStrength;
-        set => _shieldCurrentStrength = value;
-    }
+    protected float ShieldCurrentStrength { get => _shieldCurrentStrength; set => _shieldCurrentStrength = value; }
 
-    protected float ShieldCollisionDamage
-    {
-        get => _shieldCollisionDamage;
-    }
+    protected float ShieldCollisionDamage { get => _shieldCollisionDamage; set => _shieldCollisionDamage = value; }
     #endregion
 
     protected virtual void Awake()

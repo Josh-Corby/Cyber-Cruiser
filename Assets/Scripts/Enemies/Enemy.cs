@@ -18,37 +18,11 @@ public class Enemy : GameBehaviour, IDamageable
 
     #region Fields
     public string unitName;
-    [SerializeField] private float _currentHealth;
+    [SerializeField] protected float _currentHealth;
     protected float _maxHealth;
     private float _explosionRadius;
     private float _explosionDamage;
     protected bool _explodeOnDeath;
-    #endregion
-
-    #region Properties
-    public float CurrentHealth
-    {
-        get
-        {
-            return _currentHealth;
-        }
-        set
-        {
-            _currentHealth = value;
-        }
-    }
-
-    public float MaxHealth
-    {
-        get
-        {
-            return _maxHealth;
-        }
-        set
-        {
-            _maxHealth = value;
-        }
-    }
     #endregion
 
     #region Actions
@@ -105,8 +79,8 @@ public class Enemy : GameBehaviour, IDamageable
     public virtual void Damage(float damage)
     {
         //Debug.Log("enemy damaged");
-        CurrentHealth -= damage;
-        if (CurrentHealth <= 0)
+        _currentHealth -= damage;
+        if (_currentHealth <= 0)
         {
             if (_explodeOnDeath)
             {
@@ -122,7 +96,7 @@ public class Enemy : GameBehaviour, IDamageable
     protected void Explode()
     {
         GameObject explosionEffect = Instantiate(_explosionEffect, transform);
-        explosionEffect.GetComponent<ExplosionGraphic>().explosionRadius = _explosionRadius;
+        explosionEffect.GetComponent<ExplosionGraphic>().ExplosionRadius = _explosionRadius;
         explosionEffect.transform.SetParent(null);
         explosionEffect.transform.localScale = Vector3.one * 22;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _explosionRadius);
@@ -144,7 +118,7 @@ public class Enemy : GameBehaviour, IDamageable
     {
         if (_unitMovement != null)
         {
-            _unitMovement.isEnemyDead = true;
+            _unitMovement.IsEnemyDead = true;
         }
 
         if (_weapon != null)

@@ -4,14 +4,22 @@ using System.Collections;
 
 public class UIManager : GameBehaviour
 {
+    #region References  
+    [SerializeField] private GameObject _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel,
+          _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel;
+    #endregion
+
+    #region Fields
+    private GameObject[] _panels;
+    #endregion
+
+    #region Actions
     public static event Action OnMissionStart = null;
     public static event Action<bool> OnGameplayPanelToggled = null;
+    #endregion
 
-    [SerializeField] private GameObject _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel, 
-        _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel;
-    private GameObject[] _panels;
-
-    public bool GameplayPanel
+    #region Properties
+    private bool GameplayPanel
     {
         get => _gameplayPanel.activeSelf;
         set
@@ -20,6 +28,7 @@ public class UIManager : GameBehaviour
             OnGameplayPanelToggled(_gameplayPanel.activeSelf); 
         }
     }
+    #endregion
 
     private void OnEnable()
     {
