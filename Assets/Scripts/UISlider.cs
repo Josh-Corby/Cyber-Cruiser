@@ -5,7 +5,6 @@ public class UISlider : MonoBehaviour
 {
     private Slider _slider;
     [SerializeField] private Image _fillImage;
-
     [SerializeField] private bool _lerpColour;
     [SerializeField] private Color _minColour;
     [SerializeField] private Color _maxColour;
@@ -16,22 +15,13 @@ public class UISlider : MonoBehaviour
 
     public float MaxValue
     {
-        get
-        {
-            return _slider.maxValue;
-        }
-        set
-        {
-            _slider.maxValue = value;
-        }
+        get => _slider.maxValue;
+        set => _slider.maxValue = value;
     }
 
     public float CurrentValue
     {
-        get
-        {
-            return _slider.value;
-        }
+        get => _slider.value;
         set
         {
             if (_lerpSlider)
@@ -41,23 +31,17 @@ public class UISlider : MonoBehaviour
                     _isSliderChangingValue = false;
                 }
             }
-
             _slider.value = value;
-
             if (_lerpColour)
             {
                 LerpColour();
             }
-
         }
     }
 
     public float TargetValue
     {
-        get
-        {
-            return _targetValue;
-        }
+        get => _targetValue;
         set
         {
             _targetValue = value;
@@ -67,14 +51,8 @@ public class UISlider : MonoBehaviour
 
     public Color SliderColour
     {
-        get
-        {
-            return _fillImage.color;
-        }
-        set
-        {
-            _fillImage.color = value;
-        }
+        get => _fillImage.color;
+        set => _fillImage.color = value;
     }
 
     private void Awake()
