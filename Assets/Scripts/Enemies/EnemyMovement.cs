@@ -41,6 +41,26 @@ public class EnemyMovement : GameBehaviour
     private float _homeDelayCounter;
     #endregion
 
+    #region Properties
+    protected bool SeekPlayer
+    {
+        get => _seekPlayer;
+        set => _seekPlayer = value;
+    }
+
+    protected bool SeekPlayerX
+    {
+        get => _seekPlayerX;
+        set => _seekPlayerX = value;
+    }
+
+    protected bool SeekPlayerY
+    {
+        get => _seekPlayerY;
+        set => _seekPlayerY = value;
+    }
+    #endregion
+
     protected virtual void Awake()
     {
         _player = PM.player.transform;
@@ -135,11 +155,11 @@ public class EnemyMovement : GameBehaviour
         {
             if (_seekPlayerY)
             {
-                SeekPlayerY();
+                SeekY();
             }
             if (_seekPlayerX)
             {
-                SeekPlayerX();
+                SeekX();
             }
         }
 
@@ -181,12 +201,12 @@ public class EnemyMovement : GameBehaviour
         }
     }
 
-    private void SeekPlayerY()
+    private void SeekY()
     {
         transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x, _player.position.y), _seekSpeed * Time.deltaTime);
     }
 
-    protected void SeekPlayerX()
+    protected void SeekX()
     {
         transform.position = Vector2.MoveTowards(transform.position, new Vector2(_player.position.x, transform.position.y), _seekSpeed * Time.deltaTime);
     }

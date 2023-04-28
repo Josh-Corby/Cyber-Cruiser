@@ -5,10 +5,27 @@ using System;
 
 public class SlicerMovement : EnemyMovement
 {
+    #region Fields
     [SerializeField] private float _seekTime;
     private float _seekCounter;
+    #endregion
 
+    #region Properties
+    private float SeekTime
+    {
+        get => _seekTime;
+    }
+
+    private float SeekCounter
+    {
+        get => _seekCounter;
+        set => _seekCounter = value;
+    }
+    #endregion
+
+    #region Actions
     public static event Action<GameObject> OnStartSeeking = null;
+    #endregion
 
     protected override void Start()
     {
@@ -17,15 +34,15 @@ public class SlicerMovement : EnemyMovement
 
     protected override void Update()
     {
-        if (_seekPlayer)
+        if (SeekPlayer)
         {
-            if (_seekCounter <= 0)
+            if (SeekCounter <= 0)
             {
-                _seekPlayer = false;
+                SeekPlayer = false;
                 return;
             }
-            SeekPlayerX();
-            _seekCounter -= Time.deltaTime;
+            SeekX();
+            SeekCounter -= Time.deltaTime;
             return;
         }
 
@@ -37,9 +54,9 @@ public class SlicerMovement : EnemyMovement
         //if only one slicer was spawned
         if (EM.slicersSeeking.Count == 0)
         {
-            _seekPlayer = true;
-            _seekPlayerX = true;
-            _seekCounter = _seekTime;
+            SeekPlayer = true;
+            SeekPlayerX = true;
+            SeekCounter = SeekTime;
             OnStartSeeking(gameObject);
             return;
         }
