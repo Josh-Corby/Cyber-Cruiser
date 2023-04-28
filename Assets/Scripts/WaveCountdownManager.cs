@@ -10,17 +10,10 @@ public class WaveCountdownManager : GameBehaviour
 
     public static event Action OnCountdownDone = null;
 
-    public string WaveCountDown
+    public string WaveCountdownText
     {
-        set
-        {
-            _waveCountdownText.text = value;
-        }
-
-        get
-        {
-            return _waveCountdownText.text;
-        }
+        get => _waveCountdownText.text;
+        set => _waveCountdownText.text = value;
     }
 
     private void OnEnable()
@@ -55,13 +48,13 @@ public class WaveCountdownManager : GameBehaviour
 
         while (waveCountdown >= 0)
         {
-            WaveCountDown = waveCountdown.ToString("F2");
+            WaveCountdownText = waveCountdown.ToString("F2");
             waveCountdown -= Time.deltaTime;
             yield return null;
         }
 
         OnCountdownDone?.Invoke();
-        WaveCountDown = "GO!";
+        WaveCountdownText = "GO!";
 
         while (startActiveTimer >= 0)
         {
