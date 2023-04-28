@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerShipController : MonoBehaviour
+public class PlayerShipController : GameBehaviour
 {
     #region References
     [SerializeField] private GameObject playerSprite;
@@ -151,13 +151,13 @@ public class PlayerShipController : MonoBehaviour
     {
         _controlsEnabled = true;
         mouseInput.SetActive(true);
-        Cursor.visible = false;
+        IM.IsCursorVisible = false;
     }
 
     private void DisableControls()
     {
         _controlsEnabled = false;
         mouseInput.SetActive(false);
-        Cursor.visible = true;
+        IM.IsCursorVisible = true;
     }
 }

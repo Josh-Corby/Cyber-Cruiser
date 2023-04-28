@@ -45,8 +45,6 @@ public class Weapon : GameBehaviour
         get => _isHoming;
         set => _isHoming = value;
     }
-
-
     #endregion
 
     private void Awake()
@@ -253,7 +251,6 @@ public class Weapon : GameBehaviour
         {
             case WeaponUpgradeType.Scatter_Fixed:
                 _isMultiFireSpreadRandom = false;
-
                 break;
             case WeaponUpgradeType.Scatter_Random:
                 _isMultiFireSpreadRandom = true;

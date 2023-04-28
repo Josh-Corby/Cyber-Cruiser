@@ -7,19 +7,17 @@ public class UIManager : GameBehaviour
     public static event Action OnMissionStart = null;
     public static event Action<bool> OnGameplayPanelToggled = null;
 
-    [SerializeField] private GameObject _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel, _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel;
+    [SerializeField] private GameObject _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel, 
+        _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel;
     private GameObject[] _panels;
 
     public bool GameplayPanel
     {
+        get => _gameplayPanel.activeSelf;
         set
         {
             _gameplayPanel.SetActive(value);
             OnGameplayPanelToggled(_gameplayPanel.activeSelf); 
-        }
-        get
-        {
-            return _gameplayPanel.activeSelf;
         }
     }
 
@@ -32,7 +30,6 @@ public class UIManager : GameBehaviour
     private void OnDisable()
     {
         GameManager.OnIsGamePaused -= TogglePauseUI;
-
         PlayerManager.OnPlayerDeath -= GameOverUI;
     }
 
@@ -44,7 +41,8 @@ public class UIManager : GameBehaviour
 
     private void InitializePanelsArray()
     {
-        _panels = new GameObject[] { _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel, _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel };
+        _panels = new GameObject[] { _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel,
+            _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel };
     }
 
     public void DisablePanels()
@@ -53,6 +51,7 @@ public class UIManager : GameBehaviour
         {
             GameplayPanel = false;
         }
+
         foreach (GameObject panel in _panels)
         {
             if (panel.activeSelf)
@@ -83,7 +82,7 @@ public class UIManager : GameBehaviour
 
     private void GameOverUI()
     {
-        Cursor.visible = true;
+        IM.IsCursorVisible = true;
         _gameOverPanel.SetActive(true);
     }
 
@@ -101,13 +100,13 @@ public class UIManager : GameBehaviour
 
     private void EnablePauseUI()
     {
-        Cursor.visible = true;
+        IM.IsCursorVisible = true;
         _pausePanel.SetActive(true);
     }
 
     private void DisablePauseUI()
     {
-        Cursor.visible = false;
+        IM.IsCursorVisible = false;
         _pausePanel.SetActive(false);
     }
 }

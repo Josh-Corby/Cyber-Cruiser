@@ -1,16 +1,27 @@
 using UnityEngine;
 using System;
 
-public class InputManager : MonoBehaviour
+public class InputManager : GameBehaviour<InputManager>
 {
+    #region References
+    PlayerControls controls;
+    #endregion
+
+    #region Properties
+    public bool IsCursorVisible
+    {
+        set => Cursor.visible = value;
+    }
+    #endregion
+
+    #region Actions
     public static event Action<Vector2> OnMouseMove = null;
     public static event Action<bool> OnFire = null;
     public static event Action OnShield = null;
     public static event Action OnControlsEnabled = null;
     public static event Action OnControlsDisabled = null;
     public static event Action OnPause = null;
-
-    PlayerControls controls;
+    #endregion
 
 
     private void OnEnable()
@@ -25,6 +36,7 @@ public class InputManager : MonoBehaviour
             controls.Controls.Shield.performed += i => OnShield?.Invoke();
             controls.Controls.Pause.performed += i => OnPause?.Invoke();
         }
+
         GameManager.OnMissionStart += EnableControls;
         PlayerManager.OnPlayerDeath += DisableControls;
     }
