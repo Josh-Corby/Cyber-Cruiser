@@ -19,7 +19,7 @@ public class Bullet : GameBehaviour
 
     #region Fields
     [SerializeField] private float _speed;
-    private readonly float _damage;
+    [SerializeField] private float _damage;
 
     [SerializeField] private bool _isHoming;
     [SerializeField] protected float _homeTurnSpeed;
@@ -28,7 +28,6 @@ public class Bullet : GameBehaviour
     [SerializeField] protected float _homeDelayTime;
     [SerializeField] private float _homeCounter;
     [SerializeField] private float _homeDelayCounter;
-    private Vector2 direction;
     #endregion
 
     public float Speed
@@ -56,14 +55,14 @@ public class Bullet : GameBehaviour
         }
     }
 
-    public Sprite ProjectileImage
+    public Sprite BulletSprite
     {
         set => _spriteRenderer.sprite = value;
     }
 
     private void Awake()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         if (transform.childCount > 0)
         {
@@ -82,6 +81,11 @@ public class Bullet : GameBehaviour
     }
 
     private void Start()
+    {
+        AssignHoming();
+    }
+
+    private void AssignHoming()
     {
         if (_homingTrigger != null)
         {
@@ -109,6 +113,11 @@ public class Bullet : GameBehaviour
                 return;
             }
         }
+        MoveRight();
+    }
+
+    private void MoveRight()
+    {
         transform.position += transform.right * _speed * Time.deltaTime;
     }
 
@@ -118,9 +127,7 @@ public class Bullet : GameBehaviour
 
         if (_homeCounter <= 0)
         {
-            direction = transform.up;
             IsHoming = false;
-            //Debug.Log("No longer rotating towards player");
             return;
         }
 
@@ -128,7 +135,6 @@ public class Bullet : GameBehaviour
         float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg - 90;
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, q, _homeTurnSpeed * Time.deltaTime);
-        direction = transform.up;
     }
 
     private void MoveTowardsTarget()
@@ -142,7 +148,6 @@ public class Bullet : GameBehaviour
         {
             homingTarget = PM.player;
         }
-        else return;
     }
 
     public void SwitchBulletTeam()
@@ -151,17 +156,16 @@ public class Bullet : GameBehaviour
         if(gameObject.layer == LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME))
         {
             gameObject.layer = ChangeLayerFromString(ENEMY_PROJECTILE_LAYER_NAME);
-            _spriteRenderer.sprite = _enemyProjectileSprite;
+            BulletSprite = _enemyProjectileSprite;
         }
 
         //switch to player team
         else if(gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME))
         {
             gameObject.layer = ChangeLayerFromString(PLAYER_PROJECTILE_LAYER_NAME);
-            _spriteRenderer.sprite = _playerProjectileSprite;
+            BulletSprite = _playerProjectileSprite;
         }
     }
-
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -170,24 +174,29 @@ public class Bullet : GameBehaviour
 
     private void ProcessCollision(GameObject collider)
     {
-        if (collider.TryGetComponent<Shield>(out var shield))
-        {
-            return;
-        }
-
         GameObject particles = Instantiate(_collisionParticles, transform);
         particles.transform.parent = null;
 
-        if (!collider.TryGetComponent<IDamageable>(out var interactable))
+        if (collider.GetComponent<Shield>())
         {
-            Destroy(gameObject);
             return;
         }
 
-        interactable.Damage(Damage);
+        else if (collider.TryGetComponent<IDamageable>(out var interactable))
+        {
+            interactable.Damage(Damage);
+        }  
         Destroy(gameObject);
     }
 
+    public void Reflect(GameObject objectReflectedFrom)
+    {
+        Debug.Log("Bullet reflected");
+        transform.right = objectReflectedFrom.transform.right;
+        Speed /= 2;
+        SwitchBulletTeam();
+        _spriteRenderer.flipX = !_spriteRenderer.flipX;
+    }
     private void DestroyBullet()
     {
         Destroy(gameObject);

@@ -190,7 +190,7 @@ public class PlayerWeaponController : GameBehaviour
         set
         {
             _isHoming = value;
-            _currentWeapon.isHoming = _isHoming;
+            _currentWeapon.IsHoming = _isHoming;
         }
     }
     #endregion
@@ -329,7 +329,7 @@ public class PlayerWeaponController : GameBehaviour
 
     private void CheckHoldToFire()
     {
-        if (!_currentWeapon._holdToFire)
+        if (!_currentWeapon.HoldToFire)
         {
             CancelFireInput();
         }
@@ -344,7 +344,7 @@ public class PlayerWeaponController : GameBehaviour
             return;
         }
 
-        if (_currentWeapon.readyToFire)
+        if (_currentWeapon.ReadyToFire)
         {
             _currentWeapon.CheckFireTypes();
             if (!IsWeaponUpgradeActive)

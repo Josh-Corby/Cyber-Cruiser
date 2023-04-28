@@ -10,10 +10,10 @@ public class ShieldControllerBase : GameBehaviour
 
     #region Fields
     protected bool _shieldsActive;
-    protected bool reflectorShield;
+    [SerializeField] protected bool _reflectorShield;
 
     [SerializeField] protected bool _shieldsActiveOnSpawn;
-    [SerializeField] protected bool isShieldImmuneToDamage;
+    [SerializeField] protected bool _isShieldImmuneToDamage;
 
     [SerializeField] protected int _shieldMaxStrength;
     [SerializeField] protected float _shieldCurrentStrength;
@@ -88,7 +88,7 @@ public class ShieldControllerBase : GameBehaviour
         if (collider.TryGetComponent<IDamageable>(out var damageable))
         {
             damageable.Damage(ShieldCollisionDamage);
-            if (!isShieldImmuneToDamage)
+            if (!_isShieldImmuneToDamage)
             {
                 ReduceShields(1);
             }
@@ -103,7 +103,7 @@ public class ShieldControllerBase : GameBehaviour
         else if (collider.TryGetComponent<ShieldControllerBase>(out var shield))
         {
             shield.ReduceShields(ShieldCollisionDamage);
-            if (!isShieldImmuneToDamage)
+            if (!_isShieldImmuneToDamage)
             {
                 ReduceShields(shield.ShieldCollisionDamage);
             }
@@ -111,13 +111,13 @@ public class ShieldControllerBase : GameBehaviour
 
         else if (collider.TryGetComponent<Bullet>(out var bullet))
         {
-            if (reflectorShield)
+            if (_reflectorShield)
             {
                 ReflectProjectile(bullet);
             }
             else
             {
-                if (!isShieldImmuneToDamage)
+                if (!_isShieldImmuneToDamage)
                 {
                     ReduceShields(bullet.Damage);
                 }
@@ -140,8 +140,6 @@ public class ShieldControllerBase : GameBehaviour
 
     protected virtual void ReflectProjectile(Bullet bulletToReflect)
     {
-        bulletToReflect.gameObject.transform.right = transform.right;
-        bulletToReflect.Speed /= 2;
-        bulletToReflect.SwitchBulletTeam();
+        bulletToReflect.Reflect(gameObject);
     }
 }

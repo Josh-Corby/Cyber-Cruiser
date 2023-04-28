@@ -353,6 +353,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 6190062103476473847, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: _reflectorShield
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190062103476473847, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: _shieldsActiveOnSpawn
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6498324827412908661, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_Name
       value: EnemyShieldController

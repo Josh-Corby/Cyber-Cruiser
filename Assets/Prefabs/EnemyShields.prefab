@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 6498324827412908661}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.495, y: 1.495, z: 1.495}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8055569515623550205}
@@ -48,9 +48,9 @@ MonoBehaviour:
   _unitCollider: {fileID: 0}
   _shields: {fileID: 0}
   _collisionParticles: {fileID: 0}
-  _shieldsActiveOnSpawn: 0
+  _shieldsActiveOnSpawn: 1
   isShieldImmuneToDamage: 0
-  _shieldMaxStrength: 0
+  _shieldMaxStrength: 3
   _shieldCurrentStrength: 0
   _shieldCollisionDamage: 0
 --- !u!1 &6623612547947860220
@@ -79,7 +79,7 @@ Transform:
   m_GameObject: {fileID: 6623612547947860220}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 14, y: 14, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8055569515623550205}
@@ -150,15 +150,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 192671712348854038, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 192671712348854038, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 192671712348854038, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 192671712348854038, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -199,6 +199,14 @@ PrefabInstance:
     - target: {fileID: 192671712348854038, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2050032202392030802, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2050032202392030802, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
+      propertyPath: m_Size.y
+      value: 2.39
       objectReference: {fileID: 0}
     - target: {fileID: 3323969703301485185, guid: c7d2e1ec20504c749818bea3d2d7a85a, type: 3}
       propertyPath: m_Name

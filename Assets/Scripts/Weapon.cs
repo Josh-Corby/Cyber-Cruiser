@@ -12,9 +12,9 @@ public class Weapon : GameBehaviour
     #endregion
 
     #region Fields
-    public bool readyToFire;
-    [HideInInspector] public bool _holdToFire;
-    [HideInInspector] public bool isHoming;
+    private bool _readyToFire;
+    private bool _holdToFire;
+    private bool _isHoming;
     protected bool _autoFire;
     private int _bursts;
     private int _multiFireShots;
@@ -25,7 +25,28 @@ public class Weapon : GameBehaviour
     private bool _burstFire;
     private bool _multiFire;
     private bool _isMultiFireSpreadRandom;
-    private string _weaponName;
+    #endregion
+
+    #region Properties
+    public bool ReadyToFire
+    {
+        get => _readyToFire;
+        private set => _readyToFire = value;
+    }
+
+    public bool HoldToFire
+    {
+        get => _holdToFire;
+        private set => _holdToFire = value;
+    }
+
+    public bool IsHoming
+    {
+        get => _isHoming;
+        set => _isHoming = value;
+    }
+
+
     #endregion
 
     private void Awake()
@@ -37,15 +58,14 @@ public class Weapon : GameBehaviour
 
     protected virtual void OnEnable()
     {
-        readyToFire = true;
+        ReadyToFire = true;
     }
 
     public void AssignWeaponInfo()
     {
-        _weaponName = _weaponInfo.weaponName;
         _objectToFire = _weaponInfo.objectToFire;
         _timeBetweenShots = _weaponInfo.timeBetweenShots;
-        _holdToFire = _weaponInfo.holdToFire;
+        HoldToFire = _weaponInfo.holdToFire;
         _useSpread = _weaponInfo.useSpread;
         _spreadAngle = _weaponInfo.spreadAngle;
         _burstFire = _weaponInfo.burstFire;
@@ -60,7 +80,7 @@ public class Weapon : GameBehaviour
     {
         if (_autoFire)
         {
-            if (readyToFire)
+            if (ReadyToFire)
             {
                 CheckFireTypes();
             }
@@ -69,7 +89,7 @@ public class Weapon : GameBehaviour
 
     public void CheckFireTypes()
     {
-        readyToFire = false;
+        ReadyToFire = false;
         //check for burst fire
         if (_burstFire)
         {
@@ -201,7 +221,7 @@ public class Weapon : GameBehaviour
     public void FireWithSpread(Quaternion directionWithSpread)
     {
         GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, directionWithSpread);
-        if (isHoming)
+        if (IsHoming)
         {
             ApplyHoming(bullet.GetComponent<Bullet>());
         } 
@@ -210,7 +230,7 @@ public class Weapon : GameBehaviour
     public void FireWithoutSpread()
     {
         GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, _firePointTransform.rotation);
-        if (isHoming)
+        if (IsHoming)
         {
             ApplyHoming(bullet.GetComponent<Bullet>());
         }
@@ -224,7 +244,7 @@ public class Weapon : GameBehaviour
     private IEnumerator ResetShooting()
     {
         yield return new WaitForSeconds(_timeBetweenShots);
-        readyToFire = true;
+        ReadyToFire = true;
     }
 
     public void ScatterUpgrade(WeaponUpgradeType scatterType)
