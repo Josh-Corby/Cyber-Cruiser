@@ -24,12 +24,14 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     [SerializeField] private GameObject _batteryPack, _hydrocoolant, _plasmaCache;
 
     public bool isDead;
-    private float _iFramesDuration;
-    private bool _hasPlayerTakenDamage;
+    [SerializeField] private float _iFramesDuration;
+    private bool _isPlayerImmuneToDamage;
     [SerializeField] private bool _isBatteryPack, _isHydrocoolant, _isPlasmaCache;
     [SerializeField] private List<GameObject> _addOnObjects = new();
 
     [SerializeField] private int _ramDamage;
+
+    private Coroutine _iFramesCoroutine;
     #endregion
 
     #region Properties
@@ -67,7 +69,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         set
         {
             _currentHealth = value;
-            if(_currentHealth > 0)
+            if (_currentHealth > 0)
             {
                 isDead = false;
                 if (_currentHealth >= PlayerMaxHealth)
@@ -114,13 +116,41 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         }
     }
 
+    public bool IsPlayerColliderEnabled
+    {
+        set
+        {
+            //if playercollider is already disabled and disabled by property call
+            if (_playerCollider.enabled == false && value == false)
+            {
+                EndIFrames();
+                DisablePlayerCollision();
+                return;
+            }
+
+            _playerCollider.enabled = value;
+
+            //start iframes when collider is enabled by property call
+            if (_playerCollider.enabled == true)
+            {
+                StartIFrames();
+            }
+
+            //end iframes if player collider is disabled by property call
+            else if (_playerCollider.enabled == false)
+            {
+                EndIFrames();
+            }
+        }
+    }
+
     public PlayerHealthState PlayerHealthState
     {
         set
         {
             _playerHealthState = value;
 
-            if(OnPlayerHealthStateChange != null)
+            if (OnPlayerHealthStateChange != null)
             {
                 OnPlayerHealthStateChange(value);
             }
@@ -152,7 +182,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         DisableAddOnSprites();
         SetAddOnBools();
         SetStats();
-        _hasPlayerTakenDamage = false;
+        _isPlayerImmuneToDamage = false;
     }
 
     private void OnDisable()
@@ -166,6 +196,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         PlayerPlasma = PSM.PlayerPlasma;
         PlasmaCost = PSM.PlasmaCost;
         _iFramesDuration = PSM.IFramesDuration;
+
         FullHeal();
     }
 
@@ -206,7 +237,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     public bool CheckPlasma()
     {
-        if(PlayerPlasma < PlasmaCost)
+        if (PlayerPlasma < PlasmaCost)
         {
             Debug.Log("Not enough plasma");
             return false;
@@ -223,20 +254,54 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     public void Damage(float damage)
     {
-        if (!_hasPlayerTakenDamage)
+        if (!_isPlayerImmuneToDamage)
         {
-            _hasPlayerTakenDamage = true;
+            _isPlayerImmuneToDamage = true;
             PlayerCurrentHealth -= damage;
-            StartCoroutine(PlayerDamage());
+
+            StartIFrames();
         }
     }
 
-    private IEnumerator PlayerDamage()
+    private IEnumerator Iframes()
+    {
+        Debug.Log("iFrames");
+        _playerCollider.enabled = false;
+        _isPlayerImmuneToDamage = true;
+        yield return new WaitForSeconds(_iFramesDuration);
+        CancelIFrames();
+    }
+
+    private void StartIFrames()
+    {
+        if (_iFramesCoroutine != null)
+        {
+            StopCoroutine(_iFramesCoroutine);
+
+        }
+        CancelIFrames();
+        _iFramesCoroutine = StartCoroutine(Iframes());
+    }
+
+    private void EndIFrames()
+    {
+        if (_iFramesCoroutine != null)
+        {
+            StopCoroutine(_iFramesCoroutine);
+        }
+        DisablePlayerCollision();
+    }
+
+    private void CancelIFrames()
+    {
+        _isPlayerImmuneToDamage = false;
+        _playerCollider.enabled = true;
+    }
+
+    private void DisablePlayerCollision()
     {
         _playerCollider.enabled = false;
-        yield return new WaitForSeconds(_iFramesDuration);
-        _playerCollider.enabled = true;
-        _hasPlayerTakenDamage = false;
+        _isPlayerImmuneToDamage = true;
     }
 
     public void Destroy()
@@ -257,7 +322,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             Damage(1);
         }
 
-        else if(collider.TryGetComponent<CyberKrakenTentacle>(out var tentacle))
+        else if (collider.TryGetComponent<CyberKrakenTentacle>(out var tentacle))
         {
             Damage(1);
         }

@@ -110,9 +110,8 @@ public class PlayerShieldController : ShieldControllerBase, IShield
     {
         if (GM.isPaused) return;
 
-        if (_shieldsActive)
+        if (ShieldsActive)
         {
-            Debug.Log("Shields already Active");
             return;
         }
 
@@ -131,7 +130,10 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 
         if (!_isPulseDetonator)
         {
-            base.ActivateShields();      
+            ShieldsActive = true;
+            _shields.EnableShields();
+            PM.IsPlayerColliderEnabled = false;
+            ShieldCurrentStrength = ShieldMaxStrength;
         }
     }
 
@@ -141,14 +143,8 @@ public class PlayerShieldController : ShieldControllerBase, IShield
 
         ShieldsActive = false;
         _shields.DisableShields();
-        Invoke(nameof(EnablePlayerCollider), 0.5f);
+        PM.IsPlayerColliderEnabled = true;
     }
-
-    private void EnablePlayerCollider()
-    {
-        _unitCollider.enabled = true;
-    }
-
 
     public override void ProcessCollision(GameObject collider, Vector2 collisionPoint)
     {

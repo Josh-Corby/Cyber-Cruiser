@@ -14223,7 +14223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _ramDamage
-      value: 100
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _collisionParticles

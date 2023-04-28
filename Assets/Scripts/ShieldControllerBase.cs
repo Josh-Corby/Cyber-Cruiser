@@ -96,6 +96,7 @@ public abstract class ShieldControllerBase : GameBehaviour, IShield
         _shields = GetComponentInChildren<Shield>();
     }
 
+
     protected void Start()
     {
         if (!_shieldsActiveOnSpawn)
