@@ -20,10 +20,6 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     #endregion
 
     #region Properties
-
-
-    public int PlayerPlasma { get => _playerPlasma; private set => _playerPlasma = value; }
-
     public int PlasmaCost { get => _plasmaCost; private set => _plasmaCost = value; }
 
     public float PlayerCurrentMaxHealth { get => _playerCurrentMaxHealth; private set => _playerCurrentMaxHealth = value; }
@@ -36,13 +32,22 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     public bool IsPulseDetonator { get => _isPulseDetonator; private set { _isPulseDetonator = value; } }
 
-    public int PlayerIonAmount
+    public int PlayerPlasma
+    {
+        get => _playerPlasma;
+        private set
+        {
+            _playerPlasma = value;
+        }
+    }
+
+    public int PlayerIon
     {
         get => _playerIon;
         private set
         {
             _playerIon = value;
-            OnIonChange(_playerIon);
+            OnIonChange(value);
         }
     }
 
@@ -79,7 +84,6 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     #region Actions
     public static event Action<int> OnIonChange = null;
-    public static event Action<int> OnPlasmaChange = null;
     #endregion
 
     private void OnEnable()
@@ -105,14 +109,14 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     private void RestoreValues()
     {
-        PlayerIonAmount = PlayerPrefs.GetInt(nameof(PLAYER_ION));
+        PlayerIon = PlayerPrefs.GetInt(nameof(PLAYER_ION));
         PlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
         PlasmaCost = 5;
     }
 
     public void ChangeIon(int value)
     {
-        PlayerIonAmount += value;
+        PlayerIon += value;
     }
 
     public void ChangePlasma(int value)
@@ -149,9 +153,9 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         }
 
         //Spend or refund ions depending on bool state
-        PlayerIonAmount += value ? -cost : cost;
+        PlayerIon += value ? -cost : cost;
         //Process ion change
-        OnIonChange(PlayerIonAmount);
+        OnIonChange(PlayerIon);
 
         //Find function related to addon type
         switch (addOnType)
@@ -173,7 +177,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     private bool CanPlayerAffordAddon(int cost)
     {
-        return PlayerIonAmount > cost;
+        return PlayerIon > cost;
     }
 
     #region AddOnEffects
@@ -197,6 +201,6 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), PlayerPlasma);
-        PlayerPrefs.SetInt(nameof(PLAYER_ION), PlayerIonAmount);
+        PlayerPrefs.SetInt(nameof(PLAYER_ION), PlayerIon);
     }
 }

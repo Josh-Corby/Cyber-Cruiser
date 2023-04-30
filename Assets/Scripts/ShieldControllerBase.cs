@@ -10,8 +10,8 @@ public class ShieldControllerBase : GameBehaviour
 
     #region Fields
     protected bool _shieldsActive;
-    private int _shieldMaxStrength;
-    private float _shieldCurrentStrength;
+    [SerializeField] private int _shieldMaxStrength;
+    [SerializeField] private float _shieldCurrentStrength;
     private float _shieldCollisionDamage;
 
     [SerializeField] protected bool _reflectorShield;

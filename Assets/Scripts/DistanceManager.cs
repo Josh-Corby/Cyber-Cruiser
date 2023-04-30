@@ -28,7 +28,12 @@ public class DistanceManager : GameBehaviour
         get => _distanceInt;
         set
         {
+            if(_distanceInt != value)
+            {
+                if (OnDistanceTraveled != null) OnDistanceTraveled?.Invoke();
+            }
             _distanceInt = value;
+            OnDistanceChanged?.Invoke(_distanceInt);       
             UpdateDistanceText();
         }
     }
@@ -36,6 +41,8 @@ public class DistanceManager : GameBehaviour
 
     #region Actions
     public static event Action<PickupType> OnPlasmaDistanceReached = null;
+    public static event Action<int> OnDistanceChanged = null;
+    public static event Action OnDistanceTraveled = null;
     public static event Action OnWeaponUpgradeDistanceReached = null;
     public static event Action OnBossDistanceReached = null;
     #endregion

@@ -115,8 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f983803b7c3c2240ae6af887933654e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnemyDead: 0
-  direction: {x: 0, y: 0}
   gunshipMoveType: 0
 --- !u!1 &2997536913237005337
 GameObject:
@@ -170,9 +168,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponInfo: {fileID: 11400000, guid: 9818121d79463934baba9740bb6cab5d, type: 2}
   _objectToFire: {fileID: 0}
-  readyToFire: 0
-  _holdToFire: 0
-  isHoming: 0
 --- !u!1 &6039875575232580999
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +337,10 @@ PrefabInstance:
     - target: {fileID: 6190062103476473847, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: _reflectorShield
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190062103476473847, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
+      propertyPath: _shieldCurrentStrength
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6498324827412908661, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: m_Name

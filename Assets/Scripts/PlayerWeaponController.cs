@@ -107,6 +107,7 @@ public class PlayerWeaponController : GameBehaviour
     public static event Action<UISlider, float, int> OnWeaponHeatInitialized = null;
     public static event Action<UISlider, float> OnHeatChange = null;
     public static event Action<UISlider, bool> OnOverheatStatusChange = null;
+    public static event Action OnShoot = null;
     #endregion
 
     private void Awake()
@@ -225,6 +226,7 @@ public class PlayerWeaponController : GameBehaviour
                 _beamAttack.ResetBeam();
             }
         }
+        OnShoot?.Invoke();
     }
 
     private void SetFireInput(bool input)

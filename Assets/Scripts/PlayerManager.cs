@@ -146,6 +146,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     public static event Action OnPlayerDeath = null;
     public static event Action<int> OnIonPickup = null;
     public static event Action<int> OnPlasmaChange = null;
+    public static event Action<int> OnPlasmaPickupValue = null;
     public static event Action<UISlider, float> OnPlayerMaxHealthSet = null;
     public static event Action<UISlider, float> OnPlayerCurrentHealthChange = null;
     public static event Action<PlayerHealthState> OnPlayerHealthStateChange = null;
@@ -208,6 +209,14 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         PlayerCurrentHealth += healthAmount;
         PlayerPlasma += plasmaAmount;
         OnIonPickup(ionAmount);
+
+        if(plasmaAmount > 0)
+        {
+            if(OnPlasmaPickupValue != null)
+            {
+                OnPlasmaPickupValue(plasmaAmount);
+            }
+        }
     }
 
     private void FullHeal()

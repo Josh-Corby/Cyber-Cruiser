@@ -1,6 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+using System;
 
 public class CyberKraken : Boss, IBoss
 {
@@ -14,6 +15,8 @@ public class CyberKraken : Boss, IBoss
 
     private List<GameObject> _tentacles = new();
     private bool _isAttacking;
+
+    public static event Action OnDied = null;
 
     protected override void Awake()
     {
@@ -64,5 +67,6 @@ public class CyberKraken : Boss, IBoss
         }
         _tentacles.Clear();
         base.Crash();
+        if (OnDied != null) OnDied?.Invoke();
     }
 }

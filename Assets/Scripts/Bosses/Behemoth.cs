@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Behemoth : Boss, IBoss
 {
@@ -10,6 +9,7 @@ public class Behemoth : Boss, IBoss
     [SerializeField] private EnemyScriptableObject _missile;
     [SerializeField] private EnemyScriptableObject _homingMissile;
 
+    public static event Action OnDied;
 
     //missiles in random directions
     public void Attack1()
@@ -21,5 +21,11 @@ public class Behemoth : Boss, IBoss
     public void Attack2()
     {
         _homingMissileLauncher.CheckFireTypes();
+    }
+
+    protected override void Crash()
+    {
+        base.Crash();
+        if (OnDied != null) OnDied?.Invoke();
     }
 }

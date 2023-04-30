@@ -1,6 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Battlecruiser : Boss, IBoss
 {
@@ -14,6 +14,8 @@ public class Battlecruiser : Boss, IBoss
 
     [SerializeField] private GameObject _pulverizerBeam;
     [SerializeField] private BeamAttack _beamAttack;
+
+    public static event Action OnDied = null;
 
     protected override void Awake()
     {
@@ -62,5 +64,11 @@ public class Battlecruiser : Boss, IBoss
         _beamAttack.lineRenderer.enabled = true;
         _attackTimer = _beamAttackDuration + _timeAfterAttackFinish;
         _beamAttack.isBeamActive = true;
+    }
+
+    protected override void Crash()
+    {
+        base.Crash();
+        if (OnDied != null) OnDied?.Invoke();
     }
 }

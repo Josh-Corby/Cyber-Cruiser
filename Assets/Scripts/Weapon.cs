@@ -213,7 +213,7 @@ public class Weapon : GameBehaviour
         if (IsHoming)
         {
             ApplyHoming(bullet.GetComponent<Bullet>());
-        }
+        }      
     }
 
     public void FireWithoutSpread()
