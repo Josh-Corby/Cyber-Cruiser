@@ -17,6 +17,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     [SerializeField] private int _enemiesToSpawn;
     [SerializeField] private float _spawnEnemyIntervalBase;
     [SerializeField] private float _enemySpawnInterval;
+    private float _enemySpawnTimer;
     [SerializeField] private float _spawnEnemyReduction;
     [SerializeField] private float _offsetPerEnemy;
     [SerializeField] private int _timesToReduce;
@@ -28,14 +29,17 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     public GameObject bossGoalPosition;
     public Transform dragonMovePoint;
 
+    [Header("Spawn bools")]
     [HideInInspector] public bool bossReadyToSpawn;
     private const float BOSS_WAIT_TIME = 2f;
     private bool _spawnEnemies;
 
+    [Header("Lists")]
     private List<EnemySpawner> _enemySpawners = new();
     private List<EnemySpawner> _spawnersSpawning = new();
     private List<EnemyScriptableObject> _bossesToSpawn = new();
 
+    [Header("Coroutines")]
     private Coroutine _spawnEnemiesCoroutine;
     private Coroutine _spawnBossCoroutine;
 
@@ -80,6 +84,31 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
         RestartLevel();
     }
 
+    private void Update()
+    {
+        if (GM.IsPaused) return;
+
+
+        while (_spawnEnemies)
+        {
+            if(_enemySpawnTimer > 0)
+            {
+                _enemySpawnTimer -= Time.deltaTime;
+                return;
+            }
+
+            //yield return new WaitForSeconds(_enemySpawnInterval);
+            _spawnersSpawning.Clear();
+            OnSpawnEnemyGroup?.Invoke();
+            for (int i = 0; i < _enemiesToSpawn; i++)
+            {
+                GetRandomWeightedSpawners();
+            }
+            SpawnFromRandomSpawners();
+            _enemySpawnTimer = _enemySpawnInterval;
+        }
+    }
+
     private void RestartLevel()
     {
         StopSpawningEnemies();
@@ -110,31 +139,13 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     private void StartSpawningEnemies()
     {
         _spawnEnemies = true;
-        _spawnEnemiesCoroutine = StartCoroutine(SpawnEnemiesCoroutine());
+        _enemySpawnTimer = _enemySpawnInterval;
     }
 
     private void StopSpawningEnemies()
     {
-        if (_spawnEnemiesCoroutine != null)
-        {
-            StopCoroutine(_spawnEnemiesCoroutine);
-        }
         _spawnEnemies = false;
-    }
-
-    private IEnumerator SpawnEnemiesCoroutine()
-    {
-        while (_spawnEnemies)
-        {
-            yield return new WaitForSeconds(_enemySpawnInterval);
-            _spawnersSpawning.Clear();
-            OnSpawnEnemyGroup?.Invoke();
-            for (int i = 0; i < _enemiesToSpawn; i++)
-            {
-                GetRandomWeightedSpawners();
-            }
-            SpawnFromRandomSpawners();
-        }
+        _enemySpawnTimer = 0;
     }
 
     private void GetRandomWeightedSpawners()

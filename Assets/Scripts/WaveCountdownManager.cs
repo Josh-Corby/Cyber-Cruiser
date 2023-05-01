@@ -6,7 +6,15 @@ using System;
 public class WaveCountdownManager : GameBehaviour
 {
     [SerializeField] private TMP_Text _waveCountdownText;
-    private Coroutine _waveCountdownCoroutine;
+
+    private const float WAVECOUNTDOWNTIME = 3f;
+    private const float STARTTEXTTIMER = 1f;
+
+    #region Fields
+    private float _waveCountdownTime = 3f;
+    private float _startTextTimer = 1f;
+    private bool _isCountdownDone;
+    #endregion
 
     public static event Action OnCountdownDone = null;
 
@@ -17,49 +25,49 @@ public class WaveCountdownManager : GameBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnMissionStart += ResetWaveCountdown;
+        GameManager.OnMissionStart += StartWaveCountdown;
     }
 
     private void OnDisable()
     {
-        GameManager.OnMissionStart -= ResetWaveCountdown;
+        GameManager.OnMissionStart -= StartWaveCountdown;
     }
 
-    private void ResetWaveCountdown()
-    {
-        if (_waveCountdownCoroutine != null)
-        {
-            StopCoroutine(_waveCountdownCoroutine);
-        }
-        StartWaveCountdown();
-    }
 
     private void StartWaveCountdown()
     {
-        _waveCountdownCoroutine = StartCoroutine(WaveCountdown());
+        _isCountdownDone = false;
+        _waveCountdownText.enabled = true;
+        _waveCountdownTime = WAVECOUNTDOWNTIME;
+        _startTextTimer = STARTTEXTTIMER;
     }
 
-    private IEnumerator WaveCountdown()
+    private void Update()
     {
-        _waveCountdownText.enabled = true;
-        float waveCountdown = 3f;
-        float startActiveTimer = 1f;
+        if (GM.IsPaused) return;
 
-        while (waveCountdown >= 0)
+        while (_waveCountdownTime >= 0)
         {
-            WaveCountdownText = waveCountdown.ToString("F2");
-            waveCountdown -= Time.deltaTime;
-            yield return null;
+            WaveCountdownText = _waveCountdownTime.ToString("F2");
+            _waveCountdownTime -= Time.deltaTime;
+            return;
         }
 
-        OnCountdownDone?.Invoke();
-        WaveCountdownText = "GO!";
-
-        while (startActiveTimer >= 0)
+        if (!_isCountdownDone)
         {
-            startActiveTimer -= Time.deltaTime;
-            yield return null;
+            OnCountdownDone?.Invoke();
+            WaveCountdownText = "GO!";
+            _isCountdownDone = true;
         }
-        _waveCountdownText.enabled = false;
+        while (_startTextTimer >= 0)
+        {
+            _startTextTimer -= Time.deltaTime;
+            return;
+        }
+
+        if(_waveCountdownText.enabled == true)
+        {
+            _waveCountdownText.enabled = false;
+        }
     }
 }
