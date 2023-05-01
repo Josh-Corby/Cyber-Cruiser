@@ -72,12 +72,15 @@ public class MissionManager : GameBehaviour
                     case BossTypes.All:
                         Boss.OnBossDied += (V, P) => { IncrementMissionProgress(); };
                         break;
+                    case BossTypes.Battlecruiser:
+                        break;
                     case BossTypes.Robodactyl:
                         Robodactyl.OnDied += IncrementMissionProgress;
                         break;
                     case BossTypes.Behemoth:
-
+                        Behemoth.OnDied += IncrementMissionProgress;
                         break;
+                   
                 }
                 break;
                 #endregion
