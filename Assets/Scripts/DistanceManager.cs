@@ -6,21 +6,31 @@ using Random = UnityEngine.Random;
 
 public class DistanceManager : GameBehaviour
 {
+    #region References
+    [SerializeField] private TMP_Text _distanceCounterText;
+    #endregion
+
+    #region Fields
+    [Header("Check Distances")]
     [SerializeField] private int _bossSpawnDistance = 500;
     private const int MILESTONE_DISTANCE = 100;
 
+    [Header("General Distance")]
     private float _distanceFloat;
     private int _distanceInt;
     private bool IsDistanceIncreasing;
 
+    [Header("Boss distances")]
     private int _previousBossDistance, _currentBossDistance;
 
+    [Header("Distance Milestones")]
     private int _currentDistanceMilestone;
     private bool isDistanceMilestoneIncreased;
-    [SerializeField] private TMP_Text _distanceCounterText;
 
+    [Header("Pickup values")]
     private int _plasmaDropDistance, _weaponUpgradeDropDistance;
     private bool _isPlasmaSpawned, _isWeaponUpgradeSpawned = false;
+    #endregion 
 
     #region Properties
     private int DistanceInt
@@ -71,6 +81,8 @@ public class DistanceManager : GameBehaviour
 
     private void Update()
     {
+        if (GM.IsPaused) return;
+
         if (!IsDistanceIncreasing) return;
 
         IncreaseDistance();
