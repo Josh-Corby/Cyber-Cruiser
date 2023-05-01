@@ -57,6 +57,7 @@ public class Pickup : GameBehaviour
 
     private void Update()
     {
+        if (GM.IsPaused) return;
         MoveForward();
     }
 

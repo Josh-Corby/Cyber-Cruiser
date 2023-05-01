@@ -18,7 +18,7 @@ public class DistanceManager : GameBehaviour
     [Header("General Distance")]
     private float _distanceFloat;
     private int _distanceInt;
-    private bool IsDistanceIncreasing;
+    [SerializeField] private bool _isDistanceIncreasing;
 
     [Header("Boss distances")]
     private int _previousBossDistance, _currentBossDistance;
@@ -79,11 +79,16 @@ public class DistanceManager : GameBehaviour
         PickupManager.OnWeaponUpgradeSpawned -= () => { StartCoroutine(WeaponUpgradeSpawned()); };
     }
 
+    private void Start()
+    {
+        _isDistanceIncreasing = false;    
+    }
+
     private void Update()
     {
         if (GM.IsPaused) return;
 
-        if (!IsDistanceIncreasing) return;
+        if (!_isDistanceIncreasing) return;
 
         IncreaseDistance();
         CheckDistance();
@@ -192,19 +197,19 @@ public class DistanceManager : GameBehaviour
         DistanceInt = 0;
         _currentBossDistance = _bossSpawnDistance;
         isDistanceMilestoneIncreased = false;
-        IsDistanceIncreasing = false;
+        _isDistanceIncreasing = false;
     }
 
     private void StartIncreasingDistance()
     {
         _distanceFloat += 1;
         DistanceInt += 1;
-        IsDistanceIncreasing = true;
+        _isDistanceIncreasing = true;
     }
 
     private void StopIncreasingDistance()
     {
-        IsDistanceIncreasing = false;
+        _isDistanceIncreasing = false;
     }
 
     private void UpdateDistanceText()

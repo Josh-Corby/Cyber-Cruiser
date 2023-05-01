@@ -500,7 +500,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5601301386871396227}
+  - {fileID: 5853570435262539623}
   m_Father: {fileID: 2987692178991082004}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -585,8 +587,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3486365589442822900}
-  - {fileID: 5601301386871396227}
-  - {fileID: 5853570435262539623}
   m_Father: {fileID: 3061054622817398978}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -848,13 +848,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7036974156172268677}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.074, y: -0.028, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.07399988, y: -0.028, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2987692178991082004}
-  m_RootOrder: 2
+  m_Father: {fileID: 3486365589442822900}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2943122821616581379
 SpriteRenderer:
@@ -957,11 +957,11 @@ MonoBehaviour:
   _unitCollider: {fileID: 672325873516531704}
   _shields: {fileID: 7448088386261638001}
   _collisionParticles: {fileID: 8611581191203232223, guid: bcd084b07ae840f49bc8526ab122ce58, type: 3}
-  _shieldsActiveOnSpawn: 0
-  isShieldImmuneToDamage: 1
   _shieldMaxStrength: 1
   _shieldCurrentStrength: 0
-  _shieldCollisionDamage: 1
+  _reflectorShield: 0
+  _shieldsActiveOnSpawn: 0
+  _isShieldImmuneToDamage: 0
   _shieldActiveDuration: 5
   _shieldActiveTimer: 5
   _isPulseDetonator: 0
@@ -996,8 +996,8 @@ Transform:
   - {fileID: 3719595099470285327}
   - {fileID: 3163025727687551518}
   - {fileID: 2528931301412477764}
-  m_Father: {fileID: 2987692178991082004}
-  m_RootOrder: 1
+  m_Father: {fileID: 3486365589442822900}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8907491432247727163
 GameObject:
@@ -1120,6 +1120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba5b68eaeaf9334b9d15dd84c46a276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroy: 0
 --- !u!114 &8907491432247727158
 MonoBehaviour:
   m_ObjectHideFlags: 0

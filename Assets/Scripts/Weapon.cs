@@ -67,6 +67,7 @@ public class Weapon : GameBehaviour
 
     private void Update()
     {
+        if (GM.IsPaused) return;
         if (AutoFire)
         {
             if (ReadyToFire)
