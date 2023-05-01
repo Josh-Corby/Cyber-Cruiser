@@ -25,21 +25,20 @@ public class GameManager : GameBehaviour<GameManager>
     private void OnEnable()
     {
         InputManager.OnPause += TogglePause;
-        UIManager.OnMissionStart += StartLevel;
-        UIManager.OnGameplayPanelToggled += ToggleGameplayObjects;
+        UIManager.OnLevelUIReady += StartLevel;
     }
 
     private void OnDisable()
     {
         InputManager.OnPause -= TogglePause;
-        UIManager.OnMissionStart -= StartLevel;
-        UIManager.OnGameplayPanelToggled -= ToggleGameplayObjects;
+        UIManager.OnLevelUIReady -= StartLevel;
     }
 
-    public void StartLevel()
+    public void StartLevel(bool value)
     {
         _isPaused = false;
         Time.timeScale = 1f;
+        ToggleGameplayObjects(value);
         OnMissionStart?.Invoke();
     }
 
@@ -70,7 +69,7 @@ public class GameManager : GameBehaviour<GameManager>
 
     private void PauseGame()
     {
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
     }
 
     private void ResumeGame()
