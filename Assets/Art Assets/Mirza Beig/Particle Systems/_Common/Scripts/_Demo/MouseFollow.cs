@@ -21,7 +21,7 @@ namespace MirzaBeig
             // =================================	
             // Classes.
             // =================================
-            
+
             public class MouseFollow : MonoBehaviour
             {
                 // =================================	

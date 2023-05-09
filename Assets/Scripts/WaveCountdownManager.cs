@@ -1,7 +1,6 @@
-using System.Collections;
-using UnityEngine;
-using TMPro;
 using System;
+using TMPro;
+using UnityEngine;
 
 public class WaveCountdownManager : GameBehaviour
 {
@@ -13,7 +12,7 @@ public class WaveCountdownManager : GameBehaviour
     #region Fields
     private float _waveCountdownTime = 3f;
     private float _startTextTimer = 1f;
-    private bool _isCountdownDone;
+    private bool _isCountdownDone, _isCountingDown;
     #endregion
 
     public static event Action OnCountdownDone = null;
@@ -33,17 +32,22 @@ public class WaveCountdownManager : GameBehaviour
         GameManager.OnMissionStart -= StartWaveCountdown;
     }
 
-
+    private void Start()
+    {
+        _isCountingDown = false;
+    }
     private void StartWaveCountdown()
     {
         _isCountdownDone = false;
         _waveCountdownText.enabled = true;
         _waveCountdownTime = WAVECOUNTDOWNTIME;
         _startTextTimer = STARTTEXTTIMER;
+        _isCountingDown = true;
     }
 
     private void Update()
     {
+        if (!_isCountingDown) return;
         if (GM.IsPaused) return;
 
         while (_waveCountdownTime >= 0)
@@ -65,7 +69,7 @@ public class WaveCountdownManager : GameBehaviour
             return;
         }
 
-        if(_waveCountdownText.enabled == true)
+        if (_waveCountdownText.enabled == true)
         {
             _waveCountdownText.enabled = false;
         }

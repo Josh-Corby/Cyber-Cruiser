@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using System;
 
 public class Battlecruiser : Boss, IBoss
 {
@@ -40,7 +40,7 @@ public class Battlecruiser : Boss, IBoss
     //release seeker mines
     private IEnumerator ReleaseMines()
     {
-        _attackTimer =  _timeAfterAttackFinish;
+        _attackTimer = _timeAfterAttackFinish;
         for (int i = 0; i < _minesToFire; i++)
         {
             GameObject mineObject = EM.CreateEnemyFromSO(_seekerMineInfo);
@@ -49,7 +49,7 @@ public class Battlecruiser : Boss, IBoss
             yield return new WaitForSeconds(_mineDelay);
         }
         StopCoroutine(ReleaseMines());
-      
+
     }
 
     public void Attack1()

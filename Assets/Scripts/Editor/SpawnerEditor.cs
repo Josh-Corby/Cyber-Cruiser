@@ -16,12 +16,12 @@ public class SpawnerEditor : Editor
 
         serializedObject.Update();
 
-        if(GUILayout.Button("Reset Category Weights"))
+        if (GUILayout.Button("Reset Category Weights"))
         {
             spawner.ResetCategoryWeights();
         }
 
-        if(GUILayout.Button("Reset Type Weights"))
+        if (GUILayout.Button("Reset Type Weights"))
         {
             spawner.ResetTypeWeights();
         }

@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using System;
 
 public class CyberKraken : Boss, IBoss
 {
@@ -30,7 +30,7 @@ public class CyberKraken : Boss, IBoss
         int i = Random.Range(0, 2);
         if (i == 0)
         {
-            GameObject topTentacle = Instantiate(_spawnedTentaclePrefab,_topSpawner.GetRandomSpawnPosition(),_topSpawner.transform.rotation);
+            GameObject topTentacle = Instantiate(_spawnedTentaclePrefab, _topSpawner.GetRandomSpawnPosition(), _topSpawner.transform.rotation);
             topTentacle.transform.parent = gameObject.transform;
             _tentacles.Add(topTentacle);
         }

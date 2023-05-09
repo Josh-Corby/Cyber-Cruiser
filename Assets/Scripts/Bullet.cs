@@ -157,14 +157,14 @@ public class Bullet : GameBehaviour
     public void SwitchBulletTeam()
     {
         //switch from player team
-        if(gameObject.layer == LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME))
+        if (gameObject.layer == LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME))
         {
             gameObject.layer = ChangeLayerFromString(ENEMY_PROJECTILE_LAYER_NAME);
             BulletSprite = _enemyProjectileSprite;
         }
 
         //switch to player team
-        else if(gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME))
+        else if (gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME))
         {
             gameObject.layer = ChangeLayerFromString(PLAYER_PROJECTILE_LAYER_NAME);
             BulletSprite = _playerProjectileSprite;
@@ -189,7 +189,7 @@ public class Bullet : GameBehaviour
         else if (collider.TryGetComponent<IDamageable>(out var interactable))
         {
             interactable.Damage(Damage);
-        }  
+        }
         Destroy(gameObject);
     }
 

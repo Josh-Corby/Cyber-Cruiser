@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum MissionConditions
 {
-    EndMission,CollectPlasma,UseShield,UseWeaponPack,FlyDistanceTotal,FlyDistanceOnce,KillBoss,DontShootForDistance
+    EndMission, CollectPlasma, UseShield, UseWeaponPack, FlyDistanceTotal, FlyDistanceOnce, KillBoss, DontShootForDistance
 }
 
 public enum EnemyTypes

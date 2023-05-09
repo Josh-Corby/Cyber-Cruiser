@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DragonMovement : EnemyMovement
@@ -18,7 +16,7 @@ public class DragonMovement : EnemyMovement
     {
         startRotation = new Vector3(0, transform.eulerAngles.y, 0);
 
-        ChooseRandomMoveType(); 
+        ChooseRandomMoveType();
     }
 
     protected override void Update()
@@ -44,7 +42,7 @@ public class DragonMovement : EnemyMovement
             //float angle = Mathf.Atan2(vectorToBottomLeft.y, -vectorToBottomLeft.x) * Mathf.Rad2Deg;
 
             //Hard coded solution
-            transform.eulerAngles = new Vector3(0, 180, -29);           
+            transform.eulerAngles = new Vector3(0, 180, -29);
         }
 
         if (movementTypeID == 1)

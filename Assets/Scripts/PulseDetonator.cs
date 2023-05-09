@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PulseDetonator : GameBehaviour
@@ -27,7 +25,7 @@ public class PulseDetonator : GameBehaviour
             {
                 Detonation();
             }
-        }      
+        }
     }
     public void Detonate()
     {

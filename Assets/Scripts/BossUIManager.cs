@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class BossUIManager : GameBehaviour
 {
@@ -37,7 +37,7 @@ public class BossUIManager : GameBehaviour
     {
         EnemySpawnerManager.OnBossSelected -= EnableBossWarningUI;
         GameManager.OnMissionEnd -= DisableBossUI;
-        EnemySpawner.OnBossSpawned -= (e) => { DisableBossWarningUI(); }; 
+        EnemySpawner.OnBossSpawned -= (e) => { DisableBossWarningUI(); };
         Boss.OnBossDamage -= UpdateBossHealthBar;
         EnemySpawner.OnBossSpawned -= EnableBossUI;
         Boss.OnBossDied -= (p, v) => { DisableBossUI(); };

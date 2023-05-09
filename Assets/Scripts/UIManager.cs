@@ -1,11 +1,11 @@
-using UnityEngine;
 using System;
-using System.Collections;
+using UnityEngine;
 
 public class UIManager : GameBehaviour
 {
     #region References  
-    [SerializeField] private GameObject _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel,
+    [SerializeField]
+    private GameObject _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel,
           _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel;
 
     #endregion
@@ -49,7 +49,7 @@ public class UIManager : GameBehaviour
 
     public void DisablePanels()
     {
-        if(_gameplayPanel.activeSelf == true)
+        if (_gameplayPanel.activeSelf == true)
         {
             _gameplayPanel.SetActive(false);
         }
@@ -59,14 +59,15 @@ public class UIManager : GameBehaviour
             if (panel.activeSelf)
             {
                 panel.SetActive(false);
-            }     
+            }
         }
     }
 
     public void EnableMainMenu()
     {
         DisablePanels();
-        _titlePanel.SetActive(true);
+        _panelToEnable = _titlePanel;
+        EnablePanel();
     }
 
     public void EnableLevelUI()
@@ -94,7 +95,7 @@ public class UIManager : GameBehaviour
 
     private void DisablePanel()
     {
-        if(_currentPanel.TryGetComponent<PanelAnimation>(out var panelAnimation))
+        if (_currentPanel.TryGetComponent<PanelAnimation>(out var panelAnimation))
         {
             panelAnimation.StartCloseUI();
         }

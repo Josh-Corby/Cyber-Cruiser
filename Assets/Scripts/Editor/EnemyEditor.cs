@@ -65,11 +65,11 @@ public class EnemyEditor : Editor
         seekPlayerY = serializedObject.FindProperty(nameof(seekPlayerY));
         seekPlayerX = serializedObject.FindProperty(nameof(seekPlayerX));
         seekSpeed = serializedObject.FindProperty(nameof(seekSpeed));
-      
+
         sinUpDownMovement = serializedObject.FindProperty(nameof(sinUpDownMovement));
         sinFrequency = serializedObject.FindProperty(nameof(sinFrequency));
         sinMagnitude = serializedObject.FindProperty(nameof(sinMagnitude));
-      
+
         homeOnPlayer = serializedObject.FindProperty(nameof(homeOnPlayer));
         homeTurnSpeed = serializedObject.FindProperty(nameof(homeTurnSpeed));
         homeTime = serializedObject.FindProperty(nameof(homeTime));

@@ -1,7 +1,5 @@
-using UnityEngine;
-using System.Collections;
 using System;
-using TMPro;
+using UnityEngine;
 
 public class GameManager : GameBehaviour<GameManager>
 {
@@ -22,6 +20,7 @@ public class GameManager : GameBehaviour<GameManager>
         gameplayObjects.SetActive(false);
         Application.targetFrameRate = 60;
     }
+
     private void OnEnable()
     {
         InputManager.OnPause += TogglePause;
@@ -49,6 +48,7 @@ public class GameManager : GameBehaviour<GameManager>
 
     public void EndMission()
     {
+        ToggleGameplayObjects(false);
         OnMissionEnd?.Invoke();
     }
 

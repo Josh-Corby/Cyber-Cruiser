@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CyberKrakenTentacle : GameBehaviour
@@ -59,7 +57,7 @@ public class CyberKrakenTentacle : GameBehaviour
     {
         transform.parent.position -= transform.right * speed * Time.deltaTime;
 
-        if (Vector2.Distance(transform.parent.position, spawnPosition) <0.5f)
+        if (Vector2.Distance(transform.parent.position, spawnPosition) < 0.5f)
         {
             Destroy(transform.parent.gameObject);
         }
@@ -79,5 +77,5 @@ public class CyberKrakenTentacle : GameBehaviour
         {
             _isWaiting = false;
         }
-    } 
+    }
 }

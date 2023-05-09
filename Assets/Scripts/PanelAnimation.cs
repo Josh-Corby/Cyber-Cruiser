@@ -62,5 +62,5 @@ public class PanelAnimation : MonoBehaviour
     {
         OnPanelDisabled?.Invoke();
         gameObject.SetActive(false);
-    } 
+    }
 }

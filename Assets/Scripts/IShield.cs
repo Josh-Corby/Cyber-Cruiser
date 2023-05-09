@@ -1,4 +1,3 @@
-using UnityEngine;
 public interface IShield
 {
     public void ReduceShields(float damage);

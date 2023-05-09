@@ -1,7 +1,7 @@
-using UnityEngine;
 using System;
 using System.Collections;
 using TMPro;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class DistanceManager : GameBehaviour
@@ -38,12 +38,12 @@ public class DistanceManager : GameBehaviour
         get => _distanceInt;
         set
         {
-            if(_distanceInt != value)
+            if (_distanceInt != value)
             {
                 if (OnDistanceTraveled != null) OnDistanceTraveled?.Invoke();
             }
             _distanceInt = value;
-            OnDistanceChanged?.Invoke(_distanceInt);       
+            OnDistanceChanged?.Invoke(_distanceInt);
             UpdateDistanceText();
         }
     }
@@ -64,7 +64,7 @@ public class DistanceManager : GameBehaviour
         WaveCountdownManager.OnCountdownDone += GenerateFirstPickupDistances;
         PlayerManager.OnPlayerDeath += StopIncreasingDistance;
         Boss.OnBossDied += (p, v) => { StartIncreasingDistance(); };
-        PickupManager.OnPlasmaSpawned += () => { StartCoroutine(PlasmaSpawned()); } ;
+        PickupManager.OnPlasmaSpawned += () => { StartCoroutine(PlasmaSpawned()); };
         PickupManager.OnWeaponUpgradeSpawned += () => { StartCoroutine(WeaponUpgradeSpawned()); };
     }
 
@@ -81,7 +81,7 @@ public class DistanceManager : GameBehaviour
 
     private void Start()
     {
-        _isDistanceIncreasing = false;    
+        _isDistanceIncreasing = false;
     }
 
     private void Update()
@@ -110,9 +110,12 @@ public class DistanceManager : GameBehaviour
         }
 
         //start boss fight at boss distance
-        if (DistanceInt > 0 && DistanceInt % _currentBossDistance == 0)
+        if (DistanceInt > 0)
         {
-            BossDistanceReached();
+            if (DistanceInt % _currentBossDistance == 0)
+            {
+                BossDistanceReached();
+            }
         }
 
         //spawn plasma at seeded distance

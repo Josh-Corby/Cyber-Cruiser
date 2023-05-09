@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 
 public class BorderCollider : GameBehaviour
 {
@@ -8,7 +7,7 @@ public class BorderCollider : GameBehaviour
         if (collision.gameObject != PM.player)
         {
             //Debug.Log(collision.name);
-            if(collision.gameObject.TryGetComponent<Shield>(out var enemyShield))
+            if (collision.gameObject.TryGetComponent<Shield>(out var enemyShield))
             {
                 IDamageable ShieldUnit = enemyShield.GetComponentInParent<IDamageable>();
                 if (ShieldUnit != null)

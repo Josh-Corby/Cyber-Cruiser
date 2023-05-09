@@ -10,7 +10,7 @@ public class ESMEditor : Editor
 
         serializedObject.Update();
 
-        if(GUILayout.Button("Reset Weights"))
+        if (GUILayout.Button("Reset Weights"))
         {
             ESM.ResetWeights();
             serializedObject.ApplyModifiedProperties();

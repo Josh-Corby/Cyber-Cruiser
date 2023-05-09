@@ -1,7 +1,7 @@
-using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
@@ -91,7 +91,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
         while (_spawnEnemies)
         {
-            if(_enemySpawnTimer > 0)
+            if (_enemySpawnTimer > 0)
             {
                 _enemySpawnTimer -= Time.deltaTime;
                 return;

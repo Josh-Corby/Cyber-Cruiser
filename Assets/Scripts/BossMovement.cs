@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public class BossMovement : EnemyMovement
 {
@@ -53,7 +53,7 @@ public class BossMovement : EnemyMovement
             {
                 transform.position = Vector2.MoveTowards(transform.position, _movePosition, _speed * Time.deltaTime);
             }
-            
+
             if (Vector2.Distance(transform.position, _movePosition) <= 0.1f)
             {
                 RequestNewMovePosition();

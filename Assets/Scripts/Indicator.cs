@@ -1,6 +1,6 @@
-using UnityEngine;
-using System.Collections;
 using DG.Tweening;
+using System.Collections;
+using UnityEngine;
 
 public class Indicator : MonoBehaviour
 {

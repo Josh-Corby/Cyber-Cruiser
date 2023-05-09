@@ -1,7 +1,7 @@
-using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public enum PlayerHealthState
 {
@@ -37,7 +37,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     #region Properties
     public int PlayerPlasma
     {
-        get => _playerPlasma; 
+        get => _playerPlasma;
         private set
         {
             _playerPlasma = value;
@@ -210,9 +210,9 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         PlayerPlasma += plasmaAmount;
         OnIonPickup(ionAmount);
 
-        if(plasmaAmount > 0)
+        if (plasmaAmount > 0)
         {
-            if(OnPlasmaPickupValue != null)
+            if (OnPlasmaPickupValue != null)
             {
                 OnPlasmaPickupValue(plasmaAmount);
             }

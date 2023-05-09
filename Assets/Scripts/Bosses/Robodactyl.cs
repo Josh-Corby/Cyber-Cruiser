@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public class Robodactyl : Boss, IBoss
 {
@@ -28,6 +28,6 @@ public class Robodactyl : Boss, IBoss
     protected override void Crash()
     {
         base.Crash();
-        if(OnDied !=null) OnDied?.Invoke();
+        if (OnDied != null) OnDied?.Invoke();
     }
 }

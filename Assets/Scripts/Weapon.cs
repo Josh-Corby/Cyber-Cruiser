@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : GameBehaviour
@@ -214,7 +213,7 @@ public class Weapon : GameBehaviour
         if (IsHoming)
         {
             ApplyHoming(bullet.GetComponent<Bullet>());
-        }      
+        }
     }
 
     public void FireWithoutSpread()

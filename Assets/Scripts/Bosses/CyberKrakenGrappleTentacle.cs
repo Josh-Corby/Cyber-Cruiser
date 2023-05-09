@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
 {
@@ -63,7 +63,7 @@ public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
     {
         transform.parent.position -= transform.right * speed * Time.deltaTime;
 
-        if (Vector2.Distance(transform.parent.position, spawnPosition) <0.5f)
+        if (Vector2.Distance(transform.parent.position, spawnPosition) < 0.5f)
         {
             if (_isPlayerGrappled)
             {

@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class Arachnoid : Boss, IBoss
 {
     //legs move along top and bottom of screen, cast a movement inhibiting net at player

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 
@@ -42,7 +41,7 @@ public class BeamAttack : MonoBehaviour
 
     public void ExtendBeam()
     {
-        if(lineRenderer.enabled == false)
+        if (lineRenderer.enabled == false)
         {
             lineRenderer.enabled = true;
         }
@@ -93,7 +92,7 @@ public class BeamAttack : MonoBehaviour
                 damageable.Damage(beamDamage);
             }
 
-            if(hit.collider.TryGetComponent<Shield>(out var shield))
+            if (hit.collider.TryGetComponent<Shield>(out var shield))
             {
                 //Debug.Log("beam hit shield");
                 shield._shieldController.ReduceShields(beamDamage);

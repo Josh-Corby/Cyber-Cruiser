@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -129,7 +128,7 @@ public class ChainLightning : MonoBehaviour
                 return;
             }
         }
-      
+
         if (collision.TryGetComponent<Shield>(out var shield))
         {
             if (collision.gameObject.GetComponentInParent<Enemy>())

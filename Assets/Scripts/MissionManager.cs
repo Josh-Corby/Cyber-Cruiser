@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -80,10 +79,10 @@ public class MissionManager : GameBehaviour
                     case BossTypes.Behemoth:
                         Behemoth.OnDied += IncrementMissionProgress;
                         break;
-                   
+
                 }
                 break;
-                #endregion
+            #endregion
             #endregion
 
             #region Pacifist
@@ -98,7 +97,7 @@ public class MissionManager : GameBehaviour
             case MissionConditions.UseShield:
                 PlayerShieldController.OnPlayerShieldsActivated += (U, F) => { IncrementMissionProgress(); };
                 break;
-            #endregion
+                #endregion
         }
         _currentMissionGoal = _currentMission.missionAmount;
     }

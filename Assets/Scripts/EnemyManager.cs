@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class EnemyManager : GameBehaviour<EnemyManager>
 {
@@ -32,12 +30,13 @@ public class EnemyManager : GameBehaviour<EnemyManager>
 
     private void RecieveUnit(GameObject unit)
     {
-        if(unit.TryGetComponent<GunshipMovement>(out var gunship)){
+        if (unit.TryGetComponent<GunshipMovement>(out var gunship))
+        {
             AddToList(gunshipsToProcess, gunship);
             return;
         }
 
-        if(unit.TryGetComponent<SlicerMovement>(out var slicer))
+        if (unit.TryGetComponent<SlicerMovement>(out var slicer))
         {
             AddToList(slicersSeeking, slicer);
             return;

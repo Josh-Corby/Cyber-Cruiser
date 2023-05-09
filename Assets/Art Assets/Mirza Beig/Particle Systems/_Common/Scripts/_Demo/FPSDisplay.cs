@@ -22,7 +22,7 @@ namespace MirzaBeig
             // =================================	
             // Classes.
             // =================================
-            
+
             public class FPSDisplay : MonoBehaviour
             {
                 // =================================	

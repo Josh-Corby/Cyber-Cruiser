@@ -12,12 +12,12 @@ public class RandomMissileMovement : EnemyMovement
     {
         int movementTypeID = Random.Range(0, 2);
 
-        if(movementTypeID == 0)
+        if (movementTypeID == 0)
         {
             _homeOnPlayer = false;
         }
 
-        if(movementTypeID == 1)
+        if (movementTypeID == 1)
         {
             _homeOnPlayer = true;
         }
