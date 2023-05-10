@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class GameBehaviour : Utilities
 {
-    protected static InputManager IM { get { return InputManager.INSTANCE; } }
     protected static EnemyManager EM { get { return EnemyManager.INSTANCE; } }
     protected static EnemySpawnerManager ESM { get { return EnemySpawnerManager.INSTANCE; } }
+    protected static GameManager GM { get { return GameManager.INSTANCE; } }
+    protected static GameplayUIManager GUIM { get { return GameplayUIManager.INSTANCE; } }
+    protected static InputManager IM { get { return InputManager.INSTANCE; } }
     protected static PlayerManager PM { get { return PlayerManager.INSTANCE; } }
     protected static PlayerStatsManager PSM { get { return PlayerStatsManager.INSTANCE; } }
     protected static PickupManager PUM { get { return PickupManager.INSTANCE; } }
-    protected static GameManager GM { get { return GameManager.INSTANCE; } }
-    protected static GameplayUIManager GUIM { get { return GameplayUIManager.INSTANCE; } }
+    protected static RankManager RM { get { return RankManager.INSTANCE; } }
 }
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour
 {

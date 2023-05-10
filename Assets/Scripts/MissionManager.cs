@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class MissionManager : GameBehaviour
 {
@@ -21,16 +22,19 @@ public class MissionManager : GameBehaviour
         }
     }
 
+    public static event Action<int> OnMissionComplete = null;
+
     public void SetMission(MissionScriptableObject mission)
     {
+        UnassignMission();
         _currentMission = mission;
         _currentMissionProgress = 0;
-
         SetMissionObjective();
     }
 
     private void SetMissionObjective()
     {
+        _isMissionFailed = false;
         switch (_currentMission.missionCondition)
         {
             #region General
@@ -99,12 +103,20 @@ public class MissionManager : GameBehaviour
                 break;
                 #endregion
         }
-        _currentMissionGoal = _currentMission.missionAmount;
+        _currentMissionGoal = _currentMission.missionObjectiveAmount;
     }
 
-    private void EndMission()
+    private void UnassignMission()
     {
+        if (_currentMission == null) return;
+
+        ResetMissionProgress();
         Debug.Log("Mission Complete");
+        UnassignMissionObjective();
+    }
+
+    private void UnassignMissionObjective()
+    {
         switch (_currentMission.missionCondition)
         {
             case MissionConditions.EndMission:
@@ -157,18 +169,24 @@ public class MissionManager : GameBehaviour
         if (CurrentMissionProgress >= _currentMissionGoal)
         {
             if (_isMissionFailed) return;
-            EndMission();
+            CompleteMission();
         }
     }
 
     private void ResetMissionProgress()
     {
+        _isMissionFailed = false;
         CurrentMissionProgress = 0;
+    }
+
+    private void CompleteMission()
+    {
+        OnMissionComplete(_currentMission.missionStarReward);
+        UnassignMission();
     }
 
     private void FailMission()
     {
         _isMissionFailed = true;
     }
-
 }

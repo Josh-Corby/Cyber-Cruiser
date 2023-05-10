@@ -11,10 +11,17 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     [SerializeField] private float _heatPerShot = 1.75f;
     [SerializeField] private float _weaponUpgradeDuration = 10;
 
-    private const string PLAYER_PLASMA = "PlayerPlasma";
-    private const string PLAYER_ION = "PlayerIon";
     private float _iFramesDuration = 0.3f;
     [SerializeField] private bool _isBatteryPack, _isHydrocoolant, _isPlasmaCache, _isPulseDetonator;
+
+    [Header("Rank Info")]
+    [SerializeField] private Rank _currentRank;
+    [SerializeField] private int _currentStars;
+
+    [Header("Player prefs accessor strings")]
+    private const string PLAYER_PLASMA = "PlayerPlasma";
+    private const string PLAYER_ION = "PlayerIon";
+    private const string PLAYER_RANK = "PlayerRank";
     #endregion
 
     #region Properties
@@ -30,14 +37,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     public bool IsPulseDetonator { get => _isPulseDetonator; private set { _isPulseDetonator = value; } }
 
-    public int PlayerPlasma
-    {
-        get => _playerPlasma;
-        private set
-        {
-            _playerPlasma = value;
-        }
-    }
+    public int PlayerPlasma { get => _playerPlasma; private set => _playerPlasma = value; }
 
     public int PlayerIon
     {
@@ -90,6 +90,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         PlayerManager.OnIonPickup += ChangeIon;
         PlayerManager.OnPlasmaChange += ChangePlasma;
         GameManager.OnMissionEnd += DisableAllAddOns;
+        MissionManager.OnMissionComplete += IncreaseStars;
     }
 
     private void OnDisable()
@@ -98,6 +99,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         PlayerManager.OnIonPickup -= ChangeIon;
         PlayerManager.OnPlasmaChange -= ChangePlasma;
         GameManager.OnMissionEnd -= DisableAllAddOns;
+        MissionManager.OnMissionComplete -= IncreaseStars;
     }
 
     private void Start()
@@ -110,6 +112,23 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         PlayerIon = PlayerPrefs.GetInt(nameof(PLAYER_ION));
         PlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
         PlasmaCost = 5;
+        RestoreRank();
+    }
+
+    private void RestoreRank()
+    {
+        if (!PlayerPrefs.HasKey(nameof(PLAYER_RANK)))
+        {
+            Debug.Log("no current player rank");
+            _currentRank = RM.GetRank(0);
+            return;
+        }
+
+        else
+        {
+            Debug.Log("restoring player rank");
+            _currentRank = RM.GetRank(PlayerPrefs.GetInt(nameof(PLAYER_RANK)));
+        }
     }
 
     public void ChangeIon(int value)
@@ -178,6 +197,27 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         return PlayerIon > cost;
     }
 
+    private void IncreaseStars(int stars)
+    {
+        _currentStars += stars;
+
+        if(_currentStars >= _currentRank.StarsToRankUp)
+        {
+            int excessStars = _currentStars - _currentRank.StarsToRankUp;
+
+            RankUp();
+            if(excessStars > 0)
+            {
+                IncreaseStars(excessStars);
+            }
+        }
+    }
+
+    private void RankUp()
+    {
+        _currentRank = RM.GetRank(_currentRank.RankID + 1);
+    }
+
     #region AddOnEffects
     private void ToggleBatteryPack(bool value)
     {
@@ -195,10 +235,16 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     }
     #endregion
 
+    private void StoreRank()
+    {
+        PlayerPrefs.SetInt(nameof(PLAYER_RANK), _currentRank.RankID);
+    }
 
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), PlayerPlasma);
         PlayerPrefs.SetInt(nameof(PLAYER_ION), PlayerIon);
+        PlayerPrefs.SetInt(nameof(PLAYER_RANK), _currentRank.RankID);
+        StoreRank();
     }
 }

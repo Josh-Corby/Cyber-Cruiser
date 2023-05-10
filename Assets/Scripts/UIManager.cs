@@ -92,7 +92,6 @@ public class UIManager : GameBehaviour
         DisablePanel();
     }
 
-
     private void DisablePanel()
     {
         if (_currentPanel.TryGetComponent<PanelAnimation>(out var panelAnimation))

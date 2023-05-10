@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AddOn")]
+[CreateAssetMenu(fileName = "AddOn", menuName = "ScriptableObject/New AddOn")]
 public class AddOnScriptableObject : ScriptableObject
 {
 

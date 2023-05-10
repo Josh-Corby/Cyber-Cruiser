@@ -21,5 +21,6 @@ public class MissionScriptableObject : ScriptableObject
     public MissionConditions missionCondition;
     public EnemyTypes enemy;
     public BossTypes boss;
-    public int missionAmount;
+    public int missionObjectiveAmount;
+    public int missionStarReward;
 }
