@@ -1,3 +1,4 @@
+using DG.Tweening.CustomPlugins;
 using System;
 using UnityEngine;
 
@@ -16,7 +17,10 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     [Header("Rank Info")]
     [SerializeField] private Rank _currentRank;
+    private Rank _rankBeforeRankUp;
     [SerializeField] private int _currentStars;
+    private int _starsBeforeStarGain;
+    private int _starsToGain;
 
     [Header("Player prefs accessor strings")]
     private const string PLAYER_PLASMA = "PlayerPlasma";
@@ -25,6 +29,16 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     #endregion
 
     #region Properties
+    public Rank CurrentRank { get => _currentRank; private set => _currentRank = value; }
+
+    public Rank RankBeforeRankUp { get => _rankBeforeRankUp; private set => _rankBeforeRankUp = value; }
+
+    public int CurrentStars { get => _currentStars; private set => _currentStars = value; }
+
+    public int StarsBeforeStarGain { get => _starsBeforeStarGain; private set => _starsBeforeStarGain = value; }
+
+    public int StarsToGain { get => _starsToGain; private set => _starsToGain = value; }
+
     public int PlasmaCost { get => _plasmaCost; private set => _plasmaCost = value; }
 
     public float PlayerCurrentMaxHealth { get => _playerCurrentMaxHealth; private set => _playerCurrentMaxHealth = value; }
@@ -82,6 +96,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     #region Actions
     public static event Action<int> OnIonChange = null;
+    public static event Action<int> OnStarsGained = null;
     #endregion
 
     private void OnEnable()
@@ -90,7 +105,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         PlayerManager.OnIonPickup += ChangeIon;
         PlayerManager.OnPlasmaChange += ChangePlasma;
         GameManager.OnMissionEnd += DisableAllAddOns;
-        MissionManager.OnMissionComplete += IncreaseStars;
+        MissionManager.OnMissionComplete += StartStarIncreaseProcess;
     }
 
     private void OnDisable()
@@ -99,7 +114,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         PlayerManager.OnIonPickup -= ChangeIon;
         PlayerManager.OnPlasmaChange -= ChangePlasma;
         GameManager.OnMissionEnd -= DisableAllAddOns;
-        MissionManager.OnMissionComplete -= IncreaseStars;
+        MissionManager.OnMissionComplete -= StartStarIncreaseProcess;
     }
 
     private void Start()
@@ -120,14 +135,14 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         if (!PlayerPrefs.HasKey(nameof(PLAYER_RANK)))
         {
             Debug.Log("no current player rank");
-            _currentRank = RM.GetRank(0);
+            CurrentRank = RM.GetRank(0);
             return;
         }
 
         else
         {
             Debug.Log("restoring player rank");
-            _currentRank = RM.GetRank(PlayerPrefs.GetInt(nameof(PLAYER_RANK)));
+            CurrentRank = RM.GetRank(PlayerPrefs.GetInt(nameof(PLAYER_RANK)));
         }
     }
 
@@ -197,16 +212,32 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         return PlayerIon > cost;
     }
 
-    private void IncreaseStars(int stars)
-    {
-        _currentStars += stars;
+    //On mission complete
+    //store current rank before increase
+    //store current stars before increase
+    //store stars to gain before increase
 
-        if(_currentStars >= _currentRank.StarsToRankUp)
+    private void StartStarIncreaseProcess(int starsToGain)
+    {
+        RankBeforeRankUp = CurrentRank;
+        StarsBeforeStarGain = CurrentStars;
+        StarsToGain = starsToGain;
+
+        IncreaseStars(starsToGain);
+    }
+
+    private void IncreaseStars(int starsToGain)
+    {
+        StarsToGain = _starsToGain;
+
+        _currentStars += starsToGain;
+
+        if (_currentStars >= CurrentRank.StarsToRankUp)
         {
-            int excessStars = _currentStars - _currentRank.StarsToRankUp;
+            int excessStars = _currentStars - CurrentRank.StarsToRankUp;
 
             RankUp();
-            if(excessStars > 0)
+            if (excessStars > 0)
             {
                 IncreaseStars(excessStars);
             }
@@ -215,7 +246,8 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     private void RankUp()
     {
-        _currentRank = RM.GetRank(_currentRank.RankID + 1);
+        RankBeforeRankUp = CurrentRank;
+        CurrentRank = RM.RankUp(CurrentRank.RankID);
     }
 
     #region AddOnEffects
@@ -237,14 +269,14 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     private void StoreRank()
     {
-        PlayerPrefs.SetInt(nameof(PLAYER_RANK), _currentRank.RankID);
+        PlayerPrefs.SetInt(nameof(PLAYER_RANK), CurrentRank.RankID);
     }
 
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), PlayerPlasma);
         PlayerPrefs.SetInt(nameof(PLAYER_ION), PlayerIon);
-        PlayerPrefs.SetInt(nameof(PLAYER_RANK), _currentRank.RankID);
+        PlayerPrefs.SetInt(nameof(PLAYER_RANK), CurrentRank.RankID);
         StoreRank();
     }
 }

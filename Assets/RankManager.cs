@@ -13,4 +13,9 @@ public class RankManager : GameBehaviour<RankManager>
     { 
         return ranks[rankID]; 
     }
+
+    public Rank RankUp(int rankID)
+    {
+        return ranks[rankID+1];
+    }
 }
