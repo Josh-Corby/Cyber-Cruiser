@@ -14,29 +14,30 @@ public class RankUI : GameBehaviour
 
     private void OnEnable()
     {
-        if(PSM.StarsToGain > 0)
+        //on enable check if current rank on UI is same as rank before star/rank up of player
+        ValidateCurrentRank();
+
+        //if the player is gaining any stars then start star gain process
+        if (PSM.StarsToGain > 0)
         {
             _starsToGain = PSM.StarsToGain;
             StartCoroutine(GainStarsAnimation());
         }
-
-        else
-        {
-            ValidateCurrentRank();
-        }
-    }
-
-    private void OnDisable()
-    {
-
     }
 
     private void ValidateCurrentRank()
     {
-        if (_currentRank != PSM.CurrentRank)
+        //make sure displayed rank is correct
+        if (_currentRank != PSM.RankBeforeRankUp)
         {
-            _currentRank = PSM.CurrentRank;
+            _currentRank = PSM.RankBeforeRankUp;
             AssignRankUI();
+        }
+
+        //make sure displayed stars are correct
+        if(_currentEnabledGoldStars != PSM.StarsBeforeStarGain) 
+        {
+            _currentEnabledGoldStars = PSM.StarsBeforeStarGain;
             AssignStarsUI();
         }
     }
@@ -48,12 +49,10 @@ public class RankUI : GameBehaviour
     }
 
     private void AssignStarsUI()
-    {
-        if (PSM.CurrentStars == 0) return;
-        _currentEnabledGoldStars = PSM.CurrentStars;
+    {  
         for (int i = 0; i < _currentRank.StarsToRankUp; i++)
         {
-            _goldStars[i].enabled = i <= _currentEnabledGoldStars;
+            _goldStars[i].enabled = i < _currentEnabledGoldStars;
         }
     }
 
@@ -61,7 +60,7 @@ public class RankUI : GameBehaviour
     {
         for (int i = _starsToGain; i > 0; i--)
         {
-            if(_currentEnabledGoldStars < _currentRank.StarsToRankUp)
+            if (_currentEnabledGoldStars < _currentRank.StarsToRankUp)
             {
                 _goldStars[_currentEnabledGoldStars].enabled = true;
                 _currentEnabledGoldStars++;

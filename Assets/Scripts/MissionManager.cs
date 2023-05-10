@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class MissionManager : GameBehaviour
+public class MissionManager : GameBehaviour<MissionManager>
 {
     [SerializeField] private MissionScriptableObject _currentMission;
     [SerializeField] private List<MissionScriptableObject> _availableMissions = new();
@@ -11,6 +11,7 @@ public class MissionManager : GameBehaviour
     [SerializeField] private int _currentMissionGoal;
     [SerializeField] private int _currentMissionProgress;
     [SerializeField] private bool _isMissionFailed;
+    [SerializeField] private bool _isAnyMissionCompleted;
 
     private int CurrentMissionProgress
     {
@@ -22,7 +23,19 @@ public class MissionManager : GameBehaviour
         }
     }
 
+    public bool IsAnyMissionCompleted { get => _isAnyMissionCompleted; private set => _isAnyMissionCompleted = value; }
+
     public static event Action<int> OnMissionComplete = null;
+
+    private void OnEnable()
+    {
+        GameManager.OnMissionStart += () => { IsAnyMissionCompleted = false; };
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnMissionStart -= () => { IsAnyMissionCompleted = false; };
+    }
 
     public void SetMission(MissionScriptableObject mission)
     {
@@ -181,6 +194,7 @@ public class MissionManager : GameBehaviour
 
     private void CompleteMission()
     {
+        IsAnyMissionCompleted = true;
         OnMissionComplete(_currentMission.missionStarReward);
         UnassignMission();
     }

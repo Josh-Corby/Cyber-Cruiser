@@ -23,14 +23,14 @@ public class UIManager : GameBehaviour
     private void OnEnable()
     {
         GameManager.OnIsGamePaused += TogglePauseUI;
-        PlayerManager.OnPlayerDeath += GameOverUI;
+        PlayerManager.OnPlayerDeath += SelectEndOfMissionScreen;
         PanelAnimation.OnPanelDisabled += EnablePanel;
     }
 
     private void OnDisable()
     {
         GameManager.OnIsGamePaused -= TogglePauseUI;
-        PlayerManager.OnPlayerDeath -= GameOverUI;
+        PlayerManager.OnPlayerDeath -= SelectEndOfMissionScreen;
         PanelAnimation.OnPanelDisabled -= EnablePanel;
     }
 
@@ -111,10 +111,17 @@ public class UIManager : GameBehaviour
         _currentPanel = _panelToEnable;
     }
 
-    private void GameOverUI()
+    private void SelectEndOfMissionScreen()
     {
         IM.IsCursorVisible = true;
-        _gameOverPanel.SetActive(true);
+        if (MM.IsAnyMissionCompleted)
+        {
+            _missionCompletePanel.SetActive(true);
+        }
+        else
+        {
+            _gameOverPanel.SetActive(true);
+        }
     }
 
     private void TogglePauseUI(bool value)

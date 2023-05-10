@@ -26,9 +26,11 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     private const string PLAYER_PLASMA = "PlayerPlasma";
     private const string PLAYER_ION = "PlayerIon";
     private const string PLAYER_RANK = "PlayerRank";
+    private const string PLAYER_STARS = "PlayerStars";
     #endregion
 
     #region Properties
+
     public Rank CurrentRank { get => _currentRank; private set => _currentRank = value; }
 
     public Rank RankBeforeRankUp { get => _rankBeforeRankUp; private set => _rankBeforeRankUp = value; }
@@ -128,6 +130,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         PlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
         PlasmaCost = 5;
         RestoreRank();
+        RestoreStars();
     }
 
     private void RestoreRank()
@@ -136,13 +139,26 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         {
             Debug.Log("no current player rank");
             CurrentRank = RM.GetRank(0);
-            return;
         }
 
         else
         {
             Debug.Log("restoring player rank");
             CurrentRank = RM.GetRank(PlayerPrefs.GetInt(nameof(PLAYER_RANK)));
+        }
+    }
+
+    private void RestoreStars()
+    {
+        if (!PlayerPrefs.HasKey(nameof(PLAYER_STARS)))
+        {
+            Debug.Log("no saved stars");
+            CurrentStars = 0;
+        }
+        else
+        {
+            Debug.Log("restoring player stars");
+            CurrentStars = PlayerPrefs.GetInt(nameof(PLAYER_STARS));
         }
     }
 
@@ -212,11 +228,6 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         return PlayerIon > cost;
     }
 
-    //On mission complete
-    //store current rank before increase
-    //store current stars before increase
-    //store stars to gain before increase
-
     private void StartStarIncreaseProcess(int starsToGain)
     {
         RankBeforeRankUp = CurrentRank;
@@ -267,16 +278,11 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     }
     #endregion
 
-    private void StoreRank()
-    {
-        PlayerPrefs.SetInt(nameof(PLAYER_RANK), CurrentRank.RankID);
-    }
-
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), PlayerPlasma);
         PlayerPrefs.SetInt(nameof(PLAYER_ION), PlayerIon);
         PlayerPrefs.SetInt(nameof(PLAYER_RANK), CurrentRank.RankID);
-        StoreRank();
+        PlayerPrefs.SetInt(nameof(PLAYER_STARS), CurrentStars);
     }
 }
