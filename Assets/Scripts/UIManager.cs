@@ -18,6 +18,7 @@ public class UIManager : GameBehaviour
 
     #region Actions
     public static event Action<bool> OnLevelUIReady = null;
+    public static event Action OnMissionsPanelLoaded;
     #endregion
 
     private void OnEnable()
@@ -88,18 +89,31 @@ public class UIManager : GameBehaviour
 
     public void GoToScreen(GameObject screen)
     {
+        //set panel to change to
+        //disable current panel
+
+
+        //Debug.Log(screen.name);
         _panelToEnable = screen;
+        Debug.Log(_panelToEnable.name);
+
+        if(_panelToEnable == _missionsPanel)
+        {
+            OnMissionsPanelLoaded?.Invoke();
+        }
         DisablePanel();
     }
 
     private void DisablePanel()
     {
+        //if panel has animation play it
         if (_currentPanel.TryGetComponent<PanelAnimation>(out var panelAnimation))
         {
             panelAnimation.StartCloseUI();
         }
         else
         {
+            //if panel has no animation disable current panel and enable next one
             _currentPanel.SetActive(false);
             EnablePanel();
         }
@@ -113,14 +127,17 @@ public class UIManager : GameBehaviour
 
     private void SelectEndOfMissionScreen()
     {
+        _gameplayPanel.SetActive(false);
         IM.IsCursorVisible = true;
         if (MM.IsAnyMissionCompleted)
         {
             _missionCompletePanel.SetActive(true);
+            _currentPanel = _missionCompletePanel;
         }
         else
         {
             _gameOverPanel.SetActive(true);
+            _currentPanel = _gameOverPanel;
         }
     }
 

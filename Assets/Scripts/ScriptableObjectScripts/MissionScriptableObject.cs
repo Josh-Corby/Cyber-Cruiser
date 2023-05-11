@@ -18,6 +18,7 @@ public enum BossTypes
 [CreateAssetMenu(fileName = "Mission", menuName = "ScriptableObject/New Mission")]
 public class MissionScriptableObject : ScriptableObject
 {
+    public string missionDescription;
     public MissionConditions missionCondition;
     public EnemyTypes enemy;
     public BossTypes boss;

@@ -254,7 +254,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private IEnumerator Iframes()
     {
-        Debug.Log("iFrames");
+        //Debug.Log("iFrames");
         _playerCollider.enabled = false;
         _isPlayerImmuneToDamage = true;
         yield return new WaitForSeconds(_iFramesDuration);

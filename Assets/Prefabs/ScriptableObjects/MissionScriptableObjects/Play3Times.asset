@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: Play3Times
   m_EditorClassIdentifier: 
   missionCondition: 0
-  missionAmount: 3
+  enemy: 0
+  boss: 0
+  missionObjectiveAmount: 3
+  missionStarReward: 1

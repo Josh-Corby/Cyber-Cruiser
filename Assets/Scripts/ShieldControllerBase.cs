@@ -99,18 +99,16 @@ public class ShieldControllerBase : GameBehaviour
 
         else if (collider.TryGetComponent<Bullet>(out var bullet))
         {
+            if (!_isShieldImmuneToDamage)
+            {
+                ReduceShields(bullet.Damage);
+            }
             if (_reflectorShield)
             {
                 ReflectProjectile(bullet);
-            }
-            else
-            {
-                if (!_isShieldImmuneToDamage)
-                {
-                    ReduceShields(bullet.Damage);
-                }
-                Destroy(bullet.gameObject);
-            }
+                return;
+            }        
+            Destroy(bullet.gameObject);
         }
     }
 

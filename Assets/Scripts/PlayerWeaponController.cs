@@ -323,7 +323,11 @@ public class PlayerWeaponController : GameBehaviour
         CurrentHeat = 0;
         IsWeaponUpgradeActive = true;
         _weaponUpgradeCounter = _weaponUpgradeDuration;
-        OnWeaponUpgradeStart(GUIM.weaponUpgradeSlider, _weaponUpgradeDuration);
+
+        if(OnWeaponUpgradeStart != null)
+        {
+            OnWeaponUpgradeStart(GUIM.weaponUpgradeSlider, _weaponUpgradeDuration);
+        }
         while (_weaponUpgradeCounter > 0)
         {
             _weaponUpgradeCounter -= Time.deltaTime;

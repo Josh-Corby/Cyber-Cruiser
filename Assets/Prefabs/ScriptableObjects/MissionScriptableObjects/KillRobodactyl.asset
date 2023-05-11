@@ -15,4 +15,5 @@ MonoBehaviour:
   missionCondition: 6
   enemy: 0
   boss: 1
-  missionAmount: 1
+  missionObjectiveAmount: 1
+  missionStarReward: 1

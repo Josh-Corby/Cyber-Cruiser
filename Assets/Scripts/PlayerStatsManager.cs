@@ -17,10 +17,11 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     [Header("Rank Info")]
     [SerializeField] private Rank _currentRank;
-    private Rank _rankBeforeRankUp;
+    [SerializeField] private Rank _rankBeforeRankUp;
     [SerializeField] private int _currentStars;
-    private int _starsBeforeStarGain;
-    private int _starsToGain;
+    [SerializeField] private int _starsBeforeStarGain;
+    [SerializeField] private int _starsToGain;
+    [SerializeField] private int _totalStarReward;
 
     [Header("Player prefs accessor strings")]
     private const string PLAYER_PLASMA = "PlayerPlasma";
@@ -30,31 +31,19 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     #endregion
 
     #region Properties
-
     public Rank CurrentRank { get => _currentRank; private set => _currentRank = value; }
-
     public Rank RankBeforeRankUp { get => _rankBeforeRankUp; private set => _rankBeforeRankUp = value; }
-
     public int CurrentStars { get => _currentStars; private set => _currentStars = value; }
-
     public int StarsBeforeStarGain { get => _starsBeforeStarGain; private set => _starsBeforeStarGain = value; }
-
     public int StarsToGain { get => _starsToGain; private set => _starsToGain = value; }
-
+    public int TotalStarReward { get => _totalStarReward; private set => _totalStarReward = value; }
     public int PlasmaCost { get => _plasmaCost; private set => _plasmaCost = value; }
-
     public float PlayerCurrentMaxHealth { get => _playerCurrentMaxHealth; private set => _playerCurrentMaxHealth = value; }
-
     public float HeatPerShot { get => _heatPerShot; private set => _heatPerShot = value; }
-
     public float WeaponUpgradeDuration { get => _weaponUpgradeDuration; private set => _weaponUpgradeDuration = value; }
-
     public float IFramesDuration { get => _iFramesDuration; private set => _iFramesDuration = value; }
-
     public bool IsPulseDetonator { get => _isPulseDetonator; private set { _isPulseDetonator = value; } }
-
     public int PlayerPlasma { get => _playerPlasma; private set => _playerPlasma = value; }
-
     public int PlayerIon
     {
         get => _playerIon;
@@ -64,7 +53,6 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
             OnIonChange(value);
         }
     }
-
     public bool IsBatteryPack
     {
         get => _isBatteryPack;
@@ -74,7 +62,6 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
             ToggleBatteryPack(_isBatteryPack);
         }
     }
-
     public bool IsHydrocoolant
     {
         get => _isHydrocoolant;
@@ -84,7 +71,6 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
             ToggleHydrocoolant(_isHydrocoolant);
         }
     }
-
     public bool IsPlasmaCache
     {
         get => _isPlasmaCache;
@@ -121,7 +107,11 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     private void Start()
     {
-        RestoreValues();
+        CurrentRank = RM.GetRank(0);
+        RankBeforeRankUp = CurrentRank;
+        CurrentStars = 0;
+        StarsBeforeStarGain = CurrentStars;
+        //RestoreValues();
     }
 
     private void RestoreValues()
@@ -139,12 +129,14 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         {
             Debug.Log("no current player rank");
             CurrentRank = RM.GetRank(0);
+            RankBeforeRankUp = CurrentRank;
         }
 
         else
         {
-            Debug.Log("restoring player rank");
             CurrentRank = RM.GetRank(PlayerPrefs.GetInt(nameof(PLAYER_RANK)));
+            RankBeforeRankUp = CurrentRank;
+            Debug.Log("rank of " + CurrentRank.Name + " restored");
         }
     }
 
@@ -157,8 +149,9 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         }
         else
         {
-            Debug.Log("restoring player stars");
             CurrentStars = PlayerPrefs.GetInt(nameof(PLAYER_STARS));
+            StarsBeforeStarGain = CurrentStars;
+            Debug.Log(CurrentStars + " stars restored");
         }
     }
 
@@ -230,9 +223,11 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     private void StartStarIncreaseProcess(int starsToGain)
     {
+        Debug.Log(starsToGain);
         RankBeforeRankUp = CurrentRank;
         StarsBeforeStarGain = CurrentStars;
         StarsToGain = starsToGain;
+        TotalStarReward = starsToGain;
 
         IncreaseStars(starsToGain);
     }
@@ -245,20 +240,21 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
         if (_currentStars >= CurrentRank.StarsToRankUp)
         {
-            int excessStars = _currentStars - CurrentRank.StarsToRankUp;
-
-            RankUp();
-            if (excessStars > 0)
-            {
-                IncreaseStars(excessStars);
-            }
+            _currentStars -= CurrentRank.StarsToRankUp;
+            RankUp();    
         }
     }
 
     private void RankUp()
     {
+        Debug.Log("player rank up");
         RankBeforeRankUp = CurrentRank;
         CurrentRank = RM.RankUp(CurrentRank.RankID);
+
+        if (_currentStars > 0)
+        {
+            IncreaseStars(_currentStars);
+        }
     }
 
     #region AddOnEffects

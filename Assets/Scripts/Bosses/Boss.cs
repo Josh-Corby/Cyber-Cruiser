@@ -46,7 +46,7 @@ public class Boss : Enemy, IDamageable
         }
     }
 
-    protected void ChooseRandomAttack()
+    protected virtual void ChooseRandomAttack()
     {
         int randomAttackID = Random.Range(0, 2);
         PerformAttack(randomAttackID);

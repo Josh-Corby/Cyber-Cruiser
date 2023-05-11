@@ -4,74 +4,92 @@ using System;
 
 public class MissionManager : GameBehaviour<MissionManager>
 {
-    [SerializeField] private MissionScriptableObject _currentMission;
-    [SerializeField] private List<MissionScriptableObject> _availableMissions = new();
+    #region References
     [SerializeField] private MissionScriptableObject[] _missions;
+    #endregion
 
+    #region Fields
+    [SerializeField] private MissionScriptableObject _currentMission;
     [SerializeField] private int _currentMissionGoal;
     [SerializeField] private int _currentMissionProgress;
+    [SerializeField] private int _currentMissionID;
     [SerializeField] private bool _isMissionFailed;
     [SerializeField] private bool _isAnyMissionCompleted;
+    #endregion
 
-    private int CurrentMissionProgress
+    #region Properties
+    public MissionScriptableObject CurrentMission { get => _currentMission; }
+    public int CurrentMissionProgress
     {
         get => _currentMissionProgress;
-        set
+        private set
         {
             _currentMissionProgress = value;
             CheckMissionProgress();
         }
     }
-
     public bool IsAnyMissionCompleted { get => _isAnyMissionCompleted; private set => _isAnyMissionCompleted = value; }
+    #endregion
 
     public static event Action<int> OnMissionComplete = null;
 
     private void OnEnable()
     {
         GameManager.OnMissionStart += () => { IsAnyMissionCompleted = false; };
+        UIManager.OnMissionsPanelLoaded += SetMission;
     }
 
     private void OnDisable()
     {
         GameManager.OnMissionStart -= () => { IsAnyMissionCompleted = false; };
+        UIManager.OnMissionsPanelLoaded -= SetMission;
     }
 
-    public void SetMission(MissionScriptableObject mission)
+    private void Start()
     {
+        _currentMissionID = 0;
+        _currentMissionGoal = 10000;
+        SetMission();
+    }
+
+    public void SetMission()
+    {
+        if (_currentMission != null) return;
+
         UnassignMission();
-        _currentMission = mission;
-        _currentMissionProgress = 0;
+        _currentMission = _missions[_currentMissionID];
         SetMissionObjective();
     }
 
     private void SetMissionObjective()
     {
+        _currentMissionGoal = _currentMission.missionObjectiveAmount;
+        CurrentMissionProgress = 0;
         _isMissionFailed = false;
+
         switch (_currentMission.missionCondition)
         {
             #region General
             case MissionConditions.EndMission:
                 GameManager.OnMissionEnd += IncrementMissionProgress;
-                break;
+                return;
             #endregion
-
             #region Travel Distance
             case MissionConditions.FlyDistanceOnce:
                 DistanceManager.OnDistanceChanged += SetMissionProgress;
-                break;
+                return;
             case MissionConditions.FlyDistanceTotal:
                 DistanceManager.OnDistanceTraveled += IncrementMissionProgress;
-                break;
+                return;
             #endregion
 
             #region Pickups
             case MissionConditions.CollectPlasma:
                 PlayerManager.OnPlasmaPickupValue += IncreaseMissionProgress;
-                break;
+                return;
             case MissionConditions.UseWeaponPack:
                 PlayerWeaponController.OnWeaponUpgradeStart += (U, F) => { IncrementMissionProgress(); };
-                break;
+                return;
             #endregion
 
             #region Kill Enemies
@@ -87,16 +105,15 @@ public class MissionManager : GameBehaviour<MissionManager>
                 {
                     case BossTypes.All:
                         Boss.OnBossDied += (V, P) => { IncrementMissionProgress(); };
-                        break;
+                        return;
                     case BossTypes.Battlecruiser:
-                        break;
+                        return;
                     case BossTypes.Robodactyl:
                         Robodactyl.OnDied += IncrementMissionProgress;
-                        break;
+                        return;
                     case BossTypes.Behemoth:
                         Behemoth.OnDied += IncrementMissionProgress;
-                        break;
-
+                        return;
                 }
                 break;
             #endregion
@@ -107,29 +124,27 @@ public class MissionManager : GameBehaviour<MissionManager>
                 GameManager.OnMissionEnd += ResetMissionProgress;
                 DistanceManager.OnDistanceTraveled += IncrementMissionProgress;
                 PlayerWeaponController.OnShoot += FailMission;
-                break;
+                return;
             #endregion
 
             #region Shield
             case MissionConditions.UseShield:
                 PlayerShieldController.OnPlayerShieldsActivated += (U, F) => { IncrementMissionProgress(); };
-                break;
+                return;
                 #endregion
-        }
-        _currentMissionGoal = _currentMission.missionObjectiveAmount;
+        }    
     }
 
     private void UnassignMission()
     {
         if (_currentMission == null) return;
-
-        ResetMissionProgress();
-        Debug.Log("Mission Complete");
         UnassignMissionObjective();
+        ResetMissionProgress();     
     }
 
     private void UnassignMissionObjective()
     {
+        if(_currentMission == null) return;
         switch (_currentMission.missionCondition)
         {
             case MissionConditions.EndMission:
@@ -159,10 +174,12 @@ public class MissionManager : GameBehaviour<MissionManager>
                 PlayerWeaponController.OnShoot += FailMission;
                 break;
         }
+        _currentMission = null;
     }
 
     private void SetMissionProgress(int value)
     {
+        Debug.Log(value);
         CurrentMissionProgress = value;
     }
 
@@ -173,12 +190,14 @@ public class MissionManager : GameBehaviour<MissionManager>
 
     private void IncrementMissionProgress()
     {
-        Debug.Log("Mission Progress");
+        //Debug.Log("Mission Progress");
         CurrentMissionProgress += 1;
     }
 
     private void CheckMissionProgress()
     {
+        if(_currentMission ==null) return;
+
         if (CurrentMissionProgress >= _currentMissionGoal)
         {
             if (_isMissionFailed) return;
@@ -194,9 +213,11 @@ public class MissionManager : GameBehaviour<MissionManager>
 
     private void CompleteMission()
     {
+        Debug.Log("mission complete");
         IsAnyMissionCompleted = true;
         OnMissionComplete(_currentMission.missionStarReward);
         UnassignMission();
+        _currentMissionID++;
     }
 
     private void FailMission()

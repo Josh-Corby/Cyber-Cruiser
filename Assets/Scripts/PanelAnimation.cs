@@ -60,6 +60,7 @@ public class PanelAnimation : MonoBehaviour
 
     private void OnCloseAnimationFinished()
     {
+        Debug.Log("panel closed");
         OnPanelDisabled?.Invoke();
         gameObject.SetActive(false);
     }
