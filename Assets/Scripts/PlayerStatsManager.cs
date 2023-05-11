@@ -32,9 +32,9 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     #region Properties
     public Rank CurrentRank { get => _currentRank; private set => _currentRank = value; }
-    public Rank RankBeforeRankUp { get => _rankBeforeRankUp; private set => _rankBeforeRankUp = value; }
+    public Rank RankBeforeMissionStart { get => _rankBeforeRankUp; private set => _rankBeforeRankUp = value; }
     public int CurrentStars { get => _currentStars; private set => _currentStars = value; }
-    public int StarsBeforeStarGain { get => _starsBeforeStarGain; private set => _starsBeforeStarGain = value; }
+    public int StarsBeforeMissionStart { get => _starsBeforeStarGain; private set => _starsBeforeStarGain = value; }
     public int StarsToGain { get => _starsToGain; private set => _starsToGain = value; }
     public int TotalStarReward { get => _totalStarReward; private set => _totalStarReward = value; }
     public int PlasmaCost { get => _plasmaCost; private set => _plasmaCost = value; }
@@ -43,7 +43,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     public float WeaponUpgradeDuration { get => _weaponUpgradeDuration; private set => _weaponUpgradeDuration = value; }
     public float IFramesDuration { get => _iFramesDuration; private set => _iFramesDuration = value; }
     public bool IsPulseDetonator { get => _isPulseDetonator; private set { _isPulseDetonator = value; } }
-    public int PlayerPlasma
+    public int SetPlayerPlasma
     {
         get => _playerPlasma;
         private set
@@ -52,7 +52,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
             OnPlasmaChange(value);
         }
     }
-    public int PlayerIon
+    public int SetPlayerIon
     {
         get => _playerIon;
         private set
@@ -101,6 +101,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         AddOn.OnAddOnToggled += ToggleAddOnBool;
         PlayerManager.OnIonPickup += ChangeIon;
         PlayerManager.OnPlasmaChange += ChangePlasma;
+        GameManager.OnMissionStart += StoreRankValues;
         GameManager.OnMissionEnd += DisableAllAddOns;
         MissionManager.OnMissionComplete += StartStarIncreaseProcess;
     }
@@ -110,23 +111,21 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         AddOn.OnAddOnToggled -= ToggleAddOnBool;
         PlayerManager.OnIonPickup -= ChangeIon;
         PlayerManager.OnPlasmaChange -= ChangePlasma;
+        GameManager.OnMissionStart -= StoreRankValues;
         GameManager.OnMissionEnd -= DisableAllAddOns;
         MissionManager.OnMissionComplete -= StartStarIncreaseProcess;
     }
 
     private void Start()
     {
-        CurrentRank = RM.GetRank(0);
-        RankBeforeRankUp = CurrentRank;
-        CurrentStars = 0;
-        StarsBeforeStarGain = CurrentStars;
-        //RestoreValues();
+        RestoreValues();
     }
 
+    #region Data Changing Functions
     private void RestoreValues()
     {
-        PlayerIon = PlayerPrefs.GetInt(nameof(PLAYER_ION));
-        PlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
+        SetPlayerIon = PlayerPrefs.GetInt(nameof(PLAYER_ION));
+        SetPlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
         PlasmaCost = 5;
         RestoreRank();
         RestoreStars();
@@ -138,13 +137,13 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         {
             Debug.Log("no current player rank");
             CurrentRank = RM.GetRank(0);
-            RankBeforeRankUp = CurrentRank;
+            RankBeforeMissionStart = CurrentRank;
         }
 
         else
         {
             CurrentRank = RM.GetRank(PlayerPrefs.GetInt(nameof(PLAYER_RANK)));
-            RankBeforeRankUp = CurrentRank;
+            RankBeforeMissionStart = CurrentRank;
             Debug.Log("rank of " + CurrentRank.Name + " restored");
         }
     }
@@ -159,21 +158,62 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         else
         {
             CurrentStars = PlayerPrefs.GetInt(nameof(PLAYER_STARS));
-            StarsBeforeStarGain = CurrentStars;
+            StarsBeforeMissionStart = CurrentStars;
             Debug.Log(CurrentStars + " stars restored");
         }
     }
 
     public void ChangeIon(int value)
     {
-        PlayerIon += value;
+        SetPlayerIon += value;
     }
 
     public void ChangePlasma(int value)
     {
-        PlayerPlasma = value;
+        SetPlayerPlasma = value;
+    }
+    #endregion
+
+    #region Rank Functions
+    private void StoreRankValues()
+    {
+        RankBeforeMissionStart = CurrentRank;
+        StarsBeforeMissionStart = CurrentStars;
     }
 
+    private void StartStarIncreaseProcess(int starsToGain)
+    {
+        Debug.Log(starsToGain);
+        StarsToGain = starsToGain;
+        TotalStarReward = starsToGain;
+
+        IncreaseStars(starsToGain);
+    }
+
+    private void IncreaseStars(int starsToGain)
+    {
+        _currentStars += starsToGain;
+
+        if (_currentStars >= CurrentRank.StarsToRankUp)
+        {
+            _currentStars -= CurrentRank.StarsToRankUp;
+            RankUp();
+        }
+    }
+
+    private void RankUp()
+    {
+        Debug.Log("player rank up");
+        CurrentRank = RM.RankUp(CurrentRank.RankID);
+
+        if (_currentStars > 0)
+        {
+            IncreaseStars(_currentStars);
+        }
+    }
+    #endregion
+
+    #region Addon Functions
     private void DisableAllAddOns()
     {
         if (IsBatteryPack)
@@ -203,9 +243,9 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         }
 
         //Spend or refund ions depending on bool state
-        PlayerIon += value ? -cost : cost;
+        SetPlayerIon += value ? -cost : cost;
         //Process ion change
-        OnIonChange(PlayerIon);
+        OnIonChange(SetPlayerIon);
 
         //Find function related to addon type
         switch (addOnType)
@@ -227,44 +267,9 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     private bool CanPlayerAffordAddon(int cost)
     {
-        return PlayerIon > cost;
+        return SetPlayerIon > cost;
     }
-
-    private void StartStarIncreaseProcess(int starsToGain)
-    {
-        Debug.Log(starsToGain);
-        RankBeforeRankUp = CurrentRank;
-        StarsBeforeStarGain = CurrentStars;
-        StarsToGain = starsToGain;
-        TotalStarReward = starsToGain;
-
-        IncreaseStars(starsToGain);
-    }
-
-    private void IncreaseStars(int starsToGain)
-    {
-        StarsToGain = _starsToGain;
-
-        _currentStars += starsToGain;
-
-        if (_currentStars >= CurrentRank.StarsToRankUp)
-        {
-            _currentStars -= CurrentRank.StarsToRankUp;
-            RankUp();    
-        }
-    }
-
-    private void RankUp()
-    {
-        Debug.Log("player rank up");
-        RankBeforeRankUp = CurrentRank;
-        CurrentRank = RM.RankUp(CurrentRank.RankID);
-
-        if (_currentStars > 0)
-        {
-            IncreaseStars(_currentStars);
-        }
-    }
+    #endregion
 
     #region AddOnEffects
     private void ToggleBatteryPack(bool value)
@@ -285,8 +290,8 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     private void OnApplicationQuit()
     {
-        PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), PlayerPlasma);
-        PlayerPrefs.SetInt(nameof(PLAYER_ION), PlayerIon);
+        PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), SetPlayerPlasma);
+        PlayerPrefs.SetInt(nameof(PLAYER_ION), SetPlayerIon);
         PlayerPrefs.SetInt(nameof(PLAYER_RANK), CurrentRank.RankID);
         PlayerPrefs.SetInt(nameof(PLAYER_STARS), CurrentStars);
     }

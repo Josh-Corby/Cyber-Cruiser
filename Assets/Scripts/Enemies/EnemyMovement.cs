@@ -92,6 +92,7 @@ public class EnemyMovement : GameBehaviour
 
             homeCounter = _homeTime;
         }
+
         if (_sinUpDownMovement)
         {
             _sinRandomSeed = Random.Range(0f, Mathf.PI * 2f);

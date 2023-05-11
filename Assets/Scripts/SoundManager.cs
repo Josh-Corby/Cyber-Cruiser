@@ -34,6 +34,13 @@ public class SoundManager : MonoBehaviour
         ChangeBGMVolumeOnGamePauseToggle(false);
     }
 
+    private void SetUISFXClip(AudioClip clip)
+    {
+        _uiSFX.Stop();
+        _uiSFX.clip = clip;
+        _uiSFX.Play();
+    }
+
     private void ChangeBGMVolumeOnGamePauseToggle(bool isPaused)
     {
         _bgm.volume = isPaused ? _pausedVolume : _defaultVolume;

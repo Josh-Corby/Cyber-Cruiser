@@ -161,6 +161,7 @@ public class DistanceManager : GameBehaviour
         _currentBossDistance += _bossSpawnDistance;
         StopIncreasingDistance();
         GenerateNewWeaponUpgradeDropDistance();
+        Debug.Log(DistanceInt);
         OnBossDistanceReached?.Invoke();
     }
 

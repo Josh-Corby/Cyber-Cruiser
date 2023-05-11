@@ -174,7 +174,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     private void SetStats()
     {
         PlayerMaxHealth = PSM.PlayerCurrentMaxHealth;
-        PlayerPlasma = PSM.PlayerPlasma;
+        PlayerPlasma = PSM.SetPlayerPlasma;
         PlasmaCost = PSM.PlasmaCost;
         _iFramesDuration = PSM.IFramesDuration;
 
