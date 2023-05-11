@@ -253,7 +253,7 @@ MonoBehaviour:
   _deadSprite: {fileID: 21300000, guid: 191ef783c66e6e648a1c9e6475bb7a07, type: 3}
   unitName: 
   _currentHealth: 0
-  _attackCooldown: 0.75
+  _attackCooldown: 1.5
   _attackTimer: 0
   _laserLaunchers:
   - {fileID: 5710954070109479895}

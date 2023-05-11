@@ -7,9 +7,6 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
     [SerializeField] private GameObject _playerHealthBarUI, _playerShieldBarUI, _weaponUpgradeBarUI;
     [SerializeField] private TMP_Text _plasmaCountText;
 
-
-    private string PlasmaCount { set => _plasmaCountText.text = value; }
-
     private void OnEnable()
     {
         PlayerManager.OnPlayerMaxHealthSet += EnableSlider;
@@ -62,6 +59,6 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 
     private void UpdatePlasmaText(int plasmaCount)
     {
-        PlasmaCount = plasmaCount.ToString();
+        _plasmaCountText.text = plasmaCount.ToString();
     }
 }

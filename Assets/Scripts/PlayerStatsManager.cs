@@ -43,7 +43,15 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     public float WeaponUpgradeDuration { get => _weaponUpgradeDuration; private set => _weaponUpgradeDuration = value; }
     public float IFramesDuration { get => _iFramesDuration; private set => _iFramesDuration = value; }
     public bool IsPulseDetonator { get => _isPulseDetonator; private set { _isPulseDetonator = value; } }
-    public int PlayerPlasma { get => _playerPlasma; private set => _playerPlasma = value; }
+    public int PlayerPlasma
+    {
+        get => _playerPlasma;
+        private set
+        {
+            _playerPlasma = value;
+            OnPlasmaChange(value);
+        }
+    }
     public int PlayerIon
     {
         get => _playerIon;
@@ -84,6 +92,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     #region Actions
     public static event Action<int> OnIonChange = null;
+    public static event Action<int> OnPlasmaChange = null;
     public static event Action<int> OnStarsGained = null;
     #endregion
 

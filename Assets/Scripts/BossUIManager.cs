@@ -15,7 +15,7 @@ public class BossUIManager : GameBehaviour
     [SerializeField] private Sprite _cyberKrakenWarning;
     [SerializeField] private Sprite _robodactylWarning;
 
-    public string BossNameText
+    private string SetBossNameText
     {
         set
         {
@@ -47,6 +47,7 @@ public class BossUIManager : GameBehaviour
     {
         DisableBossUI();
     }
+
     public void EnableBossWarningUI(EnemyScriptableObject bossInfo)
     {
         switch (bossInfo.unitName)
@@ -74,7 +75,7 @@ public class BossUIManager : GameBehaviour
 
     private void EnableBossUI(EnemyScriptableObject boss)
     {
-        BossNameText = boss.unitName;
+        SetBossNameText = boss.unitName;
         EnableSlider(_bossHealthBar, boss.maxHealth);
     }
 
@@ -83,7 +84,7 @@ public class BossUIManager : GameBehaviour
         _bossHealthBarUI.SetActive(false);
         DisableSlider(_bossHealthBar);
         _bossNameText.enabled = false;
-        BossNameText = "";
+        SetBossNameText = "";
         DisableBossWarningUI();
     }
 
