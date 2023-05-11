@@ -159,10 +159,11 @@ MonoBehaviour:
   _deadSprite: {fileID: 21300000, guid: 8c25d5e743dc1184b8df6716848c231b, type: 3}
   unitName: 
   _currentHealth: 0
-  _attackCooldown: 0.75
+  _attackCooldown: 2
   _attackTimer: 0
   _mineReleasePoint: {fileID: 5151822783525052687}
   _seekerMineInfo: {fileID: 11400000, guid: cc0e1a3f7458d714da9b02da04b0e8d2, type: 2}
+  _minesToFire: 1
   _pulverizerBeam: {fileID: 313375864532200023}
   _beamAttack: {fileID: 361785294246377548}
 --- !u!114 &2768467503477785582
@@ -177,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _staticMovement: 1
+  _moveType: 1
 --- !u!1 &1791959886730766748
 GameObject:
   m_ObjectHideFlags: 0

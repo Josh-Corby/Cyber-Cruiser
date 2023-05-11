@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameManager : GameBehaviour<GameManager>
 {
-    private bool _isPaused = false;
+    [SerializeField] private bool _isPaused = false;
     [SerializeField] private GameObject gameplayObjects;
 
     #region Properties

@@ -1,13 +1,14 @@
 using UnityEngine;
 
 
-public class BeamAttack : MonoBehaviour
+public class BeamAttack : GameBehaviour
 {
     public bool isBeamActive;
     public LineRenderer lineRenderer;
     private float _beamSize;
     public float beamDuration;
-    [SerializeField] private float beamDamage;
+    [SerializeField] private float _beamDamage;
+    [SerializeField] private float _basicEnemyBeamDamage;
 
     [SerializeField] private float _beamSpeed;
     [SerializeField] bool _isBeamTimed;
@@ -29,6 +30,8 @@ public class BeamAttack : MonoBehaviour
 
     private void Update()
     {
+        if (GM.IsPaused) return;
+
         if (isBeamActive)
         {
             ExtendBeam();
@@ -86,16 +89,21 @@ public class BeamAttack : MonoBehaviour
         RaycastHit2D hit = Physics2D.BoxCast(transform.position, new Vector2(1, 1), 180, transform.right, GetDistanceXBetweenPoints(), _beamCollisionMask);
         if (hit.collider != null)
         {
-            //Debug.Log("Enemy hit");
-            if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
+
+            if (hit.collider.TryGetComponent<Enemy>(out var enemy))
             {
-                damageable.Damage(beamDamage);
+                enemy.GetComponent<IDamageable>().Damage(_basicEnemyBeamDamage);
+            }
+
+            else if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
+            {
+                damageable.Damage(_beamDamage);
             }
 
             if (hit.collider.TryGetComponent<Shield>(out var shield))
             {
                 //Debug.Log("beam hit shield");
-                shield._shieldController.ReduceShields(beamDamage);
+                shield._shieldController.ReduceShields(_beamDamage);
             }
         }
     }

@@ -272,31 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnemyDead: 0
-  direction: {x: 0, y: 0}
-  _startRotation: {x: 0, y: 0, z: 0}
-  _speed: 0
-  _upDownMovement: 0
-  _upDownSpeed: 0
-  isBackForthMovingUp: 0
-  _upDownMoveDistance: 0
-  _seekPlayer: 0
-  _seekPlayerY: 0
-  _seekPlayerX: 0
-  _seekSpeed: 0
-  _sinUpDownMovement: 0
-  _sinFrequency: 0
-  _sinMagnitude: 0
-  _sinRandomSeed: 0
-  _homeOnPlayer: 0
-  _homeTurnSpeed: 0
-  _homeTime: 0
-  homeCounter: 0
-  _homeDelay: 0
-  _homeDelayTime: 0
-  _homeDelayCounter: 0
-  _staticMovement: 0
-  speed: 4
+  _moveType: 2
 --- !u!1 &3534197723866894886
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,9 +320,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponInfo: {fileID: 11400000, guid: cd856ec32a1ec4a4cb4e89a8a5ba24c7, type: 2}
   _objectToFire: {fileID: 0}
-  readyToFire: 0
-  _holdToFire: 0
-  isHoming: 0
 --- !u!1 &3807874348917580334
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,9 +398,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponInfo: {fileID: 11400000, guid: cd856ec32a1ec4a4cb4e89a8a5ba24c7, type: 2}
   _objectToFire: {fileID: 0}
-  readyToFire: 0
-  _holdToFire: 0
-  isHoming: 0
 --- !u!1 &7020472227476826103
 GameObject:
   m_ObjectHideFlags: 0

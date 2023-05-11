@@ -30,6 +30,8 @@ public class Boss : Enemy, IDamageable
 
     protected virtual void Update()
     {
+        if (GM.IsPaused) return;
+
         if (_movement.IsEnemyDead)
         {
             return;
@@ -41,8 +43,7 @@ public class Boss : Enemy, IDamageable
 
         if (_attackTimer <= 0)
         {
-            ChooseRandomAttack();
-            _attackTimer = _attackCooldown;
+            ChooseRandomAttack();         
         }
     }
 
@@ -50,6 +51,7 @@ public class Boss : Enemy, IDamageable
     {
         int randomAttackID = Random.Range(0, 2);
         PerformAttack(randomAttackID);
+        _attackTimer = _attackCooldown;
     }
 
     protected void PerformAttack(int ID)

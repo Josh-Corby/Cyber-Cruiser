@@ -18,6 +18,7 @@ public class Behemoth : Boss, IBoss
     {
         _attacksSinceHomingAttack = 0;
     }
+
     protected override void ChooseRandomAttack()
     {
         if(_attacksSinceHomingAttack == 1)
@@ -26,12 +27,9 @@ public class Behemoth : Boss, IBoss
         }
         else
         {
-            int randomAttackID = Random.Range(0, 2);
-            PerformAttack(randomAttackID);
+           base.ChooseRandomAttack();
         }
     }
-
-
 
     //missiles in random directions
     public void Attack1()

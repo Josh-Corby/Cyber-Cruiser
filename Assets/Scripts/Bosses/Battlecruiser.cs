@@ -1,16 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 public class Battlecruiser : Boss, IBoss
 {
     [SerializeField] private GameObject _mineReleasePoint;
     [SerializeField] private EnemyScriptableObject _seekerMineInfo;
-    private readonly int _minesToFire = 2;
-    private readonly int _mineDelay = 1;
-
+    [SerializeField] private int _minesToFire = 1;
     private float _beamAttackDuration;
-    private readonly float _timeAfterAttackFinish = 1f;
 
     [SerializeField] private GameObject _pulverizerBeam;
     [SerializeField] private BeamAttack _beamAttack;
@@ -26,6 +23,7 @@ public class Battlecruiser : Boss, IBoss
 
     protected override void Update()
     {
+        if(GM.IsPaused) return;
         if (_attackTimer > 0)
         {
             _attackTimer -= Time.deltaTime;
@@ -37,24 +35,38 @@ public class Battlecruiser : Boss, IBoss
         }
     }
 
-    //release seeker mines
-    private IEnumerator ReleaseMines()
+    //check if beam is active
+    //if so fire a mine
+    protected override void ChooseRandomAttack()
     {
-        _attackTimer = _timeAfterAttackFinish;
+        _attackTimer = _attackCooldown;
+
+        if (_beamAttack.isBeamActive)
+        {           
+            Attack1();          
+        }
+
+        else
+        {
+            int randomAttackID = Random.Range(0, 2);
+            PerformAttack(randomAttackID);
+        }
+    }
+
+    //release seeker mines
+    public void Attack1()
+    {
+        ReleaseMines();
+    }
+
+    private void ReleaseMines()
+    {
         for (int i = 0; i < _minesToFire; i++)
         {
             GameObject mineObject = EM.CreateEnemyFromSO(_seekerMineInfo);
             GameObject seekermine = Instantiate(mineObject, _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
             seekermine.transform.SetParent(null);
-            yield return new WaitForSeconds(_mineDelay);
         }
-        StopCoroutine(ReleaseMines());
-
-    }
-
-    public void Attack1()
-    {
-        StartCoroutine(ReleaseMines());
     }
 
     //fire laser
@@ -62,7 +74,6 @@ public class Battlecruiser : Boss, IBoss
     {
         _beamAttack.ResetBeam();
         _beamAttack.lineRenderer.enabled = true;
-        _attackTimer = _beamAttackDuration + _timeAfterAttackFinish;
         _beamAttack.isBeamActive = true;
     }
 

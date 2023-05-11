@@ -1,14 +1,19 @@
 using System;
 using UnityEngine;
 
+public enum BossMovementType
+{
+    Static, UpDown, Free
+}
+
 public class BossMovement : EnemyMovement
 {
-    public static event Action<BossMovement> OnMovePositionRequested = null;
+    public static event Action<BossMovement, BossMovementType> OnMovePositionRequested = null;
 
-    [SerializeField] private bool _staticMovement;
     private GameObject _goalPoint;
     private bool _goalPositionReached;
-
+    [SerializeField] private BossMovementType _moveType;
+    #region Properties
     private Vector2 _movePosition;
     public Vector2 SetMovePosition
     {
@@ -17,6 +22,9 @@ public class BossMovement : EnemyMovement
             _movePosition = value;
         }
     }
+    #endregion
+
+
 
     protected override void Awake()
     {
@@ -47,24 +55,30 @@ public class BossMovement : EnemyMovement
             return;
         }
 
-        if (!_staticMovement)
-        {
-            if (_movePosition != null)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, _movePosition, _speed * Time.deltaTime);
-            }
+        MoveTypeCheck();
+    }
 
-            if (Vector2.Distance(transform.position, _movePosition) <= 0.1f)
-            {
-                RequestNewMovePosition();
-            }
+    private void MoveTypeCheck()
+    {
+        if (_moveType == BossMovementType.Static)
+        {
+            return;
+        }
+
+        if (_movePosition != null)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, _movePosition, _speed * Time.deltaTime);
+        }
+
+        if (Vector2.Distance(transform.position, _movePosition) <= 0.1f)
+        {
+            RequestNewMovePosition();
         }
     }
 
     private void RequestNewMovePosition()
     {
-        //new destination requested;
-        OnMovePositionRequested(this);
+        OnMovePositionRequested(this, _moveType);
     }
 
     private void MoveTowardGoalPosition()
