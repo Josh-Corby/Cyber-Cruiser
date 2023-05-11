@@ -52,7 +52,7 @@ public class Boss : Enemy, IDamageable
         PerformAttack(randomAttackID);
     }
 
-    private void PerformAttack(int ID)
+    protected void PerformAttack(int ID)
     {
         if (ID == 0)
         {

@@ -6,7 +6,7 @@ public class Enemy : GameBehaviour, IDamageable
     protected const string DEAD_ENEMY_LAYER_NAME = "DeadEnemy";
 
     #region References
-    [HideInInspector] public EnemyScriptableObject _unitInfo;
+    public EnemyScriptableObject _unitInfo;
     private EnemyMovement _unitMovement;
     private EnemyWeaponController _weapon;
     [SerializeField] private SpriteRenderer _spriteRenderer;
