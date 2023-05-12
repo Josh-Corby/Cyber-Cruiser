@@ -2,36 +2,36 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum AddOnTypes
+public enum AddOnType
 {
     BatteryPack, Hydrocoolant, PlasmaCache, PulseDetonator
 }
-public class AddOn : GameBehaviour
+
+[RequireComponent(typeof(Button))]
+public class AddOnButton : GameBehaviour
 {
+    #region References
     [SerializeField] private AddOnScriptableObject _addOnInfo;
     private Button _addOnButton;
-    private AddOnTypes _addOnType;
+    #endregion
+
+    #region Fields
+    private AddOnType _addOnType;
     private string _name;
     private string _description;
     private int _ionCost;
     private bool _isAddOnEnabled;
+    #endregion
 
     #region Properties
     public string Name { get => _name; }
-
     public string Description { get => _description; }
-
-    public bool IsAddonEnabled
-    {
-        get => _isAddOnEnabled;
-        private set => _isAddOnEnabled = value;
-    }
     #endregion
 
     #region Actions
-    public static event Action<AddOn> OnMouseEnter = null;
+    public static event Action<AddOnButton> OnMouseEnter = null;
     public static event Action OnMouseExit = null;
-    public static event Action<AddOnTypes, int, bool> OnAddOnToggled = null;
+    public static event Action<AddOnType, int, bool> OnAddonBuyOrSell = null;
     #endregion
 
     private void Awake()
@@ -42,13 +42,13 @@ public class AddOn : GameBehaviour
 
     private void OnEnable()
     {
-        PlayerStatsManager.OnIonChange += (playerIon) => { ValidateButtonState(); };
-        ValidateButtonState();
+        PlayerStatsManager.OnIonChange -= ValidateButtonState;
+        ValidateButtonState(PSM.PlayerIon);
     }
 
     private void OnDisable()
     {
-        PlayerStatsManager.OnIonChange -= (playerIon) => { ValidateButtonState(); };
+        PlayerStatsManager.OnIonChange -= ValidateButtonState;
     }
 
     private void AssignAddOnInfo()
@@ -59,11 +59,11 @@ public class AddOn : GameBehaviour
         _ionCost = _addOnInfo.IonCost;
     }
 
-    private void ValidateButtonState()
+    private void ValidateButtonState(int playerIon)
     {
-        if (!IsAddonEnabled)
+        if (!_isAddOnEnabled)
         {
-            _addOnButton.interactable = CanPlayerAffordAddOn();
+            _addOnButton.interactable = playerIon >= _ionCost;
         }
 
         else
@@ -72,16 +72,15 @@ public class AddOn : GameBehaviour
         }     
     }
 
-    private bool CanPlayerAffordAddOn()
-    {
-        return PSM.CanPlayerAffordAddon(_ionCost);
-    }
-
-    #region UI Functions
     public void ToggleAddOnActiveState()
     {
         _isAddOnEnabled = !_isAddOnEnabled;
-        OnAddOnToggled(_addOnType, _ionCost, _isAddOnEnabled);
+        BuyOrSellAddOn();
+    }
+
+    private void BuyOrSellAddOn()
+    {
+        OnAddonBuyOrSell?.Invoke(_addOnType, _ionCost, _isAddOnEnabled);
     }
 
     public void MouseEnter()
@@ -92,6 +91,5 @@ public class AddOn : GameBehaviour
     public void MouseExit()
     {
         OnMouseExit?.Invoke();
-    }  
-    #endregion
+    }
 }

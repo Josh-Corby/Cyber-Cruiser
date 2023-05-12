@@ -1,6 +1,7 @@
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine;
 
+[RequireComponent(typeof(TMP_Text))]
 public class PlayerPlasmaTextDisplay : GameBehaviour
 {
     private TMP_Text _plasmaText;
@@ -12,17 +13,17 @@ public class PlayerPlasmaTextDisplay : GameBehaviour
 
     private void OnEnable()
     {
-        PlayerStatsManager.OnPlasmaChange += (playerPlasma) => { UpdatePlasmaText(); } ;
-        UpdatePlasmaText();
+        PlayerStatsManager.OnPlasmaChange += UpdatePlasmaText;
+        UpdatePlasmaText(PSM.PlayerPlasma);
     }
 
     private void OnDisable()
     {
-        PlayerStatsManager.OnPlasmaChange -= (playerPlasma) => { UpdatePlasmaText(); } ;
+        PlayerStatsManager.OnPlasmaChange -= UpdatePlasmaText;
     }
 
-    private void UpdatePlasmaText()
+    private void UpdatePlasmaText(int plasma)
     {
-        _plasmaText.text = PSM.PlayerPlasma.ToString();
+        _plasmaText.text = plasma.ToString();
     }
 }

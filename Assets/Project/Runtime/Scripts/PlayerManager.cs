@@ -12,6 +12,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 {
     #region References
     public GameObject player;
+
     private Collider2D _playerCollider;
     #endregion
 
@@ -21,31 +22,28 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _currentHealth;
     [SerializeField] private PlayerHealthState _playerHealthState;
+
     [SerializeField] private GameObject _batteryPack, _hydrocoolant, _plasmaCache;
+    [SerializeField] private bool _isBatteryPack, _isHydrocoolant, _isPlasmaCache;
+    [SerializeField] private List<GameObject> _addOnObjects = new();
 
     public bool isDead;
     [SerializeField] private float _iFramesDuration;
     private bool _isPlayerImmuneToDamage;
-    [SerializeField] private bool _isBatteryPack, _isHydrocoolant, _isPlasmaCache;
-    [SerializeField] private List<GameObject> _addOnObjects = new();
-
     [SerializeField] private int _ramDamage;
-
     private Coroutine _iFramesCoroutine;
     #endregion
 
     #region Properties
-    public int PlayerPlasma
+    private int PlayerPlasma
     {
         get => _playerPlasma;
-        private set
+        set
         {
             _playerPlasma = value;
             OnPlasmaChange(_playerPlasma);
         }
     }
-
-    public int PlasmaCost { get => _plasmaCost; private set => _plasmaCost = value; }
 
     private float PlayerCurrentHealth
     {
@@ -86,10 +84,10 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         }
     }
 
-    public float PlayerMaxHealth
+    private float PlayerMaxHealth
     {
         get => _maxHealth;
-        private set
+        set
         {
             _maxHealth = value;
             OnPlayerMaxHealthSet(GUIM.playerHealthBar, _maxHealth);
@@ -159,10 +157,11 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
     private void OnEnable()
     {
+        SetStats();
+
         Pickup.OnResourcePickup += AddResources;
         DisableAddOnSprites();
         SetAddOnBools();
-        SetStats();
         _isPlayerImmuneToDamage = false;
     }
 
@@ -175,12 +174,49 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         PlayerMaxHealth = PSM.PlayerCurrentMaxHealth;
         PlayerPlasma = PSM.PlayerPlasma;
-        PlasmaCost = PSM.PlasmaCost;
+        _plasmaCost = PSM.PlasmaCost;
         _iFramesDuration = PSM.IFramesDuration;
 
         FullHeal();
     }
 
+    private void AddResources(int healthAmount, int plasmaAmount, int ionAmount)
+    {
+        PlayerCurrentHealth += healthAmount;     
+        OnIonPickup(ionAmount);
+
+        if (plasmaAmount > 0)
+        {
+            PlayerPlasma += plasmaAmount;
+            OnPlasmaPickupValue?.Invoke(plasmaAmount);
+        }
+    }
+
+    private void FullHeal()
+    {
+        PlayerCurrentHealth = PlayerMaxHealth;
+    }
+
+    public bool CheckPlasma()
+    {
+        if (PlayerPlasma < _plasmaCost)
+        {
+            Debug.Log("Not enough plasma");
+            return false;
+        }
+
+        if (PlayerPlasma >= _plasmaCost)
+        {
+            PlayerPlasma -= _plasmaCost;
+            return true;
+        }
+
+        else return false;
+    }
+
+    //THINGS THAT CAN BE RELOCATED
+
+    #region Addon Functions
     private void DisableAddOnSprites()
     {
         foreach (GameObject sprite in _addOnObjects)
@@ -203,44 +239,9 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         _hydrocoolant.SetActive(_isHydrocoolant);
         _plasmaCache.SetActive(_isPlasmaCache);
     }
+    #endregion
 
-    private void AddResources(int healthAmount, int plasmaAmount, int ionAmount)
-    {
-        PlayerCurrentHealth += healthAmount;
-        PlayerPlasma += plasmaAmount;
-        OnIonPickup(ionAmount);
-
-        if (plasmaAmount > 0)
-        {
-            if (OnPlasmaPickupValue != null)
-            {
-                OnPlasmaPickupValue(plasmaAmount);
-            }
-        }
-    }
-
-    private void FullHeal()
-    {
-        PlayerCurrentHealth = PlayerMaxHealth;
-    }
-
-    public bool CheckPlasma()
-    {
-        if (PlayerPlasma < PlasmaCost)
-        {
-            Debug.Log("Not enough plasma");
-            return false;
-        }
-
-        if (PlayerPlasma >= PlasmaCost)
-        {
-            PlayerPlasma -= PlasmaCost;
-            return true;
-        }
-
-        else return false;
-    }
-
+    #region Player Damage Functions
     public void Damage(float damage)
     {
         if (!_isPlayerImmuneToDamage)
@@ -250,15 +251,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
             StartIFrames();
         }
-    }
-
-    private IEnumerator Iframes()
-    {
-        //Debug.Log("iFrames");
-        _playerCollider.enabled = false;
-        _isPlayerImmuneToDamage = true;
-        yield return new WaitForSeconds(_iFramesDuration);
-        CancelIFrames();
     }
 
     private void StartIFrames()
@@ -285,6 +277,14 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         _isPlayerImmuneToDamage = false;
         _playerCollider.enabled = true;
+    }
+
+    private IEnumerator Iframes()
+    {
+        _playerCollider.enabled = false;
+        _isPlayerImmuneToDamage = true;
+        yield return new WaitForSeconds(_iFramesDuration);
+        CancelIFrames();
     }
 
     private void DisablePlayerCollision()
@@ -322,4 +322,5 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             Destroy(pickup.gameObject);
         }
     }
+    #endregion
 }

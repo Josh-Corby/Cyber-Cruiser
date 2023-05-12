@@ -4,7 +4,7 @@ using UnityEngine;
 public class AddOnScriptableObject : ScriptableObject
 {
 
-    public AddOnTypes AddOnType;
+    public AddOnType AddOnType;
     public string Description;
     public int IonCost;
 }

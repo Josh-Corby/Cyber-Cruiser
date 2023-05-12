@@ -1,5 +1,7 @@
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine;
+
+[RequireComponent(typeof(TMP_Text))]
 public class PlayerIonTextDisplay : GameBehaviour
 {
     private TMP_Text _ionTMPText;
@@ -11,17 +13,17 @@ public class PlayerIonTextDisplay : GameBehaviour
 
     private void OnEnable()
     {
-        PlayerStatsManager.OnIonChange += (playerIon) => { UpdateIonText(); };
-        UpdateIonText();
+        PlayerStatsManager.OnIonChange += UpdateIonText;
+        UpdateIonText(PSM.PlayerIon);
     }
 
     private void OnDisable()
     {
-        PlayerStatsManager.OnIonChange -= (playerIon) => { UpdateIonText(); };
+        PlayerStatsManager.OnIonChange -= UpdateIonText;
     }
 
-    private void UpdateIonText()
+    private void UpdateIonText(int ion)
     {
-        _ionTMPText.text = PSM.PlayerIon.ToString();
+        _ionTMPText.text = ion.ToString();
     }
 }

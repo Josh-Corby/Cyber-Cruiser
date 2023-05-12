@@ -5,21 +5,21 @@ public class AddOnUIManager : GameBehaviour
 {
     [SerializeField] private TMP_Text _addOnName;
     [SerializeField] private TMP_Text _addOnDescription;
-    private AddOn _currentAddon;
+    private AddOnButton _currentAddon;
 
     private void OnEnable()
     {
-        AddOn.OnMouseEnter += SetCurrentAddOn;
-        AddOn.OnMouseExit += ClearAddOn;
+        AddOnButton.OnMouseEnter += SetCurrentAddOn;
+        AddOnButton.OnMouseExit += ClearAddOn;
     }
 
     private void OnDisable()
     {
-        AddOn.OnMouseEnter -= SetCurrentAddOn;
-        AddOn.OnMouseExit -= ClearAddOn;
+        AddOnButton.OnMouseEnter -= SetCurrentAddOn;
+        AddOnButton.OnMouseExit -= ClearAddOn;
     }
 
-    private void SetCurrentAddOn(AddOn addOn)
+    private void SetCurrentAddOn(AddOnButton addOn)
     {
         _currentAddon = addOn;
         SetAddOnUI();
