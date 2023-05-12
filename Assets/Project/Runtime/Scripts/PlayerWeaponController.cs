@@ -126,6 +126,8 @@ public class PlayerWeaponController : GameBehaviour
         GameManager.OnMissionEnd += ResetPlayerWeapon;
 
         Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
+
+        ResetPlayerWeapon();
     }
 
     private void OnDisable()
