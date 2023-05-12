@@ -75,9 +75,6 @@ public class RankUI : GameBehaviour
         if (_starsToGain == 0) return;
         GainStarsAnimation();
     }
- 
-
-
 
     private void ValidateCurrentRank()
     {

@@ -12,6 +12,7 @@ public class PlayerIonTextDisplay : GameBehaviour
     private void OnEnable()
     {
         PlayerStatsManager.OnIonChange += (playerIon) => { UpdateIonText(); };
+        UpdateIonText();
     }
 
     private void OnDisable()

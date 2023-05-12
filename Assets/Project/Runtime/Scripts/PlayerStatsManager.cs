@@ -52,9 +52,8 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
             {
                 value = 0;
             }
-
             _playerPlasma = value;
-            OnPlasmaChange(value);
+            OnPlasmaChange?.Invoke(_playerPlasma);
         }
     }
     public int PlayerIon
@@ -67,7 +66,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
                 value = 0;
             }
             _playerIon = value;
-            OnIonChange(value);
+            OnIonChange?.Invoke(_playerIon);
         }
     }
     public bool IsBatteryPack
@@ -281,7 +280,7 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         }
     }
 
-    private bool CanPlayerAffordAddon(int cost)
+    public bool CanPlayerAffordAddon(int cost)
     {
         return PlayerIon >= cost;
     }
