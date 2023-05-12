@@ -2,47 +2,46 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource _bgm, _uiSFX;
+    [SerializeField] private AudioSource _bgm;
+    [SerializeField] private AudioSource _uiSFX;
+    [SerializeField] private AudioSource _gameSFX;
     [SerializeField] private AudioClip _menuMusic, _missionMusic, _panelUp, _panelDown;
     [SerializeField][Range(0, 1)] private float _defaultVolume, _pausedVolume;
 
 
     private void OnEnable()
     {
-        GameManager.OnMissionStart += () => { SetBGMClip(_missionMusic); };
-        GameManager.OnMissionEnd += () => { SetBGMClip(_menuMusic); };
         GameManager.OnIsGamePaused += ChangeBGMVolumeOnGamePauseToggle;
-        PanelAnimation.OnPanelOpenAnimationStart += () => { SetUISFXClip(_panelUp); };
-        PanelAnimation.OnPanelCloseAnimationStart += () => { SetUISFXClip(_panelDown); };
+        GameManager.OnMissionStart += () => { PlayClipOnSource(_missionMusic, _bgm); };
+        GameManager.OnMissionEnd += () => { PlayClipOnSource(_menuMusic, _bgm); };     
+        PanelAnimation.OnPanelOpenAnimationStart += () => { PlayClipOnSource(_panelUp, _uiSFX); };
+        PanelAnimation.OnPanelCloseAnimationStart += () => { PlayClipOnSource(_panelDown, _uiSFX); };
     }
 
     private void OnDisable()
     {
-        GameManager.OnMissionStart -= () => { SetBGMClip(_missionMusic); };
-        GameManager.OnMissionEnd -= () => { SetBGMClip(_menuMusic); };
         GameManager.OnIsGamePaused -= ChangeBGMVolumeOnGamePauseToggle;
-        PanelAnimation.OnPanelOpenAnimationStart -= () => { SetUISFXClip(_panelUp); };
-        PanelAnimation.OnPanelCloseAnimationStart -= () => { SetUISFXClip(_panelDown); };
+        GameManager.OnMissionStart -= () => { PlayClipOnSource(_missionMusic, _bgm); };
+        GameManager.OnMissionEnd -= () => { PlayClipOnSource(_menuMusic, _bgm); };   
+        PanelAnimation.OnPanelOpenAnimationStart -= () => { PlayClipOnSource(_panelUp, _uiSFX); };
+        PanelAnimation.OnPanelCloseAnimationStart -= () => { PlayClipOnSource(_panelDown, _uiSFX); };
     }
 
     private void Start()
     {
-        SetBGMClip(_menuMusic);
+        PlayClipOnSource(_menuMusic,_bgm);
     }
 
-    private void SetBGMClip(AudioClip clip)
+    private void PlayClipOnSource(AudioClip clip, AudioSource audioSource)
     {
-        _bgm.Stop();
-        _bgm.clip = clip;
-        _bgm.Play();
-        ChangeBGMVolumeOnGamePauseToggle(false);
-    }
+        audioSource.Stop();
+        audioSource.clip = clip;
+        audioSource.Play();
 
-    private void SetUISFXClip(AudioClip clip)
-    {
-        _uiSFX.Stop();
-        _uiSFX.clip = clip;
-        _uiSFX.Play();
+        if(audioSource == _bgm)
+        {
+            ChangeBGMVolumeOnGamePauseToggle(false);
+        }
     }
 
     private void ChangeBGMVolumeOnGamePauseToggle(bool isPaused)
