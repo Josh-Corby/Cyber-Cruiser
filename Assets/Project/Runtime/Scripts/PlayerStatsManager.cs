@@ -43,20 +43,29 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     public float WeaponUpgradeDuration { get => _weaponUpgradeDuration; private set => _weaponUpgradeDuration = value; }
     public float IFramesDuration { get => _iFramesDuration; private set => _iFramesDuration = value; }
     public bool IsPulseDetonator { get => _isPulseDetonator; private set { _isPulseDetonator = value; } }
-    public int SetPlayerPlasma
+    public int PlayerPlasma
     {
         get => _playerPlasma;
         private set
         {
+            if(value < 0)
+            {
+                value = 0;
+            }
+
             _playerPlasma = value;
             OnPlasmaChange(value);
         }
     }
-    public int SetPlayerIon
+    public int PlayerIon
     {
         get => _playerIon;
         private set
         {
+            if(value < 0)
+            {
+                value = 0;
+            }
             _playerIon = value;
             OnIonChange(value);
         }
@@ -121,11 +130,11 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         RestoreValues();
     }
 
-    #region Data Changing Functions
+    #region Restore Values
     private void RestoreValues()
     {
-        SetPlayerIon = PlayerPrefs.GetInt(nameof(PLAYER_ION));
-        SetPlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
+        PlayerIon = PlayerPrefs.GetInt(nameof(PLAYER_ION));
+        PlayerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
         PlasmaCost = 5;
         RestoreRank();
         RestoreStars();
@@ -162,15 +171,17 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
             Debug.Log(CurrentStars + " stars restored");
         }
     }
+    #endregion
 
+    #region Data Changing Functions
     public void ChangeIon(int value)
     {
-        SetPlayerIon += value;
+        PlayerIon += value;
     }
 
     public void ChangePlasma(int value)
     {
-        SetPlayerPlasma = value;
+        PlayerPlasma = value;
     }
     #endregion
 
@@ -234,40 +245,45 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         }
     }
 
-    private void ToggleAddOnBool(AddOnTypes addOnType, int cost, bool value)
+    private void ToggleAddOnBool(AddOnTypes addOnType, int cost, bool isAddonBeingBought)
     {
+
+
         //If AddOn is being bought check if player can afford it
-        if (value)
+        if (isAddonBeingBought)
         {
-            CanPlayerAffordAddon(cost);
+            if (CanPlayerAffordAddon(cost) == false)
+            {
+                return;
+            }
         }
 
         //Spend or refund ions depending on bool state
-        SetPlayerIon += value ? -cost : cost;
+        PlayerIon += isAddonBeingBought ? -cost : cost;
         //Process ion change
-        OnIonChange(SetPlayerIon);
+        OnIonChange(PlayerIon);
 
-        //Find function related to addon type
+        //Find property related to addon type and set its bool
         switch (addOnType)
         {
             case AddOnTypes.BatteryPack:
-                IsBatteryPack = value;
+                IsBatteryPack = isAddonBeingBought;
                 break;
             case AddOnTypes.Hydrocoolant:
-                IsHydrocoolant = value;
+                IsHydrocoolant = isAddonBeingBought;
                 break;
             case AddOnTypes.PlasmaCache:
-                IsPlasmaCache = value;
+                IsPlasmaCache = isAddonBeingBought;
                 break;
             case AddOnTypes.PulseDetonator:
-                IsPulseDetonator = value;
+                IsPulseDetonator = isAddonBeingBought;
                 break;
         }
     }
 
     private bool CanPlayerAffordAddon(int cost)
     {
-        return SetPlayerIon > cost;
+        return PlayerIon >= cost;
     }
     #endregion
 
@@ -290,8 +306,8 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
 
     private void OnApplicationQuit()
     {
-        PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), SetPlayerPlasma);
-        PlayerPrefs.SetInt(nameof(PLAYER_ION), SetPlayerIon);
+        PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), PlayerPlasma);
+        PlayerPrefs.SetInt(nameof(PLAYER_ION), PlayerIon);
 
         PlayerPrefs.SetInt(nameof(PLAYER_RANK), 0);
         //PlayerPrefs.SetInt(nameof(PLAYER_RANK), CurrentRank.RankID);

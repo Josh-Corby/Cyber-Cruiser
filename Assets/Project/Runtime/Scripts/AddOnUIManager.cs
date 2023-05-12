@@ -29,10 +29,12 @@ public class AddOnUIManager : GameBehaviour
     {
         _plasmaText.text = value.ToString();
     }
+
     private void ChangeIonText(int value)
     {
         _ionText.text = value.ToString();
     }
+
     private void SetCurrentAddOn(AddOn addOn)
     {
         _currentAddon = addOn;
