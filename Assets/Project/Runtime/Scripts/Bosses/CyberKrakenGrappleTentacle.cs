@@ -9,6 +9,7 @@ public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
 
     private void Update()
     {
+        if(GM.IsPaused) return;
         TentacleMovement();
     }
 

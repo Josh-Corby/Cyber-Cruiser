@@ -21,7 +21,7 @@ public class EnemyMovement : GameBehaviour
 
     [Header("Seek movement")]
 
-    protected bool _seekPlayer;
+    [SerializeField] protected bool _seekPlayer;
     protected bool _seekPlayerY;
     protected bool _seekPlayerX;
     protected float _seekSpeed;

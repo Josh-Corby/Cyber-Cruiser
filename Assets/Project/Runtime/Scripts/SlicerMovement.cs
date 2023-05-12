@@ -3,11 +3,8 @@ using UnityEngine;
 
 public class SlicerMovement : EnemyMovement
 {
-    #region Properties
-    private float SeekTime { get; }
-
-    private float SeekCounter { get; set; }
-    #endregion
+    [SerializeField] private float _seekTime;
+    private float _seekCounter;
 
     #region Actions
     public static event Action<GameObject> OnStartSeeking = null;
@@ -22,13 +19,13 @@ public class SlicerMovement : EnemyMovement
     {
         if (_seekPlayer)
         {
-            if (SeekCounter <= 0)
+            if (_seekCounter <= 0)
             {
                 _seekPlayer = false;
                 return;
             }
             SeekX();
-            SeekCounter -= Time.deltaTime;
+            _seekCounter -= Time.deltaTime;
             return;
         }
         base.Update();
@@ -41,7 +38,7 @@ public class SlicerMovement : EnemyMovement
         {
             _seekPlayer = true;
             _seekPlayerX = true;
-            SeekCounter = SeekTime;
+            _seekCounter = _seekTime;
             OnStartSeeking(gameObject);
             return;
         }
