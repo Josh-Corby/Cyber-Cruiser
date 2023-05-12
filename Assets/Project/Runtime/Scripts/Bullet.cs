@@ -106,8 +106,6 @@ public class Bullet : GameBehaviour
 
     private void Update()
     {
-        if (GM.IsPaused) return;
-
         if (IsHoming)
         {
             if (homingTarget != null)

@@ -5,62 +5,59 @@ using UnityEngine;
 
 public class PanelAnimation : MonoBehaviour
 {
+    private Animator _animator;
+    private string _currentState;
+    private const string PANEL_UP = "Panel_Up";
+    private const string PANEL_DOWN = "Panel_Down";
 
-    private const int DOWN_POS = -900;
-    private const int UP_POS = 0;
-    private const float _tweenLength = 0.75f;
     [SerializeField] private GameObject _screenDisplay;
-
     public static event Action OnPanelOpenAnimationStart = null;
     public static event Action OnPanelCloseAnimationStart = null;
     public static event Action OnPanelDisabled = null;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
 
     private void OnEnable()
     {
         StartOpenUI();
     }
 
-    private void Update()
+    private void ChangeAnimationState(string newState)
     {
-        if (Input.GetKeyDown(KeyCode.U))
+        if(newState == _currentState)
         {
-            StartCloseUI();
+            return;
         }
+
+        _animator.Play(newState);
+        _currentState = newState;
     }
 
-    private void StartOpenUI()
-    {
-        OnPanelOpenAnimationStart?.Invoke();
-        transform.localPosition = new Vector2(0, DOWN_POS);
-        _screenDisplay.SetActive(false);
-        TweenUp();
-    }
-
-    private void TweenUp()
-    {
-        transform.DOLocalMoveY(UP_POS, _tweenLength).SetEase(Ease.OutQuint).OnComplete(EnableScreenDisplay);
-    }
-
-    private void EnableScreenDisplay()
+    public void EnableScreenDisplay()
     {
         _screenDisplay.SetActive(true);
     }
 
-    public void StartCloseUI()
-    {
-        OnPanelCloseAnimationStart?.Invoke();
-        DisableScreenDisplay();
-        TweenDown();
-    }
-
-    private void DisableScreenDisplay()
+    public void DisableScreenDisplay()
     {
         _screenDisplay.SetActive(false);
     }
 
-    public void TweenDown()
+    private void StartOpenUI()
     {
-        transform.DOLocalMoveY(DOWN_POS, _tweenLength).SetEase(Ease.OutQuint).OnComplete(OnCloseAnimationFinished);
+        DisableScreenDisplay();
+        OnPanelOpenAnimationStart?.Invoke();
+        ChangeAnimationState(PANEL_UP);
+    }
+
+    public void StartCloseUI()
+    {
+        DisableScreenDisplay();
+        OnPanelCloseAnimationStart?.Invoke();
+        ChangeAnimationState(PANEL_DOWN);
     }
 
     private void OnCloseAnimationFinished()

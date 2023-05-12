@@ -106,11 +106,6 @@ public class EnemyMovement : GameBehaviour
 
     private void UnitMovement()
     {
-        if (GM.IsPaused)
-        {
-            return;
-        }
-
         if (_isEnemyDead)
         {
             MoveForward();

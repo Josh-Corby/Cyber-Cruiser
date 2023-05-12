@@ -7,6 +7,7 @@ public class Weapon : GameBehaviour
     [SerializeField] private WeaponScriptableObject _weaponInfo;
     private GameObject _firePoint;
     private Transform _firePointTransform;
+    private AudioSource _audioSource;
     [HideInInspector] public GameObject _objectToFire;
     #endregion
 
@@ -39,6 +40,7 @@ public class Weapon : GameBehaviour
 
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
         _firePoint = transform.GetChild(0).gameObject;
         _firePointTransform = _firePoint.transform;
         AssignWeaponInfo();
@@ -66,7 +68,6 @@ public class Weapon : GameBehaviour
 
     private void Update()
     {
-        if (GM.IsPaused) return;
         if (AutoFire)
         {
             if (ReadyToFire)
@@ -210,6 +211,7 @@ public class Weapon : GameBehaviour
     public void FireWithSpread(Quaternion directionWithSpread)
     {
         GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, directionWithSpread);
+        PlayFireSFX();
         if (IsHoming)
         {
             ApplyHoming(bullet.GetComponent<Bullet>());
@@ -219,10 +221,16 @@ public class Weapon : GameBehaviour
     public void FireWithoutSpread()
     {
         GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, _firePointTransform.rotation);
+        PlayFireSFX();
         if (IsHoming)
         {
             ApplyHoming(bullet.GetComponent<Bullet>());
         }
+    }
+
+    private void PlayFireSFX()
+    {
+        _audioSource.PlayOneShot(_audioSource.clip);
     }
 
     private void ApplyHoming(Bullet bullet)

@@ -86,8 +86,6 @@ public class DistanceManager : GameBehaviour
 
     private void Update()
     {
-        if (GM.IsPaused) return;
-
         if (!_isDistanceIncreasing) return;
 
         IncreaseDistance();

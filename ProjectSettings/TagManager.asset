@@ -53,11 +53,11 @@ TagManager:
   - name: EnemyProjectile
     uniqueID: 2329735
     locked: 0
-  - name: Boss
-    uniqueID: 583995123
-    locked: 0
   - name: Enemies
     uniqueID: 4189217035
+    locked: 0
+  - name: Boss
+    uniqueID: 583995123
     locked: 0
   - name: Pickups
     uniqueID: 701405901

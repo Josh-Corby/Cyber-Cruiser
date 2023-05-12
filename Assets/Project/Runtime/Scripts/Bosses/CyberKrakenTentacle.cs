@@ -23,10 +23,6 @@ public class CyberKrakenTentacle : GameBehaviour
 
     private void Update()
     {
-        if(GM.IsPaused)
-        {
-            return;
-        }
         TentacleMovement();
     }
 

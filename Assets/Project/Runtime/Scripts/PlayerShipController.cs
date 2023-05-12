@@ -56,6 +56,8 @@ public class PlayerShipController : GameBehaviour
 
     private void Update()
     {
+        if(GM.GameState != GameState.Mission) return;
+
         if (ControlsEnabled)
         {
             PlayerMovement();

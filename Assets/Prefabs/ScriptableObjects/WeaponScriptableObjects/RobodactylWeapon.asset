@@ -24,4 +24,4 @@ MonoBehaviour:
   timeBetweenBurstShots: 0.8
   multiFire: 1
   multiFireShots: 2
-  isMultiFireSpreadRandom: 1
+  isMultiFireSpreadRandom: 0

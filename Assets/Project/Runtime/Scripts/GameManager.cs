@@ -1,20 +1,32 @@
 using System;
 using UnityEngine;
 
+public enum GameState
+{
+    Mission, Menu
+}
+
 public class GameManager : GameBehaviour<GameManager>
 {
     [SerializeField] private bool _isPaused = false;
     [SerializeField] private GameObject gameplayObjects;
+    private GameState _gameState;
 
     #region Properties
-    public bool IsPaused { get => _isPaused; private set => _isPaused = value; }
+    public GameState GameState
+    {
+        get => _gameState;
+    }
     #endregion
 
     #region Actions
     public static event Action<bool> OnIsGamePaused = null;
+    public static event Action OnGamePaused = null;
+    public static event Action OnGameResumed = null;
     public static event Action OnMissionStart = null;
     public static event Action OnMissionEnd = null;
     #endregion
+
     private void Awake()
     {
         gameplayObjects.SetActive(false);
@@ -50,6 +62,7 @@ public class GameManager : GameBehaviour<GameManager>
     {
         ToggleGameplayObjects(false);
         OnMissionEnd?.Invoke();
+        TogglePause();
     }
 
     public void TogglePause()
@@ -59,21 +72,25 @@ public class GameManager : GameBehaviour<GameManager>
         if (_isPaused)
         {
             PauseGame();
+            OnGamePaused?.Invoke();
         }
+
         else if (!_isPaused)
         {
-            ResumeGame();
+            OnGameResumed?.Invoke();
         }
-        OnIsGamePaused(_isPaused);
+        OnIsGamePaused?.Invoke(_isPaused);
     }
 
     private void PauseGame()
     {
-        //Time.timeScale = 0f;
+        Time.timeScale = 0f;
+        _gameState = GameState.Menu;
     }
 
-    private void ResumeGame()
+    public void ResumeGame()
     {
         Time.timeScale = 1f;
+        _gameState = GameState.Mission;
     }
 }

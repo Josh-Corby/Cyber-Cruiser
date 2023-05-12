@@ -11,6 +11,7 @@ public class GameBehaviour : Utilities
     protected static PlayerManager PM { get { return PlayerManager.INSTANCE; } }
     protected static PlayerStatsManager PSM { get { return PlayerStatsManager.INSTANCE; } }
     protected static PickupManager PUM { get { return PickupManager.INSTANCE; } }
+    protected static UIManager UIM { get { return UIManager.INSTANCE; } }
     protected static RankManager RM { get { return RankManager.INSTANCE; } }
 }
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour

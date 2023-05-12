@@ -32,7 +32,7 @@ MonoBehaviour:
   upDownDistance: 0
   seekPlayer: 1
   seekPlayerY: 0
-  seekPlayerX: 0
+  seekPlayerX: 1
   seekSpeed: 30
   sinUpDownMovement: 0
   sinFrequency: 0

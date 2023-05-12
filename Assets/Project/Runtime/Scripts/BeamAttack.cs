@@ -30,8 +30,6 @@ public class BeamAttack : GameBehaviour
 
     private void Update()
     {
-        if (GM.IsPaused) return;
-
         if (isBeamActive)
         {
             ExtendBeam();

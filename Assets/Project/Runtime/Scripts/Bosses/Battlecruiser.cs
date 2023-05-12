@@ -24,7 +24,6 @@ public class Battlecruiser : Boss, IBoss
 
     protected override void Update()
     {
-        if(GM.IsPaused) return;
         if (_attackTimer > 0)
         {
             _attackTimer -= Time.deltaTime;

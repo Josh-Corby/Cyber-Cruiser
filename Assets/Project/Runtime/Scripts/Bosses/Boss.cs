@@ -9,7 +9,6 @@ public class Boss : Enemy, IDamageable
     public static event Action<PickupType, Vector3> OnBossDied = null;
 
     private BossMovement _movement;
-
     [SerializeField] protected float _attackCooldown, _attackTimer;
 
     private IBoss bossMoveset;
@@ -21,7 +20,6 @@ public class Boss : Enemy, IDamageable
         bossMoveset = GetComponent<IBoss>();
     }
 
-
     protected override void Start()
     {
         base.Start();
@@ -30,8 +28,6 @@ public class Boss : Enemy, IDamageable
 
     protected virtual void Update()
     {
-        if (GM.IsPaused) return;
-
         if (_movement.IsEnemyDead)
         {
             return;

@@ -48,8 +48,6 @@ public class WaveCountdownManager : GameBehaviour
     private void Update()
     {
         if (!_isCountingDown) return;
-        if (GM.IsPaused) return;
-
         while (_waveCountdownTime >= 0)
         {
             WaveCountdownText = _waveCountdownTime.ToString("F2");

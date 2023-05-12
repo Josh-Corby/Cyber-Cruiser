@@ -89,8 +89,6 @@ public class PlayerShieldController : ShieldControllerBase
 
     private void CheckShieldsState()
     {
-        if (GM.IsPaused) return;
-
         if (IsShieldsActive)
         {
             return;

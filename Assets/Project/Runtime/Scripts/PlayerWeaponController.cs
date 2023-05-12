@@ -159,10 +159,7 @@ public class PlayerWeaponController : GameBehaviour
 
     private void Update()
     {
-        if (!GM.IsPaused)
-        {
-            CheckOverHeated();
-        }
+        CheckOverHeated();
     }
 
     private void CheckOverHeated()
@@ -326,7 +323,7 @@ public class PlayerWeaponController : GameBehaviour
         IsWeaponUpgradeActive = true;
         _weaponUpgradeCounter = _weaponUpgradeDuration;
 
-        if(OnWeaponUpgradeStart != null)
+        if (OnWeaponUpgradeStart != null)
         {
             OnWeaponUpgradeStart(GUIM.weaponUpgradeSlider, _weaponUpgradeDuration);
         }

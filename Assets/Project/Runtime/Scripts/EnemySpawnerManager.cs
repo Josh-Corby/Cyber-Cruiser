@@ -86,18 +86,13 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void Update()
     {
-        if (GM.IsPaused) return;
-
-
         while (_spawnEnemies)
         {
-            if (_enemySpawnTimer > 0)
+            if(IsWaitingForSpawnTimer() == true)
             {
-                _enemySpawnTimer -= Time.deltaTime;
                 return;
             }
 
-            //yield return new WaitForSeconds(_enemySpawnInterval);
             _spawnersSpawning.Clear();
             OnSpawnEnemyGroup?.Invoke();
             for (int i = 0; i < _enemiesToSpawn; i++)
@@ -107,6 +102,16 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
             SpawnFromRandomSpawners();
             _enemySpawnTimer = _enemySpawnInterval;
         }
+    }
+
+    private bool IsWaitingForSpawnTimer()
+    {
+        if (_enemySpawnTimer > 0)
+        {
+            _enemySpawnTimer -= Time.deltaTime;
+            return true;
+        }
+        else return false;
     }
 
     private void RestartLevel()
@@ -183,7 +188,6 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
 
     private void SpawnFromRandomSpawners()
     {
-
         foreach (EnemySpawner spawner in _spawnersSpawning)
         {
             //Debug.Log("tell spawner to spawn");

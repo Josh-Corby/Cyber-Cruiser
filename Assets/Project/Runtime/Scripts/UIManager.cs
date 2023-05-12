@@ -1,17 +1,19 @@
 using System;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class UIManager : GameBehaviour
+public class UIManager : GameBehaviour<UIManager>
 {
     #region References  
-    [SerializeField]
-    private GameObject _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel,
-          _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel;
-
+    [SerializeField] private GameObject _titlePanel;
+    [SerializeField] private GameObject _missionsPanel;
+    [SerializeField] private GameObject _gameplayPanel;
+    [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _missionCompletePanel;
+    [SerializeField] private GameObject _gameOverPanel;
     #endregion
 
     #region Fields
-    private GameObject[] _panels;
     [SerializeField] private GameObject _currentPanel;
     [SerializeField] private GameObject _panelToEnable;
     [SerializeField] private float _enablePanelDelay;
@@ -24,106 +26,100 @@ public class UIManager : GameBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnIsGamePaused += TogglePauseUI;
+        GameManager.OnGamePaused += EnablePauseUI;
+        GameManager.OnGameResumed += DisablePauseUI;
         PlayerManager.OnPlayerDeath += SelectEndOfMissionScreen;
-        PanelAnimation.OnPanelDisabled += EnablePanelDelay;
+        PanelAnimation.OnPanelDisabled += ValidateCurrentPanel;
     }
 
     private void OnDisable()
     {
-        GameManager.OnIsGamePaused -= TogglePauseUI;
+        GameManager.OnGamePaused -= EnablePauseUI;
+        GameManager.OnGameResumed -= DisablePauseUI;
         PlayerManager.OnPlayerDeath -= SelectEndOfMissionScreen;
-        PanelAnimation.OnPanelDisabled -= EnablePanelDelay;
+        PanelAnimation.OnPanelDisabled -= ValidateCurrentPanel;
     }
 
     private void Start()
     {
-        _currentPanel = _titlePanel;
-        InitializePanelsArray();
-        EnableMainMenu();
+        GoToScreen(_titlePanel);
     }
 
-    private void InitializePanelsArray()
-    {
-        _panels = new GameObject[] { _titlePanel, _missionsPanel, _loadoutPanel, _gameplayPanel,
-            _pausePanel, _gameOverPanel, _missionCompletePanel, _optionsPanel, _creditsPanel, _storePanel };
-    }
-
-    public void DisablePanels()
+    public void EnableMainMenu()
     {
         if (_gameplayPanel.activeSelf == true)
         {
             _gameplayPanel.SetActive(false);
         }
-
-        foreach (GameObject panel in _panels)
-        {
-            if (panel.activeSelf)
-            {
-                panel.SetActive(false);
-            }
-        }
-    }
-
-    public void EnableMainMenu()
-    {
-        DisablePanels();
-        _panelToEnable = _titlePanel;
-        EnablePanel();
-    }
-
-    public void EnableLevelUI()
-    {
-        DisablePanel();
-        _currentPanel.SetActive(false);
-        _currentPanel = null;
-        _panelToEnable = null;
-        _gameplayPanel.SetActive(true);
-        OnLevelUIReady?.Invoke(_gameplayPanel.activeSelf);
+        GoToScreen(_titlePanel);
     }
 
     public void GoToScreen(GameObject screen)
     {
-        //set panel to change to
-        //disable current panel
-
-
-        //Debug.Log(screen.name);
         _panelToEnable = screen;
-        Debug.Log(_panelToEnable.name);
 
-        if (_panelToEnable == _missionsPanel)
+        if(_panelToEnable == null)
         {
-            OnMissionsPanelLoaded?.Invoke();
+            return;
         }
-        DisablePanel();
+
+        if(_currentPanel == null)
+        {
+            ValidatePanelToEnable();
+            return;
+        }
+        DisableCurrentPanel();      
     }
 
-    private void DisablePanel()
+    private void DisableCurrentPanel()
     {
-        //if panel has animation play it
         if (_currentPanel.TryGetComponent<PanelAnimation>(out var panelAnimation))
         {
             panelAnimation.StartCloseUI();
         }
         else
         {
-            //if panel has no animation disable current panel and enable next one
             _currentPanel.SetActive(false);
-            EnablePanelDelay();
-        }
+            ValidatePanelToEnable();
+        }       
     }
 
-    private void EnablePanelDelay()
+    private void ValidateCurrentPanel()
     {
-        Invoke(nameof(EnablePanel), _enablePanelDelay);
+        if(_currentPanel == _pausePanel)
+        {
+            GM.ResumeGame();
+        }
+        ValidatePanelToEnable();
     }
 
-    private void EnablePanel()
+    private void ValidatePanelToEnable()
+    {
+        if (_panelToEnable == null)
+        {
+            _currentPanel = null;
+            return;
+        }
+
+        EnableNextPanel();
+    }
+
+    private void EnableNextPanel()
     {
         if (_panelToEnable == null) return;
         _panelToEnable.SetActive(true);
         _currentPanel = _panelToEnable;
+
+
+        if (_currentPanel == _missionsPanel)
+        {
+            OnMissionsPanelLoaded?.Invoke();
+        }
+
+        if(_currentPanel == _gameplayPanel)
+        {
+            OnLevelUIReady?.Invoke(_gameplayPanel.activeSelf);
+        }
     }
 
     private void SelectEndOfMissionScreen()
@@ -142,27 +138,16 @@ public class UIManager : GameBehaviour
         }
     }
 
-    private void TogglePauseUI(bool value)
-    {
-        if (value)
-        {
-            EnablePauseUI();
-        }
-        else
-        {
-            DisablePauseUI();
-        }
-    }
-
     private void EnablePauseUI()
     {
+        _panelToEnable = _pausePanel;
+        ValidatePanelToEnable();
         IM.IsCursorVisible = true;
-        _pausePanel.SetActive(true);
     }
 
-    private void DisablePauseUI()
+    public void DisablePauseUI()
     {
+        DisableCurrentPanel();
         IM.IsCursorVisible = false;
-        _pausePanel.SetActive(false);
     }
 }
