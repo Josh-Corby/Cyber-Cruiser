@@ -187,16 +187,16 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         StarsToGain = starsToGain;
         TotalStarReward = starsToGain;
 
-        IncreaseStars(starsToGain);
+        IncreaseStars();
     }
 
-    private void IncreaseStars(int starsToGain)
+    private void IncreaseStars()
     {
-        _currentStars += starsToGain;
+        _currentStars = StarsToGain;
 
         if (_currentStars >= CurrentRank.StarsToRankUp)
         {
-            _currentStars -= CurrentRank.StarsToRankUp;
+            StarsToGain -= CurrentRank.StarsToRankUp;
             RankUp();
         }
     }
@@ -206,9 +206,9 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
         Debug.Log("player rank up");
         CurrentRank = RM.RankUp(CurrentRank.RankID);
 
-        if (_currentStars > 0)
+        if (StarsToGain > 0)
         {
-            IncreaseStars(_currentStars);
+            IncreaseStars();
         }
     }
     #endregion
@@ -292,7 +292,9 @@ public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
     {
         PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), SetPlayerPlasma);
         PlayerPrefs.SetInt(nameof(PLAYER_ION), SetPlayerIon);
-        PlayerPrefs.SetInt(nameof(PLAYER_RANK), CurrentRank.RankID);
+
+        PlayerPrefs.SetInt(nameof(PLAYER_RANK), 0);
+        //PlayerPrefs.SetInt(nameof(PLAYER_RANK), CurrentRank.RankID);
         PlayerPrefs.SetInt(nameof(PLAYER_STARS), CurrentStars);
     }
 }

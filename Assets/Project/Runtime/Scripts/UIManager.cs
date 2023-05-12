@@ -14,6 +14,7 @@ public class UIManager : GameBehaviour
     private GameObject[] _panels;
     [SerializeField] private GameObject _currentPanel;
     [SerializeField] private GameObject _panelToEnable;
+    [SerializeField] private float _enablePanelDelay;
     #endregion
 
     #region Actions
@@ -25,14 +26,14 @@ public class UIManager : GameBehaviour
     {
         GameManager.OnIsGamePaused += TogglePauseUI;
         PlayerManager.OnPlayerDeath += SelectEndOfMissionScreen;
-        PanelAnimation.OnPanelDisabled += EnablePanel;
+        PanelAnimation.OnPanelDisabled += EnablePanelDelay;
     }
 
     private void OnDisable()
     {
         GameManager.OnIsGamePaused -= TogglePauseUI;
         PlayerManager.OnPlayerDeath -= SelectEndOfMissionScreen;
-        PanelAnimation.OnPanelDisabled -= EnablePanel;
+        PanelAnimation.OnPanelDisabled -= EnablePanelDelay;
     }
 
     private void Start()
@@ -73,16 +74,10 @@ public class UIManager : GameBehaviour
 
     public void EnableLevelUI()
     {
-        if (_currentPanel.TryGetComponent<PanelAnimation>(out var panelAnimation))
-        {
-            panelAnimation.StartCloseUI();
-        }
-        else
-        {
-            DisablePanel();
-        }
-
+        DisablePanel();
         _currentPanel.SetActive(false);
+        _currentPanel = null;
+        _panelToEnable = null;
         _gameplayPanel.SetActive(true);
         OnLevelUIReady?.Invoke(_gameplayPanel.activeSelf);
     }
@@ -97,7 +92,7 @@ public class UIManager : GameBehaviour
         _panelToEnable = screen;
         Debug.Log(_panelToEnable.name);
 
-        if(_panelToEnable == _missionsPanel)
+        if (_panelToEnable == _missionsPanel)
         {
             OnMissionsPanelLoaded?.Invoke();
         }
@@ -115,12 +110,18 @@ public class UIManager : GameBehaviour
         {
             //if panel has no animation disable current panel and enable next one
             _currentPanel.SetActive(false);
-            EnablePanel();
+            EnablePanelDelay();
         }
+    }
+
+    private void EnablePanelDelay()
+    {
+        Invoke(nameof(EnablePanel), _enablePanelDelay);
     }
 
     private void EnablePanel()
     {
+        if (_panelToEnable == null) return;
         _panelToEnable.SetActive(true);
         _currentPanel = _panelToEnable;
     }

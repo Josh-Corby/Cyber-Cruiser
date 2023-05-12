@@ -19,7 +19,7 @@ MonoBehaviour:
   holdToFire: 0
   useSpread: 1
   spreadAngle: 60
-  burstFire: 1
+  burstFire: 0
   bursts: 3
   timeBetweenBurstShots: 0.6
   multiFire: 1

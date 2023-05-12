@@ -18,10 +18,10 @@ MonoBehaviour:
   timeBetweenShots: 1
   holdToFire: 0
   useSpread: 1
-  spreadAngle: 30
+  spreadAngle: 15
   burstFire: 0
   bursts: 1
   timeBetweenBurstShots: 0.8
   multiFire: 1
   multiFireShots: 2
-  isMultiFireSpreadRandom: 0
+  isMultiFireSpreadRandom: 1

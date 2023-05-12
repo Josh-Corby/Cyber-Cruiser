@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using Unity.Collections;
 using UnityEngine;
 
 public class PanelAnimation : MonoBehaviour
@@ -10,6 +11,8 @@ public class PanelAnimation : MonoBehaviour
     private const float _tweenLength = 0.75f;
     [SerializeField] private GameObject _screenDisplay;
 
+    public static event Action OnPanelOpenAnimationStart = null;
+    public static event Action OnPanelCloseAnimationStart = null;
     public static event Action OnPanelDisabled = null;
 
     private void OnEnable()
@@ -27,6 +30,7 @@ public class PanelAnimation : MonoBehaviour
 
     private void StartOpenUI()
     {
+        OnPanelOpenAnimationStart?.Invoke();
         transform.localPosition = new Vector2(0, DOWN_POS);
         _screenDisplay.SetActive(false);
         TweenUp();
@@ -44,6 +48,7 @@ public class PanelAnimation : MonoBehaviour
 
     public void StartCloseUI()
     {
+        OnPanelCloseAnimationStart?.Invoke();
         DisableScreenDisplay();
         TweenDown();
     }

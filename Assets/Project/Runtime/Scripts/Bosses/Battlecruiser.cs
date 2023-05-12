@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
+
 public class Battlecruiser : Boss, IBoss
 {
     [SerializeField] private GameObject _mineReleasePoint;

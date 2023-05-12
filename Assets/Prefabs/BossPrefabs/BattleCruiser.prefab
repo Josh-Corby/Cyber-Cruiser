@@ -48,7 +48,7 @@ MonoBehaviour:
   isBeamActive: 0
   lineRenderer: {fileID: 8300924498132005569}
   beamDuration: 3
-  _beamDamage: 0.1
+  _beamDamage: 0.3
   _basicEnemyBeamDamage: 0
   _beamSpeed: 40
   _isBeamTimed: 1

@@ -263,7 +263,8 @@ MonoBehaviour:
   isBeamActive: 1
   lineRenderer: {fileID: 634649626243274673}
   beamDuration: 0
-  beamDamage: 0.1
+  _beamDamage: 0.1
+  _basicEnemyBeamDamage: 0.2
   _beamSpeed: 50
   _isBeamTimed: 0
   _beamTimer: 0
@@ -961,7 +962,7 @@ MonoBehaviour:
   _shieldCurrentStrength: 0
   _reflectorShield: 0
   _shieldsActiveOnSpawn: 0
-  _isShieldImmuneToDamage: 0
+  _isShieldImmuneToDamage: 1
   _shieldActiveDuration: 5
   _shieldActiveTimer: 5
   _isPulseDetonator: 0
@@ -1157,7 +1158,7 @@ MonoBehaviour:
   dontDestroy: 0
   player: {fileID: 8907491432247727163}
   _playerPlasma: 0
-  _plasmaCost: 0
+  _plasmaCost: 5
   _maxHealth: 0
   _currentHealth: 0
   _playerHealthState: 0

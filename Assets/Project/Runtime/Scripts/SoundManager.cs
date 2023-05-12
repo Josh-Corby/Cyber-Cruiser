@@ -3,7 +3,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     [SerializeField] private AudioSource _bgm, _uiSFX;
-    [SerializeField] private AudioClip _menuMusic, _missionMusic;
+    [SerializeField] private AudioClip _menuMusic, _missionMusic, _panelUp, _panelDown;
     [SerializeField][Range(0, 1)] private float _defaultVolume, _pausedVolume;
 
 
@@ -12,6 +12,8 @@ public class SoundManager : MonoBehaviour
         GameManager.OnMissionStart += () => { SetBGMClip(_missionMusic); };
         GameManager.OnMissionEnd += () => { SetBGMClip(_menuMusic); };
         GameManager.OnIsGamePaused += ChangeBGMVolumeOnGamePauseToggle;
+        PanelAnimation.OnPanelOpenAnimationStart += () => { SetUISFXClip(_panelUp); };
+        PanelAnimation.OnPanelCloseAnimationStart += () => { SetUISFXClip(_panelDown); };
     }
 
     private void OnDisable()
@@ -19,6 +21,8 @@ public class SoundManager : MonoBehaviour
         GameManager.OnMissionStart -= () => { SetBGMClip(_missionMusic); };
         GameManager.OnMissionEnd -= () => { SetBGMClip(_menuMusic); };
         GameManager.OnIsGamePaused -= ChangeBGMVolumeOnGamePauseToggle;
+        PanelAnimation.OnPanelOpenAnimationStart -= () => { SetUISFXClip(_panelUp); };
+        PanelAnimation.OnPanelCloseAnimationStart -= () => { SetUISFXClip(_panelDown); };
     }
 
     private void Start()

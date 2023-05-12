@@ -574,7 +574,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0.544
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!4 &55785242 stripped
 Transform:
@@ -721,7 +721,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 1
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!1 &71385176
 GameObject:
@@ -1016,6 +1016,7 @@ MonoBehaviour:
   _storePanel: {fileID: 46490425}
   _currentPanel: {fileID: 0}
   _panelToEnable: {fileID: 0}
+  _enablePanelDelay: 0.5
 --- !u!4 &123104435
 Transform:
   m_ObjectHideFlags: 0
@@ -3702,7 +3703,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 0, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!1 &492079264
 GameObject:
@@ -3814,7 +3815,7 @@ MonoBehaviour:
   dontDestroy: 0
   _playerIon: 0
   _playerPlasma: 0
-  _plasmaCost: 0
+  _plasmaCost: 5
   _playerCurrentMaxHealth: 5
   _heatPerShot: 1.75
   _weaponUpgradeDuration: 10
@@ -6304,7 +6305,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1cd975d9886a8584eb3c7815d8dddc43, type: 2}
   m_sharedMaterial: {fileID: -3999230334582584882, guid: 1cd975d9886a8584eb3c7815d8dddc43, type: 2}
@@ -7082,7 +7083,7 @@ MonoBehaviour:
       spawnWeight: 0.5
     TotalTypeWeights: 0
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!1 &989281828
 GameObject:
@@ -8038,7 +8039,7 @@ MonoBehaviour:
   - {fileID: 1794948492}
   - {fileID: 1587804072}
   - {fileID: 248003442}
-  _type: 1
+  _uiType: 0
   _currentRank:
     _name: 
     _sprite: {fileID: 0}
@@ -9649,6 +9650,8 @@ MonoBehaviour:
   _uiSFX: {fileID: 1658314465}
   _menuMusic: {fileID: 8300000, guid: 4542e80e933e17d40ae05a0069adf09e, type: 3}
   _missionMusic: {fileID: 8300000, guid: 474778dcd3a4145448dc29847c188ed5, type: 3}
+  _panelUp: {fileID: 8300000, guid: 9ddbf46d70c675b4c854a408e0fedcb1, type: 3}
+  _panelDown: {fileID: 8300000, guid: 91f8cb0b30bb23b42854ac2375d92967, type: 3}
   _defaultVolume: 1
   _pausedVolume: 0.294
 --- !u!1 &1336500841
@@ -10102,7 +10105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCategories:
   - CategoryName: Blimp
-    CategoryWeight: 0.25
+    CategoryWeight: 0.33
     CategoryTypes:
     - EnemySO: {fileID: 11400000, guid: a618fcbbac3fc904db03e8bfe81c63ef, type: 2}
       spawnWeight: 0.5
@@ -10110,7 +10113,7 @@ MonoBehaviour:
       spawnWeight: 0.5
     TotalTypeWeights: 0
   - CategoryName: Gunship
-    CategoryWeight: 0.25
+    CategoryWeight: 0.34
     CategoryTypes:
     - EnemySO: {fileID: 11400000, guid: 11ad0b7501b164f4ea8d6773f1c92f9a, type: 2}
       spawnWeight: 0.5
@@ -10118,7 +10121,7 @@ MonoBehaviour:
       spawnWeight: 0.5
     TotalTypeWeights: 0
   - CategoryName: Mine
-    CategoryWeight: 0.25
+    CategoryWeight: 0.33
     CategoryTypes:
     - EnemySO: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
       spawnWeight: 0.2
@@ -10132,13 +10135,13 @@ MonoBehaviour:
       spawnWeight: 0.2
     TotalTypeWeights: 0
   - CategoryName: Reflector
-    CategoryWeight: 0.25
+    CategoryWeight: 0
     CategoryTypes:
     - EnemySO: {fileID: 11400000, guid: b8253218195d4e048b086f691ebf997b, type: 2}
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!4 &1370326091
 Transform:
@@ -10305,7 +10308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1cd975d9886a8584eb3c7815d8dddc43, type: 2}
   m_sharedMaterial: {fileID: -3999230334582584882, guid: 1cd975d9886a8584eb3c7815d8dddc43, type: 2}
@@ -12159,6 +12162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ionText: {fileID: 868386576}
+  _plasmaText: {fileID: 1404503722}
   _currentAddon: {fileID: 0}
   _addOnName: {fileID: 989281830}
   _addOnDescription: {fileID: 501637380}
@@ -13138,7 +13142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _distanceCounterText: {fileID: 366983006}
-  _bossSpawnDistance: 10
+  _bossSpawnDistance: 500
   _isDistanceIncreasing: 0
 --- !u!1 &1737652090
 GameObject:
@@ -15678,6 +15682,9 @@ MonoBehaviour:
   _bottomSpawner: {fileID: 984547534}
   _bossSpawner: {fileID: 1370326090}
   _bosses:
+  - {fileID: 11400000, guid: b3eead9fae217544fbca7e9c01d12c17, type: 2}
+  - {fileID: 11400000, guid: 78f9a89cd02828243b6c80b47d51d549, type: 2}
+  - {fileID: 11400000, guid: f9f7b71e06d9e7347a816ac37c62f91f, type: 2}
   - {fileID: 11400000, guid: 45c00a2ce362ab249b4c9699c248f74d, type: 2}
   _enemiesToSpawnBase: 1
   _enemiesToSpawn: 2
@@ -15689,15 +15696,15 @@ MonoBehaviour:
   _timesReduced: 0
   _enemySpawnerInfo:
   - spawner: {fileID: 984547534}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 1370326090}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 47135018}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 485082065}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 71091565}
-    SpawnerWeight: 1
+    SpawnerWeight: 0
   _totalSpawnWeight: 1
   bossGoalPosition: {fileID: 1997121481}
   dragonMovePoint: {fileID: 73215885}
@@ -16123,7 +16130,7 @@ MonoBehaviour:
   - {fileID: 149013109}
   - {fileID: 427811290}
   - {fileID: 1263760195}
-  _type: 0
+  _uiType: 0
   _currentRank:
     _name: 
     _sprite: {fileID: 0}
@@ -17023,7 +17030,7 @@ MonoBehaviour:
   - {fileID: 1102862870}
   - {fileID: 1150693942}
   - {fileID: 1013601374}
-  _type: 1
+  _uiType: 0
   _currentRank:
     _name: 
     _sprite: {fileID: 0}
