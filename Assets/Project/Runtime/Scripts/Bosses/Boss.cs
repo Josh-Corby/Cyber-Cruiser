@@ -39,7 +39,7 @@ public class Boss : Enemy, IDamageable
 
         if (_attackTimer <= 0)
         {
-            ChooseRandomAttack();         
+            ChooseRandomAttack();
         }
     }
 

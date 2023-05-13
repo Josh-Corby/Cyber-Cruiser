@@ -30,14 +30,14 @@ public class SoundManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Boss.OnBossDied += (pickup,vector3) => { PlayClipOnSource(_bossCrash, _bossSFX); };
+        Boss.OnBossDied += (pickup, vector3) => { PlayClipOnSource(_bossCrash, _bossSFX); };
         EnemySpawner.OnBossSpawned += (enemySO) => PlayClipOnSource(_bossSpawn, _bossSFX);
         GameManager.OnIsGamePaused += ChangeBGMVolumeOnGamePauseToggle;
         GameManager.OnMissionStart += () => { PlayClipOnSource(_missionMusic, _bgm); };
-        GameManager.OnMissionEnd += () => { PlayClipOnSource(_menuMusic, _bgm); };     
+        GameManager.OnMissionEnd += () => { PlayClipOnSource(_menuMusic, _bgm); };
         PanelAnimation.OnPanelOpenAnimationStart += () => { PlayClipOnSource(_panelUp, _uiSFX); };
         PanelAnimation.OnPanelCloseAnimationStart += () => { PlayClipOnSource(_panelDown, _uiSFX); };
-        PlayerWeaponController.OnWeaponUpgradeStart += (slider,f) => { PlayClipOnSource(_weaponPackStart, _pickupSFX); };
+        PlayerWeaponController.OnWeaponUpgradeStart += (slider, f) => { PlayClipOnSource(_weaponPackStart, _pickupSFX); };
         PlayerWeaponController.OnWeaponUpgradeFinished += (slider) => { PlayClipOnSource(_weaponPackEnd, _pickupSFX); };
     }
 
@@ -47,7 +47,7 @@ public class SoundManager : MonoBehaviour
         EnemySpawner.OnBossSpawned -= (enemySO) => PlayClipOnSource(_bossSpawn, _gameSFX);
         GameManager.OnIsGamePaused -= ChangeBGMVolumeOnGamePauseToggle;
         GameManager.OnMissionStart -= () => { PlayClipOnSource(_missionMusic, _bgm); };
-        GameManager.OnMissionEnd -= () => { PlayClipOnSource(_menuMusic, _bgm); };   
+        GameManager.OnMissionEnd -= () => { PlayClipOnSource(_menuMusic, _bgm); };
         PanelAnimation.OnPanelOpenAnimationStart -= () => { PlayClipOnSource(_panelUp, _uiSFX); };
         PanelAnimation.OnPanelCloseAnimationStart -= () => { PlayClipOnSource(_panelDown, _uiSFX); };
         PlayerWeaponController.OnWeaponUpgradeStart -= (slider, f) => { PlayClipOnSource(_weaponPackStart, _pickupSFX); };
@@ -56,7 +56,7 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        PlayClipOnSource(_menuMusic,_bgm);
+        PlayClipOnSource(_menuMusic, _bgm);
     }
 
     private void PlayClipOnSource(AudioClip clip, AudioSource audioSource)
@@ -65,7 +65,7 @@ public class SoundManager : MonoBehaviour
         audioSource.clip = clip;
         audioSource.Play();
 
-        if(audioSource == _bgm)
+        if (audioSource == _bgm)
         {
             ChangeBGMVolumeOnGamePauseToggle(false);
         }

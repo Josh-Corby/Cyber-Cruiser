@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 public class MissionManager : GameBehaviour<MissionManager>
 {
@@ -132,19 +131,19 @@ public class MissionManager : GameBehaviour<MissionManager>
                 PlayerShieldController.OnPlayerShieldsActivated += (U, F) => { IncrementMissionProgress(); };
                 return;
                 #endregion
-        }    
+        }
     }
 
     private void UnassignMission()
     {
         if (_currentMission == null) return;
         UnassignMissionObjective();
-        ResetMissionProgress();     
+        ResetMissionProgress();
     }
 
     private void UnassignMissionObjective()
     {
-        if(_currentMission == null) return;
+        if (_currentMission == null) return;
         switch (_currentMission.missionCondition)
         {
             case MissionConditions.EndMission:
@@ -196,7 +195,7 @@ public class MissionManager : GameBehaviour<MissionManager>
 
     private void CheckMissionProgress()
     {
-        if(_currentMission ==null) return;
+        if (_currentMission == null) return;
 
         if (CurrentMissionProgress >= _currentMissionGoal)
         {

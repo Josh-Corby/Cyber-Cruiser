@@ -1,15 +1,16 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAddOnManager : GameBehaviour
 {
-    #region AddOn Bools
-    [SerializeField] private bool _isBatteryPack;
-    [SerializeField] private bool _isHydrocoolant;
-    [SerializeField] private bool _isPlasmaCache;
-    [SerializeField] private bool _isPulseDetonator;
-    #endregion
+    [SerializeField] private PlayerManager _playerManager;
+    [SerializeField] private PlayerWeaponController _weaponController;
+    [SerializeField] private PlayerShieldController _shieldController;
+
+
+    [SerializeField] private List<AddOnActiveState> _addOnActiveStates = new();
+    public List<AddOnActiveState> AddOnActiveStates { get => _addOnActiveStates; }
 
     #region AddOn Effect Values
     [SerializeField] private int _batteryPack = 5;
@@ -17,12 +18,6 @@ public class PlayerAddOnManager : GameBehaviour
     [SerializeField] private float _hydroCoolant = 0.25f;
     #endregion
 
-    #region AddOn Properties
-    public bool IsBatteryPack { get => _isBatteryPack; private set => IsBatteryPack = value; }
-    public bool IsHydrocoolant { get => _isHydrocoolant; private set => _isHydrocoolant = value; }
-    public bool IsPlasmaCache { get => _isPlasmaCache; private set => _isPlasmaCache = value; }
-    public bool IsPulseDetonator { get => _isPulseDetonator; private set { _isPulseDetonator = value; } }
-    #endregion
 
     private void OnEnable()
     {
@@ -38,50 +33,62 @@ public class PlayerAddOnManager : GameBehaviour
 
     private void DisableAllAddOns()
     {
-        if (IsBatteryPack)
+        for (int i = 0; i < _addOnActiveStates.Count; i++)
         {
-            IsBatteryPack = false;
-        }
-
-        if (IsHydrocoolant)
-        {
-            IsHydrocoolant = false;
-        }
-
-        if (IsPlasmaCache)
-        {
-            IsPlasmaCache = false;
-        }
-
-        if (IsPulseDetonator)
-        {
-            IsPulseDetonator = false;
+            _addOnActiveStates[i].IsAddOnActive = false;
         }
     }
 
-    private void BuyOrSellAddOn(AddOnType addOnType, int value, bool isBuyingAddOn)
+    private void BuyOrSellAddOn(AddOnScriptableObject addOn, bool isBuyingAddOn)
     {
-        value = isBuyingAddOn ? -value : value;
-        PSM.ChangeIon(value);
-        ToggleAddOnBool(addOnType, isBuyingAddOn);
+        int buyOrRefundValue = addOn.IonCost;
+        buyOrRefundValue = isBuyingAddOn ? -buyOrRefundValue : buyOrRefundValue;
+        PSM.ChangeIon(buyOrRefundValue);
+        _addOnActiveStates[addOn.ID].IsAddOnActive = isBuyingAddOn;
     }
 
-    private void ToggleAddOnBool(AddOnType addOnType, bool value)
+    public void CheckAddOnStates()
     {
-        switch (addOnType)
+        for (int i = 0; i < _addOnActiveStates.Count; i++)
         {
-            case AddOnType.BatteryPack:
-                IsBatteryPack = value;
-                break;
-            case AddOnType.Hydrocoolant:
-                IsHydrocoolant = value;
-                break;
-            case AddOnType.PlasmaCache:
-                IsPlasmaCache = value;
-                break;
-            case AddOnType.PulseDetonator:
-                IsPulseDetonator = value;
-                break;
+            switch (i)
+            {
+                case 0:
+                    //battery pack
+                    if (_addOnActiveStates[i].IsAddOnActive)
+                    {
+                        _weaponController.WeaponUpgradeDuration += _batteryPack;
+                    }
+                    break;
+                //plasma cache
+                case 1:
+                    if (_addOnActiveStates[i].IsAddOnActive)
+                    {
+                        _playerManager.PlasmaCost -= _plasmaCache;
+                    }
+                    break;
+                //hydro coolant
+                case 2:
+                    if (_addOnActiveStates[i].IsAddOnActive)
+                    {
+                        _weaponController.HeatPerShot -= _hydroCoolant;
+                    }
+                    break;
+                //pulse detonator
+                case 3:
+                    if (_addOnActiveStates[i].IsAddOnActive)
+                    {
+                        _shieldController.IsPulseDetonator = true;
+                    }
+                    break;
+            }
         }
     }
+}
+
+[Serializable]
+public class AddOnActiveState
+{
+    public string Name { get; }
+    public bool IsAddOnActive { get; set; }
 }

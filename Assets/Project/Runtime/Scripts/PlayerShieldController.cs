@@ -12,8 +12,6 @@ public class PlayerShieldController : ShieldControllerBase
     #endregion
 
     #region Properties
-    public int ShieldActiveDuration { get => _shieldActiveDuration; }
-
     public float ShieldActiveTimer
     {
         get => _shieldActiveTimer;
@@ -24,20 +22,20 @@ public class PlayerShieldController : ShieldControllerBase
         }
     }
 
+    public bool IsPulseDetonator { get => _isPulseDetonator; set => _isPulseDetonator = value; }
     protected override bool IsShieldsActive
     {
         get => _shieldsActive;
         set
         {
             base.IsShieldsActive = value;
-
             if (!_shieldsActive)
             {
                 OnPlayerShieldsDeactivated(GUIM.playerShieldBar);
             }
             if (_shieldsActive)
             {
-                OnPlayerShieldsActivated(GUIM.playerShieldBar, ShieldActiveDuration);
+                OnPlayerShieldsActivated(GUIM.playerShieldBar, _shieldActiveDuration);
             }
         }
     }
@@ -52,8 +50,6 @@ public class PlayerShieldController : ShieldControllerBase
     protected override void Awake()
     {
         base.Awake();
-
-        _isPulseDetonator = PSM.IsPulseDetonator;
         if (_isPulseDetonator)
         {
             _pulseDetonator = GetComponentInChildren<PulseDetonator>();
@@ -116,7 +112,7 @@ public class PlayerShieldController : ShieldControllerBase
 
     protected override void DeactivateShields()
     {
-        ShieldActiveTimer = ShieldActiveDuration;
+        ShieldActiveTimer = _shieldActiveDuration;
 
         IsShieldsActive = false;
         PM.IsPlayerColliderEnabled = true;

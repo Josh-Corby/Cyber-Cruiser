@@ -1,30 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class PlayerRankManager : GameBehaviour
+public class PlayerRankManager : GameBehaviour<PlayerRankManager>
 {
+    private const string PLAYER_RANK = "PlayerRank";
+    private const string PLAYER_STARS = "PlayerStars";
 
-    [Header("Rank Info")]
-    [SerializeField] private Rank _currentRank;
-    [SerializeField] private Rank _rankBeforeRankUp;
-    [SerializeField] private int _currentStars;
-    [SerializeField] private int _starsBeforeStarGain;
-    [SerializeField] private int _starsToGain;
-    [SerializeField] private int _totalStarReward;
+    #region Fields
+    private Rank _currentRank;
+    private Rank _rankBeforeRankUp;
+    private int _currentStars;
+    private int _starsBeforeMissionStart;
+    private int _starsToGain;
+    private int _totalStarReward;
+    #endregion
 
-    public Rank CurrentRank { get => _currentRank; private set => _currentRank = value; }
-    public Rank RankBeforeMissionStart { get => _rankBeforeRankUp; private set => _rankBeforeRankUp = value; }
-    public int CurrentStars { get => _currentStars; private set => _currentStars = value; }
-    public int StarsBeforeMissionStart { get => _starsBeforeStarGain; private set => _starsBeforeStarGain = value; }
-    public int StarsToGain { get => _starsToGain; private set => _starsToGain = value; }
-    public int TotalStarReward { get => _totalStarReward; private set => _totalStarReward = value; }
-
+    #region Proerties
+    public Rank CurrentRank { get => _currentRank; }
+    public Rank RankBeforeMissionStart { get => _rankBeforeRankUp; }
+    public int CurrentStars { get => _currentStars; }
+    public int StarsBeforeMissionStart { get => _starsBeforeMissionStart; }
+    public int TotalStarReward { get => _totalStarReward; }
+    #endregion
 
     private void OnEnable()
     {
         GameManager.OnMissionStart += StoreRankValues;
         MissionManager.OnMissionComplete += StartStarIncreaseProcess;
+        RestoreValues();
     }
 
     private void OnDisable()
@@ -33,42 +36,84 @@ public class PlayerRankManager : GameBehaviour
         MissionManager.OnMissionComplete -= StartStarIncreaseProcess;
     }
 
-    #region Rank Functions
+    private void RestoreValues()
+    {
+        RestoreRank();
+        RestoreStars();
+    }
+
+    private void RestoreRank()
+    {
+        if (!PlayerPrefs.HasKey(nameof(PLAYER_RANK)))
+        {
+            _currentRank = RM.GetRank(0);
+            _rankBeforeRankUp = _currentRank;
+        }
+
+        else
+        {
+            _currentRank = RM.GetRank(PlayerPrefs.GetInt(nameof(PLAYER_RANK)));
+            _rankBeforeRankUp = _currentRank;
+        }
+    }
+
+    private void RestoreStars()
+    {
+        if (!PlayerPrefs.HasKey(nameof(PLAYER_STARS)))
+        {
+            _currentStars = 0;
+        }
+
+        else
+        {
+            _currentStars = PlayerPrefs.GetInt(nameof(PLAYER_STARS));
+            _starsBeforeMissionStart = _currentStars;
+        }
+    }
+
     private void StoreRankValues()
     {
-        RankBeforeMissionStart = CurrentRank;
-        StarsBeforeMissionStart = CurrentStars;
+        _rankBeforeRankUp = _currentRank;
+        _starsBeforeMissionStart = _currentStars;
     }
 
     private void StartStarIncreaseProcess(int starsToGain)
     {
-        Debug.Log(starsToGain);
-        StarsToGain = starsToGain;
-        TotalStarReward = starsToGain;
-
+        _starsToGain = starsToGain;
+        _totalStarReward = starsToGain;
         IncreaseStars();
     }
 
     private void IncreaseStars()
     {
-        _currentStars = StarsToGain;
+        _currentStars = _starsToGain;
 
-        if (_currentStars >= CurrentRank.StarsToRankUp)
+        if (_currentStars >= _currentRank.StarsToRankUp)
         {
-            StarsToGain -= CurrentRank.StarsToRankUp;
+            _starsToGain -= _currentRank.StarsToRankUp;
             RankUp();
         }
     }
 
     private void RankUp()
     {
-        Debug.Log("player rank up");
-        CurrentRank = RM.RankUp(CurrentRank.RankID);
+        _currentRank = RM.RankUp(_currentRank.RankID);
 
-        if (StarsToGain > 0)
+        if (_starsToGain > 0)
         {
             IncreaseStars();
         }
     }
-    #endregion
+
+    private void SaveValues()
+    {
+        PlayerPrefs.SetInt(nameof(PLAYER_RANK), 0);
+        //PlayerPrefs.SetInt(nameof(PLAYER_RANK), _currentRank.RankID);
+        PlayerPrefs.SetInt(nameof(PLAYER_STARS), _currentStars);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveValues();
+    }
 }

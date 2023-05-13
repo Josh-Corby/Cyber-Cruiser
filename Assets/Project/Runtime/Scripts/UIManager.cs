@@ -1,8 +1,7 @@
 using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class UIManager : GameBehaviour<UIManager>
+public class UIManager : GameBehaviour
 {
     #region References  
     [SerializeField] private GameObject _titlePanel;
@@ -58,17 +57,17 @@ public class UIManager : GameBehaviour<UIManager>
     {
         _panelToEnable = screen;
 
-        if(_panelToEnable == null)
+        if (_panelToEnable == null)
         {
             return;
         }
 
-        if(_currentPanel == null)
+        if (_currentPanel == null)
         {
             ValidatePanelToEnable();
             return;
         }
-        DisableCurrentPanel();      
+        DisableCurrentPanel();
     }
 
     private void DisableCurrentPanel()
@@ -81,12 +80,12 @@ public class UIManager : GameBehaviour<UIManager>
         {
             _currentPanel.SetActive(false);
             ValidatePanelToEnable();
-        }       
+        }
     }
 
     private void ValidateCurrentPanel()
     {
-        if(_currentPanel == _pausePanel)
+        if (_currentPanel == _pausePanel)
         {
             GM.ResumeGame();
         }
@@ -116,7 +115,7 @@ public class UIManager : GameBehaviour<UIManager>
             OnMissionsPanelLoaded?.Invoke();
         }
 
-        if(_currentPanel == _gameplayPanel)
+        if (_currentPanel == _gameplayPanel)
         {
             OnLevelUIReady?.Invoke(_gameplayPanel.activeSelf);
         }

@@ -9,9 +9,8 @@ public class GameBehaviour : Utilities
     protected static InputManager IM { get { return InputManager.INSTANCE; } }
     protected static MissionManager MM { get { return MissionManager.INSTANCE; } }
     protected static PlayerManager PM { get { return PlayerManager.INSTANCE; } }
+    protected static PlayerRankManager PRM { get { return PlayerRankManager.INSTANCE; } }
     protected static PlayerStatsManager PSM { get { return PlayerStatsManager.INSTANCE; } }
-    protected static PickupManager PUM { get { return PickupManager.INSTANCE; } }
-    protected static UIManager UIM { get { return UIManager.INSTANCE; } }
     protected static RankManager RM { get { return RankManager.INSTANCE; } }
 }
 public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour
@@ -25,7 +24,7 @@ public class GameBehaviour<T> : GameBehaviour where T : GameBehaviour
         {
             if (instance_ == null)
             {
-                instance_ = GameObject.FindObjectOfType<T>();
+                instance_ = FindObjectOfType<T>();
                 if (instance_ == null)
                 {
                     GameObject singleton = new GameObject(typeof(T).Name);

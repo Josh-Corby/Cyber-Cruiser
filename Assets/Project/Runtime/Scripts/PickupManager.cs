@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class PickupManager : GameBehaviour<PickupManager>
+public class PickupManager : GameBehaviour
 {
-
     [SerializeField] private List<GameObject> pickupsOnScreen = new List<GameObject>();
 
     [SerializeField] private PickupSpawner _pickupSpawner;
@@ -120,14 +119,14 @@ public class PickupManager : GameBehaviour<PickupManager>
     {
         GameObject Indicator = Instantiate(_pickupIndicator, spawner.gameObject.transform.position, Quaternion.identity);
 
-        Indicator.transform.position += spawner._pickupIndicatorPosition;
+        Indicator.transform.position += spawner._pickupIndicatorOffset;
 
-        if (spawner._pickupIndicatorPosition.x == 0)
+        if (spawner._pickupIndicatorOffset.x == 0)
         {
             Indicator.transform.position += new Vector3(position.x, 0);
         }
 
-        if (spawner._pickupIndicatorPosition.y == 0)
+        if (spawner._pickupIndicatorOffset.y == 0)
         {
             Indicator.transform.position += new Vector3(0, position.y);
         }

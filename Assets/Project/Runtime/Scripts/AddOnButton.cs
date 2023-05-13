@@ -2,42 +2,22 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum AddOnType
-{
-    BatteryPack, Hydrocoolant, PlasmaCache, PulseDetonator
-}
-
 [RequireComponent(typeof(Button))]
 public class AddOnButton : GameBehaviour
 {
-    #region References
     [SerializeField] private AddOnScriptableObject _addOnInfo;
+    private int _addOnCost;
     private Button _addOnButton;
-    #endregion
-
-    #region Fields
-    private AddOnType _addOnType;
-    private string _name;
-    private string _description;
-    private int _ionCost;
     private bool _isAddOnEnabled;
-    #endregion
 
-    #region Properties
-    public string Name { get => _name; }
-    public string Description { get => _description; }
-    #endregion
-
-    #region Actions
-    public static event Action<AddOnButton> OnMouseEnter = null;
+    public static event Action<AddOnScriptableObject> OnMouseEnter = null;
     public static event Action OnMouseExit = null;
-    public static event Action<AddOnType, int, bool> OnAddonBuyOrSell = null;
-    #endregion
+    public static event Action<AddOnScriptableObject, bool> OnAddonBuyOrSell = null;
 
     private void Awake()
     {
         _addOnButton = GetComponent<Button>();
-        AssignAddOnInfo();
+        _addOnCost = _addOnInfo.IonCost;
     }
 
     private void OnEnable()
@@ -51,25 +31,17 @@ public class AddOnButton : GameBehaviour
         PlayerStatsManager.OnIonChange -= ValidateButtonState;
     }
 
-    private void AssignAddOnInfo()
-    {
-        _addOnType = _addOnInfo.AddOnType;
-        _name = _addOnType.ToString();
-        _description = _addOnInfo.Description;
-        _ionCost = _addOnInfo.IonCost;
-    }
-
     private void ValidateButtonState(int playerIon)
     {
         if (!_isAddOnEnabled)
         {
-            _addOnButton.interactable = playerIon >= _ionCost;
+            _addOnButton.interactable = playerIon >= _addOnCost;
         }
 
         else
         {
             _addOnButton.interactable = true;
-        }     
+        }
     }
 
     public void ToggleAddOnActiveState()
@@ -80,12 +52,12 @@ public class AddOnButton : GameBehaviour
 
     private void BuyOrSellAddOn()
     {
-        OnAddonBuyOrSell?.Invoke(_addOnType, _ionCost, _isAddOnEnabled);
+        OnAddonBuyOrSell?.Invoke(_addOnInfo, _isAddOnEnabled);
     }
 
     public void MouseEnter()
     {
-        OnMouseEnter(this);
+        OnMouseEnter(_addOnInfo);
     }
 
     public void MouseExit()

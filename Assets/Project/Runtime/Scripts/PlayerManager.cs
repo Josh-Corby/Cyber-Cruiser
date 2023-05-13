@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum PlayerHealthState
@@ -12,20 +11,20 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 {
     #region References
     public GameObject player;
-
+    [SerializeField] private PlayerAddOnManager _addOnManager;
     private Collider2D _playerCollider;
     #endregion
 
     #region Fields
+    private const int BASE_MAX_HEALTH = 5;
+    private const int BASE_PLASMA_COST = 5;
+    private const float BASE_I_FRAMES_DURATION = 0.3f;
+
     [SerializeField] private int _playerPlasma;
     [SerializeField] private int _plasmaCost;
     [SerializeField] private float _maxHealth;
     [SerializeField] private float _currentHealth;
     [SerializeField] private PlayerHealthState _playerHealthState;
-
-    [SerializeField] private GameObject _batteryPack, _hydrocoolant, _plasmaCache;
-    [SerializeField] private bool _isBatteryPack, _isHydrocoolant, _isPlasmaCache;
-    [SerializeField] private List<GameObject> _addOnObjects = new();
 
     public bool isDead;
     [SerializeField] private float _iFramesDuration;
@@ -35,6 +34,7 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     #endregion
 
     #region Properties
+    public int PlasmaCost { get => _plasmaCost; set => _plasmaCost = value; }
     private int PlayerPlasma
     {
         get => _playerPlasma;
@@ -150,18 +150,17 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     public static event Action<PlayerHealthState> OnPlayerHealthStateChange = null;
     #endregion
 
-    new private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _playerCollider = player.GetComponent<Collider2D>();
     }
 
     private void OnEnable()
     {
-        SetStats();
+        ResetStats();
 
         Pickup.OnResourcePickup += AddResources;
-        DisableAddOnSprites();
-        SetAddOnBools();
         _isPlayerImmuneToDamage = false;
     }
 
@@ -170,19 +169,18 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
         Pickup.OnResourcePickup -= AddResources;
     }
 
-    private void SetStats()
+    private void ResetStats()
     {
-        PlayerMaxHealth = PSM.PlayerCurrentMaxHealth;
+        _plasmaCost = BASE_PLASMA_COST;
+        _iFramesDuration = BASE_I_FRAMES_DURATION;
+        PlayerMaxHealth = BASE_MAX_HEALTH;
         PlayerPlasma = PSM.PlayerPlasma;
-        _plasmaCost = PSM.PlasmaCost;
-        _iFramesDuration = PSM.IFramesDuration;
-
         FullHeal();
     }
 
     private void AddResources(int healthAmount, int plasmaAmount, int ionAmount)
     {
-        PlayerCurrentHealth += healthAmount;     
+        PlayerCurrentHealth += healthAmount;
         OnIonPickup(ionAmount);
 
         if (plasmaAmount > 0)
@@ -213,33 +211,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
 
         else return false;
     }
-
-    //THINGS THAT CAN BE RELOCATED
-
-    #region Addon Functions
-    private void DisableAddOnSprites()
-    {
-        foreach (GameObject sprite in _addOnObjects)
-        {
-            sprite.SetActive(false);
-        }
-    }
-
-    private void SetAddOnBools()
-    {
-        _isBatteryPack = PSM.IsBatteryPack;
-        _isHydrocoolant = PSM.IsHydrocoolant;
-        _isPlasmaCache = PSM.IsPlasmaCache;
-        SetAddOnSprites();
-    }
-
-    private void SetAddOnSprites()
-    {
-        _batteryPack.SetActive(_isBatteryPack);
-        _hydrocoolant.SetActive(_isHydrocoolant);
-        _plasmaCache.SetActive(_isPlasmaCache);
-    }
-    #endregion
 
     #region Player Damage Functions
     public void Damage(float damage)

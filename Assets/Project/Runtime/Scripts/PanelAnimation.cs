@@ -1,6 +1,4 @@
-using DG.Tweening;
 using System;
-using Unity.Collections;
 using UnityEngine;
 
 public class PanelAnimation : MonoBehaviour
@@ -27,7 +25,7 @@ public class PanelAnimation : MonoBehaviour
 
     private void ChangeAnimationState(string newState)
     {
-        if(newState == _currentState)
+        if (newState == _currentState)
         {
             return;
         }

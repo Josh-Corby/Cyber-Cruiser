@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,7 +7,7 @@ public class CurrentMissionDisplay : GameBehaviour
 
     private void OnEnable()
     {
-        if(MM.CurrentMission == null)
+        if (MM.CurrentMission == null)
         {
             _missionDescription.text = "";
             _missionProgress.text = "";

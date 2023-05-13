@@ -27,7 +27,7 @@ public class BossMovementArea : MonoBehaviour
             case BossMovementType.Free:
                 randomX = Random.Range(transform.position.x - (bossMoveArea.x / 2), transform.position.x + (bossMoveArea.x / 2));
                 randomY = Random.Range(transform.position.y - (bossMoveArea.y / 2), transform.position.y + (bossMoveArea.y / 2));
-                break;        
+                break;
         }
 
         randomPosition = new Vector2(randomX, randomY);

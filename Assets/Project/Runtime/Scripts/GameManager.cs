@@ -27,8 +27,9 @@ public class GameManager : GameBehaviour<GameManager>
     public static event Action OnMissionEnd = null;
     #endregion
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         gameplayObjects.SetActive(false);
         Application.targetFrameRate = 60;
     }

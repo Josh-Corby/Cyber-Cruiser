@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +5,7 @@ public class RankUI : GameBehaviour
 {
     enum UIType
     {
-        Animated, Static, 
+        Animated, Static,
     }
 
     [SerializeField] private Image _rankImageRenderer;
@@ -48,8 +46,8 @@ public class RankUI : GameBehaviour
 
     //private void GetPlayerRankInfoBeforeMissionStart()
     //{
-    //    _playerRankBeforeMissionStart = PSM.RankBeforeMissionStart;
-    //    _playerStarsBeforeMissionStart = PSM.StarsBeforeMissionStart;
+    //    _playerRankBeforeMissionStart = PRM.RankBeforeMissionStart;
+    //    _playerStarsBeforeMissionStart = PRM.StarsBeforeMissionStart;
     //}
 
     //private void DisplayRank()
@@ -82,34 +80,34 @@ public class RankUI : GameBehaviour
         {
             case UIType.Static:
 
-                if (_currentRank != PSM.CurrentRank)
+                if (_currentRank != PRM.CurrentRank)
                 {
-                    _currentRank = PSM.CurrentRank;
+                    _currentRank = PRM.CurrentRank;
                     AssignRankUI();
                 }
-                if (_currentEnabledGoldStars != PSM.CurrentStars)
+                if (_currentEnabledGoldStars != PRM.CurrentStars)
                 {
                     DisableAllStars();
-                    _starsToGain = PSM.CurrentStars;
+                    _starsToGain = PRM.CurrentStars;
                 }
 
                 break;
             case UIType.Animated:
-                if (PSM.TotalStarReward > 0)
+                if (PRM.TotalStarReward > 0)
                 {
-                    _starsToGain = PSM.TotalStarReward;
+                    _starsToGain = PRM.TotalStarReward;
                 }
                 //make sure displayed rank is correct
-                if (_currentRank != PSM.RankBeforeMissionStart)
+                if (_currentRank != PRM.RankBeforeMissionStart)
                 {
-                    _currentRank = PSM.RankBeforeMissionStart;
+                    _currentRank = PRM.RankBeforeMissionStart;
                     AssignRankUI();
                 }
 
                 //make sure displayed stars are correct
-                if (_currentEnabledGoldStars != PSM.StarsBeforeMissionStart)
+                if (_currentEnabledGoldStars != PRM.StarsBeforeMissionStart)
                 {
-                    _currentEnabledGoldStars = PSM.StarsBeforeMissionStart;
+                    _currentEnabledGoldStars = PRM.StarsBeforeMissionStart;
                 }
                 break;
         }

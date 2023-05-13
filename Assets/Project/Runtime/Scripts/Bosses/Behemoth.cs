@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Behemoth : Boss, IBoss
 {
@@ -14,20 +13,21 @@ public class Behemoth : Boss, IBoss
 
     public static event Action OnDied;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _attacksSinceHomingAttack = 0;
     }
 
     protected override void ChooseRandomAttack()
     {
-        if(_attacksSinceHomingAttack == 1)
+        if (_attacksSinceHomingAttack == 1)
         {
             Attack2();
         }
         else
         {
-           base.ChooseRandomAttack();
+            base.ChooseRandomAttack();
         }
     }
 

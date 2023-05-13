@@ -107,7 +107,7 @@ public class ShieldControllerBase : GameBehaviour
             {
                 ReflectProjectile(bullet);
                 return;
-            }        
+            }
             Destroy(bullet.gameObject);
         }
     }

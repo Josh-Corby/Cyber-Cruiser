@@ -48,8 +48,9 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     public static event Action<EnemyScriptableObject> OnBossSelected = null;
     #endregion
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         InitializeEnemySpawners();
     }
 
@@ -88,7 +89,7 @@ public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     {
         while (_spawnEnemies)
         {
-            if(IsWaitingForSpawnTimer() == true)
+            if (IsWaitingForSpawnTimer() == true)
             {
                 return;
             }

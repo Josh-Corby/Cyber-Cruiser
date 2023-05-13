@@ -5,7 +5,7 @@ public class AddOnUIManager : GameBehaviour
 {
     [SerializeField] private TMP_Text _addOnName;
     [SerializeField] private TMP_Text _addOnDescription;
-    private AddOnButton _currentAddon;
+    private AddOnScriptableObject _currentAddon;
 
     private void OnEnable()
     {
@@ -19,7 +19,7 @@ public class AddOnUIManager : GameBehaviour
         AddOnButton.OnMouseExit -= ClearAddOn;
     }
 
-    private void SetCurrentAddOn(AddOnButton addOn)
+    private void SetCurrentAddOn(AddOnScriptableObject addOn)
     {
         _currentAddon = addOn;
         SetAddOnUI();

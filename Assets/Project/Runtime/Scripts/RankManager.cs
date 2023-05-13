@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,9 +7,10 @@ public class RankManager : GameBehaviour<RankManager>
 
     public List<Rank> ranks = new List<Rank>();
 
-    private void Awake()
+    protected override void Awake()
     {
-        PopulateRanksList();   
+        base.Awake();
+        PopulateRanksList();
     }
 
     private void PopulateRanksList()
@@ -23,12 +22,12 @@ public class RankManager : GameBehaviour<RankManager>
     }
 
     public Rank GetRank(int rankID)
-    { 
-        return ranks[rankID]; 
+    {
+        return ranks[rankID];
     }
 
     public Rank RankUp(int rankID)
     {
-        return ranks[rankID+1];
+        return ranks[rankID + 1];
     }
 }

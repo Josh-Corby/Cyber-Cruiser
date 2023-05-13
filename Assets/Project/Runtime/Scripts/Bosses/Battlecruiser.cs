@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -42,8 +41,8 @@ public class Battlecruiser : Boss, IBoss
         _attackTimer = _attackCooldown;
 
         if (_beamAttack.isBeamActive)
-        {           
-            Attack1();          
+        {
+            Attack1();
         }
 
         else
