@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: addf7c2747ecd934e9c91a5420e5e138, type: 3}
   m_Name: PlasmaCache
   m_EditorClassIdentifier: 
-  AddOnType: 2
+  Name: Plasma Cache
+  ID: 2
   Description: Reduce cost of plasma shield by 1
   IonCost: 1

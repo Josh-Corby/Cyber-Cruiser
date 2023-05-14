@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: addf7c2747ecd934e9c91a5420e5e138, type: 3}
   m_Name: Hydrocoolant
   m_EditorClassIdentifier: 
-  AddOnType: 1
+  Name: Hydrocoolant
+  ID: 1
   Description: Weapons take longer to Overheat
   IonCost: 1

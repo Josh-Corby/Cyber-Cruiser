@@ -44,7 +44,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             OnPlasmaChange(_playerPlasma);
         }
     }
-
     private float PlayerCurrentHealth
     {
         get => _currentHealth;
@@ -83,7 +82,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             }
         }
     }
-
     private float PlayerMaxHealth
     {
         get => _maxHealth;
@@ -93,7 +91,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             OnPlayerMaxHealthSet(GUIM.playerHealthBar, _maxHealth);
         }
     }
-
     public bool IsPlayerColliderEnabled
     {
         set
@@ -121,7 +118,6 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
             }
         }
     }
-
     public PlayerHealthState PlayerHealthState
     {
         set
@@ -172,6 +168,10 @@ public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     private void ResetStats()
     {
         _plasmaCost = BASE_PLASMA_COST;
+        if (PAM.IsPlasmaCacheActive)
+        {
+            _plasmaCost -= 1;
+        }
         _iFramesDuration = BASE_I_FRAMES_DURATION;
         PlayerMaxHealth = BASE_MAX_HEALTH;
         PlayerPlasma = PSM.PlayerPlasma;

@@ -143,7 +143,19 @@ public class PlayerWeaponController : GameBehaviour
         CurrentHeat = 0;
         _heatMax = BASE_HEAT_MAX;
         _heatPerShot = BASE_HEAT_PER_SHOT;
+
+        if(PAM.IsHydrocoolantActive)
+        {
+            _heatPerShot -= 0.25f;
+        }
+
         WeaponUpgradeDuration = BASE_UPGRADE_DURATION;
+
+        if(PAM.IsBatteryPackActive) 
+        {
+            WeaponUpgradeDuration += 5;
+        }
+        
         OnWeaponHeatInitialized(GUIM.weaponHeatBar, CurrentHeat, _heatMax);
     }
 

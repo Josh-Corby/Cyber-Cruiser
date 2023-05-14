@@ -8,6 +8,7 @@ public class GameBehaviour : Utilities
     protected static GameplayUIManager GUIM { get { return GameplayUIManager.INSTANCE; } }
     protected static InputManager IM { get { return InputManager.INSTANCE; } }
     protected static MissionManager MM { get { return MissionManager.INSTANCE; } }
+    protected static PlayerAddOnManager PAM { get { return PlayerAddOnManager.INSTANCE; } }
     protected static PlayerManager PM { get { return PlayerManager.INSTANCE; } }
     protected static PlayerRankManager PRM { get { return PlayerRankManager.INSTANCE; } }
     protected static PlayerStatsManager PSM { get { return PlayerStatsManager.INSTANCE; } }

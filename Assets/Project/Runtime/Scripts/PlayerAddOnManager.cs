@@ -2,22 +2,24 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAddOnManager : GameBehaviour
+public class PlayerAddOnManager : GameBehaviour<PlayerAddOnManager>
 {
     [SerializeField] private PlayerManager _playerManager;
     [SerializeField] private PlayerWeaponController _weaponController;
     [SerializeField] private PlayerShieldController _shieldController;
-
-
     [SerializeField] private List<AddOnActiveState> _addOnActiveStates = new();
-    public List<AddOnActiveState> AddOnActiveStates { get => _addOnActiveStates; }
 
     #region AddOn Effect Values
-    [SerializeField] private int _batteryPack = 5;
-    [SerializeField] private int _plasmaCache = 1;
-    [SerializeField] private float _hydroCoolant = 0.25f;
+    private int _batteryPack = 5;
+    private int _plasmaCache = 1;
+    private float _hydroCoolant = 0.25f;
     #endregion
 
+    public List<AddOnActiveState> AddOnActiveStates { get => _addOnActiveStates; }
+    public bool IsBatteryPackActive { get; private set; }
+    public bool IsPlasmaCacheActive { get; private set; }
+    public bool IsHydrocoolantActive { get; private set; }
+    public bool IsPulseDetonatorActive { get; private set; }
 
     private void OnEnable()
     {
@@ -44,44 +46,32 @@ public class PlayerAddOnManager : GameBehaviour
         int buyOrRefundValue = addOn.IonCost;
         buyOrRefundValue = isBuyingAddOn ? -buyOrRefundValue : buyOrRefundValue;
         PSM.ChangeIon(buyOrRefundValue);
-        _addOnActiveStates[addOn.ID].IsAddOnActive = isBuyingAddOn;
+        ChangeAddOnActiveState(addOn.ID, isBuyingAddOn);
     }
 
-    public void CheckAddOnStates()
+    private void ChangeAddOnActiveState(int addOnId, bool isActive)
     {
-        for (int i = 0; i < _addOnActiveStates.Count; i++)
+        _addOnActiveStates[addOnId].IsAddOnActive = isActive;
+
+
+        switch (addOnId)
         {
-            switch (i)
-            {
-                case 0:
-                    //battery pack
-                    if (_addOnActiveStates[i].IsAddOnActive)
-                    {
-                        _weaponController.WeaponUpgradeDuration += _batteryPack;
-                    }
-                    break;
-                //plasma cache
-                case 1:
-                    if (_addOnActiveStates[i].IsAddOnActive)
-                    {
-                        _playerManager.PlasmaCost -= _plasmaCache;
-                    }
-                    break;
-                //hydro coolant
-                case 2:
-                    if (_addOnActiveStates[i].IsAddOnActive)
-                    {
-                        _weaponController.HeatPerShot -= _hydroCoolant;
-                    }
-                    break;
-                //pulse detonator
-                case 3:
-                    if (_addOnActiveStates[i].IsAddOnActive)
-                    {
-                        _shieldController.IsPulseDetonator = true;
-                    }
-                    break;
-            }
+            case 0:
+            //battery pack
+                IsBatteryPackActive = _addOnActiveStates[addOnId].IsAddOnActive;
+                break;
+            //plasma cache
+            case 1:
+                IsPlasmaCacheActive = _addOnActiveStates[addOnId].IsAddOnActive;
+                break;
+            //hydro coolant
+            case 2:
+                IsHydrocoolantActive = _addOnActiveStates[addOnId].IsAddOnActive;
+                break;
+            //pulse detonator
+            case 3:
+                IsPulseDetonatorActive = _addOnActiveStates[addOnId].IsAddOnActive;
+                break;
         }
     }
 }
@@ -89,6 +79,6 @@ public class PlayerAddOnManager : GameBehaviour
 [Serializable]
 public class AddOnActiveState
 {
-    public string Name { get; }
-    public bool IsAddOnActive { get; set; }
+    public string Name;
+    public bool IsAddOnActive;
 }

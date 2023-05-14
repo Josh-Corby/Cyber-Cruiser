@@ -7,7 +7,7 @@ public class PlayerRankManager : GameBehaviour<PlayerRankManager>
     private const string PLAYER_STARS = "PlayerStars";
 
     #region Fields
-    private Rank _currentRank;
+    [SerializeField] private Rank _currentRank;
     private Rank _rankBeforeRankUp;
     private int _currentStars;
     private int _starsBeforeMissionStart;
@@ -26,14 +26,18 @@ public class PlayerRankManager : GameBehaviour<PlayerRankManager>
     private void OnEnable()
     {
         GameManager.OnMissionStart += StoreRankValues;
-        MissionManager.OnMissionComplete += StartStarIncreaseProcess;
-        RestoreValues();
+        MissionManager.OnMissionComplete += StartStarIncreaseProcess;      
     }
 
     private void OnDisable()
     {
         GameManager.OnMissionStart -= StoreRankValues;
         MissionManager.OnMissionComplete -= StartStarIncreaseProcess;
+    }
+
+    private void Start()
+    {
+        RestoreValues();
     }
 
     private void RestoreValues()
@@ -52,7 +56,8 @@ public class PlayerRankManager : GameBehaviour<PlayerRankManager>
 
         else
         {
-            _currentRank = RM.GetRank(PlayerPrefs.GetInt(nameof(PLAYER_RANK)));
+            _currentRank = RM.GetRank(0);
+            //_currentRank = RM.GetRank(PlayerPrefs.GetInt(nameof(PLAYER_RANK)));
             _rankBeforeRankUp = _currentRank;
         }
     }

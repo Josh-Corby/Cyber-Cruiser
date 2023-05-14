@@ -965,7 +965,7 @@ MonoBehaviour:
   _isShieldImmuneToDamage: 1
   _shieldActiveDuration: 5
   _shieldActiveTimer: 5
-  _isPulseDetonator: 0
+  _isPulseDetonatorActive: 0
 --- !u!1 &7739079383947034166
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,6 +975,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5601301386871396227}
+  - component: {fileID: 7798838778722217166}
   m_Layer: 9
   m_Name: AddOnsSprites
   m_TagString: Untagged
@@ -1000,6 +1001,26 @@ Transform:
   m_Father: {fileID: 3486365589442822900}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7798838778722217166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7739079383947034166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7cddff6a796fa64885bd3ea5362acf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _addOnManager: {fileID: 0}
+  _addOnSprites:
+  - Name: Battery Pack
+    SpriteRenderer: {fileID: 6798878685328637649}
+  - Name: Plasma Cache
+    SpriteRenderer: {fileID: 5374756715051047593}
+  - Name: Hydrocoolant
+    SpriteRenderer: {fileID: 5374141384435511991}
 --- !u!1 &8907491432247727163
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,11 +1159,6 @@ MonoBehaviour:
   _chainLightning: {fileID: 230465097142827675}
   _currentWeapon: {fileID: 0}
   _beamAttack: {fileID: 0}
-  _currentHeat: 0
-  _heatPerShot: 1.75
-  _heatLossOverTime: 0.75
-  _cooldownHeatLoss: 1
-  _timebeforeHeatLoss: 0.25
 --- !u!114 &5093816518230039129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1157,23 +1173,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroy: 0
   player: {fileID: 8907491432247727163}
+  _addOnManager: {fileID: 0}
   _playerPlasma: 0
   _plasmaCost: 5
   _maxHealth: 0
   _currentHealth: 0
   _playerHealthState: 0
-  _batteryPack: {fileID: 3461389658813905078}
-  _hydrocoolant: {fileID: 2285850683428058597}
-  _plasmaCache: {fileID: 1337110364967020284}
   isDead: 0
   _iFramesDuration: 0
-  _isBatteryPack: 0
-  _isHydrocoolant: 0
-  _isPlasmaCache: 0
-  _addOnObjects:
-  - {fileID: 3461389658813905078}
-  - {fileID: 2285850683428058597}
-  - {fileID: 1337110364967020284}
   _ramDamage: 5
 --- !u!1001 &2861099524117455809
 PrefabInstance:

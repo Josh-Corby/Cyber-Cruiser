@@ -8,7 +8,7 @@ public class PlayerShieldController : ShieldControllerBase
     #region Fields
     [SerializeField] private int _shieldActiveDuration;
     [SerializeField] private float _shieldActiveTimer;
-    [SerializeField] private bool _isPulseDetonator;
+    [SerializeField] private bool _isPulseDetonatorActive;
     #endregion
 
     #region Properties
@@ -21,8 +21,6 @@ public class PlayerShieldController : ShieldControllerBase
             OnPlayerShieldsValueChange(GUIM.playerShieldBar, _shieldActiveTimer);
         }
     }
-
-    public bool IsPulseDetonator { get => _isPulseDetonator; set => _isPulseDetonator = value; }
     protected override bool IsShieldsActive
     {
         get => _shieldsActive;
@@ -50,16 +48,14 @@ public class PlayerShieldController : ShieldControllerBase
     protected override void Awake()
     {
         base.Awake();
-        if (_isPulseDetonator)
-        {
-            _pulseDetonator = GetComponentInChildren<PulseDetonator>();
-        }
+        _pulseDetonator = GetComponentInChildren<PulseDetonator>();
     }
 
     private void OnEnable()
     {
         InputManager.OnShield += CheckShieldsState;
         GameManager.OnMissionEnd += DeactivateShields;
+        CheckPulseDetonator();
     }
 
     private void OnDisable()
@@ -83,6 +79,11 @@ public class PlayerShieldController : ShieldControllerBase
         }
     }
 
+    private void CheckPulseDetonator()
+    {
+        _isPulseDetonatorActive = PAM.IsPulseDetonatorActive;
+    }
+
     private void CheckShieldsState()
     {
         if (IsShieldsActive)
@@ -98,12 +99,12 @@ public class PlayerShieldController : ShieldControllerBase
 
     protected override void ActivateShields()
     {
-        if (_isPulseDetonator)
+        if (_isPulseDetonatorActive)
         {
             _pulseDetonator.Detonate();
         }
 
-        if (!_isPulseDetonator)
+        if (!_isPulseDetonatorActive)
         {
             IsShieldsActive = true;
             PM.IsPlayerColliderEnabled = false;

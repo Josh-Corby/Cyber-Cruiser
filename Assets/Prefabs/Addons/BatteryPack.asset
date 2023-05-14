@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: addf7c2747ecd934e9c91a5420e5e138, type: 3}
   m_Name: BatteryPack
   m_EditorClassIdentifier: 
-  AddOnType: 0
+  Name: Battery Pack
+  ID: 0
   Description: Weapon pack lasts extra 5 seconds
   IonCost: 1

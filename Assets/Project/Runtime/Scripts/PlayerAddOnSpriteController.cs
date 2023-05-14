@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,12 +8,7 @@ public class PlayerAddOnSpriteController : GameBehaviour
 
     private void OnEnable()
     {
-        GameManager.OnMissionStart += SetAddOnSprites;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.OnMissionStart -= SetAddOnSprites;
+        SetAddOnSprites();
     }
 
     private void SetAddOnSprites()
@@ -27,9 +21,9 @@ public class PlayerAddOnSpriteController : GameBehaviour
     }
 }
 
-[Serializable]
+[System.Serializable]
 public class AddOnSprite
 {
-    public string Name { get; }
-    public SpriteRenderer SpriteRenderer { get; set; }
+    public string Name;
+    public SpriteRenderer SpriteRenderer;
 }
