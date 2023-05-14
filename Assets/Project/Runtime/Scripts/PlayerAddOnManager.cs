@@ -9,12 +9,6 @@ public class PlayerAddOnManager : GameBehaviour<PlayerAddOnManager>
     [SerializeField] private PlayerShieldController _shieldController;
     [SerializeField] private List<AddOnActiveState> _addOnActiveStates = new();
 
-    #region AddOn Effect Values
-    private int _batteryPack = 5;
-    private int _plasmaCache = 1;
-    private float _hydroCoolant = 0.25f;
-    #endregion
-
     public List<AddOnActiveState> AddOnActiveStates { get => _addOnActiveStates; }
     public bool IsBatteryPackActive { get; private set; }
     public bool IsPlasmaCacheActive { get; private set; }

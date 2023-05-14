@@ -5,9 +5,10 @@ public class ExplosionGraphic : MonoBehaviour
     private float _explosionRadius;
     public float ExplosionRadius { get => _explosionRadius; set => _explosionRadius = value; }
 
+
     private void Start()
     {
-        Invoke(nameof(Destroy), 0.2f);
+        Invoke(nameof(Destroy), 1f);
     }
 
     private void Destroy()

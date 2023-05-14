@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource _gameSFX;
     [SerializeField] private AudioSource _bossSFX;
     [SerializeField] private AudioSource _pickupSFX;
+
     #region Audio Clips
     [Header("UI Clips")]
     [SerializeField] private AudioClip _menuMusic;

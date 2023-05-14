@@ -20,9 +20,8 @@ public class Boss : Enemy, IDamageable
         bossMoveset = GetComponent<IBoss>();
     }
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
         _attackTimer = _attackCooldown;
     }
 

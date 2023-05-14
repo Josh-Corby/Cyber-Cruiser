@@ -40,7 +40,7 @@ public class Battlecruiser : Boss, IBoss
     {
         _attackTimer = _attackCooldown;
 
-        if (_beamAttack.isBeamActive)
+        if (_beamAttack.IsBeamActive)
         {
             Attack1();
         }
@@ -73,7 +73,7 @@ public class Battlecruiser : Boss, IBoss
     {
         _beamAttack.ResetBeam();
         _beamAttack.lineRenderer.enabled = true;
-        _beamAttack.isBeamActive = true;
+        _beamAttack.EnableBeam();
     }
 
     protected override void Crash()

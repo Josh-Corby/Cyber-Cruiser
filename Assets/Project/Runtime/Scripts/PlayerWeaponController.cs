@@ -16,11 +16,13 @@ public class PlayerWeaponController : GameBehaviour
     private const int BASE_HEAT_MAX = 100;
     private const float BASE_HEAT_PER_SHOT = 1.75f;
     private const int BASE_UPGRADE_DURATION = 10;
+    private const float BASE_HEAT_LOSS_PER_FRAME = 0.1f;
+    private const float BASE_COOLDOWN_HEAT_LOSS_PER_FRAME = 0.2f;
 
-    private float _currentHeat;
+    [SerializeField] private float _currentHeat;
     private float _heatPerShot;
-    private float _heatLossOverTime;
-    private float _cooldownHeatLoss;
+    private float _heatLossPerFrame;
+    private float _cooldownHeatLossPerFrame;
     private float _timebeforeHeatLoss;
 
     private int _heatMax;
@@ -143,6 +145,8 @@ public class PlayerWeaponController : GameBehaviour
         CurrentHeat = 0;
         _heatMax = BASE_HEAT_MAX;
         _heatPerShot = BASE_HEAT_PER_SHOT;
+        _heatLossPerFrame = BASE_HEAT_LOSS_PER_FRAME;
+        _cooldownHeatLossPerFrame = BASE_COOLDOWN_HEAT_LOSS_PER_FRAME;
 
         if(PAM.IsHydrocoolantActive)
         {
@@ -161,6 +165,11 @@ public class PlayerWeaponController : GameBehaviour
 
     private void Update()
     {
+        if(GM.GameState != GameState.Mission)
+        {
+            return;
+        }
+
         CheckOverHeated();
     }
 
@@ -182,7 +191,7 @@ public class PlayerWeaponController : GameBehaviour
     {
         if (CurrentHeat > 0)
         {
-            CurrentHeat -= _cooldownHeatLoss;
+            CurrentHeat -= _cooldownHeatLossPerFrame;
         }
         else
         {
@@ -208,7 +217,7 @@ public class PlayerWeaponController : GameBehaviour
         {
             if (CurrentHeat > 0)
             {
-                CurrentHeat -= _heatLossOverTime;
+                CurrentHeat -= _heatLossPerFrame;
             }
         }
     }
@@ -222,7 +231,7 @@ public class PlayerWeaponController : GameBehaviour
 
         if (!_fireInput)
         {
-            if (_beamAttack.isBeamActive)
+            if (_beamAttack.IsBeamActive)
             {
                 _beamAttack.ResetBeam();
             }
@@ -248,7 +257,7 @@ public class PlayerWeaponController : GameBehaviour
     {
         if (_beamAttack.enabled)
         {
-            _beamAttack.isBeamActive = true;
+            _beamAttack.EnableBeam();
             return;
         }
 
@@ -347,7 +356,7 @@ public class PlayerWeaponController : GameBehaviour
     {
         OnWeaponUpgradeFinished(GUIM.weaponUpgradeSlider);
         SetIsHoming = false;
-        _beamAttack.isBeamActive = false;
+        _beamAttack.DisableBeam();
         _beamAttack.enabled = false;
         _currentWeapon.enabled = true;
         _currentWeapon.AssignWeaponInfo();

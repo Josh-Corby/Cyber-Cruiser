@@ -6,14 +6,18 @@ public class Enemy : GameBehaviour, IDamageable
     protected const string DEAD_ENEMY_LAYER_NAME = "DeadEnemy";
 
     #region References
+
     public EnemyScriptableObject _unitInfo;
     private EnemyMovement _unitMovement;
     private EnemyWeaponController _weapon;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
     private Animator _animator;
-    [SerializeField] private Sprite _deadSprite;
     private GameObject _crashParticles;
     private GameObject _explosionEffect;
+
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Sprite _deadSprite;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _explodeClip;
     #endregion
 
     #region Fields
@@ -35,11 +39,6 @@ public class Enemy : GameBehaviour, IDamageable
         AssignEnemyInfo();
     }
 
-    protected virtual void Start()
-    {
-        _currentHealth = _maxHealth;
-    }
-
     private void AssignEnemyInfo()
     {
         _animator = GetComponentInChildren<Animator>();
@@ -47,6 +46,7 @@ public class Enemy : GameBehaviour, IDamageable
         unitName = _unitInfo.unitName;
         gameObject.name = unitName;
         _maxHealth = _unitInfo.maxHealth;
+        _currentHealth = _maxHealth;
         _explodeOnDeath = _unitInfo.explodeOnDeath;
 
         if (_explodeOnDeath)
@@ -78,7 +78,6 @@ public class Enemy : GameBehaviour, IDamageable
 
     public virtual void Damage(float damage)
     {
-        //Debug.Log("enemy damaged");
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {
@@ -98,7 +97,6 @@ public class Enemy : GameBehaviour, IDamageable
         GameObject explosionEffect = Instantiate(_explosionEffect, transform);
         explosionEffect.GetComponent<ExplosionGraphic>().ExplosionRadius = _explosionRadius;
         explosionEffect.transform.SetParent(null);
-        //explosionEffect.transform.localScale = Vector3.one * 22;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _explosionRadius);
 
         foreach (Collider2D collider in colliders)
@@ -111,7 +109,7 @@ public class Enemy : GameBehaviour, IDamageable
             {
                 player.Damage(_explosionDamage);
             }
-        }
+        }   
         Destroy();
     }
 
@@ -138,7 +136,6 @@ public class Enemy : GameBehaviour, IDamageable
 
         //change object layer to layer that only collides with cull area
         gameObject.layer = LayerMask.NameToLayer(DEAD_ENEMY_LAYER_NAME);
-
 
         //remove enemy from enemies alive so it doesn't make boss spawner wait for it
         OnEnemyAliveStateChange(gameObject, false);

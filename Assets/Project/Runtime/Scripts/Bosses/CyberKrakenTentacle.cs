@@ -13,6 +13,8 @@ public class CyberKrakenTentacle : GameBehaviour
 
     private BoxCollider2D _col;
 
+    [SerializeField] private AudioSource _audioSource;
+
     protected void Awake()
     {
         spawnPosition = transform.parent.position;
@@ -50,6 +52,7 @@ public class CyberKrakenTentacle : GameBehaviour
         {
             StartWaiting();
             _moveForward = false;
+            _audioSource.Play();
         }
     }
 
@@ -76,6 +79,7 @@ public class CyberKrakenTentacle : GameBehaviour
         if (_waitTimer <= 0)
         {
             _isWaiting = false;
+            _audioSource.Stop();
         }
     }
 }

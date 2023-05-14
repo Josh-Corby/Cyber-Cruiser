@@ -5,9 +5,10 @@ public class Weapon : GameBehaviour
 {
     #region References
     [SerializeField] private WeaponScriptableObject _weaponInfo;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _fireClip;
     private GameObject _firePoint;
     private Transform _firePointTransform;
-    private AudioSource _audioSource;
     [HideInInspector] public GameObject _objectToFire;
     #endregion
 
@@ -40,9 +41,9 @@ public class Weapon : GameBehaviour
 
     private void Awake()
     {
-        _audioSource = GetComponent<AudioSource>();
         _firePoint = transform.GetChild(0).gameObject;
         _firePointTransform = _firePoint.transform;
+        _audioSource = GetComponent<AudioSource>();
         AssignWeaponInfo();
     }
 
@@ -64,6 +65,11 @@ public class Weapon : GameBehaviour
         _multiFire = _weaponInfo.multiFire;
         _multiFireShots = _weaponInfo.multiFireShots;
         _isMultiFireSpreadRandom = _weaponInfo.isMultiFireSpreadRandom;
+
+        if(_audioSource != null)
+        {
+            _audioSource.clip = _fireClip;
+        }
     }
 
     private void Update()
@@ -119,20 +125,19 @@ public class Weapon : GameBehaviour
     {
         if (_isMultiFireSpreadRandom)
         {
-            //Debug.Log("Random spread fire");
             for (int i = 0; i < _multiFireShots; i++)
             {
-                FireWithSpread(GetRandomSpreadAngle());
+                FireBullet(GetRandomSpreadAngle());
             }
         }
+
         else if (!_isMultiFireSpreadRandom)
         {
             for (int i = 0; i < _multiFireShots; i++)
             {
                 Quaternion projectileSpread = GetFixedSpreadAngle(i);
-                FireWithSpread(projectileSpread);
-            }
-            //Debug.Log("set spread fire");    
+                FireBullet(projectileSpread);
+            }   
         }
     }
 
@@ -140,11 +145,11 @@ public class Weapon : GameBehaviour
     {
         if (!_useSpread)
         {
-            FireWithoutSpread();
+            FireBullet(_firePointTransform.rotation);
         }
         else
         {
-            FireWithSpread(GetRandomSpreadAngle());
+            FireBullet(GetRandomSpreadAngle());
         }
     }
 
@@ -208,29 +213,18 @@ public class Weapon : GameBehaviour
          */
     }
 
-    public void FireWithSpread(Quaternion directionWithSpread)
+    private void FireBullet(Quaternion direction)
     {
-        GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, directionWithSpread);
-        PlayFireSFX();
+        GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, direction);
         if (IsHoming)
         {
             ApplyHoming(bullet.GetComponent<Bullet>());
         }
-    }
 
-    public void FireWithoutSpread()
-    {
-        GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, _firePointTransform.rotation);
-        PlayFireSFX();
-        if (IsHoming)
+        if(_audioSource != null)
         {
-            ApplyHoming(bullet.GetComponent<Bullet>());
+            PlayFireSFX();
         }
-    }
-
-    private void PlayFireSFX()
-    {
-        _audioSource.PlayOneShot(_audioSource.clip);
     }
 
     private void ApplyHoming(Bullet bullet)
@@ -260,5 +254,10 @@ public class Weapon : GameBehaviour
         _multiFireShots = 3;
         _useSpread = true;
         _spreadAngle = 30;
+    }
+
+    private void PlayFireSFX()
+    {
+        _audioSource.PlayOneShot(_audioSource.clip);
     }
 }

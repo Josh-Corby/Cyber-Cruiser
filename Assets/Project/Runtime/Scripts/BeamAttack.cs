@@ -1,9 +1,10 @@
 using UnityEngine;
 
 
+[RequireComponent(typeof(AudioSource))]
 public class BeamAttack : GameBehaviour
 {
-    public bool isBeamActive;
+    private bool _isBeamActive;
     public LineRenderer lineRenderer;
     private float _beamSize;
     public float beamDuration;
@@ -16,7 +17,10 @@ public class BeamAttack : GameBehaviour
     [SerializeField] private LayerMask _beamCollisionMask;
     [SerializeField] private float _beamWidth;
 
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _beamClip;
 
+    public bool IsBeamActive { get => _isBeamActive; }
     private void OnDisable()
     {
         ResetBeam();
@@ -30,7 +34,7 @@ public class BeamAttack : GameBehaviour
 
     private void Update()
     {
-        if (isBeamActive)
+        if (_isBeamActive)
         {
             ExtendBeam();
         }
@@ -38,6 +42,18 @@ public class BeamAttack : GameBehaviour
         {
             ResetBeam();
         }
+    }
+
+    public void EnableBeam()
+    {
+        _isBeamActive = true;
+        _audioSource.Play();
+    }
+
+    public void DisableBeam()
+    {
+        _isBeamActive = false;
+        _audioSource.Stop();
     }
 
     public void ExtendBeam()
@@ -62,7 +78,7 @@ public class BeamAttack : GameBehaviour
             if (_beamTimer <= 0)
             {
                 lineRenderer.enabled = false;
-                isBeamActive = false;
+                _isBeamActive = false;
             }
         }
         else
@@ -80,6 +96,7 @@ public class BeamAttack : GameBehaviour
         _beamSize = 0;
         _beamTimer = beamDuration;
         lineRenderer.enabled = false;
+        _audioSource.Stop();
     }
 
     private void BeamCollision()
