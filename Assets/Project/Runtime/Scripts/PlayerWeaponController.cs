@@ -19,6 +19,7 @@ public class PlayerWeaponController : GameBehaviour
     private const float BASE_HEAT_LOSS_PER_FRAME = 0.1f;
     private const float BASE_COOLDOWN_HEAT_LOSS_PER_FRAME = 0.2f;
 
+
     [SerializeField] private float _currentHeat;
     private float _heatPerShot;
     private float _heatLossPerFrame;
@@ -41,10 +42,6 @@ public class PlayerWeaponController : GameBehaviour
     #endregion
 
     #region Properties
-    public float WeaponUpgradeDuration { get => _weaponUpgradeDuration; set => _weaponUpgradeDuration = value; }
-
-    public float HeatPerShot { get => _heatPerShot; set => _heatPerShot = value; }
-
     public float CurrentHeat
     {
         get => _currentHeat;
@@ -84,15 +81,6 @@ public class PlayerWeaponController : GameBehaviour
         {
             _isOverheated = value;
             OnOverheatStatusChange(GUIM.weaponHeatBar, _isOverheated);
-        }
-    }
-
-    private bool SetIsHoming
-    {
-        set
-        {
-            _isHoming = value;
-            _currentWeapon.IsHoming = _isHoming;
         }
     }
     #endregion
@@ -153,11 +141,11 @@ public class PlayerWeaponController : GameBehaviour
             _heatPerShot -= 0.25f;
         }
 
-        WeaponUpgradeDuration = BASE_UPGRADE_DURATION;
+        _weaponUpgradeDuration = BASE_UPGRADE_DURATION;
 
         if(PAM.IsBatteryPackActive) 
         {
-            WeaponUpgradeDuration += 5;
+            _weaponUpgradeDuration += 5;
         }
         
         OnWeaponHeatInitialized(GUIM.weaponHeatBar, CurrentHeat, _heatMax);
@@ -246,7 +234,7 @@ public class PlayerWeaponController : GameBehaviour
 
     private void CheckHoldToFire()
     {
-        if (!_currentWeapon.HoldToFire)
+        if (!_currentWeapon.CurrentStats.IsWeaponAutomatic)
         {
             CancelFireInput();
         }
@@ -266,7 +254,7 @@ public class PlayerWeaponController : GameBehaviour
             _currentWeapon.CheckFireTypes();
             if (!_isWeaponUpgradeActive)
             {
-                CurrentHeat += HeatPerShot;
+                CurrentHeat += _heatPerShot;
                 TimeSinceLastShot = 0;
             }
         }
@@ -317,13 +305,13 @@ public class PlayerWeaponController : GameBehaviour
         {
             case WeaponUpgradeType.Scatter_Fixed:
             case WeaponUpgradeType.Scatter_Random:
-                _currentWeapon.ScatterUpgrade(upgradeType);
+                ScatterUpgrade(upgradeType);
                 break;
             case WeaponUpgradeType.Pulverizer:
                 PulverizerUpgrade();
                 break;
             case WeaponUpgradeType.Homing:
-                SetIsHoming = true;
+                _currentWeapon.CurrentStats.IsWeaponHoming = true;
                 break;
             case WeaponUpgradeType.ChainLightning:
                 _currentWeapon = _chainLightning;
@@ -352,16 +340,38 @@ public class PlayerWeaponController : GameBehaviour
         _beamAttack.enabled = true;
     }
 
+    public void ScatterUpgrade(WeaponUpgradeType scatterType)
+    {
+        switch (scatterType)
+        {
+            case WeaponUpgradeType.Scatter_Fixed:
+                _currentWeapon.CurrentStats.IsMultiFireSpreadRandom = false;
+                break;
+            case WeaponUpgradeType.Scatter_Random:
+                _currentWeapon.CurrentStats.IsMultiFireSpreadRandom = true;
+                break;
+        }
+
+        _currentWeapon.CurrentStats.IsWeaponMultiFire = true;
+        _currentWeapon.CurrentStats.MultiFireShots = 3;
+        _currentWeapon.CurrentStats.DoesWeaponUseSpread = true;
+        _currentWeapon.CurrentStats.SpreadHalfAngle = 30;
+    }
+
     public void ResetPlayerWeapon()
     {
-        OnWeaponUpgradeFinished(GUIM.weaponUpgradeSlider);
-        SetIsHoming = false;
+        WeaponUpgradeFinished();
         _beamAttack.DisableBeam();
         _beamAttack.enabled = false;
-        _currentWeapon.enabled = true;
-        _currentWeapon.AssignWeaponInfo();
-        _isWeaponUpgradeActive = false;
+    }
+
+    private void WeaponUpgradeFinished()
+    {
+        OnWeaponUpgradeFinished?.Invoke(GUIM.weaponUpgradeSlider);
         CurrentHeat = 0;
+        _currentWeapon.enabled = true;
+        _currentWeapon.ResetWeapon();
         _currentWeapon = _baseWeapon;
+        _isWeaponUpgradeActive = false;
     }
 }

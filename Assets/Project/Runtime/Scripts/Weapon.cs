@@ -1,82 +1,61 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Weapon : GameBehaviour
 {
     #region References
-    [SerializeField] private WeaponScriptableObject _weaponInfo;
+    [SerializeField] private WeaponScriptableObject _baseStats;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _fireClip;
+    private WeaponStats _stats;
     private GameObject _firePoint;
     private Transform _firePointTransform;
-    [HideInInspector] public GameObject _objectToFire;
     #endregion
 
     #region Fields
     private bool _readyToFire;
-    private bool _holdToFire;
-    private bool _isHoming;
-    private bool _autoFire;
-    private int _bursts;
-    private int _multiFireShots;
-    private float _timeBetweenShots;
-    private float _spreadAngle;
-    private float _timeBetweenBurstShots;
-    private bool _useSpread;
-    private bool _burstFire;
-    private bool _multiFire;
-    private bool _isMultiFireSpreadRandom;
+    protected bool _autoFire;
     #endregion
 
-    #region Properties
+    public bool ReadyToFire { get => _readyToFire; }
 
-    public bool ReadyToFire { get => _readyToFire; private set => _readyToFire = value; }
-
-    public bool HoldToFire { get => _holdToFire; private set => _holdToFire = value; }
-
-    public bool IsHoming { get => _isHoming; set => _isHoming = value; }
-
-    protected bool AutoFire { get => _autoFire; set => _autoFire = value; }
-    #endregion
+    public WeaponStats CurrentStats { get => _stats; set => _stats = value; }
 
     private void Awake()
     {
         _firePoint = transform.GetChild(0).gameObject;
         _firePointTransform = _firePoint.transform;
         _audioSource = GetComponent<AudioSource>();
-        AssignWeaponInfo();
+        WeaponSetup();
     }
 
     protected virtual void OnEnable()
     {
-        ReadyToFire = true;
+        _readyToFire = true;
     }
 
-    public void AssignWeaponInfo()
+    private void WeaponSetup()
     {
-        _objectToFire = _weaponInfo.objectToFire;
-        _timeBetweenShots = _weaponInfo.timeBetweenShots;
-        HoldToFire = _weaponInfo.holdToFire;
-        _useSpread = _weaponInfo.useSpread;
-        _spreadAngle = _weaponInfo.spreadAngle;
-        _burstFire = _weaponInfo.burstFire;
-        _bursts = _weaponInfo.bursts;
-        _timeBetweenBurstShots = _weaponInfo.timeBetweenBurstShots;
-        _multiFire = _weaponInfo.multiFire;
-        _multiFireShots = _weaponInfo.multiFireShots;
-        _isMultiFireSpreadRandom = _weaponInfo.isMultiFireSpreadRandom;
+        ResetWeapon();
 
-        if(_audioSource != null)
+        if (_audioSource != null)
         {
             _audioSource.clip = _fireClip;
         }
     }
 
+    public void ResetWeapon()
+    {
+        _stats = _baseStats.Stats;
+    }
+
     private void Update()
     {
-        if (AutoFire)
+        if (_autoFire)
         {
-            if (ReadyToFire)
+            if (_readyToFire)
             {
                 CheckFireTypes();
             }
@@ -85,65 +64,67 @@ public class Weapon : GameBehaviour
 
     public void CheckFireTypes()
     {
-        ReadyToFire = false;
-        //check for burst fire
-        if (_burstFire)
+        _readyToFire = false;
+
+        if (_stats.IsWeaponBurstFire)
         {
             StartCoroutine(BurstFire());
             return;
         }
-        //check for multifire
-        else if (_multiFire)
+
+        else if (_stats.IsWeaponMultiFire)
         {
             MultiFire();
         }
+
         else
         {
             SpreadCheck();
         }
+
         StartCoroutine(ResetShooting());
     }
 
     private IEnumerator BurstFire()
     {
-        for (int i = 0; i < _bursts; i++)
+        for (int i = 0; i < _stats.AmountOfBursts; i++)
         {
-            if (_multiFire)
+            if (_stats.IsWeaponMultiFire)
             {
                 MultiFire();
             }
+
             else
             {
                 SpreadCheck();
             }
-            yield return new WaitForSeconds(_timeBetweenBurstShots);
+
+            yield return new WaitForSeconds(_stats.TimeBetweenBurstShots);
         }
         StartCoroutine(ResetShooting());
     }
 
     private void MultiFire()
     {
-        if (_isMultiFireSpreadRandom)
+        if (_stats.IsMultiFireSpreadRandom)
         {
-            for (int i = 0; i < _multiFireShots; i++)
+            for (int i = 0; i < _stats.MultiFireShots; i++)
             {
                 FireBullet(GetRandomSpreadAngle());
             }
+            return;
         }
 
-        else if (!_isMultiFireSpreadRandom)
+        for (int i = 0; i < _stats.MultiFireShots; i++)
         {
-            for (int i = 0; i < _multiFireShots; i++)
-            {
-                Quaternion projectileSpread = GetFixedSpreadAngle(i);
-                FireBullet(projectileSpread);
-            }   
+            Quaternion projectileSpread = GetMultiShotFixedAngle(i);
+            FireBullet(projectileSpread);
         }
     }
 
     private void SpreadCheck()
     {
-        if (!_useSpread)
+        if (!_stats.DoesWeaponUseSpread)
         {
             FireBullet(_firePointTransform.rotation);
         }
@@ -155,109 +136,65 @@ public class Weapon : GameBehaviour
 
     private Quaternion GetRandomSpreadAngle()
     {
-        Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-_spreadAngle, _spreadAngle));
+        Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-_stats.SpreadHalfAngle, _stats.SpreadHalfAngle));
         return directionWithSpread;
     }
 
-    private Quaternion GetFixedSpreadAngle(int index)
+    private Quaternion GetMultiShotFixedAngle(int multifireBulletIndex)
     {
-        //get total weapon spread
-        float totalSpread = _spreadAngle * 2;
-        //find what angle the current bullet should be given
-        float spreadValue = totalSpread / (_multiFireShots - 1) * index;
-        //subtract _spread angle so negative values are assigned
-        float angle = spreadValue - _spreadAngle;
-        //convert to quaternion
-        Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, angle);
+        float totalSpreadAngle = _stats.SpreadHalfAngle * 2;
+        float bulletFireAngle = totalSpreadAngle / (_stats.MultiFireShots - 1) * multifireBulletIndex;
+        float finalAngle = bulletFireAngle - _stats.SpreadHalfAngle;
+        Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, finalAngle);
         return directionWithSpread;
-
-        /*
-          formula explanation
-          
-          i value to angle = total spread / number of bullets -1 * i
-          final angle = increment - angle
-          
-          example equations
-          fire 3
-          spread angle of 10
-          total spread if 20
-          i values are   0,1 ,2
-          increments are 0,10,20
-          bullets should fire at angles -10,0,10
-          
-          i = 0
-          angle = 20 / 2 * 0 = 0 - 10 = -10
-          i = 1
-          angle = 20 / 2 * 1 = 10 - 10 = 0
-          i = 2
-          angle = 20 / 2 * 2 = 20 - 10 = 10
-          
-          fire 5
-          spread angle of 10
-          total spread of 20
-          
-          i values       0,1,2 ,3 ,4
-          increments are 0,5,10,15,20
-          bullets should fire at -10,-5,0,5,10
-          
-          i = 0
-          angle = 20 / 4 * 0 = 0 - 10 = -10
-          i = 1
-          angle = 20 / 4 * 1 = 5 - 10 = -5
-          i = 2
-          angle = 20 / 4 * 2 = 10 - 10 = 0
-          i = 3
-          angle = 20 / 4 * 3 = 15 - 10 = 5
-          i = 4
-         angle = 20 / 4 * 4 = 20 - 10 = 10
-         */
     }
 
     private void FireBullet(Quaternion direction)
     {
-        GameObject bullet = Instantiate(_objectToFire, _firePointTransform.position, direction);
-        if (IsHoming)
+        GameObject bullet = Instantiate(_stats.objectToFire, _firePointTransform.position, direction);
+
+        if (_stats.IsWeaponHoming)
         {
-            ApplyHoming(bullet.GetComponent<Bullet>());
+            bullet.GetComponent<Bullet>().IsHoming = true;
         }
 
-        if(_audioSource != null)
+        if (_audioSource != null)
         {
             PlayFireSFX();
         }
     }
 
-    private void ApplyHoming(Bullet bullet)
-    {
-        bullet.IsHoming = true;
-    }
-
     private IEnumerator ResetShooting()
     {
-        yield return new WaitForSeconds(_timeBetweenShots);
-        ReadyToFire = true;
-    }
-
-    public void ScatterUpgrade(WeaponUpgradeType scatterType)
-    {
-        switch (scatterType)
-        {
-            case WeaponUpgradeType.Scatter_Fixed:
-                _isMultiFireSpreadRandom = false;
-                break;
-            case WeaponUpgradeType.Scatter_Random:
-                _isMultiFireSpreadRandom = true;
-
-                break;
-        }
-        _multiFire = true;
-        _multiFireShots = 3;
-        _useSpread = true;
-        _spreadAngle = 30;
+        yield return new WaitForSeconds(_stats.TimeBetweenShots);
+        _readyToFire = true;
     }
 
     private void PlayFireSFX()
     {
         _audioSource.PlayOneShot(_audioSource.clip);
     }
+}
+
+[Serializable]
+public class WeaponStats
+{
+    public GameObject objectToFire;
+    public float TimeBetweenShots;
+    public bool IsWeaponAutomatic;
+    public bool IsWeaponHoming;
+
+    [Header("Spread")]
+    public bool DoesWeaponUseSpread;
+    public float SpreadHalfAngle;
+
+    [Header("Burst Fire")]
+    public bool IsWeaponBurstFire;
+    public int AmountOfBursts;
+    public float TimeBetweenBurstShots;
+
+    [Header("Multi Shot")]
+    public bool IsWeaponMultiFire;
+    public int MultiFireShots;
+    public bool IsMultiFireSpreadRandom;
 }

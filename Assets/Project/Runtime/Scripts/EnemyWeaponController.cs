@@ -7,10 +7,11 @@ public class EnemyWeaponController : Weapon
 
     private void EnableWeapon()
     {
-        AutoFire = true;
+        _autoFire = true;
     }
+
     public void DisableWeapon()
     {
-        AutoFire = false;
+        _autoFire = false;
     }
 }
