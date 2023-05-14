@@ -101,6 +101,8 @@ MonoBehaviour:
   _unitInfo: {fileID: 11400000, guid: 78f9a89cd02828243b6c80b47d51d549, type: 2}
   _spriteRenderer: {fileID: 7678710914699729169}
   _deadSprite: {fileID: 21300000, guid: 1b6d75c985578064e899928b85a113f3, type: 3}
+  _audioSource: {fileID: 0}
+  _explodeClip: {fileID: 0}
   unitName: Behemoth
   _currentHealth: 50
   _attackCooldown: 3
@@ -200,9 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponInfo: {fileID: 11400000, guid: 721c41a4251c5fb4eac836df1fa797fb, type: 2}
-  _fireClip: {fileID: 8300000, guid: fffbdd24865acec42803a1b86044c731, type: 3}
-  _objectToFire: {fileID: 0}
+  _weaponBase: {fileID: 11400000, guid: 721c41a4251c5fb4eac836df1fa797fb, type: 2}
+  _audioSource: {fileID: 5420301948129256186}
 --- !u!82 &5420301948129256186
 AudioSource:
   m_ObjectHideFlags: 0
@@ -376,9 +377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponInfo: {fileID: 11400000, guid: cd436523be8b21a489263e4809b4293b, type: 2}
-  _fireClip: {fileID: 8300000, guid: fffbdd24865acec42803a1b86044c731, type: 3}
-  _objectToFire: {fileID: 0}
+  _weaponBase: {fileID: 11400000, guid: cd436523be8b21a489263e4809b4293b, type: 2}
+  _audioSource: {fileID: 2371684279816273714}
 --- !u!82 &2371684279816273714
 AudioSource:
   m_ObjectHideFlags: 0

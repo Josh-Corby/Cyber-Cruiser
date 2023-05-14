@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6690d9937eefb004b80a60b01e3719af, type: 3}
   m_Name: GunshipWeapon
   m_EditorClassIdentifier: 
-  weaponName: 
-  objectToFire: {fileID: 760453196464390188, guid: 130585e77da054b4ba24c84b35d78629, type: 3}
-  timeBetweenShots: 1
-  holdToFire: 0
-  useSpread: 0
-  spreadAngle: 0
-  burstFire: 0
-  bursts: 0
-  timeBetweenBurstShots: 0
-  multiFire: 0
-  multiFireShots: 0
-  isMultiFireSpreadRandom: 0
+  Stats:
+    objectToFire: {fileID: 760453196464390188, guid: 130585e77da054b4ba24c84b35d78629, type: 3}
+    TimeBetweenShots: 1
+    IsWeaponAutomatic: 0
+    FireClip: {fileID: 8300000, guid: b36d9e4c7b335b9438add8ba1b2b484f, type: 3}
+    DoesWeaponUseSpread: 0
+    SpreadHalfAngle: 0
+    IsWeaponBurstFire: 0
+    AmountOfBursts: 0
+    TimeBetweenBurstShots: 0
+    IsWeaponMultiFire: 0
+    MultiFireShots: 0
+    IsMultiFireSpreadRandom: 0

@@ -6,42 +6,33 @@ public class Bullet : GameBehaviour
     private const string PLAYER_PROJECTILE_LAYER_NAME = "PlayerProjectile";
 
     #region References
-    public GameObject homingTarget = null;
+    private BulletHoming _homingTrigger;
+    [HideInInspector] public GameObject homingTarget = null;
 
     [Header("Art")]
     private SpriteRenderer _spriteRenderer;
     [SerializeField] private Sprite _playerProjectileSprite;
     [SerializeField] private Sprite _enemyProjectileSprite;
     [SerializeField] private GameObject _collisionParticles;
-
-    private BulletHoming _homingTrigger;
+    private ExplodingObject _explosion;
     #endregion
 
     #region Fields
     [SerializeField] private float _speed;
     [SerializeField] private float _damage;
-
+    [SerializeField] private bool _doesBulletExplode;
+    [Header("Homing Stats")]
     [SerializeField] private bool _isHoming;
-    [SerializeField] protected float _homeTurnSpeed;
-    [SerializeField] protected float _homeTime;
-    [SerializeField] protected bool _homeDelay;
-    [SerializeField] protected float _homeDelayTime;
+    [SerializeField] private float _homeTurnSpeed;
+    [SerializeField] private float _homeTime;
+    [SerializeField] private bool _homeDelay;
+    [SerializeField] private float _homeDelayTime;
     [SerializeField] private float _homeCounter;
     [SerializeField] private float _homeDelayCounter;
     #endregion
 
     #region Properties
-    public float Speed
-    {
-        get => _speed;
-        set => _speed = value;
-    }
-
-    public float Damage
-    {
-        get => _damage;
-    }
-
+    public float Damage { get => _damage; }
     public bool IsHoming
     {
         get => _isHoming;
@@ -55,20 +46,25 @@ public class Bullet : GameBehaviour
             }
         }
     }
+    #endregion
 
-    public Sprite BulletSprite
+    private void Awake()
     {
-        set => _spriteRenderer.sprite = value;
+        GetComponents();
     }
 
-    #endregion
-    private void Awake()
+    private void GetComponents()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         if (transform.childCount > 0)
         {
             _homingTrigger = GetComponentInChildren<BulletHoming>();
+        }
+
+        if (_doesBulletExplode)
+        {
+            _explosion = GetComponent<ExplodingObject>();
         }
     }
 
@@ -87,6 +83,20 @@ public class Bullet : GameBehaviour
         AssignHoming();
     }
 
+    private void Update()
+    {
+        if (IsHoming)
+        {
+            if (homingTarget != null)
+            {
+                RotateTowardsTarget();
+                MoveTowardsTarget();
+                return;
+            }
+        }
+        MoveRight();
+    }
+
     private void AssignHoming()
     {
         if (_homingTrigger != null)
@@ -102,20 +112,6 @@ public class Bullet : GameBehaviour
                 _homingTrigger.gameObject.SetActive(false);
             }
         }
-    }
-
-    private void Update()
-    {
-        if (IsHoming)
-        {
-            if (homingTarget != null)
-            {
-                RotateTowardsTarget();
-                MoveTowardsTarget();
-                return;
-            }
-        }
-        MoveRight();
     }
 
     private void MoveRight()
@@ -158,14 +154,14 @@ public class Bullet : GameBehaviour
         if (gameObject.layer == LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME))
         {
             gameObject.layer = ChangeLayerFromString(ENEMY_PROJECTILE_LAYER_NAME);
-            BulletSprite = _enemyProjectileSprite;
+            _spriteRenderer.sprite = _enemyProjectileSprite;
         }
 
         //switch to player team
         else if (gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME))
         {
             gameObject.layer = ChangeLayerFromString(PLAYER_PROJECTILE_LAYER_NAME);
-            BulletSprite = _playerProjectileSprite;
+            _spriteRenderer.sprite = _playerProjectileSprite;
         }
     }
 
@@ -188,19 +184,34 @@ public class Bullet : GameBehaviour
         {
             interactable.Damage(Damage);
         }
-        Destroy(gameObject);
+
+        if(_doesBulletExplode)
+        {
+            _explosion.Explode(DestroyBullet);
+            return;
+        }
+
+        DestroyBullet();
     }
 
     public void Reflect(GameObject objectReflectedFrom)
     {
         Debug.Log("Bullet reflected");
         transform.right = objectReflectedFrom.transform.right;
-        Speed /= 2;
+        _speed /= 2;
         SwitchBulletTeam();
         _spriteRenderer.flipX = !_spriteRenderer.flipX;
     }
+
     private void DestroyBullet()
     {
         Destroy(gameObject);
     }
+}
+
+public class BulletStats
+{
+    public float Speed;
+    public float Damage;
+    public bool IsBulletHoming;
 }

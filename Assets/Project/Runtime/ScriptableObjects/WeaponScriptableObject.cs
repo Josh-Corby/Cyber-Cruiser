@@ -4,5 +4,4 @@ using UnityEngine;
 public class WeaponScriptableObject : ScriptableObject
 {
     public WeaponStats Stats;
-    public bool IsFireObjectAnEnemy;
 }

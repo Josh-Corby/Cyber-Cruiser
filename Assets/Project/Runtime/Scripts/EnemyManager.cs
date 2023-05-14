@@ -88,9 +88,8 @@ public class EnemyManager : GameBehaviour<EnemyManager>
 
     public GameObject CreateEnemyFromSO(EnemyScriptableObject enemyInfo)
     {
-        //Debug.Log(enemyInfo);
-        GameObject enemy = enemyInfo.unitPrefab;
-        enemy.GetComponent<Enemy>()._unitInfo = enemyInfo;
+        GameObject enemy = enemyInfo.EnemyPrefab;
+        enemy.GetComponent<Enemy>().EnemyInfo = enemyInfo;
         return enemy;
     }
 }

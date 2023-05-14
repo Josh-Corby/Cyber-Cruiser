@@ -595,7 +595,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0.544
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!4 &55785242 stripped
 Transform:
@@ -1382,7 +1382,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &149013110
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1410,7 +1410,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 149013109}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -3127,7 +3127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &427811291
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3155,7 +3155,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 427811290}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -3597,7 +3597,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 0, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!1 &492079264
 GameObject:
@@ -4876,11 +4876,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e3352881bef804b8b6ab6537626679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!82 &659302323 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8604456054259439966, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-  m_PrefabInstance: {fileID: 8907491432400472847}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &662447888
 GameObject:
   m_ObjectHideFlags: 0
@@ -6845,6 +6840,7 @@ MonoBehaviour:
     _rankTextSprite: {fileID: 0}
     _rankID: 0
     _starsToRankUp: 3
+  _totalStarReward: 0
 --- !u!1 &945391834
 GameObject:
   m_ObjectHideFlags: 0
@@ -7084,7 +7080,7 @@ MonoBehaviour:
       spawnWeight: 0.5
     TotalTypeWeights: 0
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 1
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!1 &989281828
 GameObject:
@@ -8034,21 +8030,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636fbe29015cdbf42a6bb8e8f123748c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _uiType: 1
   _rankImageRenderer: {fileID: 1495495609}
   _rankTextRenderer: {fileID: 1880547256}
   _goldStars:
-  - {fileID: 1794948492}
-  - {fileID: 1587804072}
-  - {fileID: 248003442}
-  _uiType: 1
+  - {fileID: 1794948494}
+  - {fileID: 1587804074}
+  - {fileID: 248003444}
   _currentRank:
     _name: 
     _sprite: {fileID: 0}
     _rankTextSprite: {fileID: 0}
     _rankID: 0
     _starsToRankUp: 3
-  _currentEnabledGoldStars: 0
-  _starsToGain: 0
 --- !u!1 &1118535382
 GameObject:
   m_ObjectHideFlags: 0
@@ -9128,7 +9122,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1263760196
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9156,7 +9150,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263760195}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -9231,6 +9225,11 @@ Transform:
   m_Father: {fileID: 137523582}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1282249305 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1633039322437063706, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+  m_PrefabInstance: {fileID: 8907491432400472847}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1289098387 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1018978276807733186, guid: 01d59c3d11219454ab5f209bcfb4783b, type: 3}
@@ -10258,7 +10257,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 0.25
   totalCategoryWeight: 1
 --- !u!4 &1370326091
 Transform:
@@ -15969,13 +15968,13 @@ MonoBehaviour:
   _timesReduced: 0
   _enemySpawnerInfo:
   - spawner: {fileID: 984547534}
-    SpawnerWeight: 1
+    SpawnerWeight: 0.25
   - spawner: {fileID: 1370326090}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 47135018}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 485082065}
-    SpawnerWeight: 0
+    SpawnerWeight: 0.25
   - spawner: {fileID: 71091565}
     SpawnerWeight: 0
   _totalSpawnWeight: 1
@@ -16397,21 +16396,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636fbe29015cdbf42a6bb8e8f123748c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _uiType: 0
   _rankImageRenderer: {fileID: 311314087}
   _rankTextRenderer: {fileID: 1451237691}
   _goldStars:
-  - {fileID: 149013109}
-  - {fileID: 427811290}
-  - {fileID: 1263760195}
-  _uiType: 0
+  - {fileID: 149013111}
+  - {fileID: 427811292}
+  - {fileID: 1263760197}
   _currentRank:
     _name: 
     _sprite: {fileID: 0}
     _rankTextSprite: {fileID: 0}
     _rankID: 0
     _starsToRankUp: 3
-  _currentEnabledGoldStars: 0
-  _starsToGain: 0
 --- !u!1 &2126992489
 GameObject:
   m_ObjectHideFlags: 0
@@ -17309,21 +17306,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 636fbe29015cdbf42a6bb8e8f123748c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _uiType: 1
   _rankImageRenderer: {fileID: 5641687414845007053}
   _rankTextRenderer: {fileID: 8000608537010246892}
   _goldStars:
-  - {fileID: 1102862870}
-  - {fileID: 1150693942}
-  - {fileID: 1013601374}
-  _uiType: 0
+  - {fileID: 1102862872}
+  - {fileID: 1150693944}
+  - {fileID: 1013601376}
   _currentRank:
     _name: 
     _sprite: {fileID: 0}
     _rankTextSprite: {fileID: 0}
     _rankID: 0
     _starsToRankUp: 3
-  _currentEnabledGoldStars: 0
-  _starsToGain: 0
 --- !u!224 &5295121983179028655
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17986,6 +17981,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1495971564}
     m_Modifications:
+    - target: {fileID: 230465097142827675, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _baseStats
+      value: 
+      objectReference: {fileID: 11400000, guid: a7ef16ca7aadcd14592be8f800e7fcb1, type: 2}
+    - target: {fileID: 230465097142827675, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _weaponBase
+      value: 
+      objectReference: {fileID: 11400000, guid: a7ef16ca7aadcd14592be8f800e7fcb1, type: 2}
     - target: {fileID: 634649626243274674, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _beamClip
       value: 
@@ -18042,6 +18045,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1633039322437063706, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_Volume
+      value: 0.515
+      objectReference: {fileID: 0}
     - target: {fileID: 2285850683428058597, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -18074,6 +18081,10 @@ PrefabInstance:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: b36d9e4c7b335b9438add8ba1b2b484f, type: 3}
+    - target: {fileID: 8907491432247727158, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _currentWeapon
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: mouseInput
       value: 
@@ -18091,10 +18102,19 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: b36d9e4c7b335b9438add8ba1b2b484f, type: 3}
     - target: {fileID: 8907491432817469731, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _baseStats
+      value: 
+      objectReference: {fileID: 11400000, guid: dcab90440fc56ad46a02c865024e77b9, type: 2}
+    - target: {fileID: 8907491432817469731, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _weaponBase
+      value: 
+      objectReference: {fileID: 11400000, guid: dcab90440fc56ad46a02c865024e77b9, type: 2}
+    - target: {fileID: 8907491432817469731, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _audioSource
       value: 
-      objectReference: {fileID: 659302323}
-    m_RemovedComponents: []
+      objectReference: {fileID: 1282249305}
+    m_RemovedComponents:
+    - {fileID: 8604456054259439966, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
 --- !u!114 &9047329454295983708
 MonoBehaviour:

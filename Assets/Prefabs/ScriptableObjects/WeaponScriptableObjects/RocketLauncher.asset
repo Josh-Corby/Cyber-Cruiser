@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6690d9937eefb004b80a60b01e3719af, type: 3}
   m_Name: RocketLauncher
   m_EditorClassIdentifier: 
-  weaponName: 
-  objectToFire: {fileID: 2653145768784104840, guid: 0f1e8bf274a42564ca36a284fb8da74a, type: 3}
-  isObjectEnemy: 1
-  timeBetweenShots: 1
-  holdToFire: 0
-  useSpread: 1
-  spreadAngle: 30
-  burstFire: 1
-  bursts: 3
-  timeBetweenBurstShots: 0.6
-  multiFire: 1
-  multiFireShots: 3
-  isMultiFireSpreadRandom: 1
+  Stats:
+    objectToFire: {fileID: 2653145768784104840, guid: 0f1e8bf274a42564ca36a284fb8da74a, type: 3}
+    TimeBetweenShots: 1
+    IsWeaponAutomatic: 0
+    FireClip: {fileID: 8300000, guid: fffbdd24865acec42803a1b86044c731, type: 3}
+    DoesWeaponUseSpread: 1
+    SpreadHalfAngle: 30
+    IsWeaponBurstFire: 1
+    AmountOfBursts: 0
+    TimeBetweenBurstShots: 0.6
+    IsWeaponMultiFire: 1
+    MultiFireShots: 3
+    IsMultiFireSpreadRandom: 1

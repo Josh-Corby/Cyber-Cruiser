@@ -10,6 +10,7 @@ public class PlayerWeaponController : GameBehaviour
     [SerializeField] private Weapon _chainLightning;
     [SerializeField] private Weapon _currentWeapon;
     [SerializeField] private BeamAttack _beamAttack;
+    private bool _isWeaponFiringHomingProjectiles;
     #endregion
 
     #region Fields
@@ -311,7 +312,7 @@ public class PlayerWeaponController : GameBehaviour
                 PulverizerUpgrade();
                 break;
             case WeaponUpgradeType.Homing:
-                _currentWeapon.CurrentStats.IsWeaponHoming = true;
+                _isWeaponFiringHomingProjectiles = true;
                 break;
             case WeaponUpgradeType.ChainLightning:
                 _currentWeapon = _chainLightning;

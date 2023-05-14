@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6690d9937eefb004b80a60b01e3719af, type: 3}
   m_Name: ChainLightning
   m_EditorClassIdentifier: 
-  weaponName: ChainLightning
-  objectToFire: {fileID: 7804011280605575531, guid: 94b73fff4d492b64280382c32d1a646d, type: 3}
-  isObjectEnemy: 0
-  timeBetweenShots: 0.1
-  holdToFire: 1
-  useSpread: 0
-  spreadAngle: 10
-  burstFire: 0
-  bursts: 3
-  timeBetweenBurstShots: 0.05
-  multiFire: 0
-  multiFireShots: 3
-  isMultiFireSpreadRandom: 0
+  Stats:
+    objectToFire: {fileID: 7804011280605575531, guid: 94b73fff4d492b64280382c32d1a646d, type: 3}
+    TimeBetweenShots: 0.1
+    IsWeaponAutomatic: 1
+    FireClip: {fileID: 8300000, guid: b36d9e4c7b335b9438add8ba1b2b484f, type: 3}
+    DoesWeaponUseSpread: 0
+    SpreadHalfAngle: 0
+    IsWeaponBurstFire: 0
+    AmountOfBursts: 0
+    TimeBetweenBurstShots: 0
+    IsWeaponMultiFire: 0
+    MultiFireShots: 0
+    IsMultiFireSpreadRandom: 0

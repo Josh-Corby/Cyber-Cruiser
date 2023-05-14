@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6690d9937eefb004b80a60b01e3719af, type: 3}
   m_Name: HomingRocketLauncher
   m_EditorClassIdentifier: 
-  weaponName: 
-  objectToFire: {fileID: 2653145768784104840, guid: 6f3aeb39ec11dc14b837dd35b3eda443, type: 3}
-  isObjectEnemy: 1
-  timeBetweenShots: 1
-  holdToFire: 0
-  useSpread: 1
-  spreadAngle: 60
-  burstFire: 0
-  bursts: 3
-  timeBetweenBurstShots: 0.6
-  multiFire: 1
-  multiFireShots: 3
-  isMultiFireSpreadRandom: 0
+  Stats:
+    objectToFire: {fileID: 2653145768784104840, guid: 6f3aeb39ec11dc14b837dd35b3eda443, type: 3}
+    TimeBetweenShots: 1
+    IsWeaponAutomatic: 0
+    FireClip: {fileID: 8300000, guid: fffbdd24865acec42803a1b86044c731, type: 3}
+    DoesWeaponUseSpread: 1
+    SpreadHalfAngle: 60
+    IsWeaponBurstFire: 0
+    AmountOfBursts: 0
+    TimeBetweenBurstShots: 0
+    IsWeaponMultiFire: 1
+    MultiFireShots: 3
+    IsMultiFireSpreadRandom: 0

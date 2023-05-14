@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6690d9937eefb004b80a60b01e3719af, type: 3}
   m_Name: RobodactylWeapon
   m_EditorClassIdentifier: 
-  weaponName: RobodactylWeapon
-  objectToFire: {fileID: 760453196464390188, guid: 130585e77da054b4ba24c84b35d78629, type: 3}
-  isObjectEnemy: 0
-  timeBetweenShots: 1
-  holdToFire: 0
-  useSpread: 1
-  spreadAngle: 15
-  burstFire: 0
-  bursts: 1
-  timeBetweenBurstShots: 0.8
-  multiFire: 1
-  multiFireShots: 2
-  isMultiFireSpreadRandom: 0
+  Stats:
+    objectToFire: {fileID: 760453196464390188, guid: 0bc4f44e95491144f93d1772d1d05593, type: 3}
+    TimeBetweenShots: 1
+    IsWeaponAutomatic: 0
+    FireClip: {fileID: 8300000, guid: 69978527b4480414bbf449aa751ad852, type: 3}
+    DoesWeaponUseSpread: 1
+    SpreadHalfAngle: 15
+    IsWeaponBurstFire: 0
+    AmountOfBursts: 0
+    TimeBetweenBurstShots: 0
+    IsWeaponMultiFire: 1
+    MultiFireShots: 2
+    IsMultiFireSpreadRandom: 1

@@ -12,32 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
   m_Name: Mine_Cluster
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 2653145768784104840, guid: 26d025349807efb46bbcf7de90e66d47, type: 3}
-  unitName: Mine
-  maxHealth: 1
-  explodeOnDeath: 1
-  explosionRadius: 2
-  explosionDamage: 1
-  explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  clusterOnDeath: 1
-  spawnEnemy: 1
-  enemyToSpawn: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
-  objectToSpawn: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
-  amountOfObjects: 4
-  moveTypes: 0
-  speed: 3
-  upDownMovement: 0
-  upDownSpeed: 0
-  upDownDistance: 0
-  seekPlayer: 0
-  seekPlayerY: 0
-  seekPlayerX: 0
-  seekSpeed: 0
-  sinUpDownMovement: 0
-  sinFrequency: 2.6
-  sinMagnitude: 0.03
-  homeOnPlayer: 0
-  homeTurnSpeed: 0
-  homeTime: 0
-  homeDelay: 0
-  homeDelayTime: 0
+  EnemyPrefab: {fileID: 2653145768784104840, guid: 26d025349807efb46bbcf7de90e66d47, type: 3}
+  EnemyName: Mine_Cluster
+  GeneralStats:
+    MaxHealth: 1
+    DoesEnemyExplodeOnDeath: 1
+  MovementStats:
+    MoveType: 0
+    Speed: 3
+    SpeedWhenCrashing: 0
+    UpDownMovementPattern: 0
+    UpDownSpeed: 0
+    UpDownDistance: 0
+    IsEnemyMovingInSinPattern: 0
+    SinWaveFrequency: 0
+    SinWaveMagnitude: 0
+    IsEnemySeekingPlayer: 0
+    IsEnemySeekingPlayerOnYAxis: 0
+    IsEnemySeekingPlayerOnXAxis: 0
+    SeekSpeed: 0
+    IsEnemyHomingOnPlayer: 0
+    HomeTurnSpeed: 0
+    HomeTimeInSeconds: 0
+    IsHomingDelayed: 0
+    HomeDelayTimeInSeconds: 0

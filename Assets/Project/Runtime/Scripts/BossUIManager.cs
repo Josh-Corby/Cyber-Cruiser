@@ -50,7 +50,7 @@ public class BossUIManager : GameBehaviour
 
     public void EnableBossWarningUI(EnemyScriptableObject bossInfo)
     {
-        switch (bossInfo.unitName)
+        switch (bossInfo.EnemyName)
         {
             case "BattleCruiser":
                 _bossWarningImage.sprite = _battleCruiserWarning;
@@ -75,14 +75,14 @@ public class BossUIManager : GameBehaviour
 
     private void EnableBossUI(EnemyScriptableObject boss)
     {
-        SetBossNameText = boss.unitName;
-        EnableSlider(_bossHealthBar, boss.maxHealth);
+        SetBossNameText = boss.EnemyName;
+        UISliderHelper.EnableSlider(_bossHealthBar, boss.GeneralStats.MaxHealth);
     }
 
     private void DisableBossUI()
     {
         _bossHealthBarUI.SetActive(false);
-        DisableSlider(_bossHealthBar);
+        UISliderHelper.DisableSlider(_bossHealthBar);
         _bossNameText.enabled = false;
         SetBossNameText = "";
         DisableBossWarningUI();
@@ -90,6 +90,6 @@ public class BossUIManager : GameBehaviour
 
     private void UpdateBossHealthBar(float value)
     {
-        ChangeSliderValue(_bossHealthBar, value);
+        UISliderHelper.ChangeSliderValue(_bossHealthBar, value);
     }
 }

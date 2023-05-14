@@ -170,7 +170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _seekPlayer: 0
   _moveType: 0
 --- !u!114 &-4359868713181001793
 MonoBehaviour:
@@ -184,11 +183,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7d08aff19691a94fa859ed1581ee62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitInfo: {fileID: 11400000, guid: f9f7b71e06d9e7347a816ac37c62f91f, type: 2}
+  EnemyInfo: {fileID: 11400000, guid: f9f7b71e06d9e7347a816ac37c62f91f, type: 2}
   _spriteRenderer: {fileID: 1718110299894638061}
   _deadSprite: {fileID: 21300000, guid: fe09aa424bd722c428d1d277b78f36a9, type: 3}
-  unitName: Cyber Kraken
-  _currentHealth: 0
   _attackCooldown: 1.5
   _attackTimer: 0
   _topSpawner: {fileID: 0}

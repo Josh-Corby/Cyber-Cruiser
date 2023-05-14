@@ -13,38 +13,38 @@ public class GameplayUIManager : GameBehaviour<GameplayUIManager>
 
     private void OnEnable()
     {
-        PlayerManager.OnPlayerMaxHealthSet += EnableSlider;
-        PlayerManager.OnPlayerCurrentHealthChange += ChangeSliderValue;
+        PlayerManager.OnPlayerMaxHealthSet += UISliderHelper.EnableSlider;
+        PlayerManager.OnPlayerCurrentHealthChange += UISliderHelper.ChangeSliderValue;
 
-        PlayerWeaponController.OnWeaponUpgradeStart += EnableSlider;
-        PlayerWeaponController.OnWeaponUpgradeTimerTick += ChangeSliderValue;
-        PlayerWeaponController.OnWeaponUpgradeFinished += DisableSlider;
-        PlayerWeaponController.OnWeaponHeatInitialized += EnableAndSetSlider;
-        PlayerWeaponController.OnHeatChange += ChangeSliderValue;
+        PlayerWeaponController.OnWeaponUpgradeStart += UISliderHelper.EnableSlider;
+        PlayerWeaponController.OnWeaponUpgradeTimerTick += UISliderHelper.ChangeSliderValue;
+        PlayerWeaponController.OnWeaponUpgradeFinished += UISliderHelper.DisableSlider;
+        PlayerWeaponController.OnWeaponHeatInitialized += UISliderHelper.EnableAndSetSlider;
+        PlayerWeaponController.OnHeatChange += UISliderHelper.ChangeSliderValue;
         PlayerWeaponController.OnOverheatStatusChange += OverheatUI;
 
-        PlayerShieldController.OnPlayerShieldsActivated += EnableSlider;
-        PlayerShieldController.OnPlayerShieldsDeactivated += DisableSlider;
-        PlayerShieldController.OnPlayerShieldsValueChange += ChangeSliderValue;
+        PlayerShieldController.OnPlayerShieldsActivated += UISliderHelper.EnableSlider;
+        PlayerShieldController.OnPlayerShieldsDeactivated += UISliderHelper.DisableSlider;
+        PlayerShieldController.OnPlayerShieldsValueChange += UISliderHelper.ChangeSliderValue;
 
         _weaponUpgradeBarUI.SetActive(false);
     }
 
     private void OnDisable()
     {
-        PlayerManager.OnPlayerMaxHealthSet -= EnableSlider;
-        PlayerManager.OnPlayerCurrentHealthChange -= ChangeSliderValue;
+        PlayerManager.OnPlayerMaxHealthSet -= UISliderHelper.EnableSlider;
+        PlayerManager.OnPlayerCurrentHealthChange -= UISliderHelper.ChangeSliderValue;
 
-        PlayerWeaponController.OnWeaponUpgradeStart -= EnableSlider;
-        PlayerWeaponController.OnWeaponUpgradeTimerTick -= ChangeSliderValue;
-        PlayerWeaponController.OnWeaponUpgradeFinished -= DisableSlider;
-        PlayerWeaponController.OnWeaponHeatInitialized -= EnableAndSetSlider;
-        PlayerWeaponController.OnHeatChange -= ChangeSliderValue;
+        PlayerWeaponController.OnWeaponUpgradeStart -= UISliderHelper.EnableSlider;
+        PlayerWeaponController.OnWeaponUpgradeTimerTick -= UISliderHelper.ChangeSliderValue;
+        PlayerWeaponController.OnWeaponUpgradeFinished -= UISliderHelper.DisableSlider;
+        PlayerWeaponController.OnWeaponHeatInitialized -= UISliderHelper.EnableAndSetSlider;
+        PlayerWeaponController.OnHeatChange -= UISliderHelper.ChangeSliderValue;
         PlayerWeaponController.OnOverheatStatusChange -= OverheatUI;
 
-        PlayerShieldController.OnPlayerShieldsActivated -= EnableSlider;
-        PlayerShieldController.OnPlayerShieldsDeactivated -= DisableSlider;
-        PlayerShieldController.OnPlayerShieldsValueChange -= ChangeSliderValue;
+        PlayerShieldController.OnPlayerShieldsActivated -= UISliderHelper.EnableSlider;
+        PlayerShieldController.OnPlayerShieldsDeactivated -= UISliderHelper.DisableSlider;
+        PlayerShieldController.OnPlayerShieldsValueChange -= UISliderHelper.ChangeSliderValue;
     }
 
     private void OverheatUI(UISlider slider, bool status)

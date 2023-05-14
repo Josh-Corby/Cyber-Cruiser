@@ -12,33 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
   m_Name: Slicer
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 2653145768784104840, guid: 2fec4a945356f4243890bd799d60aa11, type: 3}
-  unitName: Slicer
-  maxHealth: 2
-  explodeOnDeath: 0
-  explosionRadius: 1
-  explosionDamage: 1
-  explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  clusterOnDeath: 0
-  spawnEnemy: 0
-  enemyToSpawn: {fileID: 0}
-  objectToSpawn: {fileID: 0}
-  amountOfObjects: 0
-  moveTypes: 2
-  speed: 8
-  crashSpeed: 8
-  upDownMovement: 0
-  upDownSpeed: 0
-  upDownDistance: 0
-  seekPlayer: 1
-  seekPlayerY: 0
-  seekPlayerX: 1
-  seekSpeed: 30
-  sinUpDownMovement: 0
-  sinFrequency: 0
-  sinMagnitude: 0
-  homeOnPlayer: 0
-  homeTurnSpeed: 0
-  homeTime: 0
-  homeDelay: 0
-  homeDelayTime: 0
+  EnemyPrefab: {fileID: 2653145768784104840, guid: 2fec4a945356f4243890bd799d60aa11, type: 3}
+  EnemyName: Slicer
+  GeneralStats:
+    MaxHealth: 2
+    DoesEnemyExplodeOnDeath: 0
+  MovementStats:
+    MoveType: 2
+    Speed: 8
+    SpeedWhenCrashing: 8
+    UpDownMovementPattern: 0
+    UpDownSpeed: 0
+    UpDownDistance: 0
+    IsEnemyMovingInSinPattern: 0
+    SinWaveFrequency: 0
+    SinWaveMagnitude: 0
+    IsEnemySeekingPlayer: 1
+    IsEnemySeekingPlayerOnYAxis: 0
+    IsEnemySeekingPlayerOnXAxis: 1
+    SeekSpeed: 30
+    IsEnemyHomingOnPlayer: 0
+    HomeTurnSpeed: 0
+    HomeTimeInSeconds: 0
+    IsHomingDelayed: 0
+    HomeDelayTimeInSeconds: 0

@@ -12,33 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
   m_Name: Blimp_4x2
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
-  unitName: Blimp
-  maxHealth: 6
-  explodeOnDeath: 0
-  explosionRadius: 0
-  explosionDamage: 0
-  explosionEffect: {fileID: 0}
-  clusterOnDeath: 0
-  spawnEnemy: 0
-  enemyToSpawn: {fileID: 0}
-  objectToSpawn: {fileID: 0}
-  amountOfObjects: 0
-  moveTypes: 0
-  speed: 2
-  crashSpeed: 4
-  upDownMovement: 0
-  upDownSpeed: 0
-  upDownDistance: 0
-  seekPlayer: 0
-  seekPlayerY: 0
-  seekPlayerX: 0
-  seekSpeed: 0
-  sinUpDownMovement: 0
-  sinFrequency: 0
-  sinMagnitude: 0
-  homeOnPlayer: 0
-  homeTurnSpeed: 0
-  homeTime: 0
-  homeDelay: 0
-  homeDelayTime: 0
+  EnemyPrefab: {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
+  EnemyName: Blimp_4x2
+  GeneralStats:
+    MaxHealth: 6
+    DoesEnemyExplodeOnDeath: 0
+  MovementStats:
+    MoveType: 0
+    Speed: 2
+    SpeedWhenCrashing: 4
+    UpDownMovementPattern: 0
+    UpDownSpeed: 0
+    UpDownDistance: 0
+    IsEnemyMovingInSinPattern: 0
+    SinWaveFrequency: 0
+    SinWaveMagnitude: 0
+    IsEnemySeekingPlayer: 0
+    IsEnemySeekingPlayerOnYAxis: 0
+    IsEnemySeekingPlayerOnXAxis: 0
+    SeekSpeed: 0
+    IsEnemyHomingOnPlayer: 0
+    HomeTurnSpeed: 0
+    HomeTimeInSeconds: 0
+    IsHomingDelayed: 0
+    HomeDelayTimeInSeconds: 0

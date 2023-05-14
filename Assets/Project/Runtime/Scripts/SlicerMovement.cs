@@ -17,11 +17,11 @@ public class SlicerMovement : EnemyMovement
 
     protected override void Update()
     {
-        if (_seekPlayer)
+        if (_isEnemySeekingPlayer)
         {
             if (_seekCounter <= 0)
             {
-                _seekPlayer = false;
+                _isEnemySeekingPlayer = false;
                 return;
             }
             SeekX();
@@ -36,8 +36,8 @@ public class SlicerMovement : EnemyMovement
         //if only one slicer was spawned
         if (EM.slicersSeeking.Count == 0)
         {
-            _seekPlayer = true;
-            _seekPlayerX = true;
+            _isEnemySeekingPlayer = true;
+            _isEnemySeekingPlayerOnXAxis = true;
             _seekCounter = _seekTime;
             OnStartSeeking(gameObject);
             return;
@@ -53,15 +53,15 @@ public class SlicerMovement : EnemyMovement
                 if (slicer == this) continue;
 
                 //if any slicer is seeking the player
-                if (slicer._seekPlayer)
+                if (slicer._isEnemySeekingPlayer)
                 {
                     //don't seek the player
-                    _seekPlayer = false;
+                    _isEnemySeekingPlayer = false;
                     return;
                 }
             }
             //if none of the slicers are seeking the player then seek
-            _seekPlayer = true;
+            _isEnemySeekingPlayer = true;
             OnStartSeeking(gameObject);
         }
     }

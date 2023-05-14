@@ -5,19 +5,14 @@ using Random = UnityEngine.Random;
 
 public class Weapon : GameBehaviour
 {
-    #region References
-    [SerializeField] private WeaponScriptableObject _baseStats;
+    [SerializeField] private WeaponScriptableObject _weaponBase;
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _fireClip;
     private WeaponStats _stats;
     private GameObject _firePoint;
     private Transform _firePointTransform;
-    #endregion
 
-    #region Fields
     private bool _readyToFire;
     protected bool _autoFire;
-    #endregion
 
     public bool ReadyToFire { get => _readyToFire; }
 
@@ -42,13 +37,13 @@ public class Weapon : GameBehaviour
 
         if (_audioSource != null)
         {
-            _audioSource.clip = _fireClip;
+            _audioSource.clip = _weaponBase.Stats.FireClip;
         }
     }
 
     public void ResetWeapon()
     {
-        _stats = _baseStats.Stats;
+        _stats = _weaponBase.Stats;
     }
 
     private void Update()
@@ -152,12 +147,6 @@ public class Weapon : GameBehaviour
     private void FireBullet(Quaternion direction)
     {
         GameObject bullet = Instantiate(_stats.objectToFire, _firePointTransform.position, direction);
-
-        if (_stats.IsWeaponHoming)
-        {
-            bullet.GetComponent<Bullet>().IsHoming = true;
-        }
-
         if (_audioSource != null)
         {
             PlayFireSFX();
@@ -182,7 +171,7 @@ public class WeaponStats
     public GameObject objectToFire;
     public float TimeBetweenShots;
     public bool IsWeaponAutomatic;
-    public bool IsWeaponHoming;
+    public AudioClip FireClip;
 
     [Header("Spread")]
     public bool DoesWeaponUseSpread;

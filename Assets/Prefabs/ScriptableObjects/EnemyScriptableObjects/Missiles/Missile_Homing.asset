@@ -12,32 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
   m_Name: Missile_Homing
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 2653145768784104840, guid: 0f1e8bf274a42564ca36a284fb8da74a, type: 3}
-  unitName: Homing Missile
-  maxHealth: 1
-  explodeOnDeath: 1
-  explosionRadius: 2
-  explosionDamage: 1
-  explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  clusterOnDeath: 0
-  spawnEnemy: 0
-  enemyToSpawn: {fileID: 0}
-  objectToSpawn: {fileID: 0}
-  amountOfObjects: 0
-  moveTypes: 4
-  speed: 6
-  upDownMovement: 0
-  upDownSpeed: 0
-  upDownDistance: 0
-  seekPlayer: 0
-  seekPlayerY: 0
-  seekPlayerX: 0
-  seekSpeed: 0
-  sinUpDownMovement: 0
-  sinFrequency: 0
-  sinMagnitude: 0
-  homeOnPlayer: 1
-  homeTurnSpeed: 100
-  homeTime: 2
-  homeDelay: 1
-  homeDelayTime: 0.5
+  EnemyPrefab: {fileID: 2653145768784104840, guid: 6f3aeb39ec11dc14b837dd35b3eda443, type: 3}
+  EnemyName: Homing Missile
+  GeneralStats:
+    MaxHealth: 1
+    DoesEnemyExplodeOnDeath: 1
+  MovementStats:
+    MoveType: 4
+    Speed: 6
+    SpeedWhenCrashing: 0
+    UpDownMovementPattern: 0
+    UpDownSpeed: 0
+    UpDownDistance: 0
+    IsEnemyMovingInSinPattern: 0
+    SinWaveFrequency: 0
+    SinWaveMagnitude: 0
+    IsEnemySeekingPlayer: 0
+    IsEnemySeekingPlayerOnYAxis: 0
+    IsEnemySeekingPlayerOnXAxis: 0
+    SeekSpeed: 0
+    IsEnemyHomingOnPlayer: 1
+    HomeTurnSpeed: 100
+    HomeTimeInSeconds: 2
+    IsHomingDelayed: 1
+    HomeDelayTimeInSeconds: 0.5

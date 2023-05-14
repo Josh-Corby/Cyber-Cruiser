@@ -87,20 +87,20 @@ public class GunshipMovement : EnemyMovement
         switch (gunshipMoveType)
         {
             case GunshipMoveTypes.PlayerFollow:
-                _seekPlayer = true;
-                _seekPlayerY = true;
+                _isEnemySeekingPlayer = true;
+                _isEnemySeekingPlayerOnYAxis = true;
                 _seekSpeed = fastSeekSpeed;
                 break;
 
             case GunshipMoveTypes.SlowPlayerFollow:
-                _seekPlayer = true;
-                _seekPlayerY = true;
+                _isEnemySeekingPlayer = true;
+                _isEnemySeekingPlayerOnYAxis = true;
                 _seekSpeed = slowSeekSpeed;
                 break;
             case GunshipMoveTypes.UpDown:
-                _upDownMovement = true;
+                _isEnemyMovingUpDown = true;
                 _upDownSpeed = _speed;
-                _upDownMoveDistance = 1;
+                _upDownDistance = 1;
                 break;
         }
     }

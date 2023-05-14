@@ -12,6 +12,7 @@ public class PlayerRankManager : GameBehaviour<PlayerRankManager>
     private int _currentStars;
     private int _starsBeforeMissionStart;
     private int _starsToGain;
+    [SerializeField]
     private int _totalStarReward;
     #endregion
 
@@ -71,7 +72,8 @@ public class PlayerRankManager : GameBehaviour<PlayerRankManager>
 
         else
         {
-            _currentStars = PlayerPrefs.GetInt(nameof(PLAYER_STARS));
+            _currentStars = 0;
+            //_currentStars = PlayerPrefs.GetInt(nameof(PLAYER_STARS));
             _starsBeforeMissionStart = _currentStars;
         }
     }

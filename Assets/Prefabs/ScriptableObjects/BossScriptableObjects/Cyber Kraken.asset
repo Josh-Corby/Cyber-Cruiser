@@ -12,33 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
   m_Name: Cyber Kraken
   m_EditorClassIdentifier: 
-  unitPrefab: {fileID: 1686505066082717662, guid: a66577e6ad684484ab66edd9c0cc193f, type: 3}
-  unitName: Cyber Kraken
-  maxHealth: 50
-  explodeOnDeath: 0
-  explosionRadius: 1
-  explosionDamage: 0
-  explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  clusterOnDeath: 0
-  spawnEnemy: 0
-  enemyToSpawn: {fileID: 0}
-  objectToSpawn: {fileID: 0}
-  amountOfObjects: 0
-  moveTypes: 0
-  speed: 2
-  crashSpeed: 4
-  upDownMovement: 0
-  upDownSpeed: 0
-  upDownDistance: 0
-  seekPlayer: 0
-  seekPlayerY: 0
-  seekPlayerX: 0
-  seekSpeed: 0
-  sinUpDownMovement: 0
-  sinFrequency: 0
-  sinMagnitude: 0
-  homeOnPlayer: 0
-  homeTurnSpeed: 0
-  homeTime: 0
-  homeDelay: 0
-  homeDelayTime: 0
+  EnemyPrefab: {fileID: 1686505066082717662, guid: a66577e6ad684484ab66edd9c0cc193f, type: 3}
+  EnemyName: Cyber Kraken
+  GeneralStats:
+    MaxHealth: 50
+    DoesEnemyExplodeOnDeath: 0
+  MovementStats:
+    MoveType: 0
+    Speed: 2
+    SpeedWhenCrashing: 4
+    UpDownMovementPattern: 0
+    UpDownSpeed: 0
+    UpDownDistance: 0
+    IsEnemyMovingInSinPattern: 0
+    SinWaveFrequency: 0
+    SinWaveMagnitude: 0
+    IsEnemySeekingPlayer: 0
+    IsEnemySeekingPlayerOnYAxis: 0
+    IsEnemySeekingPlayerOnXAxis: 0
+    SeekSpeed: 0
+    IsEnemyHomingOnPlayer: 0
+    HomeTurnSpeed: 0
+    HomeTimeInSeconds: 0
+    IsHomingDelayed: 0
+    HomeDelayTimeInSeconds: 0

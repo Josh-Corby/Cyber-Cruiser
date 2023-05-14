@@ -146,8 +146,8 @@ public class EnemySpawner : GameBehaviour
 
     public void SpawnBoss(EnemyScriptableObject bossInfo)
     {
-        GameObject bossObject = bossInfo.unitPrefab;
-        bossObject.GetComponent<Enemy>()._unitInfo = bossInfo;
+        GameObject bossObject = bossInfo.EnemyPrefab;
+        bossObject.GetComponent<Enemy>().EnemyInfo = bossInfo;
         Instantiate(bossObject, transform.position, transform.rotation);
         AddSpeedModifier(bossObject);
         OnBossSpawned(bossInfo);

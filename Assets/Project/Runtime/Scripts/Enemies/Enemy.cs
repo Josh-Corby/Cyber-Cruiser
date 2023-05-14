@@ -1,32 +1,29 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyMovement))]
 public class Enemy : GameBehaviour, IDamageable
 {
     protected const string DEAD_ENEMY_LAYER_NAME = "DeadEnemy";
 
     #region References
-
-    public EnemyScriptableObject _unitInfo;
-    private EnemyMovement _unitMovement;
+    public EnemyScriptableObject EnemyInfo;
+    private EnemyMovement _enemyMovement;
     private EnemyWeaponController _weapon;
-    private Animator _animator;
+    private ExplodingObject _explosion;
     private GameObject _crashParticles;
-    private GameObject _explosionEffect;
-
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private Sprite _deadSprite;
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _explodeClip;
     #endregion
 
-    #region Fields
-    public string unitName;
-    [SerializeField] protected float _currentHealth;
+
+    private Animator _animator;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Sprite _deadSprite;
+
+    #region Local Enemy General Stats
+    private string _enemyName;
     protected float _maxHealth;
-    private float _explosionRadius;
-    private float _explosionDamage;
-    protected bool _explodeOnDeath;
+    protected float _currentHealth;
+    protected bool _doesEnemyExplodeOnDeath;
     #endregion
 
     #region Actions
@@ -35,45 +32,42 @@ public class Enemy : GameBehaviour, IDamageable
     #endregion
 
     protected virtual void Awake()
-    {
+    {      
         AssignEnemyInfo();
     }
 
     private void AssignEnemyInfo()
+    {    
+        _enemyName = EnemyInfo.EnemyName;
+        gameObject.name = _enemyName;
+        _maxHealth = EnemyInfo.GeneralStats.MaxHealth;
+        _currentHealth = _maxHealth;
+        _doesEnemyExplodeOnDeath = EnemyInfo.GeneralStats.DoesEnemyExplodeOnDeath;
+        GetComponents();
+        _enemyMovement.AssignEnemyMovementInfo(EnemyInfo.MovementStats);
+
+        OnEnemyAliveStateChange(gameObject, true);
+    }
+
+    private void GetComponents()
     {
         _animator = GetComponentInChildren<Animator>();
         _weapon = GetComponentInChildren<EnemyWeaponController>();
-        unitName = _unitInfo.unitName;
-        gameObject.name = unitName;
-        _maxHealth = _unitInfo.maxHealth;
-        _currentHealth = _maxHealth;
-        _explodeOnDeath = _unitInfo.explodeOnDeath;
+        _enemyMovement = GetComponent<EnemyMovement>();
 
-        if (_explodeOnDeath)
+        if (_doesEnemyExplodeOnDeath)
         {
-            _explosionRadius = _unitInfo.explosionRadius;
-            _explosionDamage = _unitInfo.explosionDamage;
-            _explosionEffect = _unitInfo.explosionEffect;
+            _explosion = GetComponent<ExplodingObject>();
         }
 
-        if (TryGetComponent<EnemyMovement>(out var enemyMovement))
+        else
         {
-            _unitMovement = enemyMovement;
-            _unitMovement.AssignEnemyMovementInfo(_unitInfo);
-        }
-
-        if (!_explodeOnDeath)
-        {
-
             _crashParticles = transform.GetComponentInChildren<ParticleSystem>().gameObject;
-            if (_crashParticles == null)
+            if (_crashParticles != null)
             {
-                return;
+                _crashParticles.SetActive(false);
             }
-            _crashParticles.SetActive(false);
         }
-
-        OnEnemyAliveStateChange(gameObject, true);
     }
 
     public virtual void Damage(float damage)
@@ -81,10 +75,12 @@ public class Enemy : GameBehaviour, IDamageable
         _currentHealth -= damage;
         if (_currentHealth <= 0)
         {
-            if (_explodeOnDeath)
+            if (_doesEnemyExplodeOnDeath)
             {
                 Explode();
+                _doesEnemyExplodeOnDeath = false;
             }
+
             else
             {
                 Crash();
@@ -92,32 +88,16 @@ public class Enemy : GameBehaviour, IDamageable
         }
     }
 
-    protected void Explode()
+    private void Explode()
     {
-        GameObject explosionEffect = Instantiate(_explosionEffect, transform);
-        explosionEffect.GetComponent<ExplosionGraphic>().ExplosionRadius = _explosionRadius;
-        explosionEffect.transform.SetParent(null);
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _explosionRadius);
-
-        foreach (Collider2D collider in colliders)
-        {
-            if (!collider.TryGetComponent<PlayerManager>(out var player))
-            {
-                continue;
-            }
-            else
-            {
-                player.Damage(_explosionDamage);
-            }
-        }   
-        Destroy();
+        _explosion.Explode(Destroy);
     }
 
     protected virtual void Crash()
     {
-        if (_unitMovement != null)
+        if (_enemyMovement != null)
         {
-            _unitMovement.IsEnemyDead = true;
+            _enemyMovement.IsEnemyDead = true;
         }
 
         if (_weapon != null)
@@ -146,15 +126,14 @@ public class Enemy : GameBehaviour, IDamageable
     {
         OnEnemyAliveStateChange(gameObject, false);
         Destroy(gameObject);
-    }
+    } 
+}
 
-    private void OnDrawGizmosSelected()
-    {
-        if (_explodeOnDeath)
-        {
-            Gizmos.DrawWireSphere(transform.position, _explosionRadius);
-        }
-    }
+[Serializable]
+public struct EnemyStats
+{
+    public float MaxHealth;
+    public bool DoesEnemyExplodeOnDeath;
 }
 
 [Serializable]
