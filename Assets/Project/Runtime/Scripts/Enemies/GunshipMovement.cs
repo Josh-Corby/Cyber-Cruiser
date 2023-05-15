@@ -30,14 +30,14 @@ public class GunshipMovement : EnemyMovement
     private void ChooseMovementType()
     {
         //if this gunship is the only one in the list default
-        if (EM.gunshipsToProcess.Count == 1)
+        if (EnemyManagerInstance.gunshipsToProcess.Count == 1)
         {
             gunshipMoveType = GunshipMoveTypes.PlayerFollow;
             SetEnemyMovementType(gunshipMoveType);
         }
 
         //if there are currently any other gunships alive go through them to check what movetype should be assigned to this gunship
-        else if (EM.gunshipsToProcess.Count > 1)
+        else if (EnemyManagerInstance.gunshipsToProcess.Count > 1)
         {
             CheckForPlayerFollow();
         }
@@ -46,7 +46,7 @@ public class GunshipMovement : EnemyMovement
     private void CheckForPlayerFollow()
     {
         //check if any of the other currently alive gunships are directly following the player
-        foreach (GunshipMovement gunship in EM.gunshipsToProcess)
+        foreach (GunshipMovement gunship in EnemyManagerInstance.gunshipsToProcess)
         {
             if (gunship == this) continue;
 
@@ -65,7 +65,7 @@ public class GunshipMovement : EnemyMovement
     private void CheckForSlowPlayerFollow()
     {
         //chekc if any of the other currently alive gunships are slow following the player
-        foreach (GunshipMovement gunship in EM.gunshipsToProcess)
+        foreach (GunshipMovement gunship in EnemyManagerInstance.gunshipsToProcess)
         {
             if (gunship == this) continue;
 

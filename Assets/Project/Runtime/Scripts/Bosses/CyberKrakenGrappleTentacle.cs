@@ -16,7 +16,7 @@ public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
     {
         if (_isPlayerGrappled)
         {
-            if (!PM.isDead)
+            if (!PlayerManagerInstance.isDead)
             {
                 ResetPlayerMovement();
             }
@@ -51,7 +51,7 @@ public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
 
     private void PullPlayer()
     {
-        PM.player.transform.position = transform.parent.position;
+        PlayerManagerInstance.player.transform.position = transform.parent.position;
     }
 
     private void ResetPlayerMovement()

@@ -21,7 +21,7 @@ public class Robodactyl : Boss, IBoss
     //Release Mine
     public void Attack2()
     {
-        GameObject mine = Instantiate(EM.CreateEnemyFromSO(_mineInfo), _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
+        GameObject mine = Instantiate(EnemyManagerInstance.CreateEnemyFromSO(_mineInfo), _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
         mine.transform.parent = null;
     }
 

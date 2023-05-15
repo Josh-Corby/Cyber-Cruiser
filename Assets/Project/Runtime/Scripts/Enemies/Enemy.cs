@@ -32,12 +32,12 @@ public class Enemy : GameBehaviour, IDamageable
     #endregion
 
     protected virtual void Awake()
-    {      
+    {
         AssignEnemyInfo();
     }
 
     private void AssignEnemyInfo()
-    {    
+    {
         _enemyName = EnemyInfo.EnemyName;
         gameObject.name = _enemyName;
         _maxHealth = EnemyInfo.GeneralStats.MaxHealth;
@@ -126,13 +126,13 @@ public class Enemy : GameBehaviour, IDamageable
     {
         OnEnemyAliveStateChange(gameObject, false);
         Destroy(gameObject);
-    } 
+    }
 }
 
 [Serializable]
 public struct EnemyStats
 {
-    public float MaxHealth;
+    public int MaxHealth;
     public bool DoesEnemyExplodeOnDeath;
 }
 

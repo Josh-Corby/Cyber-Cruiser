@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplodingObject : GameBehaviour
@@ -24,7 +22,7 @@ public class ExplodingObject : GameBehaviour
 
     private void Awake()
     {
-        if(clusterOnDeath)
+        if (clusterOnDeath)
         {
             ValidateObjectToSpawn();
         }
@@ -34,7 +32,7 @@ public class ExplodingObject : GameBehaviour
     {
         if (isClusterSpawningAUnit)
         {
-            _objectToSpawn = EM.CreateEnemyFromSO(enemyToSpawn);
+            _objectToSpawn = EnemyManagerInstance.CreateEnemyFromSO(enemyToSpawn);
         }
 
         else
@@ -52,7 +50,7 @@ public class ExplodingObject : GameBehaviour
 
         foreach (Collider2D collider in colliders)
         {
-            if(collider.TryGetComponent<IDamageable>(out var damageable))
+            if (collider.TryGetComponent<IDamageable>(out var damageable))
             {
                 damageable.Damage(_explosionDamage);
             }

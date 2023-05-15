@@ -20,8 +20,8 @@ public class CyberKraken : Boss, IBoss
 
     protected override void Awake()
     {
-        _topSpawner = ESM._topSpawner;
-        _bottomSpawner = ESM._bottomSpawner;
+        _topSpawner = EnemySpawnerManagerInstance._topSpawner;
+        _bottomSpawner = EnemySpawnerManagerInstance._bottomSpawner;
         base.Awake();
     }
     //spawn tentacle at top or bottom of screen
@@ -53,7 +53,7 @@ public class CyberKraken : Boss, IBoss
 
     private float GetDirectionToPlayer()
     {
-        Vector2 directionToPlayer = PM.player.transform.position - _grappleTentacleSpawnPoint.transform.position;
+        Vector2 directionToPlayer = PlayerManagerInstance.player.transform.position - _grappleTentacleSpawnPoint.transform.position;
         float rotationZ = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
         //directionToPlayer.Normalize();
         return rotationZ;

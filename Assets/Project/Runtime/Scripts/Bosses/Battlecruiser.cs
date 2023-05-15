@@ -62,7 +62,7 @@ public class Battlecruiser : Boss, IBoss
     {
         for (int i = 0; i < _minesToFire; i++)
         {
-            GameObject mineObject = EM.CreateEnemyFromSO(_seekerMineInfo);
+            GameObject mineObject = EnemyManagerInstance.CreateEnemyFromSO(_seekerMineInfo);
             GameObject seekermine = Instantiate(mineObject, _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
             seekermine.transform.SetParent(null);
         }

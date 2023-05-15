@@ -14,7 +14,7 @@ public class PlayerPlasmaTextDisplay : GameBehaviour
     private void OnEnable()
     {
         PlayerStatsManager.OnPlasmaChange += UpdatePlasmaText;
-        UpdatePlasmaText(PSM.PlayerPlasma);
+        UpdatePlasmaText(PlayerStatsManagerInstance.PlayerPlasma);
     }
 
     private void OnDisable()

@@ -39,7 +39,7 @@ public class EnemyMovement : GameBehaviour
 
     protected virtual void Awake()
     {
-        _player = PM.player.transform;
+        _player = PlayerManagerInstance.player.transform;
     }
 
     //Could definately reference local movement stats directly but at the moment I prefer this approach as it takes away a step in referencing
@@ -250,13 +250,13 @@ public class EnemyMovement : GameBehaviour
 
     private void SeekY()
     {
-        transform.position = Vector2.MoveTowards(transform.position, 
+        transform.position = Vector2.MoveTowards(transform.position,
             new Vector2(transform.position.x, _player.position.y), _seekSpeed * Time.deltaTime);
     }
 
     protected void SeekX()
     {
-        transform.position = Vector2.MoveTowards(transform.position, 
+        transform.position = Vector2.MoveTowards(transform.position,
             new Vector2(_player.position.x, transform.position.y), _seekSpeed * Time.deltaTime);
     }
     #endregion
@@ -276,7 +276,7 @@ public class EnemyMovement : GameBehaviour
 }
 
 [Serializable]
-public struct EnemyMovementStats 
+public struct EnemyMovementStats
 {
     [Header("Movement Info")]
     public EnemyMovementType MoveType;
