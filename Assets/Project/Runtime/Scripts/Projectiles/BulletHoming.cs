@@ -1,89 +1,92 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletHoming : MonoBehaviour
+namespace CyberCruiser
 {
-    private Bullet bullet;
-    [SerializeField] private List<GameObject> _enemiesInHomingRange = new();
-    private GameObject _homingTarget;
-    private float _distanceToTarget;
+    public class BulletHoming : MonoBehaviour
+    {
+        private Bullet bullet;
+        [SerializeField] private List<GameObject> _enemiesInHomingRange = new();
+        private GameObject _homingTarget;
+        private float _distanceToTarget;
 
-    private void Awake()
-    {
-        bullet = GetComponentInParent<Bullet>();
-    }
-    private void Update()
-    {
-        if (bullet.homingTarget == null)
+        private void Awake()
         {
-            FindClosestEnemy();
+            bullet = GetComponentInParent<Bullet>();
         }
-    }
-
-    private void FindClosestEnemy()
-    {
-        _homingTarget = null;
-        float minDistance = float.MaxValue;
-
-        for (int i = 0; i < _enemiesInHomingRange.Count; i++)
+        private void Update()
         {
-            if (_enemiesInHomingRange[i] == null)
+            if (bullet.HomingTarget == null)
             {
-                _enemiesInHomingRange.Remove(_enemiesInHomingRange[i]);
-                continue;
-            }
-
-            _distanceToTarget = Vector2.Distance(transform.position, _enemiesInHomingRange[i].transform.position);
-            if (_distanceToTarget < minDistance)
-            {
-                minDistance = _distanceToTarget;
-                _homingTarget = _enemiesInHomingRange[i];
+                FindClosestEnemy();
             }
         }
-        bullet.homingTarget = _homingTarget;
-    }
 
-    public void ClearEnemiesInRange()
-    {
-        _enemiesInHomingRange.Clear();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<Shield>(out var shield))
+        private void FindClosestEnemy()
         {
-            if (!collision.GetComponentInParent<Enemy>())
+            _homingTarget = null;
+            float minDistance = float.MaxValue;
+
+            for (int i = 0; i < _enemiesInHomingRange.Count; i++)
+            {
+                if (_enemiesInHomingRange[i] == null)
+                {
+                    _enemiesInHomingRange.Remove(_enemiesInHomingRange[i]);
+                    continue;
+                }
+
+                _distanceToTarget = Vector2.Distance(transform.position, _enemiesInHomingRange[i].transform.position);
+                if (_distanceToTarget < minDistance)
+                {
+                    minDistance = _distanceToTarget;
+                    _homingTarget = _enemiesInHomingRange[i];
+                }
+            }
+            bullet.HomingTarget = _homingTarget;
+        }
+
+        public void ClearEnemiesInRange()
+        {
+            _enemiesInHomingRange.Clear();
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.TryGetComponent<Shield>(out var shield))
+            {
+                if (!collision.GetComponentInParent<Enemy>())
+                {
+                    return;
+                }
+            }
+
+            else if (!collision.TryGetComponent<Enemy>(out var enemy))
             {
                 return;
             }
+
+            _enemiesInHomingRange.Add(collision.gameObject);
         }
 
-        else if (!collision.TryGetComponent<Enemy>(out var enemy))
+        private void OnTriggerExit2D(Collider2D collision)
         {
-            return;
-        }
-
-        _enemiesInHomingRange.Add(collision.gameObject);
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent<Enemy>(out var enemy))
-        {
-            if (bullet.homingTarget = enemy.gameObject)
+            if (collision.TryGetComponent<Enemy>(out var enemy))
             {
-                bullet.homingTarget = null;
+                if (bullet.HomingTarget = enemy.gameObject)
+                {
+                    bullet.HomingTarget = null;
+                }
+                _enemiesInHomingRange.Remove(enemy.gameObject);
             }
-            _enemiesInHomingRange.Remove(enemy.gameObject);
-        }
 
-        if (collision.TryGetComponent<Shield>(out var shield))
-        {
-            if (bullet.homingTarget = shield.gameObject)
+            if (collision.TryGetComponent<Shield>(out var shield))
             {
-                bullet.homingTarget = null;
+                if (bullet.HomingTarget = shield.gameObject)
+                {
+                    bullet.HomingTarget = null;
+                }
+                _enemiesInHomingRange.Remove(shield.gameObject);
             }
-            _enemiesInHomingRange.Remove(shield.gameObject);
         }
     }
 }

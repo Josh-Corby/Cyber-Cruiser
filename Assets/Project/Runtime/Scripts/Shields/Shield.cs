@@ -1,66 +1,69 @@
 using UnityEngine;
 
-public class Shield : MonoBehaviour
+namespace CyberCruiser
 {
-    public ShieldControllerBase _shieldController;
-    [SerializeField] private Collider2D _shieldCollider;
-    private SpriteRenderer _spriteRenderer;
-    private Color _tempColour;
-    private float _startAlpha;
-
-    private void Awake()
+    public class Shield : MonoBehaviour
     {
-        _shieldController = GetComponentInParent<ShieldControllerBase>();
-        _shieldCollider = GetComponent<Collider2D>();
-        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    }
+        public ShieldControllerBase _shieldController;
+        [SerializeField] private Collider2D _shieldCollider;
+        private SpriteRenderer _spriteRenderer;
+        private Color _tempColour;
+        private float _startAlpha;
 
-    private void Start()
-    {
-        _startAlpha = _spriteRenderer.color.a;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Vector2 closestCollision = GetClosestCollisionPoint(collision.contacts);
-        _shieldController.ProcessCollision(collision.gameObject, closestCollision);
-    }
-
-    private Vector2 GetClosestCollisionPoint(ContactPoint2D[] contacts)
-    {
-        Vector2 closestPoint = Vector2.zero;
-        float closestDistance = Mathf.Infinity;
-
-        foreach (ContactPoint2D contact in contacts)
+        private void Awake()
         {
-            float distance = Vector2.Distance(transform.position, contact.point);
-
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closestPoint = contact.point;
-            }
+            _shieldController = GetComponentInParent<ShieldControllerBase>();
+            _shieldCollider = GetComponent<Collider2D>();
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
-        return closestPoint;
-    }
 
-    public void ToggleShields(bool value)
-    {
-        _shieldCollider.enabled = value;
-        _spriteRenderer.enabled = value;
-    }
+        private void Start()
+        {
+            _startAlpha = _spriteRenderer.color.a;
+        }
 
-    public void SetTargetAlpha(float currentStrength, float maxStrength)
-    {
-        float currentPercentStrength = currentStrength / maxStrength;
-        float targetAlpha = _startAlpha * currentPercentStrength;
-        ChangeSpriteRendererAlpha(targetAlpha);
-    }
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            Vector2 closestCollision = GetClosestCollisionPoint(collision.contacts);
+            _shieldController.ProcessCollision(collision.gameObject, closestCollision);
+        }
 
-    public void ChangeSpriteRendererAlpha(float targetAlpha)
-    {
-        _tempColour = _spriteRenderer.color;
-        _tempColour.a = targetAlpha;
-        _spriteRenderer.color = _tempColour;
+        private Vector2 GetClosestCollisionPoint(ContactPoint2D[] contacts)
+        {
+            Vector2 closestPoint = Vector2.zero;
+            float closestDistance = Mathf.Infinity;
+
+            foreach (ContactPoint2D contact in contacts)
+            {
+                float distance = Vector2.Distance(transform.position, contact.point);
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestPoint = contact.point;
+                }
+            }
+            return closestPoint;
+        }
+
+        public void ToggleShields(bool value)
+        {
+            _shieldCollider.enabled = value;
+            _spriteRenderer.enabled = value;
+        }
+
+        public void SetTargetAlpha(float currentStrength, float maxStrength)
+        {
+            float currentPercentStrength = currentStrength / maxStrength;
+            float targetAlpha = _startAlpha * currentPercentStrength;
+            ChangeSpriteRendererAlpha(targetAlpha);
+        }
+
+        public void ChangeSpriteRendererAlpha(float targetAlpha)
+        {
+            _tempColour = _spriteRenderer.color;
+            _tempColour.a = targetAlpha;
+            _spriteRenderer.color = _tempColour;
+        }
     }
 }

@@ -1,45 +1,48 @@
 using TMPro;
 using UnityEngine;
 
-public class AddOnUIManager : GameBehaviour
+namespace CyberCruiser
 {
-    [SerializeField] private TMP_Text _addOnName;
-    [SerializeField] private TMP_Text _addOnDescription;
-    private AddOnScriptableObject _currentAddon;
-
-    private void OnEnable()
+    public class AddOnUIManager : GameBehaviour
     {
-        AddOnButton.OnMouseEnter += SetCurrentAddOn;
-        AddOnButton.OnMouseExit += ClearAddOn;
-    }
+        [SerializeField] private TMP_Text _addOnName;
+        [SerializeField] private TMP_Text _addOnDescription;
+        private AddOnScriptableObject _currentAddon;
 
-    private void OnDisable()
-    {
-        AddOnButton.OnMouseEnter -= SetCurrentAddOn;
-        AddOnButton.OnMouseExit -= ClearAddOn;
-    }
+        private void OnEnable()
+        {
+            AddOnButton.OnMouseEnter += SetCurrentAddOn;
+            AddOnButton.OnMouseExit += ClearAddOn;
+        }
 
-    private void SetCurrentAddOn(AddOnScriptableObject addOn)
-    {
-        _currentAddon = addOn;
-        SetAddOnUI();
-    }
+        private void OnDisable()
+        {
+            AddOnButton.OnMouseEnter -= SetCurrentAddOn;
+            AddOnButton.OnMouseExit -= ClearAddOn;
+        }
 
-    private void SetAddOnUI()
-    {
-        _addOnName.text = _currentAddon.Name;
-        _addOnDescription.text = _currentAddon.Description;
-    }
+        private void SetCurrentAddOn(AddOnScriptableObject addOn)
+        {
+            _currentAddon = addOn;
+            SetAddOnUI();
+        }
 
-    private void ClearAddOn()
-    {
-        _currentAddon = null;
-        ClearAddOnUI();
-    }
+        private void SetAddOnUI()
+        {
+            _addOnName.text = _currentAddon.Name;
+            _addOnDescription.text = _currentAddon.Description;
+        }
 
-    private void ClearAddOnUI()
-    {
-        _addOnName.text = "";
-        _addOnDescription.text = "";
+        private void ClearAddOn()
+        {
+            _currentAddon = null;
+            ClearAddOnUI();
+        }
+
+        private void ClearAddOnUI()
+        {
+            _addOnName.text = "";
+            _addOnDescription.text = "";
+        }
     }
 }

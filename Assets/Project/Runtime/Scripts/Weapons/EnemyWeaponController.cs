@@ -1,17 +1,20 @@
-public class EnemyWeaponController : Weapon
+namespace CyberCruiser
 {
-    private void Start()
+    public class EnemyWeaponController : Weapon
     {
-        EnableWeapon();
-    }
+        private void Start()
+        {
+            EnableWeapon();
+        }
 
-    private void EnableWeapon()
-    {
-        _autoFire = true;
-    }
+        private void EnableWeapon()
+        {
+            _autoFire = true;
+        }
 
-    public void DisableWeapon()
-    {
-        _autoFire = false;
+        public void DisableWeapon()
+        {
+            _autoFire = false;
+        }
     }
 }

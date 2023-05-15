@@ -1,25 +1,28 @@
 using UnityEngine;
 
-public class RandomMissileMovement : EnemyMovement
+namespace CyberCruiser
 {
-    protected override void Start()
+    public class RandomMissileMovement : EnemyMovement
     {
-        ChooseRandomMovementType();
-        base.Start();
-    }
-
-    private void ChooseRandomMovementType()
-    {
-        int movementTypeID = Random.Range(0, 2);
-
-        if (movementTypeID == 0)
+        protected override void Start()
         {
-            _isEnemyHomingOnPlayer = false;
+            ChooseRandomMovementType();
+            base.Start();
         }
 
-        if (movementTypeID == 1)
+        private void ChooseRandomMovementType()
         {
-            _isEnemyHomingOnPlayer = true;
+            int movementTypeID = Random.Range(0, 2);
+
+            if (movementTypeID == 0)
+            {
+                _isEnemyHomingOnPlayer = false;
+            }
+
+            if (movementTypeID == 1)
+            {
+                _isEnemyHomingOnPlayer = true;
+            }
         }
     }
 }

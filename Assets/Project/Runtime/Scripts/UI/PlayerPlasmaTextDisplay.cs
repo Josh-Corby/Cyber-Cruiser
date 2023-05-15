@@ -1,29 +1,32 @@
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(TMP_Text))]
-public class PlayerPlasmaTextDisplay : GameBehaviour
+namespace CyberCruiser
 {
-    private TMP_Text _plasmaText;
-
-    private void Awake()
+    [RequireComponent(typeof(TMP_Text))]
+    public class PlayerPlasmaTextDisplay : GameBehaviour
     {
-        _plasmaText = GetComponent<TMP_Text>();
-    }
+        private TMP_Text _plasmaText;
 
-    private void OnEnable()
-    {
-        PlayerStatsManager.OnPlasmaChange += UpdatePlasmaText;
-        UpdatePlasmaText(PlayerStatsManagerInstance.PlayerPlasma);
-    }
+        private void Awake()
+        {
+            _plasmaText = GetComponent<TMP_Text>();
+        }
 
-    private void OnDisable()
-    {
-        PlayerStatsManager.OnPlasmaChange -= UpdatePlasmaText;
-    }
+        private void OnEnable()
+        {
+            PlayerStatsManager.OnPlasmaChange += UpdatePlasmaText;
+            UpdatePlasmaText(PlayerStatsManagerInstance.PlayerPlasma);
+        }
 
-    private void UpdatePlasmaText(int plasma)
-    {
-        _plasmaText.text = plasma.ToString();
+        private void OnDisable()
+        {
+            PlayerStatsManager.OnPlasmaChange -= UpdatePlasmaText;
+        }
+
+        private void UpdatePlasmaText(int plasma)
+        {
+            _plasmaText.text = plasma.ToString();
+        }
     }
 }

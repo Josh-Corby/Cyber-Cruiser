@@ -1,32 +1,35 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(EnemySpawner))]
-public class SpawnerEditor : Editor
+namespace CyberCruiser
 {
-    SerializedProperty enemyCategories;
-    private void OnEnable()
+    [CustomEditor(typeof(EnemySpawner))]
+    public class SpawnerEditor : Editor
     {
-        enemyCategories = serializedObject.FindProperty(nameof(enemyCategories));
-    }
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        EnemySpawner spawner = (EnemySpawner)target;
-
-        serializedObject.Update();
-
-        if (GUILayout.Button("Reset Category Weights"))
+        SerializedProperty enemyCategories;
+        private void OnEnable()
         {
-            spawner.ResetCategoryWeights();
+            enemyCategories = serializedObject.FindProperty(nameof(enemyCategories));
         }
-
-        if (GUILayout.Button("Reset Type Weights"))
+        public override void OnInspectorGUI()
         {
-            spawner.ResetTypeWeights();
-        }
+            base.OnInspectorGUI();
+            EnemySpawner spawner = (EnemySpawner)target;
 
-        spawner.OnInspectorUpdate();
-        serializedObject.ApplyModifiedProperties();
+            serializedObject.Update();
+
+            if (GUILayout.Button("Reset Category Weights"))
+            {
+                spawner.ResetCategoryWeights();
+            }
+
+            if (GUILayout.Button("Reset Type Weights"))
+            {
+                spawner.ResetTypeWeights();
+            }
+
+            spawner.OnInspectorUpdate();
+            serializedObject.ApplyModifiedProperties();
+        }
     }
 }

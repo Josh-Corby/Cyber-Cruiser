@@ -1,88 +1,89 @@
-using System;
+using CyberCruiser.Audio;
 using UnityEngine;
 
-public class ExplodingObject : GameBehaviour
+namespace CyberCruiser
 {
-    #region Explosion
-    [SerializeField] private GameObject _explosionEffect;
-    [SerializeField] private float _explosionRadius;
-    [SerializeField] private float _explosionDamage;
-    [SerializeField] private LayerMask _explosionMask;
-    #endregion
-
-    #region Cluster
-    [SerializeField] private bool clusterOnDeath;
-    [SerializeField] private bool isClusterSpawningAUnit;
-    [SerializeField] private EnemyScriptableObject enemyToSpawn;
-    [SerializeField] private GameObject objectToSpawn;
-    [SerializeField] private int _amountOfObjectsToSpawn;
-    [SerializeField] private float _spawnRadius = 0.5f;
-    private GameObject _objectToSpawn;
-    #endregion
-
-    private void Awake()
+    [RequireComponent(typeof(OneShotAudioController))]
+    public class ExplodingObject : GameBehaviour
     {
-        if (clusterOnDeath)
-        {
-            ValidateObjectToSpawn();
-        }
-    }
+        #region Explosion
+        [SerializeField] private float _explosionRadius;
+        [SerializeField] private float _explosionDamage;
+        [SerializeField] private LayerMask _explosionMask;
+        [SerializeField] private float _explosionDuration;
+        #endregion
 
-    private void ValidateObjectToSpawn()
-    {
-        if (isClusterSpawningAUnit)
-        {
-            _objectToSpawn = EnemyManagerInstance.CreateEnemyFromSO(enemyToSpawn);
-        }
+        #region Cluster
+        [SerializeField] private bool clusterOnDeath;
+        [SerializeField] private bool isClusterSpawningAUnit;
+        [SerializeField] private EnemyScriptableObject enemyToSpawn;
+        [SerializeField] private GameObject objectToSpawn;
+        [SerializeField] private int _amountOfObjectsToSpawn;
+        [SerializeField] private float _spawnRadius = 0.5f;
+        private GameObject _objectSpawnedOnCluster;
+        #endregion
 
-        else
+        private void Start()
         {
-            _objectToSpawn = objectToSpawn;
-        }
-    }
-
-    public void Explode(Action destroyBaseObjectCallBack)
-    {
-        GameObject explosionEffect = Instantiate(_explosionEffect, transform);
-        explosionEffect.GetComponent<ExplosionGraphic>().ExplosionRadius = _explosionRadius;
-        explosionEffect.transform.SetParent(null);
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _explosionRadius, _explosionMask);
-
-        foreach (Collider2D collider in colliders)
-        {
-            if (collider.TryGetComponent<IDamageable>(out var damageable))
+            if (clusterOnDeath)
             {
-                damageable.Damage(_explosionDamage);
+                ValidateObjectToSpawn();
+            }
+
+            Explode();
+        }
+
+        private void ValidateObjectToSpawn()
+        {
+            if (isClusterSpawningAUnit)
+            {
+                _objectSpawnedOnCluster = EnemyManagerInstance.CreateEnemyFromSO(enemyToSpawn);
+            }
+
+            else
+            {
+                _objectSpawnedOnCluster = objectToSpawn;
             }
         }
 
-        if (clusterOnDeath)
+        public void Explode()
         {
-            SpawnProjectile();
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _explosionRadius, _explosionMask);
+
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.TryGetComponent<IDamageable>(out var damageable))
+                {
+                    damageable.Damage(_explosionDamage);
+                }
+            }
+
+            if (clusterOnDeath)
+            {
+                SpawnProjectile();
+            }
         }
 
-        destroyBaseObjectCallBack();
-    }
-
-    private void SpawnProjectile()
-    {
-        for (int i = 0; i < _amountOfObjectsToSpawn; i++)
+        private void SpawnProjectile()
         {
-            float angle = i * (360 / _amountOfObjectsToSpawn);
+            for (int i = 0; i < _amountOfObjectsToSpawn; i++)
+            {
+                float angle = i * (360 / _amountOfObjectsToSpawn);
 
-            float rad = angle * Mathf.Deg2Rad;
+                float rad = angle * Mathf.Deg2Rad;
 
-            float x = _spawnRadius * Mathf.Cos(rad);
-            float y = _spawnRadius * Mathf.Sin(rad);
-            Vector3 spawnPos = transform.position + new Vector3(x, y, 0);
+                float x = _spawnRadius * Mathf.Cos(rad);
+                float y = _spawnRadius * Mathf.Sin(rad);
+                Vector3 spawnPos = transform.position + new Vector3(x, y, 0);
 
-            Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
-            GameObject _go = Instantiate(_objectToSpawn, spawnPos, spawnRotation);
+                Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
+                GameObject _go = Instantiate(_objectSpawnedOnCluster, spawnPos, spawnRotation);
+            }
         }
-    }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.DrawWireSphere(transform.position, _explosionRadius);
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireSphere(transform.position, _explosionRadius);
+        }
     }
 }

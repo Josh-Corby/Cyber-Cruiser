@@ -1,33 +1,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RankManager : GameBehaviour<RankManager>
+namespace CyberCruiser
 {
-    [SerializeField] private RankScriptableObject[] _rankSos;
-
-    public List<Rank> ranks = new List<Rank>();
-
-    protected override void Awake()
+    public class RankManager : GameBehaviour<RankManager>
     {
-        base.Awake();
-        PopulateRanksList();
-    }
+        [SerializeField] private RankScriptableObject[] _rankSos;
 
-    private void PopulateRanksList()
-    {
-        for (int i = 0; i < _rankSos.Length; i++)
+        public List<Rank> ranks = new List<Rank>();
+
+        protected override void Awake()
         {
-            ranks.Add(_rankSos[i].rank);
+            base.Awake();
+            PopulateRanksList();
         }
-    }
 
-    public Rank GetRank(int rankID)
-    {
-        return ranks[rankID];
-    }
+        private void PopulateRanksList()
+        {
+            for (int i = 0; i < _rankSos.Length; i++)
+            {
+                ranks.Add(_rankSos[i].rank);
+            }
+        }
 
-    public Rank RankUp(int rankID)
-    {
-        return ranks[rankID + 1];
+        public Rank GetRank(int rankID)
+        {
+            return ranks[rankID];
+        }
+
+        public Rank RankUp(int rankID)
+        {
+            return ranks[rankID + 1];
+        }
     }
 }

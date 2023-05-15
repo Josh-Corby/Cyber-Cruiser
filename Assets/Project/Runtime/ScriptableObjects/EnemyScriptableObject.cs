@@ -1,14 +1,17 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy")]
-public class EnemyScriptableObject : ScriptableObject
+namespace CyberCruiser
 {
-    public GameObject EnemyPrefab;
-    public string EnemyName;
+    [CreateAssetMenu(fileName = "Enemy", menuName = "ScriptableObject/Enemy")]
+    public class EnemyScriptableObject : ScriptableObject
+    {
+        public GameObject EnemyPrefab;
+        public string EnemyName;
 
-    [Header("Enemy Stats")]
-    public EnemyStats GeneralStats;
+        [Header("Enemy Stats")]
+        public EnemyStats GeneralStats;
 
-    [Header("Movement Stats")]
-    public EnemyMovementStats MovementStats;
+        [Header("Movement Stats")]
+        public EnemyMovementStats MovementStats;
+    }
 }

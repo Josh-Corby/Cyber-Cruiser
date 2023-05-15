@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3660900643955642783}
-  - component: {fileID: 5384387417316733294}
   - component: {fileID: 221867296470986284}
   - component: {fileID: 8798541112174485657}
   - component: {fileID: 8596959302327450194}
   m_Layer: 0
-  m_Name: ExplosionEffect
+  m_Name: ExplosionGraphic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,18 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5384387417316733294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4667404529104272682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6d3666dc7cb62c4a8fe9c92f6cdbaa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &221867296470986284
 SpriteRenderer:
   m_ObjectHideFlags: 0

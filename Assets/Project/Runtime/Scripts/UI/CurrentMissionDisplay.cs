@@ -1,21 +1,24 @@
 using TMPro;
 using UnityEngine;
 
-public class CurrentMissionDisplay : GameBehaviour
+namespace CyberCruiser
 {
-    [SerializeField] private TMP_Text _missionDescription, _missionProgress;
-
-    private void OnEnable()
+    public class CurrentMissionDisplay : GameBehaviour
     {
-        if (MissionManagerInstance.CurrentMission == null)
+        [SerializeField] private TMP_Text _missionDescription, _missionProgress;
+
+        private void OnEnable()
         {
-            _missionDescription.text = "";
-            _missionProgress.text = "";
-        }
-        else
-        {
-            _missionDescription.text = MissionManagerInstance.CurrentMission.missionDescription;
-            _missionProgress.text = "Current progress: " + MissionManagerInstance.CurrentMissionProgress.ToString();
+            if (MissionManagerInstance.CurrentMission == null)
+            {
+                _missionDescription.text = "";
+                _missionProgress.text = "";
+            }
+            else
+            {
+                _missionDescription.text = MissionManagerInstance.CurrentMission.missionDescription;
+                _missionProgress.text = "Current progress: " + MissionManagerInstance.CurrentMissionProgress.ToString();
+            }
         }
     }
 }

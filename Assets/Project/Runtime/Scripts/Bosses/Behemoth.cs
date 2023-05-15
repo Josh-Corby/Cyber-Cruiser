@@ -1,53 +1,56 @@
 using System;
 using UnityEngine;
 
-public class Behemoth : Boss, IBoss
+namespace CyberCruiser
 {
-    [SerializeField] private Weapon _missileLauncher;
-    [SerializeField] private Weapon _homingMissileLauncher;
-
-    [SerializeField] private EnemyScriptableObject _missile;
-    [SerializeField] private EnemyScriptableObject _homingMissile;
-
-    private int _attacksSinceHomingAttack;
-
-    public static event Action OnDied;
-
-    protected override void Start()
+    public class Behemoth : Boss, IBoss
     {
-        base.Start();
-        _attacksSinceHomingAttack = 0;
-    }
+        [SerializeField] private Weapon _missileLauncher;
+        [SerializeField] private Weapon _homingMissileLauncher;
 
-    protected override void ChooseRandomAttack()
-    {
-        if (_attacksSinceHomingAttack == 1)
+        [SerializeField] private EnemyScriptableObject _missile;
+        [SerializeField] private EnemyScriptableObject _homingMissile;
+
+        private int _attacksSinceHomingAttack;
+
+        public static event Action OnDied;
+
+        protected override void Start()
         {
-            Attack2();
+            base.Start();
+            _attacksSinceHomingAttack = 0;
         }
-        else
+
+        protected override void ChooseRandomAttack()
         {
-            base.ChooseRandomAttack();
+            if (_attacksSinceHomingAttack == 1)
+            {
+                Attack2();
+            }
+            else
+            {
+                base.ChooseRandomAttack();
+            }
         }
-    }
 
-    //missiles in random directions
-    public void Attack1()
-    {
-        _missileLauncher.CheckFireTypes();
-        _attacksSinceHomingAttack += 1;
-    }
+        //missiles in random directions
+        public void Attack1()
+        {
+            _missileLauncher.CheckFireTypes();
+            _attacksSinceHomingAttack += 1;
+        }
 
-    //shoot homing missiles at different directions
-    public void Attack2()
-    {
-        _homingMissileLauncher.CheckFireTypes();
-        _attacksSinceHomingAttack = 0;
-    }
+        //shoot homing missiles at different directions
+        public void Attack2()
+        {
+            _homingMissileLauncher.CheckFireTypes();
+            _attacksSinceHomingAttack = 0;
+        }
 
-    protected override void Crash()
-    {
-        base.Crash();
-        if (OnDied != null) OnDied?.Invoke();
+        protected override void Crash()
+        {
+            base.Crash();
+            if (OnDied != null) OnDied?.Invoke();
+        }
     }
 }

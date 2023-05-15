@@ -1,87 +1,90 @@
 using System;
 using UnityEngine;
 
-public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
+namespace CyberCruiser
 {
-    private bool _isPlayerGrappled;
-
-    public static event Action OnGrappleEnd = null;
-
-    private void Update()
+    public class CyberKrakenGrappleTentacle : CyberKrakenTentacle
     {
-        TentacleMovement();
-    }
+        private bool _isPlayerGrappled;
 
-    private void OnDisable()
-    {
-        if (_isPlayerGrappled)
+        public static event Action OnGrappleEnd = null;
+
+        private void Update()
         {
-            if (!PlayerManagerInstance.isDead)
+            TentacleMovement();
+        }
+
+        private void OnDisable()
+        {
+            if (_isPlayerGrappled)
             {
-                ResetPlayerMovement();
+                if (!PlayerManagerInstance.isDead)
+                {
+                    ResetPlayerMovement();
+                }
             }
         }
-    }
 
-    protected override void TentacleMovement()
-    {
-        if (!_isPlayerGrappled)
+        protected override void TentacleMovement()
         {
-            if (_isWaiting)
+            if (!_isPlayerGrappled)
             {
-                WaitTimer();
-                return;
-            }
-            if (_moveForward)
-            {
-                MoveForward();
+                if (_isWaiting)
+                {
+                    WaitTimer();
+                    return;
+                }
+                if (_moveForward)
+                {
+                    MoveForward();
+                }
+                else
+                {
+                    MoveBackward();
+
+                }
             }
             else
             {
                 MoveBackward();
-
+                PullPlayer();
             }
         }
-        else
+
+        private void PullPlayer()
         {
-            MoveBackward();
-            PullPlayer();
+            PlayerManagerInstance.player.transform.position = transform.parent.position;
         }
-    }
 
-    private void PullPlayer()
-    {
-        PlayerManagerInstance.player.transform.position = transform.parent.position;
-    }
-
-    private void ResetPlayerMovement()
-    {
-        OnGrappleEnd?.Invoke();
-    }
-
-    private void MoveBackward()
-    {
-        transform.parent.position -= transform.right * speed * Time.deltaTime;
-
-        if (Vector2.Distance(transform.parent.position, spawnPosition) < 0.5f)
+        private void ResetPlayerMovement()
         {
-            if (_isPlayerGrappled)
+            OnGrappleEnd?.Invoke();
+        }
+
+        private void MoveBackward()
+        {
+            transform.parent.position -= transform.right * speed * Time.deltaTime;
+
+            if (Vector2.Distance(transform.parent.position, spawnPosition) < 0.5f)
             {
-                ResetPlayerMovement();
+                if (_isPlayerGrappled)
+                {
+                    ResetPlayerMovement();
+                }
+                Destroy(transform.parent.gameObject);
             }
-            Destroy(transform.parent.gameObject);
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent<PlayerShipController>(out var player))
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("Player grappled");
+            if (collision.gameObject.TryGetComponent<PlayerShipController>(out var player))
+            {
+                Debug.Log("Player grappled");
 
-            player.ControlsEnabled = false;
-            _isPlayerGrappled = true;
+                player.ControlsEnabled = false;
+                _isPlayerGrappled = true;
 
+            }
         }
     }
 }

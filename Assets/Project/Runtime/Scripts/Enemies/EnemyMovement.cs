@@ -2,312 +2,315 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemyMovement : GameBehaviour
+namespace CyberCruiser
 {
-    private Transform _player;
-    private float _homeCounter;
-    private float _homeDelayCounter;
-    private float _randomSinSeed;
-    private bool _isBackForthDirectionUp;
-
-    #region Local Movement Stats
-    private EnemyMovementType _movementType;
-    protected float _speed;
-    private float _crashSpeed;
-
-    protected bool _isEnemyMovingUpDown;
-    protected float _upDownSpeed;
-    protected float _upDownDistance;
-
-    private bool _isEnemyMovingInSinPattern;
-    private float _sinWaveFrequency;
-    private float _sinWaveMagnitude;
-
-    protected bool _isEnemySeekingPlayer;
-    protected bool _isEnemySeekingPlayerOnYAxis;
-    protected bool _isEnemySeekingPlayerOnXAxis;
-    protected float _seekSpeed;
-
-    protected bool _isEnemyHomingOnPlayer;
-    private float _homeTurnSpeed;
-    private float _homeTimeInSeconds;
-    private bool _isHomingDelayed;
-    private float _homeDelayTimeInSeconds;
-    #endregion
-
-    public bool IsEnemyDead { get; set; }
-
-    protected virtual void Awake()
+    public class EnemyMovement : GameBehaviour
     {
-        _player = PlayerManagerInstance.player.transform;
-    }
+        private Transform _player;
+        private float _homeCounter;
+        private float _homeDelayCounter;
+        private float _randomSinSeed;
+        private bool _isBackForthDirectionUp;
 
-    //Could definately reference local movement stats directly but at the moment I prefer this approach as it takes away a step in referencing
-    public void AssignEnemyMovementInfo(EnemyMovementStats movementStats)
-    {
-        _movementType = movementStats.MoveType;
-        _speed = movementStats.Speed;
-        _crashSpeed = movementStats.SpeedWhenCrashing;
+        #region Local Movement Stats
+        private EnemyMovementType _movementType;
+        protected float _speed;
+        private float _crashSpeed;
 
-        _isEnemyMovingUpDown = _movementType == EnemyMovementType.UpDown;
-        _upDownSpeed = movementStats.UpDownSpeed;
-        _upDownDistance = movementStats.UpDownDistance;
+        protected bool _isEnemyMovingUpDown;
+        protected float _upDownSpeed;
+        protected float _upDownDistance;
 
-        _isEnemyMovingInSinPattern = _movementType == EnemyMovementType.SinUpDown;
-        _sinWaveFrequency = movementStats.SinWaveFrequency;
-        _sinWaveMagnitude = movementStats.SinWaveMagnitude;
+        private bool _isEnemyMovingInSinPattern;
+        private float _sinWaveFrequency;
+        private float _sinWaveMagnitude;
 
-        _isEnemySeekingPlayer = _movementType == EnemyMovementType.SeekPlayer;
-        _isEnemySeekingPlayerOnYAxis = movementStats.IsEnemySeekingPlayerOnYAxis;
-        _isEnemySeekingPlayerOnXAxis = movementStats.IsEnemySeekingPlayerOnXAxis;
-        _seekSpeed = movementStats.SeekSpeed;
+        protected bool _isEnemySeekingPlayer;
+        protected bool _isEnemySeekingPlayerOnYAxis;
+        protected bool _isEnemySeekingPlayerOnXAxis;
+        protected float _seekSpeed;
 
-        _isEnemyHomingOnPlayer = _movementType == EnemyMovementType.HomeOnPlayer;
-        _homeTurnSpeed = movementStats.HomeTurnSpeed;
-        _homeTimeInSeconds = movementStats.HomeTimeInSeconds;
-        _isHomingDelayed = movementStats.IsHomingDelayed;
-        _homeDelayTimeInSeconds = movementStats.HomeDelayTimeInSeconds;
-    }
+        protected bool _isEnemyHomingOnPlayer;
+        private float _homeTurnSpeed;
+        private float _homeTimeInSeconds;
+        private bool _isHomingDelayed;
+        private float _homeDelayTimeInSeconds;
+        #endregion
 
-    public void ApplySpeedModifier(float speedModifier)
-    {
-        _speed += speedModifier;
-    }
+        public bool IsEnemyDead { get; set; }
 
-    protected virtual void Start()
-    {
-        CheckMovementBools();
-    }
+        protected virtual void Awake()
+        {
+            _player = PlayerManagerInstance.player.transform;
+        }
 
-    private void CheckMovementBools()
-    {
-        HomingCheck();
-        SinCheck();
-    }
+        //Could definately reference local movement stats directly but at the moment I prefer this approach as it takes away a step in referencing
+        public void AssignEnemyMovementInfo(EnemyMovementStats movementStats)
+        {
+            _movementType = movementStats.MoveType;
+            _speed = movementStats.Speed;
+            _crashSpeed = movementStats.SpeedWhenCrashing;
 
-    #region Movement Checks
-    private void HomingCheck()
-    {
-        if (_isEnemyHomingOnPlayer)
+            _isEnemyMovingUpDown = _movementType == EnemyMovementType.UpDown;
+            _upDownSpeed = movementStats.UpDownSpeed;
+            _upDownDistance = movementStats.UpDownDistance;
+
+            _isEnemyMovingInSinPattern = _movementType == EnemyMovementType.SinUpDown;
+            _sinWaveFrequency = movementStats.SinWaveFrequency;
+            _sinWaveMagnitude = movementStats.SinWaveMagnitude;
+
+            _isEnemySeekingPlayer = _movementType == EnemyMovementType.SeekPlayer;
+            _isEnemySeekingPlayerOnYAxis = movementStats.IsEnemySeekingPlayerOnYAxis;
+            _isEnemySeekingPlayerOnXAxis = movementStats.IsEnemySeekingPlayerOnXAxis;
+            _seekSpeed = movementStats.SeekSpeed;
+
+            _isEnemyHomingOnPlayer = _movementType == EnemyMovementType.HomeOnPlayer;
+            _homeTurnSpeed = movementStats.HomeTurnSpeed;
+            _homeTimeInSeconds = movementStats.HomeTimeInSeconds;
+            _isHomingDelayed = movementStats.IsHomingDelayed;
+            _homeDelayTimeInSeconds = movementStats.HomeDelayTimeInSeconds;
+        }
+
+        public void ApplySpeedModifier(float speedModifier)
+        {
+            _speed += speedModifier;
+        }
+
+        protected virtual void Start()
+        {
+            CheckMovementBools();
+        }
+
+        private void CheckMovementBools()
+        {
+            HomingCheck();
+            SinCheck();
+        }
+
+        #region Movement Checks
+        private void HomingCheck()
+        {
+            if (_isEnemyHomingOnPlayer)
+            {
+                if (_isHomingDelayed)
+                {
+                    _homeDelayCounter = _homeDelayTimeInSeconds;
+                }
+
+                _homeCounter = _homeTimeInSeconds;
+            }
+        }
+
+        private void SinCheck()
+        {
+            if (_isEnemyMovingInSinPattern)
+            {
+                _randomSinSeed = Random.Range(0f, Mathf.PI * 2f);
+            }
+        }
+        #endregion
+
+        protected virtual void Update()
+        {
+            UnitMovement();
+        }
+
+        private void UnitMovement()
+        {
+            if (IsEnemyDead)
+            {
+                MoveForward();
+                DeathMovement();
+                return;
+            }
+
+            if (_isEnemyHomingOnPlayer)
+            {
+                HomingMovement();
+            }
+
+            MoveForward();
+
+            //Functions that need to be after general movement
+            if (_isEnemyMovingUpDown)
+            {
+                UpDownMovement();
+            }
+
+            if (_isEnemySeekingPlayer)
+            {
+                SeekMovement();
+            }
+
+            if (_isEnemyMovingInSinPattern)
+            {
+                SinMovement();
+            }
+        }
+
+        private void MoveForward()
+        {
+            transform.position += _speed * Time.deltaTime * transform.right;
+        }
+
+        #region Homing Movement
+        private void HomingMovement()
         {
             if (_isHomingDelayed)
             {
-                _homeDelayCounter = _homeDelayTimeInSeconds;
+                HomeDelay();
             }
 
-            _homeCounter = _homeTimeInSeconds;
+            else
+            {
+                RotateTowardsPlayer();
+            }
+        }
+
+        private void HomeDelay()
+        {
+            _homeDelayCounter -= Time.deltaTime;
+
+            if (_homeDelayCounter <= 0)
+            {
+                _isHomingDelayed = false;
+            }
+        }
+
+        private void RotateTowardsPlayer()
+        {
+
+            _homeCounter -= Time.deltaTime;
+
+            if (_homeCounter <= 0)
+            {
+                _isEnemyHomingOnPlayer = false;
+                return;
+            }
+
+            Vector3 direction = _player.transform.position - transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+            //Quaternion targetRotation = Quaternion.Euler(0f, _startRotation.y, angle);
+            //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _homeTurnSpeed * Time.deltaTime);
+        }
+        #endregion
+
+        #region Up Down Movement
+        private void UpDownMovement()
+        {
+            if (_isBackForthDirectionUp)
+            {
+                MoveUp();
+            }
+
+            else
+            {
+                MoveDown();
+            }
+        }
+
+        private void MoveUp()
+        {
+            if (transform.position.y < _upDownDistance)
+            {
+                transform.position += new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
+            }
+
+            else
+            {
+                _isBackForthDirectionUp = false;
+            }
+        }
+
+        private void MoveDown()
+        {
+            if (transform.position.y > -_upDownDistance)
+            {
+                transform.position -= new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
+            }
+
+            else
+            {
+                _isBackForthDirectionUp = true;
+            }
+        }
+        #endregion
+
+        #region Seek Movement
+        private void SeekMovement()
+        {
+            if (_isEnemySeekingPlayerOnYAxis)
+            {
+                SeekY();
+            }
+            if (_isEnemySeekingPlayerOnXAxis)
+            {
+                SeekX();
+            }
+        }
+
+        private void SeekY()
+        {
+            transform.position = Vector2.MoveTowards(transform.position,
+                new Vector2(transform.position.x, _player.position.y), _seekSpeed * Time.deltaTime);
+        }
+
+        protected void SeekX()
+        {
+            transform.position = Vector2.MoveTowards(transform.position,
+                new Vector2(_player.position.x, transform.position.y), _seekSpeed * Time.deltaTime);
+        }
+        #endregion
+
+        #region Sin Movement
+        private void SinMovement()
+        {
+            float yPos = Mathf.Sin((Time.time - _randomSinSeed) * _sinWaveFrequency) * _sinWaveMagnitude;
+            transform.position = new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z);
+        }
+        #endregion
+
+        protected virtual void DeathMovement()
+        {
+            transform.position += _crashSpeed * Time.deltaTime * Vector3.down;
         }
     }
 
-    private void SinCheck()
-    {
-        if (_isEnemyMovingInSinPattern)
+        [Serializable]
+        public struct EnemyMovementStats
         {
-            _randomSinSeed = Random.Range(0f, Mathf.PI * 2f);
-        }
-    }
-    #endregion
+            [Header("Movement Info")]
+            public EnemyMovementType MoveType;
+            public float Speed;
+            public float SpeedWhenCrashing;
 
-    protected virtual void Update()
-    {
-        UnitMovement();
-    }
+            [Header("Up/Down Settings")]
+            public bool UpDownMovementPattern;
+            public float UpDownSpeed;
+            public float UpDownDistance;
 
-    private void UnitMovement()
-    {
-        if (IsEnemyDead)
-        {
-            MoveForward();
-            DeathMovement();
-            return;
-        }
+            [Header("Sin Movement Settings")]
+            public bool IsEnemyMovingInSinPattern;
+            public float SinWaveFrequency;
+            public float SinWaveMagnitude;
 
-        if (_isEnemyHomingOnPlayer)
-        {
-            HomingMovement();
-        }
+            [Header("Seek Settings")]
+            public bool IsEnemySeekingPlayer;
+            public bool IsEnemySeekingPlayerOnYAxis;
+            public bool IsEnemySeekingPlayerOnXAxis;
+            public float SeekSpeed;
 
-        MoveForward();
-
-        //Functions that need to be after general movement
-        if (_isEnemyMovingUpDown)
-        {
-            UpDownMovement();
+            [Header("Homing Settings")]
+            public bool IsEnemyHomingOnPlayer;
+            public float HomeTurnSpeed;
+            public float HomeTimeInSeconds;
+            public bool IsHomingDelayed;
+            public float HomeDelayTimeInSeconds;
         }
 
-        if (_isEnemySeekingPlayer)
+        public enum EnemyMovementType
         {
-            SeekMovement();
+            Default, UpDown, SeekPlayer, SinUpDown, HomeOnPlayer
         }
-
-        if (_isEnemyMovingInSinPattern)
-        {
-            SinMovement();
-        }
-    }
-
-    private void MoveForward()
-    {
-        transform.position += _speed * Time.deltaTime * transform.right;
-    }
-
-    #region Homing Movement
-    private void HomingMovement()
-    {
-        if (_isHomingDelayed)
-        {
-            HomeDelay();
-        }
-
-        else
-        {
-            RotateTowardsPlayer();
-        }
-    }
-
-    private void HomeDelay()
-    {
-        _homeDelayCounter -= Time.deltaTime;
-
-        if (_homeDelayCounter <= 0)
-        {
-            _isHomingDelayed = false;
-        }
-    }
-
-    private void RotateTowardsPlayer()
-    {
-
-        _homeCounter -= Time.deltaTime;
-
-        if (_homeCounter <= 0)
-        {
-            _isEnemyHomingOnPlayer = false;
-            return;
-        }
-
-        Vector3 direction = _player.transform.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-        //Quaternion targetRotation = Quaternion.Euler(0f, _startRotation.y, angle);
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _homeTurnSpeed * Time.deltaTime);
-    }
-    #endregion
-
-    #region Up Down Movement
-    private void UpDownMovement()
-    {
-        if (_isBackForthDirectionUp)
-        {
-            MoveUp();
-        }
-
-        else
-        {
-            MoveDown();
-        }
-    }
-
-    private void MoveUp()
-    {
-        if (transform.position.y < _upDownDistance)
-        {
-            transform.position += new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
-        }
-
-        else
-        {
-            _isBackForthDirectionUp = false;
-        }
-    }
-
-    private void MoveDown()
-    {
-        if (transform.position.y > -_upDownDistance)
-        {
-            transform.position -= new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
-        }
-
-        else
-        {
-            _isBackForthDirectionUp = true;
-        }
-    }
-    #endregion
-
-    #region Seek Movement
-    private void SeekMovement()
-    {
-        if (_isEnemySeekingPlayerOnYAxis)
-        {
-            SeekY();
-        }
-        if (_isEnemySeekingPlayerOnXAxis)
-        {
-            SeekX();
-        }
-    }
-
-    private void SeekY()
-    {
-        transform.position = Vector2.MoveTowards(transform.position,
-            new Vector2(transform.position.x, _player.position.y), _seekSpeed * Time.deltaTime);
-    }
-
-    protected void SeekX()
-    {
-        transform.position = Vector2.MoveTowards(transform.position,
-            new Vector2(_player.position.x, transform.position.y), _seekSpeed * Time.deltaTime);
-    }
-    #endregion
-
-    #region Sin Movement
-    private void SinMovement()
-    {
-        float yPos = Mathf.Sin((Time.time - _randomSinSeed) * _sinWaveFrequency) * _sinWaveMagnitude;
-        transform.position = new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z);
-    }
-    #endregion
-
-    protected virtual void DeathMovement()
-    {
-        transform.position += _crashSpeed * Time.deltaTime * Vector3.down;
-    }
-}
-
-[Serializable]
-public struct EnemyMovementStats
-{
-    [Header("Movement Info")]
-    public EnemyMovementType MoveType;
-    public float Speed;
-    public float SpeedWhenCrashing;
-
-    [Header("Up/Down Settings")]
-    public bool UpDownMovementPattern;
-    public float UpDownSpeed;
-    public float UpDownDistance;
-
-    [Header("Sin Movement Settings")]
-    public bool IsEnemyMovingInSinPattern;
-    public float SinWaveFrequency;
-    public float SinWaveMagnitude;
-
-    [Header("Seek Settings")]
-    public bool IsEnemySeekingPlayer;
-    public bool IsEnemySeekingPlayerOnYAxis;
-    public bool IsEnemySeekingPlayerOnXAxis;
-    public float SeekSpeed;
-
-    [Header("Homing Settings")]
-    public bool IsEnemyHomingOnPlayer;
-    public float HomeTurnSpeed;
-    public float HomeTimeInSeconds;
-    public bool IsHomingDelayed;
-    public float HomeDelayTimeInSeconds;
-}
-
-public enum EnemyMovementType
-{
-    Default, UpDown, SeekPlayer, SinUpDown, HomeOnPlayer
 }

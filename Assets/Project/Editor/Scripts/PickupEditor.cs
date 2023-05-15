@@ -1,48 +1,51 @@
 using UnityEditor;
 
-[CustomEditor(typeof(Pickup))]
-public class PickupEditor : Editor
+namespace CyberCruiser
 {
-    #region SerializedProperties
-
-    SerializedProperty _pickupType;
-    SerializedProperty _upgradeType;
-    SerializedProperty _speed;
-    SerializedProperty _healthAmount;
-    SerializedProperty _plasmaAmount;
-    SerializedProperty _ionAmount;
-    #endregion
-
-    private void OnEnable()
+    [CustomEditor(typeof(Pickup))]
+    public class PickupEditor : Editor
     {
-        _pickupType = serializedObject.FindProperty(nameof(_pickupType));
-        _upgradeType = serializedObject.FindProperty(nameof(_upgradeType));
-        _speed = serializedObject.FindProperty(nameof(_speed));
-        _healthAmount = serializedObject.FindProperty(nameof(_healthAmount));
-        _plasmaAmount = serializedObject.FindProperty(nameof(_plasmaAmount));
-        _ionAmount = serializedObject.FindProperty(nameof(_ionAmount));
-    }
+        #region SerializedProperties
 
-    public override void OnInspectorGUI()
-    {
-        Pickup pickup = (Pickup)target;
+        SerializedProperty _pickupType;
+        SerializedProperty _upgradeType;
+        SerializedProperty _speed;
+        SerializedProperty _healthAmount;
+        SerializedProperty _plasmaAmount;
+        SerializedProperty _ionAmount;
+        #endregion
 
-        serializedObject.Update();
-
-        EditorGUILayout.PropertyField(_pickupType);
-        EditorGUILayout.PropertyField(_speed);
-        switch (pickup._pickupType)
+        private void OnEnable()
         {
-            case PickupType.Health:
-            case PickupType.Plasma:
-                EditorGUILayout.PropertyField(_healthAmount);
-                EditorGUILayout.PropertyField(_plasmaAmount);
-                EditorGUILayout.PropertyField(_ionAmount);
-                break;
-            case PickupType.Weapon:
-                EditorGUILayout.PropertyField(_upgradeType);
-                break;
+            _pickupType = serializedObject.FindProperty(nameof(_pickupType));
+            _upgradeType = serializedObject.FindProperty(nameof(_upgradeType));
+            _speed = serializedObject.FindProperty(nameof(_speed));
+            _healthAmount = serializedObject.FindProperty(nameof(_healthAmount));
+            _plasmaAmount = serializedObject.FindProperty(nameof(_plasmaAmount));
+            _ionAmount = serializedObject.FindProperty(nameof(_ionAmount));
         }
-        serializedObject.ApplyModifiedProperties();
+
+        public override void OnInspectorGUI()
+        {
+            Pickup pickup = (Pickup)target;
+
+            serializedObject.Update();
+
+            EditorGUILayout.PropertyField(_pickupType);
+            EditorGUILayout.PropertyField(_speed);
+            switch (pickup._pickupType)
+            {
+                case PickupType.Health:
+                case PickupType.Plasma:
+                    EditorGUILayout.PropertyField(_healthAmount);
+                    EditorGUILayout.PropertyField(_plasmaAmount);
+                    EditorGUILayout.PropertyField(_ionAmount);
+                    break;
+                case PickupType.Weapon:
+                    EditorGUILayout.PropertyField(_upgradeType);
+                    break;
+            }
+            serializedObject.ApplyModifiedProperties();
+        }
     }
 }

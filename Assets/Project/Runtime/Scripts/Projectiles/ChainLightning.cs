@@ -1,162 +1,166 @@
+using CyberCruiser;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChainLightning : MonoBehaviour
+namespace CyberCruiser
 {
-    [SerializeField] private int _totalChainBounces;
-    [SerializeField] private int _currentChainBounces;
-    [SerializeField] private int _chainDamage;
-    [SerializeField] private float _chainRange;
-    [SerializeField] private List<GameObject> _objectsInRange = new();
-    [SerializeField] private List<GameObject> _objectsBouncedTo = new();
-    [SerializeField] private LayerMask _enemyMask;
-
-    private float _smallestDistance;
-    private float _distanceToTarget;
-    [SerializeField] private GameObject _chainTarget;
-    [SerializeField] private float _speed;
-    [SerializeField] private float _chainSpeed;
-    [SerializeField] private float _chainDelay;
-
-
-    private void OnEnable()
+    public class ChainLightning : GameBehaviour
     {
-        Enemy.OnEnemyAliveStateChange += RemoveEnemyBuffer;
-    }
+        [SerializeField] private int _totalChainBounces;
+        [SerializeField] private int _currentChainBounces;
+        [SerializeField] private int _chainDamage;
+        [SerializeField] private float _chainRange;
+        [SerializeField] private List<GameObject> _objectsInRange = new();
+        [SerializeField] private List<GameObject> _objectsBouncedTo = new();
+        [SerializeField] private LayerMask _enemyMask;
 
-    private void OnDisable()
-    {
-        Enemy.OnEnemyAliveStateChange -= RemoveEnemyBuffer;
-    }
+        private float _smallestDistance;
+        private float _distanceToTarget;
+        [SerializeField] private GameObject _chainTarget;
+        [SerializeField] private float _speed;
+        [SerializeField] private float _chainSpeed;
+        [SerializeField] private float _chainDelay;
 
-    private void RemoveEnemyBuffer(GameObject enemy, bool val)
-    {
-        RemoveEnemy(enemy);
-    }
 
-    private void RemoveEnemy(GameObject enemy)
-    {
-        if (_objectsInRange.Contains(enemy))
+        private void OnEnable()
         {
-            _objectsInRange.Remove(enemy);
+            Enemy.OnEnemyAliveStateChange += RemoveEnemyBuffer;
         }
-        if (_objectsBouncedTo.Contains(enemy))
+
+        private void OnDisable()
         {
-            _objectsBouncedTo.Remove(enemy);
+            Enemy.OnEnemyAliveStateChange -= RemoveEnemyBuffer;
         }
-    }
 
-
-    private void Start()
-    {
-        _chainTarget = null;
-        _currentChainBounces = 0;
-    }
-    private void Update()
-    {
-        if (_chainTarget == null)
+        private void RemoveEnemyBuffer(GameObject enemy, bool val)
         {
-            if (_currentChainBounces == 0)
+            RemoveEnemy(enemy);
+        }
+
+        private void RemoveEnemy(GameObject enemy)
+        {
+            if (_objectsInRange.Contains(enemy))
             {
-                transform.position += transform.right * _speed * Time.deltaTime;
+                _objectsInRange.Remove(enemy);
+            }
+            if (_objectsBouncedTo.Contains(enemy))
+            {
+                _objectsBouncedTo.Remove(enemy);
             }
         }
 
-        if (_chainTarget != null)
+
+        private void Start()
         {
-            transform.LookAt(_chainTarget.transform.position);
-            transform.position = Vector2.MoveTowards(transform.position, _chainTarget.transform.position, _chainSpeed * Time.deltaTime);
+            _chainTarget = null;
+            _currentChainBounces = 0;
         }
-    }
-
-
-    private void FindTargetsInRange()
-    {
-        _objectsInRange.Clear();
-        //targets in range found
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _chainRange, _enemyMask);
-
-        if (colliders.Length == 0)
+        private void Update()
         {
-            Destroy(gameObject);
-        }
-
-        foreach (Collider2D collider in colliders)
-        {
-            if (!_objectsBouncedTo.Contains(collider.gameObject))
+            if (_chainTarget == null)
             {
-                _objectsInRange.Add(collider.gameObject);
+                if (_currentChainBounces == 0)
+                {
+                    transform.position += transform.right * _speed * Time.deltaTime;
+                }
+            }
+
+            if (_chainTarget != null)
+            {
+                transform.LookAt(_chainTarget.transform.position);
+                transform.position = Vector2.MoveTowards(transform.position, _chainTarget.transform.position, _chainSpeed * Time.deltaTime);
             }
         }
 
-        if (_objectsInRange.Count <= 0)
-        {
-            Destroy(gameObject);
-        }
 
-        if (_objectsInRange.Count > 0)
+        private void FindTargetsInRange()
         {
-            FindClosestTarget();
-        }
-    }
+            _objectsInRange.Clear();
+            //targets in range found
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _chainRange, _enemyMask);
 
-    private void FindClosestTarget()
-    {
-        _smallestDistance = _chainRange;
-        foreach (GameObject enemy in _objectsInRange)
-        {
-            _distanceToTarget = Vector2.Distance(transform.position, enemy.transform.position);
-            if (_distanceToTarget < _smallestDistance)
+            if (colliders.Length == 0)
             {
-                _smallestDistance = _distanceToTarget;
-                _chainTarget = enemy;
+                Destroy(gameObject);
             }
-        }
-        if (_chainTarget == null)
-        {
-            Destroy(gameObject);
-        }
-    }
 
-    //enemy collision detection
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (_chainTarget != null)
-        {
-            if (collision.gameObject != _chainTarget)
+            foreach (Collider2D collider in colliders)
             {
-                return;
+                if (!_objectsBouncedTo.Contains(collider.gameObject))
+                {
+                    _objectsInRange.Add(collider.gameObject);
+                }
+            }
+
+            if (_objectsInRange.Count <= 0)
+            {
+                Destroy(gameObject);
+            }
+
+            if (_objectsInRange.Count > 0)
+            {
+                FindClosestTarget();
             }
         }
 
-        if (collision.TryGetComponent<Shield>(out var shield))
+        private void FindClosestTarget()
         {
-            if (collision.gameObject.GetComponentInParent<Enemy>())
+            _smallestDistance = _chainRange;
+            foreach (GameObject enemy in _objectsInRange)
             {
-                shield._shieldController.ReduceShields(_chainDamage);
+                _distanceToTarget = Vector2.Distance(transform.position, enemy.transform.position);
+                if (_distanceToTarget < _smallestDistance)
+                {
+                    _smallestDistance = _distanceToTarget;
+                    _chainTarget = enemy;
+                }
+            }
+            if (_chainTarget == null)
+            {
+                Destroy(gameObject);
             }
         }
 
-        else if (collision.TryGetComponent<Enemy>(out var enemy))
+        //enemy collision detection
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            enemy.Damage(_chainDamage);
-        }
+            if (_chainTarget != null)
+            {
+                if (collision.gameObject != _chainTarget)
+                {
+                    return;
+                }
+            }
 
-        else
-        {
-            Destroy(gameObject);
-        }
+            if (collision.TryGetComponent<Shield>(out var shield))
+            {
+                if (collision.gameObject.GetComponentInParent<Enemy>())
+                {
+                    shield._shieldController.ReduceShields(_chainDamage);
+                }
+            }
 
-        _objectsBouncedTo.Add(collision.gameObject);
-        _currentChainBounces += 1;
-        if (_currentChainBounces < _totalChainBounces)
-        {
-            FindTargetsInRange();
-        }
+            else if (collision.TryGetComponent<Enemy>(out var enemy))
+            {
+                enemy.Damage(_chainDamage);
+            }
 
-        if (_currentChainBounces >= _totalChainBounces)
-        {
-            Destroy(gameObject);
+            else
+            {
+                Destroy(gameObject);
+            }
+
+            _objectsBouncedTo.Add(collision.gameObject);
+            _currentChainBounces += 1;
+            if (_currentChainBounces < _totalChainBounces)
+            {
+                FindTargetsInRange();
+            }
+
+            if (_currentChainBounces >= _totalChainBounces)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

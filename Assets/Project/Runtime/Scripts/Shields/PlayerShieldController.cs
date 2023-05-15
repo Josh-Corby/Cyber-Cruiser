@@ -1,140 +1,142 @@
 using System;
 using UnityEngine;
 
-
-public class PlayerShieldController : ShieldControllerBase
+namespace CyberCruiser
 {
-    private PulseDetonator _pulseDetonator;
-
-    #region Fields
-    [SerializeField] private int _shieldActiveDuration;
-    [SerializeField] private float _shieldActiveTimer;
-    [SerializeField] private bool _isPulseDetonatorActive;
-    #endregion
-
-    #region Properties
-    public float ShieldActiveTimer
+    public class PlayerShieldController : ShieldControllerBase
     {
-        get => _shieldActiveTimer;
-        set
+        private PulseDetonator _pulseDetonator;
+
+        #region Fields
+        [SerializeField] private int _shieldActiveDuration;
+        [SerializeField] private float _shieldActiveTimer;
+        [SerializeField] private bool _isPulseDetonatorActive;
+        #endregion
+
+        #region Properties
+        public float ShieldActiveTimer
         {
-            _shieldActiveTimer = value;
-            OnPlayerShieldsValueChange(_shieldActiveTimer);
-        }
-    }
-    protected override bool IsShieldsActive
-    {
-        get => _shieldsActive;
-        set
-        {
-            base.IsShieldsActive = value;
-            if (!_shieldsActive)
+            get => _shieldActiveTimer;
+            set
             {
-                OnPlayerShieldsDeactivated();
-            }
-            if (_shieldsActive)
-            {
-                OnPlayerShieldsActivated(_shieldActiveDuration);
+                _shieldActiveTimer = value;
+                OnPlayerShieldsValueChange(_shieldActiveTimer);
             }
         }
-    }
-    #endregion
-
-    #region Actions
-    public static event Action OnPlayerShieldsDeactivated = null;
-    public static event Action<int> OnPlayerShieldsActivated = null;
-    public static event Action<float> OnPlayerShieldsValueChange = null;
-    #endregion
-
-    protected override void Awake()
-    {
-        base.Awake();
-        _pulseDetonator = GetComponentInChildren<PulseDetonator>();
-    }
-
-    private void OnEnable()
-    {
-        InputManager.OnShield += CheckShieldsState;
-        GameManager.OnMissionEnd += DeactivateShields;
-        CheckPulseDetonator();
-    }
-
-    private void OnDisable()
-    {
-        InputManager.OnShield -= CheckShieldsState;
-        GameManager.OnMissionEnd -= DeactivateShields;
-    }
-
-    private void Update()
-    {
-        if (IsShieldsActive)
+        protected override bool IsShieldsActive
         {
-            if (ShieldActiveTimer >= 0)
+            get => _shieldsActive;
+            set
             {
-                ShieldActiveTimer -= Time.deltaTime;
-            }
-            else
-            {
-                DeactivateShields();
+                base.IsShieldsActive = value;
+                if (!_shieldsActive)
+                {
+                    OnPlayerShieldsDeactivated();
+                }
+                if (_shieldsActive)
+                {
+                    OnPlayerShieldsActivated(_shieldActiveDuration);
+                }
             }
         }
-    }
+        #endregion
 
-    private void CheckPulseDetonator()
-    {
-        _isPulseDetonatorActive = PlayerAddOnManagerInstance.IsPulseDetonatorActive;
-    }
+        #region Actions
+        public static event Action OnPlayerShieldsDeactivated = null;
+        public static event Action<int> OnPlayerShieldsActivated = null;
+        public static event Action<float> OnPlayerShieldsValueChange = null;
+        #endregion
 
-    private void CheckShieldsState()
-    {
-        if (IsShieldsActive)
+        protected override void Awake()
         {
-            return;
+            base.Awake();
+            _pulseDetonator = GetComponentInChildren<PulseDetonator>();
         }
 
-        if (PlayerManagerInstance.CheckPlasma())
+        private void OnEnable()
         {
-            ActivateShields();
-        }
-    }
-
-    protected override void ActivateShields()
-    {
-        if (_isPulseDetonatorActive)
-        {
-            _pulseDetonator.Detonate();
+            InputManager.OnShield += CheckShieldsState;
+            GameManager.OnMissionEnd += DeactivateShields;
+            CheckPulseDetonator();
         }
 
-        if (!_isPulseDetonatorActive)
+        private void OnDisable()
         {
-            IsShieldsActive = true;
-            PlayerManagerInstance.IsPlayerColliderEnabled = false;
+            InputManager.OnShield -= CheckShieldsState;
+            GameManager.OnMissionEnd -= DeactivateShields;
         }
-    }
 
-    protected override void DeactivateShields()
-    {
-        ShieldActiveTimer = _shieldActiveDuration;
-
-        IsShieldsActive = false;
-        PlayerManagerInstance.IsPlayerColliderEnabled = true;
-    }
-
-    public override void ProcessCollision(GameObject collider, Vector2 collisionPoint)
-    {
-        if (collider.GetComponent<Boss>()) return;
-
-        else if (collider.TryGetComponent<Pickup>(out var pickup))
+        private void Update()
         {
-            pickup.PickupEffect();
-            Destroy(pickup.gameObject);
-            return;
+            if (IsShieldsActive)
+            {
+                if (ShieldActiveTimer >= 0)
+                {
+                    ShieldActiveTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    DeactivateShields();
+                }
+            }
         }
-        base.ProcessCollision(collider, collisionPoint);
-    }
 
-    public override void ReduceShields(float damage)
-    {
-        ShieldActiveTimer -= damage;
+        private void CheckPulseDetonator()
+        {
+            _isPulseDetonatorActive = PlayerAddOnManagerInstance.IsPulseDetonatorActive;
+        }
+
+        private void CheckShieldsState()
+        {
+            if (IsShieldsActive)
+            {
+                return;
+            }
+
+            if (PlayerManagerInstance.CheckPlasma())
+            {
+                ActivateShields();
+            }
+        }
+
+        protected override void ActivateShields()
+        {
+            if (_isPulseDetonatorActive)
+            {
+                _pulseDetonator.Detonate();
+            }
+
+            if (!_isPulseDetonatorActive)
+            {
+                IsShieldsActive = true;
+                PlayerManagerInstance.IsPlayerColliderEnabled = false;
+            }
+        }
+
+        protected override void DeactivateShields()
+        {
+            ShieldActiveTimer = _shieldActiveDuration;
+
+            IsShieldsActive = false;
+            PlayerManagerInstance.IsPlayerColliderEnabled = true;
+        }
+
+        public override void ProcessCollision(GameObject collider, Vector2 collisionPoint)
+        {
+            if (collider.GetComponent<Boss>()) return;
+
+            else if (collider.TryGetComponent<Pickup>(out var pickup))
+            {
+                pickup.PickupEffect();
+                Destroy(pickup.gameObject);
+                return;
+            }
+            base.ProcessCollision(collider, collisionPoint);
+        }
+
+        public override void ReduceShields(float damage)
+        {
+            ShieldActiveTimer -= damage;
+        }
     }
 }

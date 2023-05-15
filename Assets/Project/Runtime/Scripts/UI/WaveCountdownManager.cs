@@ -2,74 +2,77 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class WaveCountdownManager : GameBehaviour
+namespace CyberCruiser
 {
-    [SerializeField] private TMP_Text _waveCountdownText;
-
-    private const float WAVECOUNTDOWNTIME = 3f;
-    private const float STARTTEXTTIMER = 1f;
-
-    #region Fields
-    private float _waveCountdownTime = 3f;
-    private float _startTextTimer = 1f;
-    private bool _isCountdownDone, _isCountingDown;
-    #endregion
-
-    public static event Action OnCountdownDone = null;
-
-    private string WaveCountdownText
+    public class WaveCountdownManager : GameBehaviour
     {
-        set => _waveCountdownText.text = value;
-    }
+        [SerializeField] private TMP_Text _waveCountdownText;
 
-    private void OnEnable()
-    {
-        GameManager.OnMissionStart += StartWaveCountdown;
-    }
+        private const float WAVECOUNTDOWNTIME = 3f;
+        private const float STARTTEXTTIMER = 1f;
 
-    private void OnDisable()
-    {
-        GameManager.OnMissionStart -= StartWaveCountdown;
-    }
+        #region Fields
+        private float _waveCountdownTime = 3f;
+        private float _startTextTimer = 1f;
+        private bool _isCountdownDone, _isCountingDown;
+        #endregion
 
-    private void Start()
-    {
-        _isCountingDown = false;
-    }
-    private void StartWaveCountdown()
-    {
-        _isCountdownDone = false;
-        _waveCountdownText.enabled = true;
-        _waveCountdownTime = WAVECOUNTDOWNTIME;
-        _startTextTimer = STARTTEXTTIMER;
-        _isCountingDown = true;
-    }
+        public static event Action OnCountdownDone = null;
 
-    private void Update()
-    {
-        if (!_isCountingDown) return;
-        while (_waveCountdownTime >= 0)
+        private string WaveCountdownText
         {
-            WaveCountdownText = _waveCountdownTime.ToString("F2");
-            _waveCountdownTime -= Time.deltaTime;
-            return;
+            set => _waveCountdownText.text = value;
         }
 
-        if (!_isCountdownDone)
+        private void OnEnable()
         {
-            OnCountdownDone?.Invoke();
-            WaveCountdownText = "GO!";
-            _isCountdownDone = true;
-        }
-        while (_startTextTimer >= 0)
-        {
-            _startTextTimer -= Time.deltaTime;
-            return;
+            GameManager.OnMissionStart += StartWaveCountdown;
         }
 
-        if (_waveCountdownText.enabled == true)
+        private void OnDisable()
         {
-            _waveCountdownText.enabled = false;
+            GameManager.OnMissionStart -= StartWaveCountdown;
+        }
+
+        private void Start()
+        {
+            _isCountingDown = false;
+        }
+        private void StartWaveCountdown()
+        {
+            _isCountdownDone = false;
+            _waveCountdownText.enabled = true;
+            _waveCountdownTime = WAVECOUNTDOWNTIME;
+            _startTextTimer = STARTTEXTTIMER;
+            _isCountingDown = true;
+        }
+
+        private void Update()
+        {
+            if (!_isCountingDown) return;
+            while (_waveCountdownTime >= 0)
+            {
+                WaveCountdownText = _waveCountdownTime.ToString("F2");
+                _waveCountdownTime -= Time.deltaTime;
+                return;
+            }
+
+            if (!_isCountdownDone)
+            {
+                OnCountdownDone?.Invoke();
+                WaveCountdownText = "GO!";
+                _isCountdownDone = true;
+            }
+            while (_startTextTimer >= 0)
+            {
+                _startTextTimer -= Time.deltaTime;
+                return;
+            }
+
+            if (_waveCountdownText.enabled == true)
+            {
+                _waveCountdownText.enabled = false;
+            }
         }
     }
 }

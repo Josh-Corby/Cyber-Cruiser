@@ -1,67 +1,70 @@
 using System;
 using UnityEngine;
 
-public enum PickupType
+namespace CyberCruiser
 {
-    Weapon, Plasma, Health
-}
-
-public enum WeaponUpgradeType
-{
-    None, Scatter_Random, Scatter_Fixed, Pulverizer, Homing, ChainLightning
-}
-
-public class Pickup : GameBehaviour
-{
-    #region Fields
-    public PickupType _pickupType;
-    public WeaponUpgradeType _upgradeType;
-    [SerializeField] private float _speed;
-    [SerializeField] private int _healthAmount;
-    [SerializeField] private int _plasmaAmount;
-    [SerializeField] private int _ionAmount;
-    #endregion
-
-    #region Actions
-    public static event Action<int, int, int> OnResourcePickup = null;
-    public static event Action<GameObject> OnPickup = null;
-    public static event Action<WeaponUpgradeType> OnWeaponUpgradePickup = null;
-    #endregion
-
-    public void PickupEffect()
+    public class Pickup : GameBehaviour
     {
-        switch (_pickupType)
+        #region Fields
+        public PickupType _pickupType;
+        public WeaponUpgradeType _upgradeType;
+        [SerializeField] private float _speed;
+        [SerializeField] private int _healthAmount;
+        [SerializeField] private int _plasmaAmount;
+        [SerializeField] private int _ionAmount;
+        #endregion
+
+        #region Actions
+        public static event Action<int, int, int> OnResourcePickup = null;
+        public static event Action<GameObject> OnPickup = null;
+        public static event Action<WeaponUpgradeType> OnWeaponUpgradePickup = null;
+        #endregion
+
+        public void PickupEffect()
         {
-            case PickupType.Plasma:
-            case PickupType.Health:
-                OnResourcePickup(_healthAmount, _plasmaAmount, _ionAmount);
-                break;
-            case PickupType.Weapon:
-                switch (_upgradeType)
-                {
-                    case WeaponUpgradeType.None:
-                        return;
+            switch (_pickupType)
+            {
+                case PickupType.Plasma:
+                case PickupType.Health:
+                    OnResourcePickup(_healthAmount, _plasmaAmount, _ionAmount);
+                    break;
+                case PickupType.Weapon:
+                    switch (_upgradeType)
+                    {
+                        case WeaponUpgradeType.None:
+                            return;
 
-                    case WeaponUpgradeType.Scatter_Fixed:
-                    case WeaponUpgradeType.Scatter_Random:
-                    case WeaponUpgradeType.Pulverizer:
-                    case WeaponUpgradeType.Homing:
-                    case WeaponUpgradeType.ChainLightning:
-                        OnWeaponUpgradePickup(_upgradeType);
-                        break;
-                }
-                break;
+                        case WeaponUpgradeType.Scatter_Fixed:
+                        case WeaponUpgradeType.Scatter_Random:
+                        case WeaponUpgradeType.Pulverizer:
+                        case WeaponUpgradeType.Homing:
+                        case WeaponUpgradeType.ChainLightning:
+                            OnWeaponUpgradePickup(_upgradeType);
+                            break;
+                    }
+                    break;
+            }
+            OnPickup(gameObject);
         }
-        OnPickup(gameObject);
+
+        private void Update()
+        {
+            MoveForward();
+        }
+
+        private void MoveForward()
+        {
+            transform.position += _speed * Time.deltaTime * transform.up;
+        }
     }
 
-    private void Update()
-    {
-        MoveForward();
-    }
+        public enum PickupType
+        {
+            Weapon, Plasma, Health
+        }
 
-    private void MoveForward()
-    {
-        transform.position += _speed * Time.deltaTime * transform.up;
-    }
+        public enum WeaponUpgradeType
+        {
+            None, Scatter_Random, Scatter_Fixed, Pulverizer, Homing, ChainLightning
+        }
 }

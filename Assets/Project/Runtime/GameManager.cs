@@ -1,24 +1,18 @@
 using System;
 using UnityEngine;
 
-
-    public enum GameState
-    {
-        Mission, Menu
-    }
-
+namespace CyberCruiser
+{
     public class GameManager : GameBehaviour<GameManager>
     {
         [SerializeField] private bool _isPaused = false;
         [SerializeField] private GameObject gameplayObjects;
         private GameState _gameState;
 
-        #region Properties
-        public GameState GameState
+        public GameState CurrentGameState
         {
             get => _gameState;
         }
-        #endregion
 
         #region Actions
         public static event Action<bool> OnIsGamePaused = null;
@@ -81,6 +75,7 @@ using UnityEngine;
             {
                 OnGameResumed?.Invoke();
             }
+
             OnIsGamePaused?.Invoke(_isPaused);
         }
 
@@ -96,3 +91,9 @@ using UnityEngine;
             _gameState = GameState.Mission;
         }
     }
+
+        public enum GameState
+        {
+            Mission, Menu
+        }
+}

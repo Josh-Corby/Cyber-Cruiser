@@ -2,66 +2,69 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public class AddOnButton : GameBehaviour
+namespace CyberCruiser
 {
-    [SerializeField] private AddOnScriptableObject _addOnInfo;
-    private int _addOnCost;
-    private Button _addOnButton;
-    private bool _doesPlayerHaveAddOn;
-
-    public static event Action<AddOnScriptableObject> OnMouseEnter = null;
-    public static event Action OnMouseExit = null;
-    public static event Action<AddOnScriptableObject, bool> OnAddonBuyOrSell = null;
-
-    private void Awake()
+    [RequireComponent(typeof(Button))]
+    public class AddOnButton : GameBehaviour
     {
-        _addOnButton = GetComponent<Button>();
-        _addOnCost = _addOnInfo.IonCost;
-    }
+        [SerializeField] private AddOnScriptableObject _addOnInfo;
+        private int _addOnCost;
+        private Button _addOnButton;
+        private bool _doesPlayerHaveAddOn;
 
-    private void OnEnable()
-    {
-        PlayerStatsManager.OnIonChange -= ValidateButtonState;
-        ValidateButtonState(PlayerStatsManagerInstance.PlayerIon);
-    }
+        public static event Action<AddOnScriptableObject> OnMouseEnter = null;
+        public static event Action OnMouseExit = null;
+        public static event Action<AddOnScriptableObject, bool> OnAddonBuyOrSell = null;
 
-    private void OnDisable()
-    {
-        PlayerStatsManager.OnIonChange -= ValidateButtonState;
-    }
-
-    private void ValidateButtonState(int playerIon)
-    {
-        if (!_doesPlayerHaveAddOn)
+        private void Awake()
         {
-            _addOnButton.interactable = playerIon >= _addOnCost;
+            _addOnButton = GetComponent<Button>();
+            _addOnCost = _addOnInfo.IonCost;
         }
 
-        else
+        private void OnEnable()
         {
-            _addOnButton.interactable = true;
+            PlayerStatsManager.OnIonChange -= ValidateButtonState;
+            ValidateButtonState(PlayerStatsManagerInstance.PlayerIon);
         }
-    }
 
-    public void ToggleAddOnActiveState()
-    {
-        _doesPlayerHaveAddOn = !_doesPlayerHaveAddOn;
-        BuyOrSellAddOn();
-    }
+        private void OnDisable()
+        {
+            PlayerStatsManager.OnIonChange -= ValidateButtonState;
+        }
 
-    private void BuyOrSellAddOn()
-    {
-        OnAddonBuyOrSell?.Invoke(_addOnInfo, _doesPlayerHaveAddOn);
-    }
+        private void ValidateButtonState(int playerIon)
+        {
+            if (!_doesPlayerHaveAddOn)
+            {
+                _addOnButton.interactable = playerIon >= _addOnCost;
+            }
 
-    public void MouseEnter()
-    {
-        OnMouseEnter(_addOnInfo);
-    }
+            else
+            {
+                _addOnButton.interactable = true;
+            }
+        }
 
-    public void MouseExit()
-    {
-        OnMouseExit?.Invoke();
+        public void ToggleAddOnActiveState()
+        {
+            _doesPlayerHaveAddOn = !_doesPlayerHaveAddOn;
+            BuyOrSellAddOn();
+        }
+
+        private void BuyOrSellAddOn()
+        {
+            OnAddonBuyOrSell?.Invoke(_addOnInfo, _doesPlayerHaveAddOn);
+        }
+
+        public void MouseEnter()
+        {
+            OnMouseEnter(_addOnInfo);
+        }
+
+        public void MouseExit()
+        {
+            OnMouseExit?.Invoke();
+        }
     }
 }

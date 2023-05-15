@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 3537538281721821469}
   - component: {fileID: -3806085156021533184}
-  - component: {fileID: 377455017467164181}
   m_Layer: 7
   m_Name: Mine
   m_TagString: Untagged
@@ -86,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyInfo: {fileID: 0}
+  EnemyInfo: {fileID: 11400000, guid: 65c673e9b4286a84c842b1eaa39280d5, type: 2}
   _spriteRenderer: {fileID: 6224517711084455413}
   _deadSprite: {fileID: 0}
 --- !u!114 &-3806085156021533184
@@ -101,30 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365a316a2f7b6c445bfc232c6280bd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &377455017467164181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2653145768784104840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 519f9381a3c8c814a8486e1ca2642b46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _explosionEffect: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  _explosionRadius: 1
-  _explosionDamage: 1
-  _explosionMask:
-    serializedVersion: 2
-    m_Bits: 512
-  clusterOnDeath: 0
-  isClusterSpawningAUnit: 0
-  enemyToSpawn: {fileID: 0}
-  objectToSpawn: {fileID: 0}
-  _amountOfObjectsToSpawn: 0
-  _spawnRadius: 0.5
 --- !u!1 &3030845770333381816
 GameObject:
   m_ObjectHideFlags: 0

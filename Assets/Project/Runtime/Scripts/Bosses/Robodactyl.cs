@@ -1,33 +1,36 @@
 using System;
 using UnityEngine;
 
-public class Robodactyl : Boss, IBoss
+namespace CyberCruiser
 {
-    [SerializeField] private Weapon[] _laserLaunchers;
-    [SerializeField] private EnemyScriptableObject _mineInfo;
-    [SerializeField] private GameObject _mineReleasePoint;
-
-    public static event Action OnDied = null;
-
-    //Double lasers
-    public void Attack1()
+    public class Robodactyl : Boss, IBoss
     {
-        for (int i = 0; i < _laserLaunchers.Length; i++)
+        [SerializeField] private Weapon[] _laserLaunchers;
+        [SerializeField] private EnemyScriptableObject _mineInfo;
+        [SerializeField] private GameObject _mineReleasePoint;
+
+        public static event Action OnDied = null;
+
+        //Double lasers
+        public void Attack1()
         {
-            _laserLaunchers[i].CheckFireTypes();
+            for (int i = 0; i < _laserLaunchers.Length; i++)
+            {
+                _laserLaunchers[i].CheckFireTypes();
+            }
         }
-    }
 
-    //Release Mine
-    public void Attack2()
-    {
-        GameObject mine = Instantiate(EnemyManagerInstance.CreateEnemyFromSO(_mineInfo), _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
-        mine.transform.parent = null;
-    }
+        //Release Mine
+        public void Attack2()
+        {
+            GameObject mine = Instantiate(EnemyManagerInstance.CreateEnemyFromSO(_mineInfo), _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
+            mine.transform.parent = null;
+        }
 
-    protected override void Crash()
-    {
-        base.Crash();
-        if (OnDied != null) OnDied?.Invoke();
+        protected override void Crash()
+        {
+            base.Crash();
+            if (OnDied != null) OnDied?.Invoke();
+        }
     }
 }

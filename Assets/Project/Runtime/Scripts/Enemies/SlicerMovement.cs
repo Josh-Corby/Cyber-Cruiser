@@ -1,68 +1,71 @@
 using System;
 using UnityEngine;
 
-public class SlicerMovement : EnemyMovement
+namespace CyberCruiser
 {
-    [SerializeField] private float _seekTime;
-    private float _seekCounter;
-
-    #region Actions
-    public static event Action<GameObject> OnStartSeeking = null;
-    #endregion
-
-    protected override void Start()
+    public class SlicerMovement : EnemyMovement
     {
-        GetMovementType();
-    }
+        [SerializeField] private float _seekTime;
+        private float _seekCounter;
 
-    protected override void Update()
-    {
-        if (_isEnemySeekingPlayer)
+        #region Actions
+        public static event Action<GameObject> OnStartSeeking = null;
+        #endregion
+
+        protected override void Start()
         {
-            if (_seekCounter <= 0)
-            {
-                _isEnemySeekingPlayer = false;
-                return;
-            }
-            SeekX();
-            _seekCounter -= Time.deltaTime;
-            return;
-        }
-        base.Update();
-    }
-
-    private void GetMovementType()
-    {
-        //if only one slicer was spawned
-        if (EnemyManagerInstance.slicersSeeking.Count == 0)
-        {
-            _isEnemySeekingPlayer = true;
-            _isEnemySeekingPlayerOnXAxis = true;
-            _seekCounter = _seekTime;
-            OnStartSeeking(gameObject);
-            return;
+            GetMovementType();
         }
 
-        //if more than one slicer was spawned
-        if (EnemyManagerInstance.slicersSeeking.Count > 0)
+        protected override void Update()
         {
-            //check all slicers spawned to see if any of them are seeking the player
-            foreach (SlicerMovement slicer in EnemyManagerInstance.slicersSeeking)
+            if (_isEnemySeekingPlayer)
             {
-                //skip this slicer
-                if (slicer == this) continue;
-
-                //if any slicer is seeking the player
-                if (slicer._isEnemySeekingPlayer)
+                if (_seekCounter <= 0)
                 {
-                    //don't seek the player
                     _isEnemySeekingPlayer = false;
                     return;
                 }
+                SeekX();
+                _seekCounter -= Time.deltaTime;
+                return;
             }
-            //if none of the slicers are seeking the player then seek
-            _isEnemySeekingPlayer = true;
-            OnStartSeeking(gameObject);
+            base.Update();
+        }
+
+        private void GetMovementType()
+        {
+            //if only one slicer was spawned
+            if (EnemyManagerInstance.slicersSeeking.Count == 0)
+            {
+                _isEnemySeekingPlayer = true;
+                _isEnemySeekingPlayerOnXAxis = true;
+                _seekCounter = _seekTime;
+                OnStartSeeking(gameObject);
+                return;
+            }
+
+            //if more than one slicer was spawned
+            if (EnemyManagerInstance.slicersSeeking.Count > 0)
+            {
+                //check all slicers spawned to see if any of them are seeking the player
+                foreach (SlicerMovement slicer in EnemyManagerInstance.slicersSeeking)
+                {
+                    //skip this slicer
+                    if (slicer == this) continue;
+
+                    //if any slicer is seeking the player
+                    if (slicer._isEnemySeekingPlayer)
+                    {
+                        //don't seek the player
+                        _isEnemySeekingPlayer = false;
+                        return;
+                    }
+                }
+                //if none of the slicers are seeking the player then seek
+                _isEnemySeekingPlayer = true;
+                OnStartSeeking(gameObject);
+            }
         }
     }
 }

@@ -1,22 +1,26 @@
 using UnityEditor;
 using UnityEngine;
-[CustomEditor(typeof(EnemySpawnerManager))]
-public class ESMEditor : Editor
+
+namespace CyberCruiser
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(EnemySpawnerManager))]
+    public class ESMEditor : Editor
     {
-        base.OnInspectorGUI();
-        EnemySpawnerManager ESM = (EnemySpawnerManager)target;
-
-        serializedObject.Update();
-
-        if (GUILayout.Button("Reset Weights"))
+        public override void OnInspectorGUI()
         {
-            ESM.ResetWeights();
+            base.OnInspectorGUI();
+            EnemySpawnerManager ESM = (EnemySpawnerManager)target;
+
+            serializedObject.Update();
+
+            if (GUILayout.Button("Reset Weights"))
+            {
+                ESM.ResetWeights();
+                serializedObject.ApplyModifiedProperties();
+                return;
+            }
             serializedObject.ApplyModifiedProperties();
-            return;
+            ESM.OnInspectorUpdate();
         }
-        serializedObject.ApplyModifiedProperties();
-        ESM.OnInspectorUpdate();
     }
 }

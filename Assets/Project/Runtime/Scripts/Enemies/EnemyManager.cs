@@ -1,95 +1,98 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : GameBehaviour<EnemyManager>
+namespace CyberCruiser
 {
-    public List<SlicerMovement> slicersSeeking = new();
-    [HideInInspector] public List<GunshipMovement> gunshipsToProcess = new();
-    [SerializeField] private List<GameObject> _enemiesAlive = new();
-    [SerializeField] private List<GameObject> _crashingEnemies = new();
-
-    private void OnEnable()
+    public class EnemyManager : GameBehaviour<EnemyManager>
     {
-        Enemy.OnEnemyAliveStateChange += IsEnemyAlive;
-        Enemy.OnEnemyCrash += AddCrashingEnemy;
-        SlicerMovement.OnStartSeeking += RecieveUnit;
-        GunshipMovement.OnGunshipSpawned += RecieveUnit;
-        GameManager.OnMissionEnd += ClearLists;
-        EnemySpawnerManager.OnSpawnEnemyGroup += ClearMovementLists;
-    }
+        public List<SlicerMovement> slicersSeeking = new();
+        [HideInInspector] public List<GunshipMovement> gunshipsToProcess = new();
+        [SerializeField] private List<GameObject> _enemiesAlive = new();
+        [SerializeField] private List<GameObject> _crashingEnemies = new();
 
-    private void OnDisable()
-    {
-        Enemy.OnEnemyAliveStateChange -= IsEnemyAlive;
-        Enemy.OnEnemyCrash -= AddCrashingEnemy;
-        SlicerMovement.OnStartSeeking -= RecieveUnit;
-        GunshipMovement.OnGunshipSpawned -= RecieveUnit;
-        GameManager.OnMissionEnd -= ClearLists;
-        EnemySpawnerManager.OnSpawnEnemyGroup -= ClearMovementLists;
-    }
-
-    private void RecieveUnit(GameObject unit)
-    {
-        if (unit.TryGetComponent<GunshipMovement>(out var gunship))
+        private void OnEnable()
         {
-            AddToList(gunshipsToProcess, gunship);
-            return;
+            Enemy.OnEnemyAliveStateChange += IsEnemyAlive;
+            Enemy.OnEnemyCrash += AddCrashingEnemy;
+            SlicerMovement.OnStartSeeking += RecieveUnit;
+            GunshipMovement.OnGunshipSpawned += RecieveUnit;
+            GameManager.OnMissionEnd += ClearLists;
+            EnemySpawnerManager.OnSpawnEnemyGroup += ClearMovementLists;
         }
 
-        if (unit.TryGetComponent<SlicerMovement>(out var slicer))
+        private void OnDisable()
         {
-            AddToList(slicersSeeking, slicer);
-            return;
+            Enemy.OnEnemyAliveStateChange -= IsEnemyAlive;
+            Enemy.OnEnemyCrash -= AddCrashingEnemy;
+            SlicerMovement.OnStartSeeking -= RecieveUnit;
+            GunshipMovement.OnGunshipSpawned -= RecieveUnit;
+            GameManager.OnMissionEnd -= ClearLists;
+            EnemySpawnerManager.OnSpawnEnemyGroup -= ClearMovementLists;
         }
-    }
 
-    private void IsEnemyAlive(GameObject enemy, bool aliveState)
-    {
-        if (aliveState)
+        private void RecieveUnit(GameObject unit)
         {
-            AddToList(_enemiesAlive, enemy);
-        }
-        if (!aliveState)
-        {
-            RemoveFromList(_enemiesAlive, enemy);
-            //If an enemy was removed from enemies alive, and if the boss is ready to be spawned, check how many enemies are alive
-            if (EnemySpawnerManagerInstance.bossReadyToSpawn)
+            if (unit.TryGetComponent<GunshipMovement>(out var gunship))
             {
-                if (AreAllEnemiesDead())
+                AddToList(gunshipsToProcess, gunship);
+                return;
+            }
+
+            if (unit.TryGetComponent<SlicerMovement>(out var slicer))
+            {
+                AddToList(slicersSeeking, slicer);
+                return;
+            }
+        }
+
+        private void IsEnemyAlive(GameObject enemy, bool aliveState)
+        {
+            if (aliveState)
+            {
+                AddToList(_enemiesAlive, enemy);
+            }
+            if (!aliveState)
+            {
+                RemoveFromList(_enemiesAlive, enemy);
+                //If an enemy was removed from enemies alive, and if the boss is ready to be spawned, check how many enemies are alive
+                if (EnemySpawnerManagerInstance.bossReadyToSpawn)
                 {
-                    EnemySpawnerManagerInstance.StartBossSpawn();
+                    if (AreAllEnemiesDead())
+                    {
+                        EnemySpawnerManagerInstance.StartBossSpawn();
+                    }
                 }
             }
         }
-    }
 
-    private void AddCrashingEnemy(GameObject enemy)
-    {
-        _crashingEnemies.Add(enemy);
-    }
+        private void AddCrashingEnemy(GameObject enemy)
+        {
+            _crashingEnemies.Add(enemy);
+        }
 
-    private void ClearMovementLists()
-    {
-        slicersSeeking.Clear();
-        gunshipsToProcess.Clear();
-    }
+        private void ClearMovementLists()
+        {
+            slicersSeeking.Clear();
+            gunshipsToProcess.Clear();
+        }
 
-    private void ClearLists()
-    {
-        ClearList(_enemiesAlive);
-        ClearList(_crashingEnemies);
-        ClearMovementLists();
-    }
+        private void ClearLists()
+        {
+            ClearList(_enemiesAlive);
+            ClearList(_crashingEnemies);
+            ClearMovementLists();
+        }
 
-    public bool AreAllEnemiesDead()
-    {
-        return _enemiesAlive.Count == 0;
-    }
+        public bool AreAllEnemiesDead()
+        {
+            return _enemiesAlive.Count == 0;
+        }
 
-    public GameObject CreateEnemyFromSO(EnemyScriptableObject enemyInfo)
-    {
-        GameObject enemy = enemyInfo.EnemyPrefab;
-        enemy.GetComponent<Enemy>().EnemyInfo = enemyInfo;
-        return enemy;
+        public GameObject CreateEnemyFromSO(EnemyScriptableObject enemyInfo)
+        {
+            GameObject enemy = enemyInfo.EnemyPrefab;
+            enemy.GetComponent<Enemy>().EnemyInfo = enemyInfo;
+            return enemy;
+        }
     }
 }

@@ -1,7 +1,10 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "WeaponInfo", menuName = "ScriptableObject/Weapon")]
-public class WeaponScriptableObject : ScriptableObject
+namespace CyberCruiser
 {
-    public WeaponStats Stats;
+    [CreateAssetMenu(fileName = "WeaponInfo", menuName = "ScriptableObject/Weapon")]
+    public class WeaponScriptableObject : ScriptableObject
+    {
+        public WeaponStats Stats;
+    }
 }

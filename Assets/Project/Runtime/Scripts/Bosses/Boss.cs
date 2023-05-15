@@ -2,80 +2,82 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
-public class Boss : Enemy, IDamageable
+namespace CyberCruiser
 {
-    public static event Action<float> OnBossDamage = null;
-    public static event Action<PickupType, Vector3> OnBossDied = null;
-
-    private BossMovement _movement;
-    [SerializeField] protected float _attackCooldown, _attackTimer;
-
-    private IBoss bossMoveset;
-
-    protected override void Awake()
+    public class Boss : Enemy, IDamageable
     {
-        _movement = GetComponent<BossMovement>();
-        base.Awake();
-        bossMoveset = GetComponent<IBoss>();
-    }
+        public static event Action<float> OnBossDamage = null;
+        public static event Action<PickupType, Vector3> OnBossDied = null;
 
-    protected virtual void Start()
-    {
-        _attackTimer = _attackCooldown;
-    }
+        private BossMovement _movement;
+        [SerializeField] protected float _attackCooldown, _attackTimer;
 
-    protected virtual void Update()
-    {
-        if (_movement.IsEnemyDead)
+        private IBoss bossMoveset;
+
+        protected override void Awake()
         {
-            return;
-        }
-        if (_attackTimer > 0)
-        {
-            _attackTimer -= Time.deltaTime;
+            _movement = GetComponent<BossMovement>();
+            base.Awake();
+            bossMoveset = GetComponent<IBoss>();
         }
 
-        if (_attackTimer <= 0)
+        protected virtual void Start()
         {
-            ChooseRandomAttack();
-        }
-    }
-
-    protected virtual void ChooseRandomAttack()
-    {
-        int randomAttackID = Random.Range(0, 2);
-        PerformAttack(randomAttackID);
-        _attackTimer = _attackCooldown;
-    }
-
-    protected void PerformAttack(int ID)
-    {
-        if (ID == 0)
-        {
-            bossMoveset.Attack1();
+            _attackTimer = _attackCooldown;
         }
 
-        if (ID == 1)
+        protected virtual void Update()
         {
-            bossMoveset.Attack2();
+            if (_movement.IsEnemyDead)
+            {
+                return;
+            }
+            if (_attackTimer > 0)
+            {
+                _attackTimer -= Time.deltaTime;
+            }
+
+            if (_attackTimer <= 0)
+            {
+                ChooseRandomAttack();
+            }
         }
-    }
 
-    public override void Damage(float damage)
-    {
-        OnBossDamage(_currentHealth);
-        base.Damage(damage);
-    }
+        protected virtual void ChooseRandomAttack()
+        {
+            int randomAttackID = Random.Range(0, 2);
+            PerformAttack(randomAttackID);
+            _attackTimer = _attackCooldown;
+        }
 
-    protected override void Crash()
-    {
-        base.Crash();
-        OnBossDied(PickupType.Health, transform.position);
-    }
+        protected void PerformAttack(int ID)
+        {
+            if (ID == 0)
+            {
+                bossMoveset.Attack1();
+            }
 
-    public override void Destroy()
-    {
-        base.Destroy();
+            if (ID == 1)
+            {
+                bossMoveset.Attack2();
+            }
+        }
+
+        public override void Damage(float damage)
+        {
+            OnBossDamage(_currentHealth);
+            base.Damage(damage);
+        }
+
+        protected override void Crash()
+        {
+            base.Crash();
+            OnBossDied(PickupType.Health, transform.position);
+        }
+
+        public override void Destroy()
+        {
+            base.Destroy();
+        }
     }
 }

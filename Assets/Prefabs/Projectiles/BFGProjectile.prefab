@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1614547040528235197}
   - component: {fileID: 6026004926442184010}
   - component: {fileID: 1413435970046981200}
-  - component: {fileID: -1226043927367340336}
   m_Layer: 8
   m_Name: BFGProjectile
   m_TagString: Untagged
@@ -31,7 +30,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8879241011692610782}
   - {fileID: 4770325209433431687}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -68,6 +66,7 @@ MonoBehaviour:
   _playerProjectileSprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
   _enemyProjectileSprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
   _collisionParticles: {fileID: 8611581191203232223, guid: bcd084b07ae840f49bc8526ab122ce58, type: 3}
+  _explosion: {fileID: 762726913902296103, guid: 66277acada437ea4fad569e4d26ab934, type: 3}
   _speed: 30
   _damage: 1
   _doesBulletExplode: 1
@@ -78,30 +77,6 @@ MonoBehaviour:
   _homeDelayTime: 0
   _homeCounter: 0
   _homeDelayCounter: 0
---- !u!114 &-1226043927367340336
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 976552681326359198}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 519f9381a3c8c814a8486e1ca2642b46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _explosionEffect: {fileID: 662790737778313323}
-  _explosionRadius: 1
-  _explosionDamage: 2
-  _explosionMask:
-    serializedVersion: 2
-    m_Bits: 128
-  clusterOnDeath: 1
-  isClusterSpawningAUnit: 0
-  enemyToSpawn: {fileID: 0}
-  objectToSpawn: {fileID: 760453196464390188, guid: aefca9002aa15e2478302a3f2253c1b1, type: 3}
-  _amountOfObjectsToSpawn: 12
-  _spawnRadius: 0.5
 --- !u!1 &5349465572973067373
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +107,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1614547040528235197}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5887849216004966181
 SpriteRenderer:
@@ -186,78 +161,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &5329806863728719169
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1614547040528235197}
-    m_Modifications:
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_Name
-      value: ExplosionEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f9088ab58b665d84d921d414e0070571, type: 3}
---- !u!1 &662790737778313323 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4667404529104272682, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  m_PrefabInstance: {fileID: 5329806863728719169}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8879241011692610782 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-  m_PrefabInstance: {fileID: 5329806863728719169}
-  m_PrefabAsset: {fileID: 0}
