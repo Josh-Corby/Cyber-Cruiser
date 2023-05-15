@@ -17,17 +17,32 @@ namespace CyberCruiser
 
             private void OnEnable()
             {
+                GameManager.OnMissionEnd += StartMenuMusic;
+                GameManager.OnMissionStart += StartMissionMusic;
                 GameManager.OnIsGamePaused += ChangeBGMVolumeOnGamePauseToggle;
             }
 
             private void OnDisable()
             {
+                GameManager.OnMissionEnd -= StartMenuMusic;
+                GameManager.OnMissionStart -= StartMissionMusic;
                 GameManager.OnIsGamePaused -= ChangeBGMVolumeOnGamePauseToggle;
             }
 
             private void Start()
             {
+                StartMenuMusic();
+            }
+
+            private void StartMenuMusic()
+            {
                 _audioSource.clip = _menuMusic;
+                PlayClip();
+            }
+
+            private void StartMissionMusic()
+            {
+                _audioSource.clip = _missionMusic;
                 PlayClip();
             }
 

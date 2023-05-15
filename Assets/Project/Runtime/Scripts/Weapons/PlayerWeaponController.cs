@@ -1,9 +1,11 @@
+using CyberCruiser.Audio;
 using System;
 using System.Collections;
 using UnityEngine;
 
 namespace CyberCruiser
 {
+    [RequireComponent(typeof(SoundControllerBase))]
     public class PlayerWeaponController : GameBehaviour
     {
         #region References
@@ -11,7 +13,10 @@ namespace CyberCruiser
         [SerializeField] private Weapon _chainLightning;
         [SerializeField] private Weapon _currentWeapon;
         [SerializeField] private BeamAttack _beamAttack;
-        private bool _isWeaponFiringHomingProjectiles;
+
+        [SerializeField] private AudioClip _upgradeStartClip;
+        [SerializeField] private AudioClip _upgradeEndClip;
+        private SoundControllerBase _soundController;
         #endregion
 
         #region Fields
@@ -40,6 +45,7 @@ namespace CyberCruiser
         private bool _isWeaponUpgradeActive;
         private bool _isHeatDecreasing;
 
+        private bool _isWeaponFiringHomingProjectiles;
         private Coroutine _weaponUpgradeCoroutine;
         #endregion
 
@@ -101,6 +107,7 @@ namespace CyberCruiser
         {
             _currentWeapon = _baseWeapon;
             _beamAttack = GetComponentInChildren<BeamAttack>();
+            _soundController = GetComponent<SoundControllerBase>();
         }
 
         private void OnEnable()
@@ -295,11 +302,13 @@ namespace CyberCruiser
             {
                 StopCoroutine(_weaponUpgradeCoroutine);
             }
-            _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimer(upgradeType));
+            _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeCoroutine(upgradeType));
         }
 
-        private IEnumerator WeaponUpgradeTimer(WeaponUpgradeType upgradeType)
+        private IEnumerator WeaponUpgradeCoroutine(WeaponUpgradeType upgradeType)
         {
+            _soundController.PlayOneShot(_upgradeStartClip);
+
             //reset in case a different type of pickup is picked up while an upgrade is currently active
             ResetPlayerWeapon();
 
@@ -369,6 +378,7 @@ namespace CyberCruiser
 
         private void WeaponUpgradeFinished()
         {
+            _soundController.PlayOneShot(_upgradeEndClip);
             OnWeaponUpgradeFinished?.Invoke();
             CurrentHeat = 0;
             _currentWeapon.enabled = true;

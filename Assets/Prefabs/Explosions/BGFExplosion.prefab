@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5789708609481566215}
   - component: {fileID: 4150786980244040276}
-  - component: {fileID: 1751203027426155465}
+  - component: {fileID: 396160147959850325}
   - component: {fileID: 8853170189904861176}
   m_Layer: 0
   m_Name: BGFExplosion
@@ -59,7 +59,7 @@ MonoBehaviour:
   objectToSpawn: {fileID: 760453196464390188, guid: aefca9002aa15e2478302a3f2253c1b1, type: 3}
   _amountOfObjectsToSpawn: 12
   _spawnRadius: 0.5
---- !u!114 &1751203027426155465
+--- !u!114 &396160147959850325
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,10 +68,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 762726913902296103}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df9548243a7f21f4dad3deb5e2660074, type: 3}
+  m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _oneShotClip: {fileID: 0}
 --- !u!82 &8853170189904861176
 AudioSource:
   m_ObjectHideFlags: 0

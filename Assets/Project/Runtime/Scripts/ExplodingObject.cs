@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CyberCruiser
 {
-    [RequireComponent(typeof(OneShotAudioController))]
+    [RequireComponent(typeof(SoundControllerBase))]
     public class ExplodingObject : GameBehaviour
     {
         #region Explosion

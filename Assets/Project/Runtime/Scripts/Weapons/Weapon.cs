@@ -6,11 +6,11 @@ using Random = UnityEngine.Random;
 
 namespace CyberCruiser
 {
-    [RequireComponent(typeof(OneShotAudioController))]
+    [RequireComponent(typeof(SoundControllerBase))]
     public class Weapon : GameBehaviour
     {
         [SerializeField] private WeaponScriptableObject _weaponBase;
-        [SerializeField] private OneShotAudioController _oneShotAudioController;
+        [SerializeField] private SoundControllerBase _soundController;
         private WeaponStats _stats;
         private GameObject _firePoint;
         private Transform _firePointTransform;
@@ -24,7 +24,7 @@ namespace CyberCruiser
 
         private void Awake()
         {
-            _oneShotAudioController = GetComponent<OneShotAudioController>();
+            _soundController = GetComponent<SoundControllerBase>();
             _firePoint = transform.GetChild(0).gameObject;
             _firePointTransform = _firePoint.transform;
             WeaponSetup();
@@ -38,8 +38,6 @@ namespace CyberCruiser
         private void WeaponSetup()
         {
             ResetWeapon();
-
-            _oneShotAudioController._oneShotClip = _weaponBase.Stats.FireClip;
         }
 
         public void ResetWeapon()
@@ -148,7 +146,7 @@ namespace CyberCruiser
         private void FireBullet(Quaternion direction)
         {
             GameObject bullet = Instantiate(_stats.objectToFire, _firePointTransform.position, direction);
-            _oneShotAudioController.PlayClip();
+            _soundController.PlayOneShot(_stats.FireClip);
         }
 
         private IEnumerator ResetShooting()

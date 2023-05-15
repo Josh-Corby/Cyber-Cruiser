@@ -1,3 +1,4 @@
+using CyberCruiser.Audio;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,9 @@ namespace CyberCruiser
         [SerializeField] private Image[] _goldStars;
         [SerializeField] private Rank _currentRank;
 
+        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip _starClip;
+
         private int _starsToGain;
         private int _starsEnabled;
         private int _playerStarsBeforeMissionStart;
@@ -25,6 +29,13 @@ namespace CyberCruiser
 
         private float _starAnimationDelayInSeconds = 1f;
 
+        private void Awake()
+        {
+            if(_uiType == UIType.Animated)
+            {
+                _audioSource = GetComponent<AudioSource>();
+            }
+        }
         private void OnEnable()
         {
             GetPlayerRankInfoBeforeMissionStart();
@@ -94,6 +105,7 @@ namespace CyberCruiser
                     yield return new WaitForSeconds(_starAnimationDelayInSeconds);
                     _goldStars[_starsEnabled].enabled = true;
                     _starsEnabled += 1;
+                    _audioSource.PlayOneShot(_starClip);
                 }
 
                 if (_starsEnabled >= _currentRank.StarsToRankUp)

@@ -8,9 +8,9 @@ namespace CyberCruiser
         {
             [SerializeField] private AudioClip _buttonClip;
 
-            public void OnButtonClick()
+            public void PlaySound(AudioClip clip)
             {
-                PlayClip();
+                PlayOneShot(clip);
             }
         }
     }
