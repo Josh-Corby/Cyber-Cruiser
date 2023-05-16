@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2255677273629178609}
   - component: {fileID: 3581413814707064738}
   - component: {fileID: 6640960726374861538}
-  - component: {fileID: 5829328737251401865}
   - component: {fileID: 7533639291087831041}
+  - component: {fileID: 5829328737251401865}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -102,6 +102,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponBase: {fileID: 0}
   _soundController: {fileID: 0}
+--- !u!114 &7533639291087831041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6640960726374861542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &5829328737251401865
 AudioSource:
   m_ObjectHideFlags: 0
@@ -111,7 +123,7 @@ AudioSource:
   m_GameObject: {fileID: 6640960726374861542}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 6227862573483942199, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
+  OutputAudioMixerGroup: {fileID: 2804263056144364330, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -198,18 +210,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7533639291087831041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6640960726374861542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8907491433915432714
 GameObject:
   m_ObjectHideFlags: 0

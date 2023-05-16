@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -6,27 +7,39 @@ namespace CyberCruiser
     {
         public class MusicController : SoundControllerBase
         {
-            [SerializeField] private AudioClip _menuMusic;
-            [SerializeField] private AudioClip _missionMusic;
+            [SerializeField] private MusicClip[] _musicClips;
+
+            [Serializable]
+            private class MusicClip
+            {
+                public ClipInfo ClipInfo;
+                public MusicTypes AudioType;
+            }
+
+            private enum MusicTypes
+            {
+                MainMenu,
+                Mission
+            }
+
+            //0 for Menu Music
+            //1 for Mussion Music
 
             [SerializeField]
             [Range(0f, 1f)] private float _pausedVolume;
-
-            [SerializeField]
-            [Range(0f, 1f)] private float _defaultVolume;
 
             private void OnEnable()
             {
                 GameManager.OnMissionEnd += StartMenuMusic;
                 GameManager.OnMissionStart += StartMissionMusic;
-                GameManager.OnIsGamePaused += ChangeBGMVolumeOnGamePauseToggle;
+                GameManager.OnIsGamePaused += SetMissionMusicOnTogglePause;
             }
 
             private void OnDisable()
             {
                 GameManager.OnMissionEnd -= StartMenuMusic;
                 GameManager.OnMissionStart -= StartMissionMusic;
-                GameManager.OnIsGamePaused -= ChangeBGMVolumeOnGamePauseToggle;
+                GameManager.OnIsGamePaused -= SetMissionMusicOnTogglePause;
             }
 
             private void Start()
@@ -36,21 +49,18 @@ namespace CyberCruiser
 
             private void StartMenuMusic()
             {
-                _audioSource.clip = _menuMusic;
-                PlayClip();
+                PlayNewClip(_musicClips[(int)MusicTypes.MainMenu].ClipInfo);
             }
 
             private void StartMissionMusic()
             {
-                _audioSource.clip = _missionMusic;
-                PlayClip();
+                PlayNewClip(_musicClips[(int)MusicTypes.Mission].ClipInfo);
             }
 
-            private void ChangeBGMVolumeOnGamePauseToggle(bool isPaused)
+            private void SetMissionMusicOnTogglePause(bool isPaused)
             {
-                _audioSource.volume = isPaused ? _pausedVolume : _defaultVolume;
+                _audioSource.volume = isPaused ? _pausedVolume : _musicClips[(int)MusicTypes.Mission].ClipInfo.Volume;
             }
-
         }
     }
 }

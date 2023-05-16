@@ -62,21 +62,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527497be6615eaf4f88a354ffeb3fb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  homingTarget: {fileID: 0}
   _playerProjectileSprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
   _enemyProjectileSprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
   _collisionParticles: {fileID: 8611581191203232223, guid: bcd084b07ae840f49bc8526ab122ce58, type: 3}
-  _explosion: {fileID: 762726913902296103, guid: 66277acada437ea4fad569e4d26ab934, type: 3}
   _speed: 30
   _damage: 1
   _doesBulletExplode: 1
+  _explosion: {fileID: 762726913902296103, guid: 66277acada437ea4fad569e4d26ab934, type: 3}
   _isHoming: 0
   _homeTurnSpeed: 0
   _homeTime: 0
   _homeDelay: 0
   _homeDelayTime: 0
   _homeCounter: 0
-  _homeDelayCounter: 0
 --- !u!1 &5349465572973067373
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4770325209433431687}
   - component: {fileID: 5887849216004966181}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Art_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,22 +1,18 @@
-using CyberCruiser.Audio;
 using System;
 using System.Collections;
 using UnityEngine;
 
 namespace CyberCruiser
 {
-    [RequireComponent(typeof(SoundControllerBase))]
     public class PlayerWeaponController : GameBehaviour
     {
+        [SerializeField] private PlayerSoundController _soundController;  
+
         #region References
         [SerializeField] private Weapon _baseWeapon;
         [SerializeField] private Weapon _chainLightning;
         [SerializeField] private Weapon _currentWeapon;
         [SerializeField] private BeamAttack _beamAttack;
-
-        [SerializeField] private AudioClip _upgradeStartClip;
-        [SerializeField] private AudioClip _upgradeEndClip;
-        private SoundControllerBase _soundController;
         #endregion
 
         #region Fields
@@ -107,7 +103,6 @@ namespace CyberCruiser
         {
             _currentWeapon = _baseWeapon;
             _beamAttack = GetComponentInChildren<BeamAttack>();
-            _soundController = GetComponent<SoundControllerBase>();
         }
 
         private void OnEnable()
@@ -307,7 +302,7 @@ namespace CyberCruiser
 
         private IEnumerator WeaponUpgradeCoroutine(WeaponUpgradeType upgradeType)
         {
-            _soundController.PlayOneShot(_upgradeStartClip);
+            _soundController.PlaySound(0);
 
             //reset in case a different type of pickup is picked up while an upgrade is currently active
             ResetPlayerWeapon();
@@ -342,6 +337,7 @@ namespace CyberCruiser
             }
 
             //reset player weapon to its original values after upgrade duration is over
+            _soundController.PlaySound(1);
             ResetPlayerWeapon();
         }
 
@@ -377,8 +373,7 @@ namespace CyberCruiser
         }
 
         private void WeaponUpgradeFinished()
-        {
-            _soundController.PlayOneShot(_upgradeEndClip);
+        {    
             OnWeaponUpgradeFinished?.Invoke();
             CurrentHeat = 0;
             _currentWeapon.enabled = true;

@@ -31,8 +31,8 @@ namespace CyberCruiser
 
         private void RestoreValues()
         {
-            _playerIon = PlayerPrefs.GetInt(nameof(PLAYER_ION));
-            _playerPlasma = PlayerPrefs.GetInt(nameof(PLAYER_PLASMA));
+            _playerIon = PlayerPrefs.GetInt(PLAYER_ION);
+            _playerPlasma = PlayerPrefs.GetInt(PLAYER_PLASMA);
         }
 
         public void ChangeIon(int value)
@@ -57,8 +57,8 @@ namespace CyberCruiser
 
         private void SaveValues()
         {
-            PlayerPrefs.SetInt(nameof(PLAYER_PLASMA), _playerPlasma);
-            PlayerPrefs.SetInt(nameof(PLAYER_ION), _playerIon);
+            PlayerPrefs.SetInt(PLAYER_PLASMA, _playerPlasma);
+            PlayerPrefs.SetInt(PLAYER_ION, _playerIon);
         }
 
         private void OnApplicationQuit()

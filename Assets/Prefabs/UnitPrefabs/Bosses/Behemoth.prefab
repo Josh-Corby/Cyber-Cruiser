@@ -98,13 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d905ddc9665ff549bfb5bbeb7a3c757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitInfo: {fileID: 11400000, guid: 78f9a89cd02828243b6c80b47d51d549, type: 2}
+  EnemyInfo: {fileID: 0}
   _spriteRenderer: {fileID: 7678710914699729169}
   _deadSprite: {fileID: 21300000, guid: 1b6d75c985578064e899928b85a113f3, type: 3}
-  _audioSource: {fileID: 0}
-  _explodeClip: {fileID: 0}
-  unitName: Behemoth
-  _currentHealth: 50
   _attackCooldown: 3
   _attackTimer: 0.0640432
   _missileLauncher: {fileID: 4191074527660003506}
@@ -123,7 +119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _seekPlayer: 0
   _moveType: 0
 --- !u!1 &1355927135244723045
 GameObject:
@@ -167,6 +162,7 @@ GameObject:
   - component: {fileID: 4964870291731987656}
   - component: {fileID: 4191074527660003506}
   - component: {fileID: 5420301948129256186}
+  - component: {fileID: 2435635778365127342}
   m_Layer: 1
   m_Name: MissileLauncher
   m_TagString: Untagged
@@ -203,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponBase: {fileID: 11400000, guid: 721c41a4251c5fb4eac836df1fa797fb, type: 2}
-  _audioSource: {fileID: 5420301948129256186}
+  _soundController: {fileID: 0}
 --- !u!82 &5420301948129256186
 AudioSource:
   m_ObjectHideFlags: 0
@@ -213,7 +209,7 @@ AudioSource:
   m_GameObject: {fileID: 3069140740445223100}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3435521519813647288, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
   m_audioClip: {fileID: 8300000, guid: fffbdd24865acec42803a1b86044c731, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.142
@@ -300,6 +296,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2435635778365127342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3069140740445223100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3906066989161890512
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,6 +350,7 @@ GameObject:
   - component: {fileID: 5543213076600348203}
   - component: {fileID: 2625783356837087720}
   - component: {fileID: 2371684279816273714}
+  - component: {fileID: 7483045533634078420}
   m_Layer: 1
   m_Name: Missile_HomingLauncher
   m_TagString: Untagged
@@ -378,7 +387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponBase: {fileID: 11400000, guid: cd436523be8b21a489263e4809b4293b, type: 2}
-  _audioSource: {fileID: 2371684279816273714}
+  _soundController: {fileID: 0}
 --- !u!82 &2371684279816273714
 AudioSource:
   m_ObjectHideFlags: 0
@@ -388,7 +397,7 @@ AudioSource:
   m_GameObject: {fileID: 5700530383899644067}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3435521519813647288, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
   m_audioClip: {fileID: 8300000, guid: fffbdd24865acec42803a1b86044c731, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.142
@@ -475,6 +484,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7483045533634078420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5700530383899644067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5803388301348128618
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3537538281721821472}
   - component: {fileID: -8366687123913509109}
   - component: {fileID: 1876512611095173727}
-  - component: {fileID: -5532577649094185311}
   m_Layer: 7
   m_Name: Gunship
   m_TagString: Untagged
@@ -98,13 +97,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitInfo: {fileID: 11400000, guid: 11ad0b7501b164f4ea8d6773f1c92f9a, type: 2}
+  EnemyInfo: {fileID: 0}
   _spriteRenderer: {fileID: 5601296595884116479}
   _deadSprite: {fileID: 21300000, guid: ae5f1745108c3bb468cc0af62e673111, type: 3}
-  _audioSource: {fileID: -5532577649094185311}
-  _explodeClip: {fileID: 0}
-  unitName: 
-  _currentHealth: 0
 --- !u!114 &1876512611095173727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,104 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f983803b7c3c2240ae6af887933654e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _seekPlayer: 0
   gunshipMoveType: 0
---- !u!82 &-5532577649094185311
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2653145768784104840}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4517ca5002617704998cd5341723ce81, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &3590740715818776598
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +124,7 @@ GameObject:
   - component: {fileID: 6883753668296052494}
   - component: {fileID: 3076945486691073074}
   - component: {fileID: 2590652807368049367}
+  - component: {fileID: 3605345613569104505}
   m_Layer: 1
   m_Name: Gun
   m_TagString: Untagged
@@ -267,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponBase: {fileID: 11400000, guid: 9818121d79463934baba9740bb6cab5d, type: 2}
-  _audioSource: {fileID: 2590652807368049367}
+  _soundController: {fileID: 0}
 --- !u!82 &2590652807368049367
 AudioSource:
   m_ObjectHideFlags: 0
@@ -277,7 +176,7 @@ AudioSource:
   m_GameObject: {fileID: 3590740715818776598}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2804263056144364330, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -364,6 +263,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3605345613569104505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3590740715818776598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3823487148860911231
 GameObject:
   m_ObjectHideFlags: 0

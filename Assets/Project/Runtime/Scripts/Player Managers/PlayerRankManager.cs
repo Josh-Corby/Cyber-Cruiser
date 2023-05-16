@@ -50,33 +50,16 @@ namespace CyberCruiser
 
         private void RestoreRank()
         {
-            if (!PlayerPrefs.HasKey(nameof(PLAYER_RANK)))
-            {
-                _currentRank = RankManagerInstance.GetRank(0);
-                _rankBeforeRankUp = _currentRank;
-            }
+            _currentRank = RankManagerInstance.GetRank(0);
+            //_currentRank = RankManagerInstance.GetRank(PlayerPrefs.GetInt(PLAYER_RANK, 0));
+            _rankBeforeRankUp = _currentRank;
 
-            else
-            {
-                _currentRank = RankManagerInstance.GetRank(0);
-                //_currentRank = RM.GetRank(PlayerPrefs.GetInt(nameof(PLAYER_RANK)));
-                _rankBeforeRankUp = _currentRank;
-            }
         }
 
         private void RestoreStars()
         {
-            if (!PlayerPrefs.HasKey(nameof(PLAYER_STARS)))
-            {
-                _currentStars = 0;
-            }
-
-            else
-            {
-                _currentStars = 0;
-                //_currentStars = PlayerPrefs.GetInt(nameof(PLAYER_STARS));
-                _starsBeforeMissionStart = _currentStars;
-            }
+            _currentStars = PlayerPrefs.GetInt(PLAYER_STARS, 0);
+            _starsBeforeMissionStart = _currentStars;
         }
 
         private void StoreRankValues()
@@ -115,9 +98,9 @@ namespace CyberCruiser
 
         private void SaveValues()
         {
-            PlayerPrefs.SetInt(nameof(PLAYER_RANK), 0);
+            PlayerPrefs.SetInt(PLAYER_RANK, 0);
             //PlayerPrefs.SetInt(nameof(PLAYER_RANK), _currentRank.RankID);
-            PlayerPrefs.SetInt(nameof(PLAYER_STARS), _currentStars);
+            PlayerPrefs.SetInt(PLAYER_STARS, _currentStars);
         }
 
         private void OnApplicationQuit()

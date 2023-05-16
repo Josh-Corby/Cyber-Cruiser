@@ -1,5 +1,4 @@
 using CyberCruiser.Audio;
-using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -146,7 +145,7 @@ namespace CyberCruiser
         private void FireBullet(Quaternion direction)
         {
             GameObject bullet = Instantiate(_stats.objectToFire, _firePointTransform.position, direction);
-            _soundController.PlayOneShot(_stats.FireClip);
+            _soundController.PlayNewClip(_stats.Clip);
         }
 
         private IEnumerator ResetShooting()
@@ -155,27 +154,4 @@ namespace CyberCruiser
             _readyToFire = true;
         }
     }
-
-        [Serializable]
-        public class WeaponStats
-        {
-            public GameObject objectToFire;
-            public float TimeBetweenShots;
-            public bool IsWeaponAutomatic;
-            public AudioClip FireClip;
-
-            [Header("Spread")]
-            public bool DoesWeaponUseSpread;
-            public float SpreadHalfAngle;
-
-            [Header("Burst Fire")]
-            public bool IsWeaponBurstFire;
-            public int AmountOfBursts;
-            public float TimeBetweenBurstShots;
-
-            [Header("Multi Shot")]
-            public bool IsWeaponMultiFire;
-            public int MultiFireShots;
-            public bool IsMultiFireSpreadRandom;
-        }
 }

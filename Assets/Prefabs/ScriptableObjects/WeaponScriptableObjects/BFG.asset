@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Stats:
     objectToFire: {fileID: 976552681326359198, guid: c7a34c62830e2df48bc90895d9129f7d, type: 3}
-    TimeBetweenShots: 1
+    TimeBetweenShots: 0.5
     IsWeaponAutomatic: 0
-    FireClip: {fileID: 8300000, guid: 88aebcdc0c896584189535968fe7a923, type: 3}
-    DoesWeaponUseSpread: 0
-    SpreadHalfAngle: 0
+    Clip:
+      Clip: {fileID: 8300000, guid: 88aebcdc0c896584189535968fe7a923, type: 3}
+      OverrideSourceVolume: 0
+      Volume: 1
+      PlayOneShot: 1
+    DoesWeaponUseSpread: 1
+    SpreadHalfAngle: 30
     IsWeaponBurstFire: 0
     AmountOfBursts: 0
     TimeBetweenBurstShots: 0
-    IsWeaponMultiFire: 0
-    MultiFireShots: 0
+    IsWeaponMultiFire: 1
+    MultiFireShots: 3
     IsMultiFireSpreadRandom: 0
