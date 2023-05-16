@@ -9,7 +9,5 @@ namespace CyberCruiser
     {
         [SerializeField] private Slider _slider;
 
-
-
     }
 }
