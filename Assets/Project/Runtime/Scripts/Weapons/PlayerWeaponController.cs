@@ -18,12 +18,13 @@ namespace CyberCruiser
         #endregion
 
         #region Fields
+        private bool _controlsEnabled;
+
         private const int BASE_HEAT_MAX = 100;
         private const float BASE_HEAT_PER_SHOT = 1.75f;
         private const int BASE_UPGRADE_DURATION = 10;
         private const float BASE_HEAT_LOSS_PER_FRAME = 0.4f;
         private const float BASE_COOLDOWN_HEAT_LOSS_PER_FRAME = 0.6f;
-
 
         [SerializeField] private float _currentHeat;
         private float _heatPerShot;
@@ -39,7 +40,6 @@ namespace CyberCruiser
         private bool _isOverheated;
         private bool _isHoming;
         private bool _fireInput;
-        [SerializeField] private bool _controlsEnabled;
         private bool _isWeaponUpgradeActive;
         private bool _isHeatDecreasing;
 
@@ -110,8 +110,6 @@ namespace CyberCruiser
         private void OnEnable()
         {
             InputManager.OnFire += SetFireInput;
-            InputManager.OnControlsEnabled += EnableControls;
-            InputManager.OnControlsDisabled += DisableControls;
             GameManager.OnMissionEnd += ResetPlayerWeapon;
             Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
             ResetPlayerWeapon();
@@ -120,8 +118,6 @@ namespace CyberCruiser
         private void OnDisable()
         {
             InputManager.OnFire -= SetFireInput;
-            InputManager.OnControlsEnabled -= EnableControls;
-            InputManager.OnControlsDisabled -= DisableControls;
             GameManager.OnMissionEnd -= ResetPlayerWeapon;
             Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
         }
@@ -157,11 +153,6 @@ namespace CyberCruiser
 
         private void Update()
         {
-            if (GameManagerInstance.CurrentGameState != GameState.Mission)
-            {
-                return;
-            }
-
             CheckOverHeated();
         }
 
@@ -233,7 +224,10 @@ namespace CyberCruiser
 
         private void SetFireInput(bool input)
         {
-            _fireInput = input;
+            if(_controlsEnabled)
+            {
+                _fireInput = input;
+            }
         }
 
         private void CheckHoldToFire()
@@ -281,12 +275,12 @@ namespace CyberCruiser
             }
         }
 
-        private void EnableControls()
+        public void EnableControls()
         {
             _controlsEnabled = true;
         }
 
-        private void DisableControls()
+        public void DisableControls()
         {
             _controlsEnabled = false;
         }

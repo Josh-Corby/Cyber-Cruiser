@@ -36,12 +36,7 @@ namespace CyberCruiser
         {
             _isPlayerDead = false;
             InputManager.OnMouseMove += RecieveInput;
-            InputManager.OnControlsEnabled += EnableControls;
-            InputManager.OnControlsDisabled += DisableControls;
             GameManager.OnMissionStart += StartLevelPosition;
-
-            GameManager.OnGameResumed += EnableControls;
-            GameManager.OnGamePaused += DisableControls;
 
             CyberKrakenGrappleTentacle.OnGrappleEnd += EnableControls;
             PlayerManager.OnPlayerDeath += PlayerDead;
@@ -53,31 +48,23 @@ namespace CyberCruiser
         private void OnDisable()
         {
             InputManager.OnMouseMove -= RecieveInput;
-            InputManager.OnControlsEnabled -= EnableControls;
-            InputManager.OnControlsDisabled -= DisableControls;
             GameManager.OnMissionStart -= StartLevelPosition;
-
-            GameManager.OnGameResumed -= EnableControls;
-            GameManager.OnGamePaused -= DisableControls;
 
             CyberKrakenGrappleTentacle.OnGrappleEnd -= EnableControls;
             PlayerManager.OnPlayerDeath -= PlayerDead;
         }
 
 
-
         private void Update()
         {
-            if (GameManagerInstance.CurrentGameState != GameState.Mission) return;
-
-            if (ControlsEnabled)
-            {
-                PlayerMovement();
-            }
-
-            else if (_isPlayerDead)
+            if (_isPlayerDead)
             {
                 DeathMovement();
+            }
+
+            else if (_controlsEnabled)
+            {
+                PlayerMovement();
             }
         }
 
@@ -134,7 +121,6 @@ namespace CyberCruiser
         {
             transform.position = spawnPosition.position;
             playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
-            EnableControls();
         }
 
         private void RecieveInput(Vector2 _input)
@@ -142,14 +128,14 @@ namespace CyberCruiser
             input = _input;
         }
 
-        private void EnableControls()
+        public void EnableControls()
         {
             _controlsEnabled = true;
             mouseInput.SetActive(true);
             InputManagerInstance.IsCursorVisible = false;
         }
 
-        private void DisableControls()
+        public void DisableControls()
         {
             _controlsEnabled = false;
             mouseInput.SetActive(false);

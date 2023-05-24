@@ -11,6 +11,7 @@ namespace CyberCruiser
         [SerializeField] private int _shieldActiveDuration;
         [SerializeField] private float _shieldActiveTimer;
         [SerializeField] private bool _isPulseDetonatorActive;
+        private bool _controlsEnabled;
         #endregion
 
         #region Properties
@@ -23,6 +24,7 @@ namespace CyberCruiser
                 OnPlayerShieldsValueChange(_shieldActiveTimer);
             }
         }
+
         protected override bool IsShieldsActive
         {
             get => _shieldsActive;
@@ -81,6 +83,16 @@ namespace CyberCruiser
             }
         }
 
+        public void EnableControls()
+        {
+            _controlsEnabled = true;
+        }
+
+        public void DisableControls()
+        {
+            _controlsEnabled = false;
+        }
+
         private void CheckPulseDetonator()
         {
             _isPulseDetonatorActive = PlayerAddOnManagerInstance.IsPulseDetonatorActive;
@@ -88,6 +100,11 @@ namespace CyberCruiser
 
         private void CheckShieldsState()
         {
+            if(!_controlsEnabled)
+            {
+                return;
+            }
+
             if (IsShieldsActive)
             {
                 return;

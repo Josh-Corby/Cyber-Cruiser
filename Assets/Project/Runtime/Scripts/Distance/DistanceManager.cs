@@ -37,13 +37,13 @@ namespace CyberCruiser
         #region Properties
         private int DistanceInt
         {
-            get => _distanceInt;
             set
             {
                 if (_distanceInt != value)
                 {
-                    if (OnDistanceTraveled != null) OnDistanceTraveled?.Invoke();
+                    OnDistanceTraveled?.Invoke();
                 }
+
                 _distanceInt = value;
                 OnDistanceChanged?.Invoke(_distanceInt);
                 UpdateDistanceText();
@@ -61,13 +61,6 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            PlayerDeathTrigger.OnPlayerDeadOffScreen += StopIncreasingDistance;
-
-            GameManager.OnMissionStart += ResetValues;
-            GameManager.OnMissionEnd += StopIncreasingDistance;
-            WaveCountdownManager.OnCountdownDone += StartIncreasingDistance;
-            WaveCountdownManager.OnCountdownDone += GenerateFirstPickupDistances;
-            PlayerManager.OnPlayerDeath += StopIncreasingDistance;
             Boss.OnBossDied += (p, v) => StartIncreasingDistance();
             PickupManager.OnPlasmaSpawned += () => StartCoroutine(PlasmaSpawned());
             PickupManager.OnWeaponUpgradeSpawned += () => StartCoroutine(WeaponUpgradeSpawned());
@@ -75,13 +68,6 @@ namespace CyberCruiser
 
         private void OnDisable()
         {
-            PlayerDeathTrigger.OnPlayerDeadOffScreen -= StopIncreasingDistance;
-
-            GameManager.OnMissionStart -= ResetValues;
-            GameManager.OnMissionEnd -= StopIncreasingDistance;
-            WaveCountdownManager.OnCountdownDone -= StartIncreasingDistance;
-            WaveCountdownManager.OnCountdownDone -= GenerateFirstPickupDistances;
-            PlayerManager.OnPlayerDeath -= StopIncreasingDistance;
             Boss.OnBossDied -= (p, v) => StartIncreasingDistance();
             PickupManager.OnPlasmaSpawned -= () => StartCoroutine(PlasmaSpawned());
             PickupManager.OnWeaponUpgradeSpawned -= () => StartCoroutine(WeaponUpgradeSpawned());
@@ -108,30 +94,35 @@ namespace CyberCruiser
 
         private void CheckDistance()
         {
+            if(_distanceInt <=0)
+            {
+                return;
+            }
+
             //increment distance milestone every 100 units
-            if (DistanceInt % MILESTONE_DISTANCE == 0 && !isDistanceMilestoneIncreased)
+            if (_distanceInt % MILESTONE_DISTANCE == 0 && !isDistanceMilestoneIncreased)
             {
                 StartCoroutine(IncreaseDistanceMilestone());
                 GenerateNewPlasmaDropDistance();
             }
 
             //start boss fight at boss distance
-            if (DistanceInt > 0)
+            if (_distanceInt > 0)
             {
-                if (DistanceInt % _currentBossDistance == 0)
+                if (_distanceInt % _currentBossDistance == 0)
                 {
                     BossDistanceReached();
                 }
             }
 
             //spawn plasma at seeded distance
-            if (DistanceInt == _plasmaDropDistance && !_isPlasmaSpawned)
+            if (_distanceInt == _plasmaDropDistance && !_isPlasmaSpawned)
             {
                 PlasmaDistanceReached();
             }
 
             //spawn weapon pack at seeded distance
-            if (DistanceInt == _weaponUpgradeDropDistance && !_isWeaponUpgradeSpawned)
+            if (_distanceInt == _weaponUpgradeDropDistance && !_isWeaponUpgradeSpawned)
             {
                 WeaponUpgradeDistanceReached();
             }
@@ -163,11 +154,11 @@ namespace CyberCruiser
 
         private void BossDistanceReached()
         {
-            _previousBossDistance = DistanceInt;
+            _previousBossDistance = _distanceInt;
             _currentBossDistance += _bossSpawnDistance;
             StopIncreasingDistance();
             GenerateNewWeaponUpgradeDropDistance();
-            Debug.Log(DistanceInt);
+            Debug.Log(_distanceInt);
             OnBossDistanceReached?.Invoke();
         }
 
@@ -199,7 +190,7 @@ namespace CyberCruiser
             isDistanceMilestoneIncreased = false;
         }
 
-        private void ResetValues()
+        public void ResetValues()
         {
             _currentDistanceMilestone = 0;
             _previousBossDistance = 0;
@@ -210,21 +201,21 @@ namespace CyberCruiser
             _isDistanceIncreasing = false;
         }
 
-        private void StartIncreasingDistance()
+        public void StartIncreasingDistance()
         {
             _distanceFloat += 1;
-            DistanceInt += 1;
+            _distanceInt += 1;
             _isDistanceIncreasing = true;
         }
 
-        private void StopIncreasingDistance()
+        public void StopIncreasingDistance()
         {
             _isDistanceIncreasing = false;
         }
 
         private void UpdateDistanceText()
         {
-            _distanceCounterText.text = DistanceInt.ToString();
+            _distanceCounterText.text = _distanceInt.ToString();
         }
     }
 }

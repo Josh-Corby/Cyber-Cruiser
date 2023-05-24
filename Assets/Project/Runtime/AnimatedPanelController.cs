@@ -1,5 +1,5 @@
 using CyberCruiser.Audio;
-using UnityEditor.Experimental.GraphView;
+using System;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -28,6 +28,9 @@ namespace CyberCruiser
         private string _currentState;
         private const string PANEL_UP = "Panel_Up";
         private const string PANEL_DOWN = "Panel_Down";
+
+        public static event Action OnAnimationStart = null;
+        public static event Action OnAnimationEnd = null;
 
         private void Awake()
         {
@@ -117,7 +120,6 @@ namespace CyberCruiser
             _isResumingGame = isResumingGame;
         }
 
-
         private void CheckGameOverPanelToOpen()
         {
             if (MissionManagerInstance.IsAnyMissionCompleted)
@@ -132,17 +134,33 @@ namespace CyberCruiser
         }
 
         #region Animation Events
-        private void OnOpenScreenAnimationComplete()
+        private void OnOpenScreenAnimationStart()
         {
+            OnAnimationStart?.Invoke();
+        }
+
+        private void OnOpenScreenAnimationEnd()
+        {
+            OnAnimationEnd?.Invoke();
+
             Debug.Log("Screen Open");
             _screenToOpen.SetActive(true);
             _currentScreen = _screenToOpen;
             _screenToOpen = null;
         }
 
+        private void OnCloseScreenAnimationStart()
+        {
+            OnAnimationStart?.Invoke();
+
+            _currentScreen.SetActive(false);          
+        }
+
         private void OnCloseScreenAnimationEnd()
         {
-            if(_screenToOpen != null)
+            OnAnimationEnd?.Invoke();
+
+            if (_screenToOpen != null)
             {
                 OpenScreen();
             }
@@ -171,11 +189,6 @@ namespace CyberCruiser
             _currentScreen = null;
             _panelToEnable = null;
             _isResumingGame = true;
-        }
-
-        private void OnCloseScreenAnimationStart()
-        {
-            _currentScreen.SetActive(false);          
         }
         #endregion
     }

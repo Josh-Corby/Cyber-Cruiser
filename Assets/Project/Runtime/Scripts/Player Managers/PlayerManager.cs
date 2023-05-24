@@ -11,6 +11,11 @@ namespace CyberCruiser
         [SerializeField] private PlayerAddOnManager _addOnManager;
         [SerializeField] private PlayerUIManager _playerUI;
         private Collider2D _playerCollider;
+
+        [SerializeField] private PlayerShipController _playerShipController;
+        [SerializeField] private PlayerShieldController _playerShieldController;
+        [SerializeField] private PlayerWeaponController _playerWeaponController;
+
         #endregion
 
         #region Fields
@@ -137,8 +142,7 @@ namespace CyberCruiser
         #endregion
 
         #region Actions
-        public static event Action OnPlayerDeath = null;
-       
+        public static event Action OnPlayerDeath = null;    
         public static event Action<int> OnIonPickup = null;
         public static event Action<int> OnPlasmaChange = null;
         public static event Action<int> OnPlasmaPickupValue = null;
@@ -156,15 +160,45 @@ namespace CyberCruiser
         private void OnEnable()
         {
             ResetStats();
-
-            Pickup.OnResourcePickup += AddResources;
+            EnablePlayerControls();
             _isPlayerImmuneToDamage = false;
-          
+
+            GameManager.OnIsTimeScalePaused += SetPlayerControls;
+            Pickup.OnResourcePickup += AddResources;
         }
 
         private void OnDisable()
         {
+            GameManager.OnIsTimeScalePaused += SetPlayerControls;
             Pickup.OnResourcePickup -= AddResources;
+        }
+
+        private void SetPlayerControls(bool isControlsDisabled)
+        {
+            if (isControlsDisabled)
+            {
+                DisablePlayerControls();
+            }
+            else
+            {
+                EnablePlayerControls();
+            }
+        }
+
+        private void EnablePlayerControls()
+        {
+            Debug.Log("Controls enabled");
+            _playerShipController.EnableControls();
+            _playerWeaponController.EnableControls();
+            _playerShieldController.EnableControls();
+        }
+
+        private void DisablePlayerControls()
+        {
+            Debug.Log("Controls disabled");
+            _playerShipController.DisableControls();
+            _playerWeaponController.DisableControls();
+            _playerShieldController.DisableControls();
         }
 
         private void ResetStats()

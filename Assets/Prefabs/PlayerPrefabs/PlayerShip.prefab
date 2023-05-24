@@ -947,7 +947,6 @@ MonoBehaviour:
   _beamAttack: {fileID: 634649626243274674}
   _currentHeat: 0
   _timeBeforeHeatLoss: 0.3
-  _controlsEnabled: 0
 --- !u!114 &7594662664462515631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1277,8 +1276,8 @@ GameObject:
   - component: {fileID: 1165463880448735964}
   - component: {fileID: 1324404181}
   - component: {fileID: 9082158770902853956}
-  - component: {fileID: 8907491432247727162}
   - component: {fileID: 8907491432247727160}
+  - component: {fileID: 8907491432247727162}
   - component: {fileID: 5093816518230039129}
   m_Layer: 9
   m_Name: PlayerShip
@@ -1352,6 +1351,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
+--- !u!114 &8907491432247727160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8907491432247727163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ba5b68eaeaf9334b9d15dd84c46a276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroy: 0
 --- !u!114 &8907491432247727162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1374,19 +1386,6 @@ MonoBehaviour:
   lerpMovement: 1
   _controlsEnabled: 0
   _crashSpeed: 5
---- !u!114 &8907491432247727160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8907491432247727163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ba5b68eaeaf9334b9d15dd84c46a276, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroy: 0
 --- !u!114 &5093816518230039129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1403,6 +1402,9 @@ MonoBehaviour:
   player: {fileID: 8907491432247727163}
   _addOnManager: {fileID: 0}
   _playerUI: {fileID: 0}
+  _playerShipController: {fileID: 0}
+  _playerShieldController: {fileID: 0}
+  _playerWeaponController: {fileID: 0}
   _playerPlasma: 0
   _plasmaCost: 5
   _maxHealth: 0

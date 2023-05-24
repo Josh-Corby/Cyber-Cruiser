@@ -68,29 +68,17 @@ namespace CyberCruiser
         {
             DistanceManager.OnBossDistanceReached += SetupForBossSpawn;
             Boss.OnBossDied += (p, v) => ProcessBossDied();
-            GameManager.OnMissionEnd += StopSpawningEnemies;
-            GameManager.OnMissionStart += RestartLevel;
-            WaveCountdownManager.OnCountdownDone += StartSpawningEnemies;
-            PlayerManager.OnPlayerDeath += StopSpawningEnemies;
-
-            PlayerDeathTrigger.OnPlayerDeadOffScreen += StopSpawningEnemies;
         }
 
         private void OnDisable()
         {
             DistanceManager.OnBossDistanceReached -= SetupForBossSpawn;
             Boss.OnBossDied -= (p, v) => ProcessBossDied();
-            GameManager.OnMissionEnd -= StopSpawningEnemies;
-            GameManager.OnMissionStart -= RestartLevel;
-            WaveCountdownManager.OnCountdownDone -= StartSpawningEnemies;
-            PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
-
-            PlayerDeathTrigger.OnPlayerDeadOffScreen -= StopSpawningEnemies;
         }
 
         private void Start()
         {
-            RestartLevel();
+            ResetSpawning();
         }
 
         private void Update()
@@ -123,23 +111,20 @@ namespace CyberCruiser
             else return false;
         }
 
-        private void RestartLevel()
+        public void ResetSpawning()
         {
             StopSpawningEnemies();
             CancelBossSpawn();
             ResetBossesToSpawn();
+            ResetSpawnersModifiers();
             _enemiesToSpawn = _enemiesToSpawnBase;
             _enemySpawnInterval = _spawnEnemyIntervalBase;
-            ResetSpawnersModifiers();
             _timesReduced = 0;
         }
 
         private void ResetSpawnersModifiers()
         {
-            foreach (EnemySpawner spawner in _enemySpawners)
-            {
-                spawner.SpeedModifier = 0;
-            }
+            SetSpawnersModifiers(0);
         }
 
         private void SetSpawnersModifiers(float value)
@@ -150,13 +135,13 @@ namespace CyberCruiser
             }
         }
 
-        private void StartSpawningEnemies()
+        public void StartSpawningEnemies()
         {
             _spawnEnemies = true;
             _enemySpawnTimer = _enemySpawnInterval;
         }
 
-        private void StopSpawningEnemies()
+        public void StopSpawningEnemies()
         {
             _spawnEnemies = false;
             _enemySpawnTimer = 0;
