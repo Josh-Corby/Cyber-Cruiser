@@ -54,7 +54,6 @@ namespace CyberCruiser
             ToggleGameplayObjects(true);
             OnMissionStart?.Invoke();
             ResetSystems();
-            StartSystems();
         }
 
         public void EndMission()

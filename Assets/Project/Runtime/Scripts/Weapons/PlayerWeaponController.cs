@@ -6,16 +6,17 @@ namespace CyberCruiser
 {
     public class PlayerWeaponController : GameBehaviour
     {
-        [SerializeField] private PlayerSoundController _soundController;  
-
-        #region Weapon References
+        [SerializeField] private PlayerSoundController _soundController;
         [SerializeField] private Weapon _currentWeapon;
 
+        [Header("Player Weapon Prefabs")]
         [SerializeField] private Weapon _baseWeapon;
         [SerializeField] private Weapon _chainLightning;
         [SerializeField] private Weapon _bFG;
+        [SerializeField] private Weapon _scatterGunFixedSpread;
+        [SerializeField] private Weapon _scatterGunRandomSpread;
+        [SerializeField] private Weapon _smartGun;
         [SerializeField] private BeamAttack _beamAttack;
-        #endregion
 
         #region Fields
         private bool _controlsEnabled;
@@ -26,6 +27,7 @@ namespace CyberCruiser
         private const float BASE_HEAT_LOSS_PER_FRAME = 0.4f;
         private const float BASE_COOLDOWN_HEAT_LOSS_PER_FRAME = 0.6f;
 
+        [Header("Heat")]
         [SerializeField] private float _currentHeat;
         private float _heatPerShot;
         private float _heatLossPerFrame;
@@ -110,15 +112,15 @@ namespace CyberCruiser
         private void OnEnable()
         {
             InputManager.OnFire += SetFireInput;
-            GameManager.OnMissionEnd += ResetPlayerWeapon;
+            GameManager.OnMissionEnd += DisableBeam;
             Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
-            ResetPlayerWeapon();
+            DisableBeam();
         }
 
         private void OnDisable()
         {
             InputManager.OnFire -= SetFireInput;
-            GameManager.OnMissionEnd -= ResetPlayerWeapon;
+            GameManager.OnMissionEnd -= DisableBeam;
             Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
         }
 
@@ -247,6 +249,11 @@ namespace CyberCruiser
                 return;
             }
 
+            if (!_currentWeapon.gameObject.activeSelf)
+            {
+                return;
+            }
+
             if (_currentWeapon.ReadyToFire)
             {
                 _currentWeapon.CheckFireTypes();
@@ -261,18 +268,6 @@ namespace CyberCruiser
         private void CancelFireInput()
         {
             _fireInput = false;
-        }
-
-        private void ToggleControls(bool value)
-        {
-            if (value)
-            {
-                DisableControls();
-            }
-            else
-            {
-                EnableControls();
-            }
         }
 
         public void EnableControls()
@@ -291,41 +286,49 @@ namespace CyberCruiser
             {
                 StopCoroutine(_weaponUpgradeCoroutine);
             }
-            _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeCoroutine(upgradeType));
-        }
 
-        private IEnumerator WeaponUpgradeCoroutine(WeaponUpgradeType upgradeType)
-        {
             _soundController.PlaySound(0);
 
             //reset in case a different type of pickup is picked up while an upgrade is currently active
-            ResetPlayerWeapon();
-
             switch (upgradeType)
             {
                 case WeaponUpgradeType.Scatter_Fixed:
-                case WeaponUpgradeType.Scatter_Random:
-                    ScatterUpgrade(upgradeType);
+                    ChangeWeapon(_scatterGunFixedSpread);
                     break;
+
+                case WeaponUpgradeType.Scatter_Random:
+                    ChangeWeapon(_scatterGunRandomSpread);
+                    break;
+
                 case WeaponUpgradeType.Pulverizer:
                     PulverizerUpgrade();
                     break;
+
                 case WeaponUpgradeType.Homing:
-                    _isWeaponFiringHomingProjectiles = true;
+                    ChangeWeapon(_smartGun);
+
                     break;
                 case WeaponUpgradeType.ChainLightning:
-                    _currentWeapon = _chainLightning;
+                    ChangeWeapon(_chainLightning);
                     break;
+
                 case WeaponUpgradeType.BFG:
-                    _currentWeapon = _bFG;
+                    ChangeWeapon(_bFG);
+                    break;
+                case WeaponUpgradeType.Smart:
+                    ChangeWeapon(_smartGun);
                     break;
             }
 
             CurrentHeat = 0;
             _isWeaponUpgradeActive = true;
             _weaponUpgradeCounter = _weaponUpgradeDuration;
-
             OnWeaponUpgradeStart?.Invoke(_weaponUpgradeDuration);
+            _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimerCoroutine(upgradeType));
+        }
+
+        private IEnumerator WeaponUpgradeTimerCoroutine(WeaponUpgradeType upgradeType)
+        {
             while (_weaponUpgradeCounter > 0)
             {
                 _weaponUpgradeCounter -= Time.deltaTime;
@@ -335,48 +338,35 @@ namespace CyberCruiser
 
             //reset player weapon to its original values after upgrade duration is over
             _soundController.PlaySound(1);
-            ResetPlayerWeapon();
+            OnWeaponUpgradeFinish();
+        }
+
+        private void ChangeWeapon(Weapon newWeapon)
+        {
+            CurrentHeat = 0;
+            _currentWeapon.gameObject.SetActive(false);
+            _currentWeapon = newWeapon;
+            _currentWeapon.gameObject.SetActive(true);
         }
 
         private void PulverizerUpgrade()
         {
-            _currentWeapon.enabled = false;
+            _baseWeapon.gameObject.SetActive(false);
             _beamAttack.enabled = true;
         }
 
-        public void ScatterUpgrade(WeaponUpgradeType scatterType)
+        public void DisableBeam()
         {
-            switch (scatterType)
-            {
-                case WeaponUpgradeType.Scatter_Fixed:
-                    _currentWeapon.CurrentStats.IsMultiFireSpreadRandom = false;
-                    break;
-                case WeaponUpgradeType.Scatter_Random:
-                    _currentWeapon.CurrentStats.IsMultiFireSpreadRandom = true;
-                    break;
-            }
-
-            _currentWeapon.CurrentStats.IsWeaponMultiFire = true;
-            _currentWeapon.CurrentStats.MultiFireShots = 3;
-            _currentWeapon.CurrentStats.DoesWeaponUseSpread = true;
-            _currentWeapon.CurrentStats.SpreadHalfAngle = 30;
-        }
-
-        public void ResetPlayerWeapon()
-        {
-            WeaponUpgradeFinished();
             _beamAttack.DisableBeam();
             _beamAttack.enabled = false;
         }
 
-        private void WeaponUpgradeFinished()
+        private void OnWeaponUpgradeFinish()
         {    
-            OnWeaponUpgradeFinished?.Invoke();
-            CurrentHeat = 0;
-            _currentWeapon.enabled = true;
-            _currentWeapon.ResetWeapon();
-            _currentWeapon = _baseWeapon;
+            OnWeaponUpgradeFinished?.Invoke();          
+            ChangeWeapon(_baseWeapon);
             _isWeaponUpgradeActive = false;
+            DisableBeam();
         }
     }
 }
