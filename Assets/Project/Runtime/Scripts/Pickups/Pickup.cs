@@ -65,6 +65,6 @@ namespace CyberCruiser
 
         public enum WeaponUpgradeType
         {
-            None, Scatter_Random, Scatter_Fixed, Pulverizer, Homing, ChainLightning
+            None, Scatter_Random, Scatter_Fixed, Pulverizer, Homing, ChainLightning, BFG
         }
 }

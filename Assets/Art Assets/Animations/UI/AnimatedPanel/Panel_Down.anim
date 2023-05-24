@@ -32,6 +32,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 1
         value: -930
+        inSlope: -423.52945
+        outSlope: -423.52945
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.4166666
+        value: -1080
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -97,6 +106,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 1
         value: -930
+        inSlope: -423.52945
+        outSlope: -423.52945
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1.4166666
+        value: -1080
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -114,8 +132,15 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: OnCloseScreenAnimationStart
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.4166666
-    functionName: OnCloseAnimationFinished
+    functionName: OnCloseScreenAnimationEnd
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

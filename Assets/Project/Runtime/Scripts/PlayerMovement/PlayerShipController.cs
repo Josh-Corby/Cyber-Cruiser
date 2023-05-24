@@ -4,6 +4,9 @@ namespace CyberCruiser
 {
     public class PlayerShipController : GameBehaviour
     {
+        private const string PLAYER_ALIVE_LAYER = "Player";
+        private const string PLAYER_DEAD_LAYER = "DeadPlayer";
+
         #region References
         [SerializeField] private GameObject playerSprite;
         [SerializeField] private GameObject mouseInput;
@@ -36,11 +39,15 @@ namespace CyberCruiser
             InputManager.OnControlsEnabled += EnableControls;
             InputManager.OnControlsDisabled += DisableControls;
             GameManager.OnMissionStart += StartLevelPosition;
-            GameManager.OnIsGamePaused += ToggleControls;
-            CyberKrakenGrappleTentacle.OnGrappleEnd += EnableControls;
-            Cursor.lockState = CursorLockMode.Confined;
 
+            GameManager.OnGameResumed += EnableControls;
+            GameManager.OnGamePaused += DisableControls;
+
+            CyberKrakenGrappleTentacle.OnGrappleEnd += EnableControls;
             PlayerManager.OnPlayerDeath += PlayerDead;
+
+            Cursor.lockState = CursorLockMode.Confined;
+            gameObject.layer = LayerMask.NameToLayer(PLAYER_ALIVE_LAYER);
         }
 
         private void OnDisable()
@@ -49,7 +56,10 @@ namespace CyberCruiser
             InputManager.OnControlsEnabled -= EnableControls;
             InputManager.OnControlsDisabled -= DisableControls;
             GameManager.OnMissionStart -= StartLevelPosition;
-            GameManager.OnIsGamePaused -= ToggleControls;
+
+            GameManager.OnGameResumed -= EnableControls;
+            GameManager.OnGamePaused -= DisableControls;
+
             CyberKrakenGrappleTentacle.OnGrappleEnd -= EnableControls;
             PlayerManager.OnPlayerDeath -= PlayerDead;
         }
@@ -111,8 +121,10 @@ namespace CyberCruiser
 
         private void PlayerDead()
         {
+            gameObject.layer = LayerMask.NameToLayer(PLAYER_DEAD_LAYER);
             _isPlayerDead = true;
         }
+
         private void DeathMovement()
         {
             transform.position += _crashSpeed * Time.deltaTime * Vector3.down;
@@ -122,23 +134,12 @@ namespace CyberCruiser
         {
             transform.position = spawnPosition.position;
             playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+            EnableControls();
         }
 
         private void RecieveInput(Vector2 _input)
         {
             input = _input;
-        }
-
-        public void ToggleControls(bool value)
-        {
-            if (value)
-            {
-                DisableControls();
-            }
-            else
-            {
-                EnableControls();
-            }
         }
 
         private void EnableControls()

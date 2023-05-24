@@ -8,10 +8,12 @@ namespace CyberCruiser
     {
         [SerializeField] private PlayerSoundController _soundController;  
 
-        #region References
+        #region Weapon References
+        [SerializeField] private Weapon _currentWeapon;
+
         [SerializeField] private Weapon _baseWeapon;
         [SerializeField] private Weapon _chainLightning;
-        [SerializeField] private Weapon _currentWeapon;
+        [SerializeField] private Weapon _bFG;
         [SerializeField] private BeamAttack _beamAttack;
         #endregion
 
@@ -19,15 +21,15 @@ namespace CyberCruiser
         private const int BASE_HEAT_MAX = 100;
         private const float BASE_HEAT_PER_SHOT = 1.75f;
         private const int BASE_UPGRADE_DURATION = 10;
-        private const float BASE_HEAT_LOSS_PER_FRAME = 0.1f;
-        private const float BASE_COOLDOWN_HEAT_LOSS_PER_FRAME = 0.2f;
+        private const float BASE_HEAT_LOSS_PER_FRAME = 0.4f;
+        private const float BASE_COOLDOWN_HEAT_LOSS_PER_FRAME = 0.6f;
 
 
         [SerializeField] private float _currentHeat;
         private float _heatPerShot;
         private float _heatLossPerFrame;
         private float _cooldownHeatLossPerFrame;
-        private float _timebeforeHeatLoss;
+        [SerializeField] private float _timeBeforeHeatLoss;
 
         private int _heatMax;
         private float _timeSinceLastShot;
@@ -37,7 +39,7 @@ namespace CyberCruiser
         private bool _isOverheated;
         private bool _isHoming;
         private bool _fireInput;
-        private bool _controlsEnabled;
+        [SerializeField] private bool _controlsEnabled;
         private bool _isWeaponUpgradeActive;
         private bool _isHeatDecreasing;
 
@@ -74,7 +76,7 @@ namespace CyberCruiser
             set
             {
                 _timeSinceLastShot = value;
-                _isHeatDecreasing = _timeSinceLastShot >= _timebeforeHeatLoss;
+                _isHeatDecreasing = _timeSinceLastShot >= _timeBeforeHeatLoss;
             }
         }
 
@@ -110,7 +112,6 @@ namespace CyberCruiser
             InputManager.OnFire += SetFireInput;
             InputManager.OnControlsEnabled += EnableControls;
             InputManager.OnControlsDisabled += DisableControls;
-            GameManager.OnIsGamePaused += ToggleControls;
             GameManager.OnMissionEnd += ResetPlayerWeapon;
             Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
             ResetPlayerWeapon();
@@ -121,7 +122,6 @@ namespace CyberCruiser
             InputManager.OnFire -= SetFireInput;
             InputManager.OnControlsEnabled -= EnableControls;
             InputManager.OnControlsDisabled -= DisableControls;
-            GameManager.OnIsGamePaused -= ToggleControls;
             GameManager.OnMissionEnd -= ResetPlayerWeapon;
             Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
         }
@@ -321,6 +321,9 @@ namespace CyberCruiser
                     break;
                 case WeaponUpgradeType.ChainLightning:
                     _currentWeapon = _chainLightning;
+                    break;
+                case WeaponUpgradeType.BFG:
+                    _currentWeapon = _bFG;
                     break;
             }
 

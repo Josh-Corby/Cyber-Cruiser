@@ -1,4 +1,3 @@
-using CyberCruiser.Audio;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +13,7 @@ namespace CyberCruiser
 
         [SerializeField] private PlayerRankManager _playerRankManager;
         [SerializeField] private UIType _uiType;
-        [SerializeField] private Image _rankImageRenderer;
+        [SerializeField] private Image[] _rankImageRenderers;
         [SerializeField] private Image _rankTextRenderer;
         [SerializeField] private Image[] _goldStars;
         [SerializeField] private Rank _currentRank;
@@ -59,7 +58,11 @@ namespace CyberCruiser
 
         private void SetStaticRankUI()
         {
-            _rankImageRenderer.sprite = _playerRankBeforeMissionStart.Sprite;
+            for (int i = 0; i < _rankImageRenderers.Length; i++)
+            {
+                _rankImageRenderers[i].sprite = _playerRankBeforeMissionStart.Sprite;
+
+            }
             _rankTextRenderer.sprite = _playerRankBeforeMissionStart.RankTextSprite;
         }
 
@@ -82,7 +85,11 @@ namespace CyberCruiser
 
         private void SetRankUI()
         {
-            _rankImageRenderer.sprite = _currentRank.Sprite;
+            for (int i = 0; i < _rankImageRenderers.Length; i++)
+            {
+                _rankImageRenderers[i].sprite = _playerRankBeforeMissionStart.Sprite;
+
+            }
             _rankTextRenderer.sprite = _currentRank.RankTextSprite;
         }
 

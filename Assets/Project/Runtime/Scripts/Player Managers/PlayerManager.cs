@@ -17,6 +17,7 @@ namespace CyberCruiser
         private const int BASE_MAX_HEALTH = 5;
         private const int BASE_PLASMA_COST = 5;
         private const float BASE_I_FRAMES_DURATION = 0.3f;
+       
 
         [SerializeField] private int _playerPlasma;
         [SerializeField] private int _plasmaCost;
@@ -137,6 +138,7 @@ namespace CyberCruiser
 
         #region Actions
         public static event Action OnPlayerDeath = null;
+       
         public static event Action<int> OnIonPickup = null;
         public static event Action<int> OnPlasmaChange = null;
         public static event Action<int> OnPlasmaPickupValue = null;
@@ -157,6 +159,7 @@ namespace CyberCruiser
 
             Pickup.OnResourcePickup += AddResources;
             _isPlayerImmuneToDamage = false;
+          
         }
 
         private void OnDisable()
@@ -275,6 +278,8 @@ namespace CyberCruiser
 
         private void ProcessCollision(GameObject collider)
         {
+          
+
             if (collider.TryGetComponent<Enemy>(out var enemy))
             {
                 enemy.Damage(_ramDamage);
@@ -291,6 +296,7 @@ namespace CyberCruiser
                 pickup.PickupEffect();
                 Destroy(pickup.gameObject);
             }
+
         }
         #endregion
     }

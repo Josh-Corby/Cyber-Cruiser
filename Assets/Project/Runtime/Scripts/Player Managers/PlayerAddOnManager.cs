@@ -7,7 +7,6 @@ namespace CyberCruiser
     public class PlayerAddOnManager : GameBehaviour<PlayerAddOnManager>
     {
         [SerializeField] private PlayerManager _playerManager;
-        [SerializeField] private PlayerWeaponController _weaponController;
         [SerializeField] private PlayerShieldController _shieldController;
         [SerializeField] private List<AddOnActiveState> _addOnActiveStates = new();
 

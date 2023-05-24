@@ -19,14 +19,14 @@ namespace CyberCruiser
         private void OnEnable()
         {
             PlayerManager.OnIonPickup += ChangeIon;
-            PlayerManager.OnPlasmaChange += SetPlasma;
+            PlayerManager.OnPlasmaChange += ChangePlasma;
             RestoreValues();
         }
 
         private void OnDisable()
         {
             PlayerManager.OnIonPickup -= ChangeIon;
-            PlayerManager.OnPlasmaChange -= SetPlasma;
+            PlayerManager.OnPlasmaChange -= ChangePlasma;
         }
 
         private void RestoreValues()
@@ -42,7 +42,7 @@ namespace CyberCruiser
             OnIonChange?.Invoke(_playerIon);
         }
 
-        public void SetPlasma(int value)
+        public void ChangePlasma(int value)
         {
             _playerPlasma = value;
             _playerPlasma = ValidateValue(_playerPlasma);

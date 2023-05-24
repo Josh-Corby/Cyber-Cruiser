@@ -26,6 +26,6 @@ MonoBehaviour:
     IsWeaponBurstFire: 0
     AmountOfBursts: 0
     TimeBetweenBurstShots: 0
-    IsWeaponMultiFire: 1
+    IsWeaponMultiFire: 0
     MultiFireShots: 3
     IsMultiFireSpreadRandom: 0

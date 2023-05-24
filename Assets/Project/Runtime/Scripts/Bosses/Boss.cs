@@ -9,14 +9,13 @@ namespace CyberCruiser
         public static event Action<float> OnBossDamage = null;
         public static event Action<PickupType, Vector3> OnBossDied = null;
 
-        private BossMovement _movement;
         [SerializeField] protected float _attackCooldown, _attackTimer;
 
+        protected bool _isBossDead;
         private IBoss bossMoveset;
 
         protected override void Awake()
         {
-            _movement = GetComponent<BossMovement>();
             base.Awake();
             bossMoveset = GetComponent<IBoss>();
         }
@@ -24,14 +23,16 @@ namespace CyberCruiser
         protected virtual void Start()
         {
             _attackTimer = _attackCooldown;
+            _isBossDead = false;
         }
 
         protected virtual void Update()
         {
-            if (_movement.IsEnemyDead)
+            if (_isBossDead)
             {
                 return;
             }
+
             if (_attackTimer > 0)
             {
                 _attackTimer -= Time.deltaTime;
@@ -71,6 +72,7 @@ namespace CyberCruiser
 
         protected override void Crash()
         {
+            _isBossDead = true;
             base.Crash();
             OnBossDied(PickupType.Health, transform.position);
         }

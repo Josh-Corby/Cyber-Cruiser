@@ -32,20 +32,19 @@ namespace CyberCruiser
         private void OnEnable()
         {
             InputManager.OnPause += TogglePause;
-            UIManager.OnLevelUIReady += StartLevel;
         }
 
         private void OnDisable()
         {
             InputManager.OnPause -= TogglePause;
-            UIManager.OnLevelUIReady -= StartLevel;
         }
 
-        public void StartLevel(bool value)
+        public void StartLevel()
         {
+            _gameState = GameState.Mission;
             _isPaused = false;
             Time.timeScale = 1f;
-            ToggleGameplayObjects(value);
+            ToggleGameplayObjects(true);
             OnMissionStart?.Invoke();
         }
 
@@ -57,8 +56,8 @@ namespace CyberCruiser
         public void EndMission()
         {
             ToggleGameplayObjects(false);
+            //TogglePause();
             OnMissionEnd?.Invoke();
-            TogglePause();
         }
 
         public void TogglePause()
@@ -75,20 +74,25 @@ namespace CyberCruiser
             {
                 OnGameResumed?.Invoke();
             }
-
-            OnIsGamePaused?.Invoke(_isPaused);
         }
 
         private void PauseGame()
         {
-            Time.timeScale = 0f;
+            StopGame();
             _gameState = GameState.Menu;
+            OnIsGamePaused?.Invoke(true);
+        }
+
+        public void StopGame()
+        {
+            Time.timeScale = 0f;
         }
 
         public void ResumeGame()
         {
             Time.timeScale = 1f;
             _gameState = GameState.Mission;
+            OnIsGamePaused?.Invoke(false);
         }
     }
 

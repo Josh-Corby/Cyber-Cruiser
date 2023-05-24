@@ -9,7 +9,6 @@ namespace CyberCruiser
         [SerializeField] private GameObject _mineReleasePoint;
         [SerializeField] private EnemyScriptableObject _seekerMineInfo;
         [SerializeField] private int _minesToFire = 1;
-        private float _beamAttackDuration;
 
         [SerializeField] private GameObject _pulverizerBeam;
         [SerializeField] private BeamAttack _beamAttack;
@@ -20,11 +19,15 @@ namespace CyberCruiser
         {
             base.Awake();
             _beamAttack = _pulverizerBeam.GetComponent<BeamAttack>();
-            _beamAttackDuration = _beamAttack.beamDuration;
         }
 
         protected override void Update()
         {
+            if(_isBossDead)
+            {
+                return;
+            }
+
             if (_attackTimer > 0)
             {
                 _attackTimer -= Time.deltaTime;
@@ -81,7 +84,8 @@ namespace CyberCruiser
         protected override void Crash()
         {
             base.Crash();
-            if (OnDied != null) OnDied?.Invoke();
+            _beamAttack.DisableBeam();
+            OnDied?.Invoke();
         }
     }
 }

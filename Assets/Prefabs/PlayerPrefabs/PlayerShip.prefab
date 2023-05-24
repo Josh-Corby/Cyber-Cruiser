@@ -170,7 +170,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: bd67c88b60ac2e5478f22649c1a92c00, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -244,7 +244,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
   m_UseWorldSpace: 0
@@ -939,12 +939,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22294f0da44f0e84dbe57f9c899aeb82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _soundController: {fileID: 0}
-  _baseWeapon: {fileID: 3542562062741615023}
-  _chainLightning: {fileID: 230465097142827675}
+  _soundController: {fileID: 7594662664462515631}
   _currentWeapon: {fileID: 0}
+  _baseWeapon: {fileID: 8907491432817469731}
+  _chainLightning: {fileID: 230465097142827675}
+  _bFG: {fileID: 3542562062741615023}
   _beamAttack: {fileID: 634649626243274674}
   _currentHeat: 0
+  _timeBeforeHeatLoss: 0.3
+  _controlsEnabled: 0
 --- !u!114 &7594662664462515631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -980,7 +983,7 @@ AudioSource:
   m_GameObject: {fileID: 6891040815347585315}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2804263056144364330, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -1527,6 +1530,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2255677273629178609, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
   m_PrefabInstance: {fileID: 2861099524117455809}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8907491432817469731 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6640960726374861538, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+  m_PrefabInstance: {fileID: 2861099524117455809}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4459316152427971772
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -61,7 +61,10 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
+            PlayerDeathTrigger.OnPlayerDeadOffScreen += StopIncreasingDistance;
+
             GameManager.OnMissionStart += ResetValues;
+            GameManager.OnMissionEnd += StopIncreasingDistance;
             WaveCountdownManager.OnCountdownDone += StartIncreasingDistance;
             WaveCountdownManager.OnCountdownDone += GenerateFirstPickupDistances;
             PlayerManager.OnPlayerDeath += StopIncreasingDistance;
@@ -72,7 +75,10 @@ namespace CyberCruiser
 
         private void OnDisable()
         {
+            PlayerDeathTrigger.OnPlayerDeadOffScreen -= StopIncreasingDistance;
+
             GameManager.OnMissionStart -= ResetValues;
+            GameManager.OnMissionEnd -= StopIncreasingDistance;
             WaveCountdownManager.OnCountdownDone -= StartIncreasingDistance;
             WaveCountdownManager.OnCountdownDone -= GenerateFirstPickupDistances;
             PlayerManager.OnPlayerDeath -= StopIncreasingDistance;
@@ -165,13 +171,13 @@ namespace CyberCruiser
             OnBossDistanceReached?.Invoke();
         }
 
-        protected void GenerateNewPlasmaDropDistance()
+        private void GenerateNewPlasmaDropDistance()
         {
             _plasmaDropDistance = Random.Range(_currentDistanceMilestone + 15, _currentDistanceMilestone + 99);
             _isPlasmaSpawned = false;
         }
 
-        protected void GenerateNewWeaponUpgradeDropDistance()
+        private void GenerateNewWeaponUpgradeDropDistance()
         {
             _weaponUpgradeDropDistance = Random.Range(_previousBossDistance + 15, _currentBossDistance);
             Debug.Log(_weaponUpgradeDropDistance);

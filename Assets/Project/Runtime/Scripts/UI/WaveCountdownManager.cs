@@ -27,11 +27,13 @@ namespace CyberCruiser
         private void OnEnable()
         {
             GameManager.OnMissionStart += StartWaveCountdown;
+            GameManager.OnMissionEnd += StopWaveCountdown;
         }
 
         private void OnDisable()
         {
             GameManager.OnMissionStart -= StartWaveCountdown;
+            GameManager.OnMissionEnd -= StopWaveCountdown;
         }
 
         private void Start()
@@ -45,6 +47,12 @@ namespace CyberCruiser
             _waveCountdownTime = WAVECOUNTDOWNTIME;
             _startTextTimer = STARTTEXTTIMER;
             _isCountingDown = true;
+        }
+
+        private void StopWaveCountdown()
+        {
+            _isCountingDown = false;
+
         }
 
         private void Update()

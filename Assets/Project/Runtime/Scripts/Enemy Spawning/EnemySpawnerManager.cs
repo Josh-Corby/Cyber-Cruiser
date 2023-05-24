@@ -34,7 +34,7 @@ namespace CyberCruiser
         [Header("Spawn bools")]
         [HideInInspector] public bool bossReadyToSpawn;
         private const float BOSS_WAIT_TIME = 2f;
-        private bool _spawnEnemies;
+        [SerializeField] private bool _spawnEnemies;
 
         [Header("Lists")]
         private List<EnemySpawner> _enemySpawners = new();
@@ -68,18 +68,24 @@ namespace CyberCruiser
         {
             DistanceManager.OnBossDistanceReached += SetupForBossSpawn;
             Boss.OnBossDied += (p, v) => ProcessBossDied();
+            GameManager.OnMissionEnd += StopSpawningEnemies;
             GameManager.OnMissionStart += RestartLevel;
             WaveCountdownManager.OnCountdownDone += StartSpawningEnemies;
             PlayerManager.OnPlayerDeath += StopSpawningEnemies;
+
+            PlayerDeathTrigger.OnPlayerDeadOffScreen += StopSpawningEnemies;
         }
 
         private void OnDisable()
         {
             DistanceManager.OnBossDistanceReached -= SetupForBossSpawn;
             Boss.OnBossDied -= (p, v) => ProcessBossDied();
+            GameManager.OnMissionEnd -= StopSpawningEnemies;
             GameManager.OnMissionStart -= RestartLevel;
             WaveCountdownManager.OnCountdownDone -= StartSpawningEnemies;
             PlayerManager.OnPlayerDeath -= StopSpawningEnemies;
+
+            PlayerDeathTrigger.OnPlayerDeadOffScreen -= StopSpawningEnemies;
         }
 
         private void Start()

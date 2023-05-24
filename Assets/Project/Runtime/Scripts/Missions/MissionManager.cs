@@ -37,13 +37,13 @@ namespace CyberCruiser
         private void OnEnable()
         {
             GameManager.OnMissionStart += () => IsAnyMissionCompleted = false;
-            UIManager.OnMissionsPanelLoaded += SetMission;
+            //UIManager.OnMissionsPanelLoaded += SetMission;
         }
 
         private void OnDisable()
         {
             GameManager.OnMissionStart -= () => IsAnyMissionCompleted = false;
-            UIManager.OnMissionsPanelLoaded -= SetMission;
+            //UIManager.OnMissionsPanelLoaded -= SetMission;
         }
 
         private void Start()
