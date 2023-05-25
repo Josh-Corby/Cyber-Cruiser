@@ -16,29 +16,26 @@ namespace CyberCruiser
         [SerializeField] private UIType _uiType;
         [SerializeField] private Image[] _rankImageRenderers;
         [SerializeField] private Image _rankTextRenderer;
+        [SerializeField] private GameObject[] _greyStars;
         [SerializeField] private GameObject[] _goldStars;
-        private List<StarAnimation> _starAnimations = new();
         [SerializeField] private Rank _currentRank;
 
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip _starClip;
 
-        private int _starsToGain;
-        private int _starsEnabled;
+        [SerializeField] private int _starsToGain;
+        [SerializeField] private int _starsEnabled;
         private int _playerStarsBeforeMissionStart;
         private Rank _playerRankBeforeMissionStart;
 
-        private float _starAnimationDelayInSeconds = 1f;
+        private float _starAnimationDelayInSeconds = 1.2f;
+        private Coroutine _gainStarsCoroutine;
 
         private void Awake()
         {
             if(_uiType == UIType.Animated)
             {
                 _audioSource = GetComponent<AudioSource>();
-                for (int i = 0; i < _goldStars.Length; i++)
-                {
-                    _starAnimations.Add(_goldStars[i].GetComponent<StarAnimation>());
-                }
             }
         }
         private void OnEnable()
@@ -46,6 +43,7 @@ namespace CyberCruiser
             GetPlayerRankInfoBeforeMissionStart();
             SetStaticRankUI();
             DisableAllStars();
+            EnableGreyStars();
             EnableStaticStars();
 
             if (_uiType == UIType.Animated)
@@ -89,11 +87,21 @@ namespace CyberCruiser
             }
         }
 
+        private void EnableGreyStars()
+        {
+            int starsToEnable = _currentRank.StarsToRankUp;
+            for (int i = 0; i < starsToEnable; i++)
+            {
+                _greyStars[i].SetActive(true);
+            }
+        }
+
         private void DisableAllStars()
         {
             for (int i = 0; i < _currentRank.StarsToRankUp; i++)
             {
                 _goldStars[i].SetActive(false);
+                _greyStars[i].SetActive(false);
             }
             _starsEnabled = 0;
         }
@@ -115,7 +123,7 @@ namespace CyberCruiser
                 _starsToGain = _playerRankManager.TotalStarReward;
             }
 
-            StartCoroutine(GainStarsAnimation());
+            _gainStarsCoroutine = StartCoroutine(GainStarsAnimation());
         }
 
         private IEnumerator GainStarsAnimation()
@@ -126,8 +134,6 @@ namespace CyberCruiser
                 {
                     yield return new WaitForSeconds(_starAnimationDelayInSeconds);
                     _goldStars[_starsEnabled].SetActive(true);
-                    _starAnimations[i].PlayMoveAnimation();
-
                     _starsEnabled += 1;
                 }
 
@@ -136,7 +142,8 @@ namespace CyberCruiser
                     yield return new WaitForSeconds(_starAnimationDelayInSeconds);
                     _starsToGain -= _currentRank.StarsToRankUp;
                     RankUp();
-                    StopCoroutine(GainStarsAnimation());
+                    i = 0;
+                    StopCoroutine(_gainStarsCoroutine);
                 }
             }
         }
@@ -151,8 +158,9 @@ namespace CyberCruiser
             _starsEnabled = 0;
             DisableAllStars();
             _currentRank = RankManagerInstance.RankUp(_currentRank.RankID);
+            EnableGreyStars();
             SetRankUI();
-            StartCoroutine(GainStarsAnimation());
+            _gainStarsCoroutine = StartCoroutine(GainStarsAnimation());
         }
     }
 }

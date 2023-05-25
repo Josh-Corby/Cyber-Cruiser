@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 1. Play 3 Times
   m_EditorClassIdentifier: 
+  missionDescription: Play 3 Times
+  missionPersistence: 1
   missionCondition: 0
   enemy: 0
-  boss: 0
   missionObjectiveAmount: 3
   missionStarReward: 1

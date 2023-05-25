@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Fly 2000m in one run
   m_EditorClassIdentifier: 
   missionDescription: Fly 2000m in one run
-  missionCondition: 5
+  missionPersistence: 0
+  missionCondition: 4
   enemy: 0
-  boss: 0
   missionObjectiveAmount: 2000
-  missionStarReward: 0
+  missionStarReward: 3

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Collect 100 Plasma
   m_EditorClassIdentifier: 
   missionDescription: Collect 100 Plasma
+  missionPersistence: 1
   missionCondition: 1
   enemy: 0
-  boss: 0
   missionObjectiveAmount: 100
-  missionStarReward: 1
+  missionStarReward: 3

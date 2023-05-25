@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Kill 500 enemies
   m_EditorClassIdentifier: 
   missionDescription: Kill 500 enemies
-  missionCondition: 0
+  missionPersistence: 1
+  missionCondition: 5
   enemy: 0
-  boss: 0
-  missionObjectiveAmount: 0
-  missionStarReward: 0
+  missionObjectiveAmount: 500
+  missionStarReward: 2

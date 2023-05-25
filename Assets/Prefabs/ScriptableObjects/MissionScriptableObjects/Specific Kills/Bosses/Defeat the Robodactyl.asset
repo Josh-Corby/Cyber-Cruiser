@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Defeat the Robodactyl
   m_EditorClassIdentifier: 
   missionDescription: Defeat the Robodactyl
-  missionCondition: 6
-  enemy: 0
-  boss: 1
+  missionPersistence: 1
+  missionCondition: 5
+  enemy: 8
   missionObjectiveAmount: 1
-  missionStarReward: 0
+  missionStarReward: 2

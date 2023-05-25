@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: Defeat 5 bosses
   m_EditorClassIdentifier: 
-  missionDescription: 
-  missionCondition: 0
-  enemy: 0
-  boss: 0
-  missionObjectiveAmount: 0
-  missionStarReward: 0
+  missionDescription: Defeat 5 bosses
+  missionPersistence: 1
+  missionCondition: 5
+  enemy: 7
+  missionObjectiveAmount: 5
+  missionStarReward: 3

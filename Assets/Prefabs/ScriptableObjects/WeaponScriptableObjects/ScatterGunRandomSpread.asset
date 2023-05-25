@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ScatterGunRandomSpread
   m_EditorClassIdentifier: 
   Stats:
-    objectToFire: {fileID: 760453196464390188, guid: aefca9002aa15e2478302a3f2253c1b1, type: 3}
+    objectToFire: {fileID: 760453196464390188, guid: 1b3e20b833268c54a91ba787ca2e1d05, type: 3}
     TimeBetweenShots: 0.1
     IsWeaponAutomatic: 1
     Clip:

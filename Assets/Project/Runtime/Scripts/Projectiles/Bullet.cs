@@ -201,7 +201,7 @@ namespace CyberCruiser
 
         public void Reflect(GameObject objectReflectedFrom)
         {
-            Debug.Log("Bullet reflected");
+            //Debug.Log("Bullet reflected");
             transform.right = objectReflectedFrom.transform.right;
             _speed /= 2;
             SwitchBulletTeam();

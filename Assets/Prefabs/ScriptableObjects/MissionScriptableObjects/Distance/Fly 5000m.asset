@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Fly 5000m
   m_EditorClassIdentifier: 
   missionDescription: Fly 5000m
+  missionPersistence: 1
   missionCondition: 4
   enemy: 0
-  boss: 0
   missionObjectiveAmount: 5000
-  missionStarReward: 0
+  missionStarReward: 2

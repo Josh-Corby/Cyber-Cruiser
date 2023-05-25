@@ -17,4 +17,4 @@ MonoBehaviour:
   missionCondition: 5
   enemy: 4
   missionObjectiveAmount: 50
-  missionStarReward: 0
+  missionStarReward: 2

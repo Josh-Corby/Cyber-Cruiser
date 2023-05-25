@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Defeat the Cyber Kraken
   m_EditorClassIdentifier: 
   missionDescription: Defeat the Cyber Kraken
-  missionCondition: 6
-  enemy: 0
-  boss: 4
+  missionPersistence: 1
+  missionCondition: 5
+  enemy: 11
   missionObjectiveAmount: 1
-  missionStarReward: 0
+  missionStarReward: 2

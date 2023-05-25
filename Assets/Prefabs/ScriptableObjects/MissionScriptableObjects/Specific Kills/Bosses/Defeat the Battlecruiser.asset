@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Defeat the Battlecruiser
   m_EditorClassIdentifier: 
   missionDescription: Defeat the Battlecruiser
-  missionCondition: 6
-  enemy: 0
-  boss: 3
+  missionPersistence: 1
+  missionCondition: 5
+  enemy: 10
   missionObjectiveAmount: 1
-  missionStarReward: 0
+  missionStarReward: 2

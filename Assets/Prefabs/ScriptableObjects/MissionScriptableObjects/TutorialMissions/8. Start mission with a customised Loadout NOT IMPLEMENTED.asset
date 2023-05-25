@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 8. Start mission with a customised Loadout NOT IMPLEMENTED
   m_EditorClassIdentifier: 
-  missionDescription: Fly 100m
+  missionDescription: Start mission with a customised Loadout
+  missionPersistence: 0
   missionCondition: 4
   enemy: 0
-  boss: 0
   missionObjectiveAmount: 100
   missionStarReward: 4

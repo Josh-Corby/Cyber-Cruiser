@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: Defeat the Behemoth 3 times
   m_EditorClassIdentifier: 
-  missionDescription: Defeat the Behemoth
-  missionCondition: 6
-  enemy: 0
-  boss: 2
-  missionObjectiveAmount: 1
-  missionStarReward: 0
+  missionDescription: Defeat the Behemoth 3 times
+  missionPersistence: 1
+  missionCondition: 5
+  enemy: 9
+  missionObjectiveAmount: 3
+  missionStarReward: 3

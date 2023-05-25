@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Pick up 5 weapon packs
   m_EditorClassIdentifier: 
   missionDescription: Pick up 5 weapon packs
-  missionCondition: 1
+  missionPersistence: 1
+  missionCondition: 3
   enemy: 0
-  boss: 0
   missionObjectiveAmount: 5
   missionStarReward: 1

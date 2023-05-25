@@ -13,8 +13,7 @@ namespace CyberCruiser
         [SerializeField] private int _currentStars;
         [SerializeField] private int _starsBeforeMissionStart;
         private int _starsToGain;
-        [SerializeField]
-        private int _totalStarReward;
+        [SerializeField] private int _totalStarReward;
         #endregion
 
         #region Proerties

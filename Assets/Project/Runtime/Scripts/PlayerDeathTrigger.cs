@@ -14,7 +14,6 @@ namespace CyberCruiser
                 Debug.Log("Player off screen");
                 OnPlayerDeadOffScreen?.Invoke();
             }
-            Debug.Log("trigger enter");
         }
     }
 }

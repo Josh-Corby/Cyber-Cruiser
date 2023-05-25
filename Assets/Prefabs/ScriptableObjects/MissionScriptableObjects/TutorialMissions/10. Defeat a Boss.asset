@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 10. Defeat a Boss
   m_EditorClassIdentifier: 
-  missionDescription: 
-  missionCondition: 6
-  enemy: 0
-  boss: 0
+  missionDescription: Defeat a Boss
+  missionPersistence: 1
+  missionCondition: 5
+  enemy: 7
   missionObjectiveAmount: 1
-  missionStarReward: 1
+  missionStarReward: 2

@@ -6,6 +6,8 @@ namespace CyberCruiser
     public class MissionManager : GameBehaviour<MissionManager>
     {
         #region References
+        [SerializeField] private MissionScriptableObject[] _tutorialMissions;
+
         [SerializeField] private MissionScriptableObject[] _missions;
         #endregion
 
@@ -37,13 +39,11 @@ namespace CyberCruiser
         private void OnEnable()
         {
             GameManager.OnMissionStart += () => IsAnyMissionCompleted = false;
-            //UIManager.OnMissionsPanelLoaded += SetMission;
         }
 
         private void OnDisable()
         {
             GameManager.OnMissionStart -= () => IsAnyMissionCompleted = false;
-            //UIManager.OnMissionsPanelLoaded -= SetMission;
         }
 
         private void Start()
@@ -58,7 +58,7 @@ namespace CyberCruiser
             if (_currentMission != null) return;
 
             UnassignMission();
-            _currentMission = _missions[_currentMissionID];
+            _currentMission = _tutorialMissions[_currentMissionID];
             SetMissionObjective();
         }
 

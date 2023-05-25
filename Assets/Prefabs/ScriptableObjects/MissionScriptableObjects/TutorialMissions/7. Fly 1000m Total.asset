@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 7. Fly 1000m Total
   m_EditorClassIdentifier: 
   missionDescription: Fly 1000m
+  missionPersistence: 1
   missionCondition: 4
   enemy: 0
-  boss: 0
   missionObjectiveAmount: 1000
-  missionStarReward: 1
+  missionStarReward: 2

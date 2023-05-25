@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missionDescription: Kill 50 Mines
   missionPersistence: 1
-  missionCondition: 0
+  missionCondition: 5
   enemy: 2
-  missionObjectiveAmount: 0
-  missionStarReward: 0
+  missionObjectiveAmount: 50
+  missionStarReward: 2

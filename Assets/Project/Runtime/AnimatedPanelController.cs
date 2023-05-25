@@ -154,7 +154,7 @@ namespace CyberCruiser
             }
 
 
-            Debug.Log("Screen Open");
+            //Debug.Log("Screen Open");
             _screenToOpen.SetActive(true);
             _currentScreen = _screenToOpen;
             _screenToOpen = null;
