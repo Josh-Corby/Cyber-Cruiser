@@ -1141,57 +1141,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 87208353}
   m_CullTransparentMesh: 1
---- !u!1 &123104433
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 123104435}
-  - component: {fileID: 123104434}
-  m_Layer: 0
-  m_Name: UIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &123104434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 123104433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe992f0cfdf220743adfb0bda0bd23b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _titlePanel: {fileID: 492079264}
-  _missionsPanel: {fileID: 0}
-  _gameplayPanel: {fileID: 446903193}
-  _pausePanel: {fileID: 0}
-  _currentPanel: {fileID: 0}
-  _panelToEnable: {fileID: 0}
-  _enablePanelDelay: 0.5
---- !u!4 &123104435
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 123104433}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 774350662}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &131547840
 GameObject:
   m_ObjectHideFlags: 0
@@ -2096,6 +2045,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
+  _distanceManager: {fileID: 1708637172}
+  _enemySpawnerManager: {fileID: 2028995238}
   _isPaused: 0
   gameplayObjects: {fileID: 1495971563}
 --- !u!4 &244827581
@@ -3076,9 +3027,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 348.345, y: -324.575}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 696.69, y: 100.2075}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &363359291
@@ -3139,22 +3090,22 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 443552029}
         m_TargetAssemblyTypeName: CyberCruiser.AnimatedPanelController, Assembly-CSharp
-        m_MethodName: ChangeScreen
+        m_MethodName: DisablePanel
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 492718942}
+          m_ObjectArgument: {fileID: 492079264}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 123104434}
-        m_TargetAssemblyTypeName: CyberCruiser.UIManager, CyberCruiser
-        m_MethodName: DisablePanel
+      - m_Target: {fileID: 443552029}
+        m_TargetAssemblyTypeName: CyberCruiser.AnimatedPanelController, Assembly-CSharp
+        m_MethodName: ChangeScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 492079264}
+          m_ObjectArgument: {fileID: 492718942}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -3490,17 +3441,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &407223910 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7594662664462515631, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-  m_PrefabInstance: {fileID: 8907491432400472847}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a432723100afd44a960e23867d8ea88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &417501391
 GameObject:
   m_ObjectHideFlags: 0
@@ -3820,7 +3760,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 123104434}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Project
         m_MethodName: GoToScreen
         m_Mode: 2
@@ -4074,6 +4014,77 @@ MonoBehaviour:
   spawnArea: {x: 0, y: 0, z: 0}
   spawnerWeight: 0.25
   totalCategoryWeight: 1
+--- !u!1 &486429624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 486429627}
+  - component: {fileID: 486429626}
+  - component: {fileID: 486429625}
+  m_Layer: 12
+  m_Name: PlayerDeathTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &486429625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486429624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a665e4da593c09641a200abe31bc45b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &486429626
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486429624}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 30, y: 4.28}
+  m_EdgeRadius: 0
+--- !u!4 &486429627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486429624}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -10.88, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &492079264
 GameObject:
   m_ObjectHideFlags: 0
@@ -4089,7 +4100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &492079265
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5066,9 +5077,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 348.345, y: -458.4025}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 696.69, y: 100.2075}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &598045738
@@ -5704,7 +5715,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 123104434}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: GoToScreen
         m_Mode: 2
@@ -6316,7 +6327,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 774350662}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &707449144
 MonoBehaviour:
@@ -7040,7 +7051,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 506270503}
-  - {fileID: 123104435}
   - {fileID: 707449143}
   - {fileID: 1591327971}
   m_Father: {fileID: 281578421}
@@ -9028,6 +9038,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1018076975}
   m_CullTransparentMesh: 1
+--- !u!1 &1023851735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1023851736}
+  m_Layer: 5
+  m_Name: MenuPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1023851736
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023851735}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1892795441}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1027566321
 GameObject:
   m_ObjectHideFlags: 0
@@ -9855,7 +9901,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dontDestroy: 0
   _playerManager: {fileID: 1324404176}
-  _weaponController: {fileID: 0}
   _shieldController: {fileID: 1617183391}
   _addOnActiveStates:
   - Name: Battery Pack
@@ -12136,18 +12181,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CyberCruiser.Audio.UISoundController, CyberCruiser
-        m_MethodName: PlaySound
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1367612365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13116,7 +13149,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 123104434}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: GoToScreen
         m_Mode: 2
@@ -13235,8 +13268,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1532550346}
   - {fileID: 1570250935}
+  - {fileID: 1684328172}
   m_Father: {fileID: 182001030}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13329,7 +13362,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 123104434}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: GoToScreen
         m_Mode: 2
@@ -13591,9 +13624,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 348.345, y: -67.02377}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 438, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1466586202
@@ -13652,8 +13685,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 123104434}
-        m_TargetAssemblyTypeName: CyberCruiser.UIManager, CyberCruiser
+      - m_Target: {fileID: 443552029}
+        m_TargetAssemblyTypeName: CyberCruiser.AnimatedPanelController, Assembly-CSharp
         m_MethodName: DisablePanel
         m_Mode: 2
         m_Arguments:
@@ -14661,7 +14694,7 @@ GameObject:
   - component: {fileID: 1532550347}
   - component: {fileID: 1532550350}
   m_Layer: 5
-  m_Name: Continue
+  m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14674,20 +14707,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1532550345}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.547865, y: 1.547865, z: 1.547865}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1908824459}
-  m_Father: {fileID: 1435566241}
-  m_RootOrder: 0
+  m_Children: []
+  m_Father: {fileID: 1684328172}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 4.2}
   m_SizeDelta: {x: 128, y: 80}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1532550347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14744,7 +14776,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 123104434}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: GoToScreen
         m_Mode: 2
@@ -15087,7 +15119,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1435566241}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -15150,7 +15182,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 123104434}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: GoToScreen
         m_Mode: 2
@@ -15413,7 +15445,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 774350662}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1591327972
 MonoBehaviour:
@@ -15955,6 +15987,7 @@ MonoBehaviour:
   - {fileID: 9010852593865095087, guid: 888315a2ca640964989b3803c815bbee, type: 3}
   - {fileID: 9010852593865095087, guid: 7a01190f663ce964e9bb6f1e23f87ecd, type: 3}
   - {fileID: 9010852593865095087, guid: 0b05c1059bb5125439a8d3baa6287b52, type: 3}
+  - {fileID: 9010852593865095087, guid: ea20a119d3080f6428d1eb515b77635d, type: 3}
   _pickupIndicator: {fileID: 4630231504149823482, guid: eccf7339e3ebce64b95a42c2273d0758, type: 3}
   _indicatorAngle: 0
 --- !u!1001 &1654821707
@@ -16271,6 +16304,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b01a66e0a14ddb46acb087bf0e3d128, type: 3}
+--- !u!1 &1684328171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1684328172}
+  m_Layer: 5
+  m_Name: Continue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1684328172
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684328171}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.547865, y: 1.547865, z: 1.547865}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1908824459}
+  - {fileID: 1532550346}
+  m_Father: {fileID: 1435566241}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -11.200012, y: 0}
+  m_SizeDelta: {x: 128, y: 132}
+  m_Pivot: {x: 1, y: 0}
 --- !u!1 &1695287950
 GameObject:
   m_ObjectHideFlags: 0
@@ -18058,6 +18129,7 @@ RectTransform:
   m_Children:
   - {fileID: 492079265}
   - {fileID: 446903194}
+  - {fileID: 1023851736}
   - {fileID: 443552027}
   m_Father: {fileID: 820885200}
   m_RootOrder: 1
@@ -18130,19 +18202,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1908824458}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1532550346}
+  m_Father: {fileID: 1684328172}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -36.3, y: -71}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0.000030517578, y: 16.7}
   m_SizeDelta: {x: 173.19, y: 26.93}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &1908824460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18197,7 +18269,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -18646,9 +18718,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 348.345, y: -190.74751}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 696.69, y: 100.2075}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1970179545
@@ -18709,22 +18781,22 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 443552029}
         m_TargetAssemblyTypeName: CyberCruiser.AnimatedPanelController, Assembly-CSharp
-        m_MethodName: ChangeScreen
+        m_MethodName: DisablePanel
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 2146687013}
+          m_ObjectArgument: {fileID: 492079264}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 123104434}
-        m_TargetAssemblyTypeName: CyberCruiser.UIManager, CyberCruiser
-        m_MethodName: DisablePanel
+      - m_Target: {fileID: 443552029}
+        m_TargetAssemblyTypeName: CyberCruiser.AnimatedPanelController, Assembly-CSharp
+        m_MethodName: ChangeScreen
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 492079264}
+          m_ObjectArgument: {fileID: 2146687013}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -20357,7 +20429,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 123104434}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: GoToScreen
         m_Mode: 2
@@ -20821,9 +20893,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 244827580}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: EndMission
+      - m_Target: {fileID: 443552029}
+        m_TargetAssemblyTypeName: CyberCruiser.AnimatedPanelController, Assembly-CSharp
+        m_MethodName: IsResumingGame
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 443552029}
+        m_TargetAssemblyTypeName: CyberCruiser.AnimatedPanelController, Assembly-CSharp
+        m_MethodName: GoToMenuPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20833,13 +20917,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 123104434}
-        m_TargetAssemblyTypeName: CyberCruiser.UIManager, CyberCruiser
-        m_MethodName: DisablePanel
-        m_Mode: 2
+      - m_Target: {fileID: 244827580}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: EndMission
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 446903193}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -20869,6 +20953,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1765171431114112337, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
+      propertyPath: _menuPanel
+      value: 
+      objectReference: {fileID: 1023851735}
+    - target: {fileID: 1765171431114112337, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
+      propertyPath: _titlePanel
+      value: 
+      objectReference: {fileID: 492079264}
+    - target: {fileID: 1765171431114112337, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
       propertyPath: _pauseScreen
       value: 
       objectReference: {fileID: 4195245327428007945}
@@ -20877,6 +20969,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 446903193}
     - target: {fileID: 1765171431114112337, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
+      propertyPath: _gameOverScreen
+      value: 
+      objectReference: {fileID: 182001029}
+    - target: {fileID: 1765171431114112337, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
       propertyPath: _soundController
       value: 
       objectReference: {fileID: 689313713}
@@ -20884,6 +20980,10 @@ PrefabInstance:
       propertyPath: Screens.Array.size
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1765171431114112337, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
+      propertyPath: _missionCompleteScreen
+      value: 
+      objectReference: {fileID: 369243389}
     - target: {fileID: 2141808500905660719, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -20894,7 +20994,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2141808500905660719, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2141808500905660719, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -21202,6 +21302,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 443552029}
+        m_TargetAssemblyTypeName: CyberCruiser.AnimatedPanelController, Assembly-CSharp
+        m_MethodName: IsResumingGame
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 244827580}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: TogglePause
@@ -21210,18 +21322,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CyberCruiser.Audio.UISoundController, CyberCruiser
-        m_MethodName: PlaySound
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -21561,18 +21661,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1495971564}
     m_Modifications:
-    - target: {fileID: 634649626243274673, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Parameters.textureMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 634649626243274673, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: bd67c88b60ac2e5478f22649c1a92c00, type: 2}
-    - target: {fileID: 634649626243274673, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Positions.Array.data[1].x
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1165463880448735964, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -21617,10 +21705,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _soundController
-      value: 
-      objectReference: {fileID: 407223910}
     - target: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _playerUI
       value: 
@@ -21629,10 +21713,6 @@ PrefabInstance:
       propertyPath: _addOnManager
       value: 
       objectReference: {fileID: 1118535384}
-    - target: {fileID: 5608880328762689204, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 2804263056144364330, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
     - target: {fileID: 7798838778722217166, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _addOnManager
       value: 

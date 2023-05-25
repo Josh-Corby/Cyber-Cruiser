@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SmartGun
   m_EditorClassIdentifier: 
   Stats:
-    objectToFire: {fileID: 760453196464390188, guid: aefca9002aa15e2478302a3f2253c1b1, type: 3}
+    objectToFire: {fileID: 760453196464390188, guid: a85eefd37704a0440af18c18264d7ae2, type: 3}
     TimeBetweenShots: 0.1
     IsWeaponAutomatic: 1
     Clip:

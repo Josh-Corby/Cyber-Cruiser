@@ -10,12 +10,13 @@ namespace CyberCruiser
         [SerializeField] private AnimatedPanelSoundController _soundController;
         private Animator _animator;
 
-        [SerializeField] private GameObject _currentScreen;
-        [SerializeField] private GameObject _screenToOpen;
+        private GameObject _currentScreen;
+        private GameObject _screenToOpen;
+        [SerializeField] private GameObject _missionScreen;
         [SerializeField] private GameObject _missionCompleteScreen;
         [SerializeField] private GameObject _gameOverScreen;
 
-        [SerializeField] private GameObject _panelToEnable;
+        private GameObject _panelToEnable;
 
         private GameObject _currentPanel;
         [SerializeField] private GameObject _titlePanel;
@@ -23,7 +24,7 @@ namespace CyberCruiser
         [SerializeField] private GameObject _menuPanel;
         [SerializeField] private GameObject _pauseScreen;
 
-        [SerializeField] private bool _isResumingGame;
+        private bool _isResumingGame;
 
         private string _currentState;
         private const string PANEL_UP = "Panel_Up";
