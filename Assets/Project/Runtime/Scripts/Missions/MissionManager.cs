@@ -32,10 +32,6 @@ namespace CyberCruiser
         public bool IsAnyMissionCompleted { get => _isAnyMissionCompleted; private set => _isAnyMissionCompleted = value; }
         #endregion
 
-        private delegate void MissionControllerDelegate();
-
-        private MissionControllerDelegate missionControllerDelegate;
-
         public static event Action<int> OnMissionComplete = null;
 
         private void OnEnable()
@@ -66,135 +62,179 @@ namespace CyberCruiser
             SetMissionObjective();
         }
 
+
         private void SetMissionObjective()
         {
             _currentMissionGoal = _currentMission.missionObjectiveAmount;
             CurrentMissionProgress = 0;
             _isMissionFailed = false;
 
-            switch (_currentMission.missionCondition)
+            if(_currentMission.missionPersistence == MissionPersistence.OneRun)
             {
-                #region General
+                GameManager.OnMissionStart += ResetMissionProgress;
+            }
+
+            CheckMissionCondition(_currentMission.missionCondition);
+        }
+
+        private void CheckMissionCondition(MissionConditions currentMissionCondition)
+        {
+            switch(currentMissionCondition)
+            {
                 case MissionConditions.EndMission:
                     GameManager.OnMissionEnd += IncrementMissionProgress;
-                    return;
-                #endregion
+                    break;
 
-                #region Travel Distance
-                case MissionConditions.FlyDistanceOnce:
-                    DistanceManager.OnDistanceChanged += SetMissionProgress;
-                    return;
-                case MissionConditions.FlyDistanceTotal:
-                    DistanceManager.OnDistanceTraveled += IncrementMissionProgress;
-                    return;
-                #endregion
-
-                #region Pickups
                 case MissionConditions.CollectPlasma:
                     PlayerManager.OnPlasmaPickupValue += IncreaseMissionProgress;
-                    return;
-                case MissionConditions.UseWeaponPack:
-                    PlayerWeaponController.OnWeaponUpgradeStart += (i) => IncrementMissionProgress();
-                    return;
-                #endregion
-
-                #region Kill Enemies
-
-                #region GeneralEnemies
-                #endregion
-
-                #region Enemy Specific
-                #endregion
-
-                #region GeneralBosses
-                case MissionConditions.KillBoss:
-                    switch (_currentMission.boss)
-                    {
-                        case BossTypes.All:
-                            Boss.OnBossDied += (pickupType, position) => IncrementMissionProgress();
-                            return;
-                        case BossTypes.Battlecruiser:
-                            return;
-                        case BossTypes.Robodactyl:
-                            Robodactyl.OnDied += IncrementMissionProgress;
-                            return;
-                        case BossTypes.Behemoth:
-                            Behemoth.OnDied += IncrementMissionProgress;
-                            return;
-                    }
                     break;
-                #endregion
-                #endregion
 
-                #region Pacifist
-                case MissionConditions.DontShootForDistance:
-                    GameManager.OnMissionEnd += ResetMissionProgress;
-                    DistanceManager.OnDistanceTraveled += IncrementMissionProgress;
-                    PlayerWeaponController.OnShoot += FailMission;
-                    return;
-                #endregion
-
-                #region Shield
                 case MissionConditions.UseShield:
                     PlayerShieldController.OnPlayerShieldsActivated += (i) => IncrementMissionProgress();
-                    return;
-                    #endregion
+                    break;
+
+                case MissionConditions.UseWeaponPack:
+                    PlayerWeaponController.OnWeaponUpgradeStart += (i) => IncrementMissionProgress();
+                    break;
+
+                case MissionConditions.FlyDistance:
+                    DistanceManager.OnDistanceTraveled += IncrementMissionProgress;
+                    break;
+
+                case MissionConditions.KillEnemy:
+                     CheckEnemyToKill(_currentMission.enemy);
+                    break;
+
+                case MissionConditions.DontShootForDistance:
+                    DistanceManager.OnDistanceTraveled += IncrementMissionProgress;
+                    PlayerWeaponController.OnShoot += FailMission;
+                    break;
+            }
+        }
+
+        private void CheckEnemyToKill(EnemyTypes currentMissionEnemyType)
+        {
+            switch (currentMissionEnemyType)
+            {
+                case EnemyTypes.AllBasicEnemies:
+                    Enemy.OnEnemyDeath += (enemyType) => IncrementMissionProgress();
+                    break;
+
+                case EnemyTypes.Gunship:
+                case EnemyTypes.Mine:
+                case EnemyTypes.Missile:
+                case EnemyTypes.Blimp:
+                case EnemyTypes.Slicer:
+                case EnemyTypes.Dragon:
+                    Enemy.OnEnemyDeath += CheckEnemyType;
+                    break;
+
+                case EnemyTypes.AllBosses:
+                    Boss.OnBossDeath += (bossType) => IncrementMissionProgress();
+                    break;
+
+                case EnemyTypes.Robodactyl:
+                case EnemyTypes.Behemoth:
+                case EnemyTypes.Battlecruiser:
+                case EnemyTypes.CyberKraken:
+                    Boss.OnBossDeath += CheckBossType;
+                    break;
+            }
+        }
+
+        private void UncheckEnemyToKill(EnemyTypes currentMissionEnemyType)
+        {
+            switch (currentMissionEnemyType)
+            {
+                case EnemyTypes.AllBasicEnemies:
+                    Enemy.OnEnemyDeath -= (enemyType) => IncrementMissionProgress();
+                    break;
+
+                case EnemyTypes.Gunship:
+                case EnemyTypes.Mine:
+                case EnemyTypes.Missile:
+                case EnemyTypes.Blimp:
+                case EnemyTypes.Slicer:
+                case EnemyTypes.Dragon:
+                    Enemy.OnEnemyDeath -= CheckEnemyType;
+                    break;
+
+                case EnemyTypes.AllBosses:
+                    Boss.OnBossDeath -= (bossType) => IncrementMissionProgress();
+                    break;
+
+                case EnemyTypes.Robodactyl:
+                case EnemyTypes.Behemoth:
+                case EnemyTypes.Battlecruiser:
+                case EnemyTypes.CyberKraken:
+                    Boss.OnBossDeath -= CheckBossType;
+                    break;
+            }
+        }
+
+        private void CheckEnemyType(EnemyTypes enemyType)
+        {
+            if(enemyType == _currentMission.enemy)
+            {
+                IncrementMissionProgress();
+            }
+        }
+
+        private void CheckBossType(EnemyTypes bossType)
+        {
+            if(bossType == _currentMission.enemy)
+            {
+                IncrementMissionProgress();
             }
         }
 
         private void UnassignMission()
         {
             if (_currentMission == null) return;
-            UnassignMissionObjective();
+            UnassignMissionObjective(_currentMission.missionCondition);
             ResetMissionProgress();
-        }
-
-
-        private void ClearMissionObjectives()
-        {
-            missionControllerDelegate = null;
             _currentMission = null;
         }
 
-        private void UnassignMissionObjective()
+
+        private void UnassignMissionObjective(MissionConditions currentMissionCondition)
         {
-            if (_currentMission == null) return;
-            switch (_currentMission.missionCondition)
+            if (_currentMission.missionPersistence == MissionPersistence.OneRun)
+            {
+                GameManager.OnMissionStart -= ResetMissionProgress;
+            }
+
+            switch (currentMissionCondition)
             {
                 case MissionConditions.EndMission:
                     GameManager.OnMissionEnd -= IncrementMissionProgress;
                     break;
+
                 case MissionConditions.CollectPlasma:
                     PlayerManager.OnPlasmaPickupValue -= IncreaseMissionProgress;
                     break;
-                case MissionConditions.FlyDistanceOnce:
-                    DistanceManager.OnDistanceChanged -= SetMissionProgress;
-                    break;
-                case MissionConditions.FlyDistanceTotal:
-                    DistanceManager.OnDistanceTraveled -= IncrementMissionProgress;
-                    break;
-                case MissionConditions.KillBoss:
-                    Boss.OnBossDied -= (V, P) => { IncrementMissionProgress(); };
-                    break;
+
                 case MissionConditions.UseShield:
                     PlayerShieldController.OnPlayerShieldsActivated -= (i) => IncrementMissionProgress();
                     break;
+
                 case MissionConditions.UseWeaponPack:
                     PlayerWeaponController.OnWeaponUpgradeStart -= (i) => IncrementMissionProgress();
                     break;
+
+                case MissionConditions.FlyDistance:
+                    DistanceManager.OnDistanceTraveled -= IncrementMissionProgress;
+                    break;
+
+                case MissionConditions.KillEnemy:
+                    UncheckEnemyToKill(_currentMission.enemy);
+                    break;
+
                 case MissionConditions.DontShootForDistance:
-                    GameManager.OnMissionEnd += ResetMissionProgress;
-                    DistanceManager.OnDistanceTraveled += IncrementMissionProgress;
-                    PlayerWeaponController.OnShoot += FailMission;
+                    DistanceManager.OnDistanceTraveled -= IncrementMissionProgress;
+                    PlayerWeaponController.OnShoot -= FailMission;
                     break;
             }
-            _currentMission = null;
-        }
-
-        private void SetMissionProgress(int value)
-        {
-            Debug.Log(value);
-            CurrentMissionProgress = value;
         }
 
         private void IncreaseMissionProgress(int value)

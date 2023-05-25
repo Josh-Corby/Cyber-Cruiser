@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
-  m_Name: Kill 50 Blimps NOT IMPLEMENTED
+  m_Name: 8. Start mission with a customised Loadout NOT IMPLEMENTED
   m_EditorClassIdentifier: 
-  missionDescription: Kill 50 Blimps
-  missionCondition: 0
+  missionDescription: Fly 100m
+  missionCondition: 4
   enemy: 0
   boss: 0
-  missionObjectiveAmount: 0
-  missionStarReward: 0
+  missionObjectiveAmount: 100
+  missionStarReward: 4

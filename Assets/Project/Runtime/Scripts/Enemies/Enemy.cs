@@ -31,6 +31,7 @@ namespace CyberCruiser
         #region Actions
         public static event Action<GameObject, bool> OnEnemyAliveStateChange = null;
         public static event Action<GameObject> OnEnemyCrash = null;
+        public static event Action<EnemyTypes> OnEnemyDeath = null;
         #endregion
 
         protected virtual void Awake()
@@ -125,6 +126,7 @@ namespace CyberCruiser
         public virtual void Destroy()
         {
             OnEnemyAliveStateChange(gameObject, false);
+            OnEnemyDeath?.Invoke(EnemyInfo.GeneralStats.Type);
             Destroy(gameObject);
         }
     }
@@ -132,6 +134,7 @@ namespace CyberCruiser
         [Serializable]
         public struct EnemyStats
         {
+            public EnemyTypes Type;
             public int MaxHealth;
             public bool DoesEnemyExplodeOnDeath;
             public GameObject Explosion;

@@ -67,13 +67,13 @@ namespace CyberCruiser
         private void OnEnable()
         {
             DistanceManager.OnBossDistanceReached += SetupForBossSpawn;
-            Boss.OnBossDied += (p, v) => ProcessBossDied();
+            Boss.OnBossDiedPosition += (p, v) => ProcessBossDied();
         }
 
         private void OnDisable()
         {
             DistanceManager.OnBossDistanceReached -= SetupForBossSpawn;
-            Boss.OnBossDied -= (p, v) => ProcessBossDied();
+            Boss.OnBossDiedPosition -= (p, v) => ProcessBossDied();
         }
 
         private void Start()

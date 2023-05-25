@@ -29,7 +29,7 @@ namespace CyberCruiser
             GameManager.OnMissionEnd += ClearPickups;
             DistanceManager.OnPlasmaDistanceReached += SpawnPickupAtRandomPosition;
             DistanceManager.OnWeaponUpgradeDistanceReached += () => StartCoroutine(SpawnWeaponUpgrade());
-            Boss.OnBossDied += SpawnPickupAtPosition;
+            Boss.OnBossDiedPosition += SpawnPickupAtPosition;
             Pickup.OnPickup += RemovePickup;
         }
 
@@ -38,7 +38,7 @@ namespace CyberCruiser
             GameManager.OnMissionEnd -= ClearPickups;
             DistanceManager.OnPlasmaDistanceReached -= SpawnPickupAtRandomPosition;
             DistanceManager.OnWeaponUpgradeDistanceReached -= () => StartCoroutine(SpawnWeaponUpgrade());
-            Boss.OnBossDied -= SpawnPickupAtPosition;
+            Boss.OnBossDiedPosition -= SpawnPickupAtPosition;
             Pickup.OnPickup -= RemovePickup;
         }
 

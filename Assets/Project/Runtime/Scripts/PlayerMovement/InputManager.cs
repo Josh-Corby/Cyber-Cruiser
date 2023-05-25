@@ -36,6 +36,7 @@ namespace CyberCruiser
             AnimatedPanelController.OnAnimationStart += DisableControls;
             GameManager.OnMissionStart += EnableControls;
             PlayerManager.OnPlayerDeath += DisableControls;
+
         }
 
         private void OnDisable()

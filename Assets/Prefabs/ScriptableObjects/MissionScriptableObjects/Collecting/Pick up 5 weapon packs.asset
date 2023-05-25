@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
-  m_Name: Kill 1000 enemies NOT IMPLEMENTED
+  m_Name: Pick up 5 weapon packs
   m_EditorClassIdentifier: 
-  missionDescription: Kill 1000 enemies NOT IMPLEMENTED
-  missionCondition: 0
+  missionDescription: Pick up 5 weapon packs
+  missionCondition: 1
   enemy: 0
   boss: 0
-  missionObjectiveAmount: 0
-  missionStarReward: 0
+  missionObjectiveAmount: 5
+  missionStarReward: 1

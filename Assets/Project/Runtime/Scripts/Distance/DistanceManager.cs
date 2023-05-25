@@ -19,7 +19,7 @@ namespace CyberCruiser
 
         [Header("General Distance")]
         private float _distanceFloat;
-        private int _distanceInt;
+        [SerializeField] private int _distanceInt;
         [SerializeField] private bool _isDistanceIncreasing;
 
         [Header("Boss distances")]
@@ -30,7 +30,7 @@ namespace CyberCruiser
         private bool isDistanceMilestoneIncreased;
 
         [Header("Pickup values")]
-        private int _plasmaDropDistance, _weaponUpgradeDropDistance;
+        [SerializeField] private int _plasmaDropDistance, _weaponUpgradeDropDistance;
         private bool _isPlasmaSpawned, _isWeaponUpgradeSpawned = false;
         #endregion
 
@@ -61,14 +61,14 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            Boss.OnBossDied += (p, v) => StartIncreasingDistance();
+            Boss.OnBossDiedPosition += (p, v) => StartIncreasingDistance();
             PickupManager.OnPlasmaSpawned += () => StartCoroutine(PlasmaSpawned());
             PickupManager.OnWeaponUpgradeSpawned += () => StartCoroutine(WeaponUpgradeSpawned());
         }
 
         private void OnDisable()
         {
-            Boss.OnBossDied -= (p, v) => StartIncreasingDistance();
+            Boss.OnBossDiedPosition -= (p, v) => StartIncreasingDistance();
             PickupManager.OnPlasmaSpawned -= () => StartCoroutine(PlasmaSpawned());
             PickupManager.OnWeaponUpgradeSpawned -= () => StartCoroutine(WeaponUpgradeSpawned());
         }
@@ -206,6 +206,7 @@ namespace CyberCruiser
             _distanceFloat += 1;
             _distanceInt += 1;
             _isDistanceIncreasing = true;
+            GenerateFirstPickupDistances();
         }
 
         public void StopIncreasingDistance()

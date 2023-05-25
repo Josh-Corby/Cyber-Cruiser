@@ -1,27 +1,28 @@
 using UnityEngine;
 
+public enum MissionPersistence
+{
+    OneRun, Total
+}
+
 public enum MissionConditions
 {
-    EndMission, CollectPlasma, UseShield, UseWeaponPack, FlyDistanceTotal, FlyDistanceOnce, KillBoss, DontShootForDistance
+    EndMission, CollectPlasma, UseShield, UseWeaponPack, FlyDistance, KillEnemy, DontShootForDistance
 }
 
 public enum EnemyTypes
 {
-    All, Gunship, Mine, Missile, Blimp, Slicer, Dragon
+    AllBasicEnemies, Gunship, Mine, Missile, Blimp, Slicer, Dragon, AllBosses, Robodactyl, Behemoth, Battlecruiser, CyberKraken
 }
 
-public enum BossTypes
-{
-    All, Robodactyl, Behemoth, Battlecruiser, CyberKraken
-}
 
 [CreateAssetMenu(fileName = "Mission", menuName = "ScriptableObject/New Mission")]
 public class MissionScriptableObject : ScriptableObject
 {
     public string missionDescription;
+    public MissionPersistence missionPersistence;
     public MissionConditions missionCondition;
     public EnemyTypes enemy;
-    public BossTypes boss;
     public int missionObjectiveAmount;
     public int missionStarReward;
 }

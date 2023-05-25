@@ -148,7 +148,11 @@ namespace CyberCruiser
 
         private void OnOpenScreenAnimationEnd()
         {
-            OnAnimationEnd?.Invoke();
+            if (_screenToOpen == _pauseScreen)
+            {
+                OnAnimationEnd?.Invoke();
+            }
+
 
             Debug.Log("Screen Open");
             _screenToOpen.SetActive(true);
@@ -165,7 +169,6 @@ namespace CyberCruiser
 
         private void OnCloseScreenAnimationEnd()
         {
-            OnAnimationEnd?.Invoke();
 
             if (_screenToOpen != null)
             {
@@ -189,6 +192,7 @@ namespace CyberCruiser
             {
                 if (_isResumingGame)
                 {
+                    OnAnimationEnd?.Invoke();
                     GameManagerInstance.ResumeGame();
                 }
             }

@@ -7,7 +7,8 @@ namespace CyberCruiser
     public class Boss : Enemy, IDamageable
     {
         public static event Action<float> OnBossDamage = null;
-        public static event Action<PickupType, Vector3> OnBossDied = null;
+        public static event Action<PickupType, Vector3> OnBossDiedPosition = null;
+        public static event Action<EnemyTypes> OnBossDeath = null;
 
         [SerializeField] protected float _attackCooldown, _attackTimer;
 
@@ -74,11 +75,12 @@ namespace CyberCruiser
         {
             _isBossDead = true;
             base.Crash();
-            OnBossDied(PickupType.Health, transform.position);
+            OnBossDiedPosition(PickupType.Health, transform.position);
         }
 
         public override void Destroy()
         {
+            OnBossDeath?.Invoke(EnemyInfo.GeneralStats.Type);
             base.Destroy();
         }
     }

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
-  m_Name: Collect 5 Plasma in one run NOT IMPLEMENTED
+  m_Name: Kill 50 Gunships
   m_EditorClassIdentifier: 
-  missionDescription: Collect 5 Plasma in one run
-  missionCondition: 1
-  enemy: 0
-  boss: 0
-  missionObjectiveAmount: 5
-  missionStarReward: 1
+  missionDescription: Kill 50 Gunships
+  missionPersistence: 1
+  missionCondition: 0
+  enemy: 1
+  missionObjectiveAmount: 0
+  missionStarReward: 0

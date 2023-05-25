@@ -29,7 +29,7 @@ namespace CyberCruiser
         private void OnEnable()
         {
             Boss.OnBossDamage += UpdateBossHealthBar;
-            Boss.OnBossDied += (p, v) => DisableBossUI();
+            Boss.OnBossDiedPosition += (p, v) => DisableBossUI();
             EnemySpawner.OnBossSpawned += EnableBossUI;
             EnemySpawner.OnBossSpawned += (e) => DisableBossWarningUI();
             EnemySpawnerManager.OnBossSelected += EnableBossWarningUI;
@@ -39,7 +39,7 @@ namespace CyberCruiser
         private void OnDisable()
         {
             Boss.OnBossDamage -= UpdateBossHealthBar;
-            Boss.OnBossDied -= (p, v) => DisableBossUI();
+            Boss.OnBossDiedPosition -= (p, v) => DisableBossUI();
             EnemySpawner.OnBossSpawned -= EnableBossUI;
             EnemySpawner.OnBossSpawned -= (e) => DisableBossWarningUI();
             EnemySpawnerManager.OnBossSelected -= EnableBossWarningUI;

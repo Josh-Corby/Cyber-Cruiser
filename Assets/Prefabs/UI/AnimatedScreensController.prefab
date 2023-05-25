@@ -13308,7 +13308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2025069464
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14324,16 +14324,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _soundController: {fileID: 0}
-  _currentScreen: {fileID: 0}
-  _screenToOpen: {fileID: 0}
+  _missionScreen: {fileID: 0}
   _missionCompleteScreen: {fileID: 369243389}
   _gameOverScreen: {fileID: 182001029}
-  _panelToEnable: {fileID: 0}
   _titlePanel: {fileID: 0}
   _gameplayPanel: {fileID: 0}
   _menuPanel: {fileID: 0}
   _pauseScreen: {fileID: 4195245327428007945}
-  _isResumingGame: 0
 --- !u!95 &8275745192259513255
 Animator:
   serializedVersion: 5

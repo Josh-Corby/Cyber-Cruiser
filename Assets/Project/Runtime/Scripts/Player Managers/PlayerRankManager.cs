@@ -58,7 +58,8 @@ namespace CyberCruiser
 
         private void RestoreStars()
         {
-            _currentStars = PlayerPrefs.GetInt(PLAYER_STARS, 0);
+            _currentStars = 0;
+            //_currentStars = PlayerPrefs.GetInt(PLAYER_STARS, 0);
             _starsBeforeMissionStart = _currentStars;
         }
 
