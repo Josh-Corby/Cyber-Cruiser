@@ -32,6 +32,10 @@ namespace CyberCruiser
         public bool IsAnyMissionCompleted { get => _isAnyMissionCompleted; private set => _isAnyMissionCompleted = value; }
         #endregion
 
+        private delegate void MissionControllerDelegate();
+
+        private MissionControllerDelegate missionControllerDelegate;
+
         public static event Action<int> OnMissionComplete = null;
 
         private void OnEnable()
@@ -143,6 +147,13 @@ namespace CyberCruiser
             if (_currentMission == null) return;
             UnassignMissionObjective();
             ResetMissionProgress();
+        }
+
+
+        private void ClearMissionObjectives()
+        {
+            missionControllerDelegate = null;
+            _currentMission = null;
         }
 
         private void UnassignMissionObjective()

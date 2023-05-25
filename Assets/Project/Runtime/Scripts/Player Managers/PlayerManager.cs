@@ -303,6 +303,7 @@ namespace CyberCruiser
         public void Destroy()
         {
             OnPlayerDeath?.Invoke();
+            DisablePlayerControls();
         }
 
         private void OnCollisionEnter2D(Collision2D collision)

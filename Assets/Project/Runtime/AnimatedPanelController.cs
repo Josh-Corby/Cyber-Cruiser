@@ -89,6 +89,11 @@ namespace CyberCruiser
             CloseCurrentScreen();
         }
 
+        public void SetNextPanel(GameObject panelToEnable)
+        {
+            _panelToEnable = panelToEnable;
+        }
+
         public void EnablePanel(GameObject panelToEnable)
         {
             panelToEnable.SetActive(true);
@@ -135,6 +140,7 @@ namespace CyberCruiser
         }
 
         #region Animation Events
+
         private void OnOpenScreenAnimationStart()
         {
             OnAnimationStart?.Invoke();
