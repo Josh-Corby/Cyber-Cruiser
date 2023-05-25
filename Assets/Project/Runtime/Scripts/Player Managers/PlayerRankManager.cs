@@ -10,8 +10,8 @@ namespace CyberCruiser
         #region Fields
         [SerializeField] private Rank _currentRank;
         private Rank _rankBeforeRankUp;
-        private int _currentStars;
-        private int _starsBeforeMissionStart;
+        [SerializeField] private int _currentStars;
+        [SerializeField] private int _starsBeforeMissionStart;
         private int _starsToGain;
         [SerializeField]
         private int _totalStarReward;
@@ -27,13 +27,13 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            GameManager.OnMissionStart += StoreRankValues;
+            GameManager.OnMissionEnd += StoreRankValues;
             MissionManager.OnMissionComplete += StartStarIncreaseProcess;
         }
 
         private void OnDisable()
         {
-            GameManager.OnMissionStart -= StoreRankValues;
+            GameManager.OnMissionEnd -= StoreRankValues;
             MissionManager.OnMissionComplete -= StartStarIncreaseProcess;
         }
 

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,8 @@ namespace CyberCruiser
         [SerializeField] private UIType _uiType;
         [SerializeField] private Image[] _rankImageRenderers;
         [SerializeField] private Image _rankTextRenderer;
-        [SerializeField] private Image[] _goldStars;
+        [SerializeField] private GameObject[] _goldStars;
+        private List<StarAnimation> _starAnimations = new();
         [SerializeField] private Rank _currentRank;
 
         [SerializeField] private AudioSource _audioSource;
@@ -33,6 +35,10 @@ namespace CyberCruiser
             if(_uiType == UIType.Animated)
             {
                 _audioSource = GetComponent<AudioSource>();
+                for (int i = 0; i < _goldStars.Length; i++)
+                {
+                    _starAnimations.Add(_goldStars[i].GetComponent<StarAnimation>());
+                }
             }
         }
         private void OnEnable()
@@ -45,6 +51,15 @@ namespace CyberCruiser
             if (_uiType == UIType.Animated)
             {
                 MissionScreenAnimation();
+                StarAnimation.OnStarAtDestination += StarSoundEffect;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (_uiType == UIType.Animated)
+            {
+                StarAnimation.OnStarAtDestination -= StarSoundEffect;
             }
         }
 
@@ -70,7 +85,7 @@ namespace CyberCruiser
         {
             for (int i = 0; i < _playerStarsBeforeMissionStart; i++)
             {
-                _goldStars[i].enabled = true;
+                _goldStars[i].SetActive(true);
             }
         }
 
@@ -78,7 +93,7 @@ namespace CyberCruiser
         {
             for (int i = 0; i < _currentRank.StarsToRankUp; i++)
             {
-                _goldStars[i].enabled = false;
+                _goldStars[i].SetActive(false);
             }
             _starsEnabled = 0;
         }
@@ -110,9 +125,10 @@ namespace CyberCruiser
                 if (_starsEnabled < _currentRank.StarsToRankUp)
                 {
                     yield return new WaitForSeconds(_starAnimationDelayInSeconds);
-                    _goldStars[_starsEnabled].enabled = true;
+                    _goldStars[_starsEnabled].SetActive(true);
+                    _starAnimations[i].PlayMoveAnimation();
+
                     _starsEnabled += 1;
-                    _audioSource.PlayOneShot(_starClip);
                 }
 
                 if (_starsEnabled >= _currentRank.StarsToRankUp)
@@ -123,6 +139,11 @@ namespace CyberCruiser
                     StopCoroutine(GainStarsAnimation());
                 }
             }
+        }
+
+        private void StarSoundEffect()
+        {
+            _audioSource.PlayOneShot(_starClip);
         }
 
         private void RankUp()
