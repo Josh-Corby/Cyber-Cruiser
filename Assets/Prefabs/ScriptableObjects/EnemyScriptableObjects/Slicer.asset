@@ -15,8 +15,10 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 2653145768784104840, guid: 2fec4a945356f4243890bd799d60aa11, type: 3}
   EnemyName: Slicer
   GeneralStats:
+    Type: 5
     MaxHealth: 2
     DoesEnemyExplodeOnDeath: 0
+    Explosion: {fileID: 0}
   MovementStats:
     MoveType: 2
     Speed: 8

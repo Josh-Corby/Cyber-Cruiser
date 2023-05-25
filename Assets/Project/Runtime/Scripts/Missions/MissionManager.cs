@@ -11,6 +11,7 @@ namespace CyberCruiser
         [SerializeField] private MissionScriptableObject[] _missions;
         #endregion
 
+        private const string CURRENT_MISSION_ID = "CurrentMissionID";
         #region Fields
         [SerializeField] private MissionScriptableObject _currentMission;
         [SerializeField] private int _currentMissionGoal;
@@ -38,17 +39,33 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
+            RestoreMissionID();
             GameManager.OnMissionStart += () => IsAnyMissionCompleted = false;
+            GameManager.OnSaveDataCleared += ClearSaveData;
         }
 
         private void OnDisable()
         {
+            StoreMissionID();
             GameManager.OnMissionStart -= () => IsAnyMissionCompleted = false;
+            GameManager.OnSaveDataCleared -= ClearSaveData;
+        }
+
+        private void RestoreMissionID()
+        {
+            _currentMissionID = PlayerPrefs.GetInt(CURRENT_MISSION_ID, 0);
+        }
+
+        private void StoreMissionID()
+        {
+            if(_currentMission != null)
+            {
+                PlayerPrefs.SetInt(CURRENT_MISSION_ID, _currentMissionID);
+            }
         }
 
         private void Start()
         {
-            _currentMissionID = 0;
             _currentMissionGoal = 10000;
             SetMission();
         }
@@ -196,7 +213,6 @@ namespace CyberCruiser
             _currentMission = null;
         }
 
-
         private void UnassignMissionObjective(MissionConditions currentMissionCondition)
         {
             if (_currentMission.missionPersistence == MissionPersistence.OneRun)
@@ -244,7 +260,6 @@ namespace CyberCruiser
 
         private void IncrementMissionProgress()
         {
-            //Debug.Log("Mission Progress");
             CurrentMissionProgress += 1;
         }
 
@@ -277,6 +292,18 @@ namespace CyberCruiser
         private void FailMission()
         {
             _isMissionFailed = true;
+        }
+
+        private void ClearSaveData()
+        {
+            _currentMission = null;
+            _currentMissionID = 0;
+            _currentMissionProgress = 0;
+        }
+
+        private void OnApplicationQuit()
+        {
+            StoreMissionID();
         }
     }
 }

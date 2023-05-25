@@ -15,8 +15,10 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 2653145768784104840, guid: 5315175d49caa2c4d9ee273cc227786a, type: 3}
   EnemyName: Gunship_Reflector
   GeneralStats:
+    Type: 1
     MaxHealth: 2
     DoesEnemyExplodeOnDeath: 0
+    Explosion: {fileID: 0}
   MovementStats:
     MoveType: 0
     Speed: 2

@@ -153,6 +153,10 @@ namespace CyberCruiser
                 OnAnimationEnd?.Invoke();
             }
 
+            if(_screenToOpen == _missionScreen)
+            {
+                MissionManagerInstance.SetMission();
+            }
 
             //Debug.Log("Screen Open");
             _screenToOpen.SetActive(true);

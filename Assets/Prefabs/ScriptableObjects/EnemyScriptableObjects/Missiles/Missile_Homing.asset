@@ -15,6 +15,7 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 2653145768784104840, guid: 6f3aeb39ec11dc14b837dd35b3eda443, type: 3}
   EnemyName: Homing Missile
   GeneralStats:
+    Type: 3
     MaxHealth: 1
     DoesEnemyExplodeOnDeath: 1
     Explosion: {fileID: 762726913902296103, guid: 4c12fb1ce68f53f4ba9702687134b17e, type: 3}

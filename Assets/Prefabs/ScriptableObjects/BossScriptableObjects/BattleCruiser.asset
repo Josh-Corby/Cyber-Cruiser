@@ -15,8 +15,10 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 1686505066082717662, guid: 66c6e72b98ecf6d43abdb0bc88401953, type: 3}
   EnemyName: BattleCruiser
   GeneralStats:
+    Type: 10
     MaxHealth: 50
     DoesEnemyExplodeOnDeath: 0
+    Explosion: {fileID: 0}
   MovementStats:
     MoveType: 0
     Speed: 2

@@ -24,6 +24,7 @@ namespace CyberCruiser
         public static event Action OnGameResumed = null;
         public static event Action OnMissionStart = null;
         public static event Action OnMissionEnd = null;
+        public static event Action OnSaveDataCleared = null;
         #endregion
 
         protected override void Awake()
@@ -121,6 +122,18 @@ namespace CyberCruiser
             Time.timeScale = 1f;
             _gameState = GameState.Mission;
             OnIsTimeScalePaused?.Invoke(false);
+        }
+
+        public void ClearSaveData()
+        {
+            OnSaveDataCleared?.Invoke();
+            /*current stars
+             * current rank
+             * current mission
+             * ion
+             * plasma
+             * quests cleared
+            */
         }
     }
 

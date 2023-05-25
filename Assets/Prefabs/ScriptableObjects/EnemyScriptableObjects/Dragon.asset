@@ -15,8 +15,10 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 2653145768784104840, guid: 1f555c3aa78c87a4595854770f311869, type: 3}
   EnemyName: Dragon
   GeneralStats:
+    Type: 6
     MaxHealth: 1
     DoesEnemyExplodeOnDeath: 0
+    Explosion: {fileID: 0}
   MovementStats:
     MoveType: 0
     Speed: 16

@@ -12,11 +12,6 @@ namespace CyberCruiser
 
         public static event Action OnStarAtDestination = null;
 
-        private void OnEnable()
-        {
-            PlayMoveAnimation();
-        }
-
         public void PlayMoveAnimation()
         {
             _starMovementAnimator.Play(STAR_MOVEMENT);           

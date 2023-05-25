@@ -15,8 +15,10 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 980203594034234250, guid: 5742acc31e60e35449a79db534b7264b, type: 3}
   EnemyName: Behemoth
   GeneralStats:
+    Type: 9
     MaxHealth: 50
     DoesEnemyExplodeOnDeath: 0
+    Explosion: {fileID: 0}
   MovementStats:
     MoveType: 0
     Speed: 2

@@ -15,8 +15,10 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 1686505066082717662, guid: a66577e6ad684484ab66edd9c0cc193f, type: 3}
   EnemyName: Cyber Kraken
   GeneralStats:
+    Type: 11
     MaxHealth: 50
     DoesEnemyExplodeOnDeath: 0
+    Explosion: {fileID: 0}
   MovementStats:
     MoveType: 0
     Speed: 2

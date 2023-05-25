@@ -15,8 +15,10 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
   EnemyName: Blimp_4x2
   GeneralStats:
+    Type: 4
     MaxHealth: 6
     DoesEnemyExplodeOnDeath: 0
+    Explosion: {fileID: 0}
   MovementStats:
     MoveType: 0
     Speed: 2
