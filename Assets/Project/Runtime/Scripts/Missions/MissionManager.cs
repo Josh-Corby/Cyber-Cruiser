@@ -8,7 +8,11 @@ namespace CyberCruiser
         #region References
         [SerializeField] private MissionScriptableObject[] _tutorialMissions;
 
-        [SerializeField] private MissionScriptableObject[] _missions;
+        [SerializeField] private MissionScriptableObject[] _1StarMissions;
+
+        [SerializeField] private MissionScriptableObject[] _2StarMissions;
+
+        [SerializeField] private MissionScriptableObject[] _3StarMissions;
         #endregion
 
         private const string CURRENT_MISSION_ID = "CurrentMissionID";

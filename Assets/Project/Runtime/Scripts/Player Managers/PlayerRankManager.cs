@@ -98,8 +98,7 @@ namespace CyberCruiser
 
         private void SaveValues()
         {
-            PlayerPrefs.SetInt(PLAYER_RANK, 0);
-            //PlayerPrefs.SetInt(nameof(PLAYER_RANK), _currentRank.RankID);
+            PlayerPrefs.SetInt(nameof(PLAYER_RANK), _currentRank.RankID);
             PlayerPrefs.SetInt(PLAYER_STARS, _currentStars);
         }
 
