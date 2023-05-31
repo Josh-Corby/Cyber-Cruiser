@@ -19,11 +19,11 @@ public enum EnemyTypes
 [CreateAssetMenu(fileName = "Mission", menuName = "ScriptableObject/New Mission")]
 public class MissionScriptableObject : ScriptableObject
 {
+    public int missionID;
     public string missionDescription;
     public MissionPersistence missionPersistence;
     public MissionConditions missionCondition;
     public EnemyTypes enemy;
     public int missionObjectiveAmount;
     public int missionStarReward;
-    public bool missionCompleted;
 }

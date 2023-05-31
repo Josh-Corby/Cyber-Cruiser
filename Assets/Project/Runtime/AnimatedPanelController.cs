@@ -155,7 +155,7 @@ namespace CyberCruiser
 
             if(_screenToOpen == _missionScreen)
             {
-                MissionManagerInstance.SetMission();
+                MissionManagerInstance.ChooseNextMission();
             }
 
             //Debug.Log("Screen Open");
