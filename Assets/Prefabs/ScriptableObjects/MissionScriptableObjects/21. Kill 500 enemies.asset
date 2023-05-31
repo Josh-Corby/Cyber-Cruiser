@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 21. Kill 500 enemies
   m_EditorClassIdentifier: 
+  CategoryID: 0
   missionDescription: Kill 500 enemies
+  missionIcon: {fileID: 21300000, guid: 249690ba5ec3bf54eabbf0ec4a9d380c, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 0

@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 32. Collect 100 Plasma
   m_EditorClassIdentifier: 
+  CategoryID: 0
   missionDescription: Collect 100 Plasma
+  missionIcon: {fileID: 21300000, guid: 5391fd3b444835142b7840b70a7929be, type: 3}
   missionPersistence: 1
   missionCondition: 1
   enemy: 0

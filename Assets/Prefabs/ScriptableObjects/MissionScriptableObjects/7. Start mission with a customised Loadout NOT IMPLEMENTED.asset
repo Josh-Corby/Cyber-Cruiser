@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 7. Start mission with a customised Loadout NOT IMPLEMENTED
   m_EditorClassIdentifier: 
-  missionID: 7
+  CategoryID: 7
   missionDescription: Start mission with a customised Loadout
+  missionIcon: {fileID: 21300000, guid: 1c8be2e0aed19904187b661b11a1222b, type: 3}
   missionPersistence: 0
   missionCondition: 4
   enemy: 0

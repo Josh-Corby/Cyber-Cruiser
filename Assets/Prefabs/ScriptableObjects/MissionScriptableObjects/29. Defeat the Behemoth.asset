@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 29. Defeat the Behemoth
   m_EditorClassIdentifier: 
+  CategoryID: 0
   missionDescription: Defeat the Behemoth
+  missionIcon: {fileID: 21300000, guid: 83c8844486cb32b42884ab833abc4e0e, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 9

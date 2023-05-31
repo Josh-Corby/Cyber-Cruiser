@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 3. Pick up a Weapon Pack
   m_EditorClassIdentifier: 
-  missionID: 3
+  CategoryID: 2
   missionDescription: Pick up a Weapon Pack
+  missionIcon: {fileID: 21300000, guid: d0f31b832a8d3a9498fee762317d1c25, type: 3}
   missionPersistence: 1
   missionCondition: 3
   enemy: 0

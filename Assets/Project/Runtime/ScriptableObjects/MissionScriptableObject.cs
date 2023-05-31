@@ -21,6 +21,7 @@ public class MissionScriptableObject : ScriptableObject
 {
     public int CategoryID;
     public string missionDescription;
+    public Sprite missionIcon;
     public MissionPersistence missionPersistence;
     public MissionConditions missionCondition;
     public EnemyTypes enemy;

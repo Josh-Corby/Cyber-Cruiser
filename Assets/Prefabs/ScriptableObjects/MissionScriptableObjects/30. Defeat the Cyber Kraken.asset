@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 30. Defeat the Cyber Kraken
   m_EditorClassIdentifier: 
+  CategoryID: 0
   missionDescription: Defeat the Cyber Kraken
+  missionIcon: {fileID: 21300000, guid: 15b62874709b4944fa389bab30690583, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 11

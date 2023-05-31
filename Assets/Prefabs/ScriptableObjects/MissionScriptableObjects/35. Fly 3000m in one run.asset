@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 35. Fly 3000m in one run
   m_EditorClassIdentifier: 
+  CategoryID: 0
   missionDescription: Fly 3000m in one run
+  missionIcon: {fileID: 21300000, guid: ddcf240ba1fc0e04d9a209cbe9dd2801, type: 3}
   missionPersistence: 0
   missionCondition: 4
   enemy: 0

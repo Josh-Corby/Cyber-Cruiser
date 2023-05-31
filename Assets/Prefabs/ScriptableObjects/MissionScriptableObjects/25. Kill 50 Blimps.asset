@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
   m_Name: 25. Kill 50 Blimps
   m_EditorClassIdentifier: 
+  CategoryID: 0
   missionDescription: Kill 50 Blimps
+  missionIcon: {fileID: 21300000, guid: b2f5648a08493224384247a5e2b79cac, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 4
