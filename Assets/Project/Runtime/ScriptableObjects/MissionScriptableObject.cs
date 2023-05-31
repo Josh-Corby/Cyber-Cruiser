@@ -25,4 +25,5 @@ public class MissionScriptableObject : ScriptableObject
     public EnemyTypes enemy;
     public int missionObjectiveAmount;
     public int missionStarReward;
+    public bool missionCompleted;
 }

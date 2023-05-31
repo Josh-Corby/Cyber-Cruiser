@@ -1,23 +1,25 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace CyberCruiser
 {
     public class MissionManager : GameBehaviour<MissionManager>
     {
         #region References
-        [SerializeField] private MissionScriptableObject[] _tutorialMissions;
-
-        [SerializeField] private MissionScriptableObject[] _1StarMissions;
-
-        [SerializeField] private MissionScriptableObject[] _2StarMissions;
-
-        [SerializeField] private MissionScriptableObject[] _3StarMissions;
+        [SerializeField] private MissionCategory[] _missionCategories;
+        [SerializeField] private List<MissionScriptableObject> _uncompletedMissionsInCategory = new();
+        [SerializeField] private MissionScriptableObject _currentMission;
+        private MissionCategory _currentMissionCategory;
         #endregion
 
+        #region PlayerPrefs Strings
         private const string CURRENT_MISSION_ID = "CurrentMissionID";
+        private const string CURRENT_MISSION_CATEGORY_ID = "CurrentMissionCategoryID";
+        #endregion
+
         #region Fields
-        [SerializeField] private MissionScriptableObject _currentMission;
         [SerializeField] private int _currentMissionGoal;
         [SerializeField] private int _currentMissionProgress;
         [SerializeField] private int _currentMissionID;
@@ -27,6 +29,7 @@ namespace CyberCruiser
 
         #region Properties
         public MissionScriptableObject CurrentMission { get => _currentMission; }
+
         public int CurrentMissionProgress
         {
             get => _currentMissionProgress;
@@ -36,11 +39,15 @@ namespace CyberCruiser
                 CheckMissionProgress();
             }
         }
+
         public bool IsAnyMissionCompleted { get => _isAnyMissionCompleted; private set => _isAnyMissionCompleted = value; }
         #endregion
 
+        #region Actions
         public static event Action<int> OnMissionComplete = null;
+        #endregion
 
+        #region Unity Methods
         private void OnEnable()
         {
             RestoreMissionID();
@@ -55,34 +62,27 @@ namespace CyberCruiser
             GameManager.OnSaveDataCleared -= ClearSaveData;
         }
 
-        private void RestoreMissionID()
-        {
-            _currentMissionID = PlayerPrefs.GetInt(CURRENT_MISSION_ID, 0);
-        }
-
-        private void StoreMissionID()
-        {
-            if(_currentMission != null)
-            {
-                PlayerPrefs.SetInt(CURRENT_MISSION_ID, _currentMissionID);
-            }
-        }
-
         private void Start()
         {
             _currentMissionGoal = 10000;
             SetMission();
         }
 
+        private void OnApplicationQuit()
+        {
+            StoreMissionID();
+        }
+        #endregion
+
+        #region Mission Assigning
         public void SetMission()
         {
             if (_currentMission != null) return;
 
             UnassignMission();
-            _currentMission = _tutorialMissions[_currentMissionID];
+            //_currentMission = _tutorialMissions[_currentMissionID];
             SetMissionObjective();
         }
-
 
         private void SetMissionObjective()
         {
@@ -192,23 +192,7 @@ namespace CyberCruiser
                     break;
             }
         }
-
-        private void CheckEnemyType(EnemyTypes enemyType)
-        {
-            if(enemyType == _currentMission.enemy)
-            {
-                IncrementMissionProgress();
-            }
-        }
-
-        private void CheckBossType(EnemyTypes bossType)
-        {
-            if(bossType == _currentMission.enemy)
-            {
-                IncrementMissionProgress();
-            }
-        }
-
+       
         private void UnassignMission()
         {
             if (_currentMission == null) return;
@@ -216,7 +200,7 @@ namespace CyberCruiser
             ResetMissionProgress();
             _currentMission = null;
         }
-
+        
         private void UnassignMissionObjective(MissionConditions currentMissionCondition)
         {
             if (_currentMission.missionPersistence == MissionPersistence.OneRun)
@@ -256,17 +240,35 @@ namespace CyberCruiser
                     break;
             }
         }
+        #endregion
+
+        #region Mission Progress
+        private void CheckEnemyType(EnemyTypes enemyType)
+        {
+            if(enemyType == _currentMission.enemy)
+            {
+                IncrementMissionProgress();
+            }
+        }
+
+        private void CheckBossType(EnemyTypes bossType)
+        {
+            if(bossType == _currentMission.enemy)
+            {
+                IncrementMissionProgress();
+            }
+        }
 
         private void IncreaseMissionProgress(int value)
         {
             CurrentMissionProgress += value;
         }
-
+       
         private void IncrementMissionProgress()
         {
             CurrentMissionProgress += 1;
         }
-
+        
         private void CheckMissionProgress()
         {
             if (_currentMission == null) return;
@@ -277,13 +279,15 @@ namespace CyberCruiser
                 CompleteMission();
             }
         }
-
+        
         private void ResetMissionProgress()
         {
             _isMissionFailed = false;
             CurrentMissionProgress = 0;
         }
+        #endregion
 
+        #region EndMission
         private void CompleteMission()
         {
             Debug.Log("mission complete");
@@ -297,6 +301,31 @@ namespace CyberCruiser
         {
             _isMissionFailed = true;
         }
+        #endregion
+
+        #region Data Management
+        private void RestoreMissionCategory()
+        {
+            _currentMissionCategory = _missionCategories[PlayerPrefs.GetInt(CURRENT_MISSION_CATEGORY_ID, 0)];
+        }
+
+        private void StoreMissionCategory()
+        {
+            PlayerPrefs.SetInt(CURRENT_MISSION_CATEGORY_ID, _currentMissionCategory.ID);
+        }
+
+        private void RestoreMissionID()
+        {
+            _currentMissionID = PlayerPrefs.GetInt(CURRENT_MISSION_ID, 0);
+        }
+
+        private void StoreMissionID()
+        {
+            if(_currentMission != null)
+            {
+                PlayerPrefs.SetInt(CURRENT_MISSION_ID, _currentMissionID);
+            }
+        }
 
         private void ClearSaveData()
         {
@@ -304,10 +333,22 @@ namespace CyberCruiser
             _currentMissionID = 0;
             _currentMissionProgress = 0;
         }
+        #endregion
 
-        private void OnApplicationQuit()
+
+        //pick random mission in category
+        private void PickRandomUncompletedMissionInCategory()
         {
-            StoreMissionID();
+            MissionScriptableObject randomMission = _uncompletedMissionsInCategory[Random.Range(0, _uncompletedMissionsInCategory.Count)];
+            _currentMission = randomMission;
+        }
+
+        [Serializable]
+        private struct MissionCategory
+        {
+            public string Name;
+            public int ID;
+            public MissionScriptableObject[] Missions;
         }
     }
 }
