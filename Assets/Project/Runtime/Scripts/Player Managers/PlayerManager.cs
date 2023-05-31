@@ -162,7 +162,7 @@ namespace CyberCruiser
             ResetStats();
             EnablePlayerControls();
             _isPlayerImmuneToDamage = false;
-
+            _playerCollider.enabled = true;
             GameManager.OnIsTimeScalePaused += SetPlayerControls;
             Pickup.OnResourcePickup += AddResources;
         }

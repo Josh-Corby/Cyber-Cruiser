@@ -20,7 +20,7 @@ namespace CyberCruiser
         {
             GameManager.OnSaveDataCleared += ClearSaveData;
             PlayerManager.OnIonPickup += ChangeIon;
-            PlayerManager.OnPlasmaChange += ChangePlasma;
+            PlayerManager.OnPlasmaChange += SetPlasma;
             RestoreValues();
         }
 
@@ -28,7 +28,7 @@ namespace CyberCruiser
         {
             GameManager.OnSaveDataCleared -= ClearSaveData;
             PlayerManager.OnIonPickup -= ChangeIon;
-            PlayerManager.OnPlasmaChange -= ChangePlasma;
+            PlayerManager.OnPlasmaChange -= SetPlasma;
         }
 
         private void RestoreValues()
@@ -46,8 +46,15 @@ namespace CyberCruiser
 
         public void ChangePlasma(int value)
         {
-            _playerPlasma = value;
+            _playerPlasma += value;
             _playerPlasma = ValidateValue(_playerPlasma);
+            OnPlasmaChange?.Invoke(_playerPlasma);
+        }
+
+        public void SetPlasma(int value)
+        {
+            _playerPlasma = value;
+            _playerPlasma = ValidateValue(PlayerPlasma);
             OnPlasmaChange?.Invoke(_playerPlasma);
         }
 

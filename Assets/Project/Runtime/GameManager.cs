@@ -60,9 +60,9 @@ namespace CyberCruiser
         public void EndMission()
         {
             StopSystems();
-            ToggleGameplayObjects(false);
             //TogglePause();
             OnMissionEnd?.Invoke();
+            ToggleGameplayObjects(false);
         }
 
         public void ResetSystems()

@@ -114,6 +114,7 @@ namespace CyberCruiser
             InputManager.OnFire += SetFireInput;
             GameManager.OnMissionEnd += DisableBeam;
             Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
+            _fireInput = false;
             DisableBeam();
         }
 

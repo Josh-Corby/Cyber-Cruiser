@@ -54,7 +54,6 @@ namespace CyberCruiser
             PlayerManager.OnPlayerDeath -= PlayerDead;
         }
 
-
         private void Update()
         {
             if (_isPlayerDead)
@@ -110,11 +109,13 @@ namespace CyberCruiser
         {
             gameObject.layer = LayerMask.NameToLayer(PLAYER_DEAD_LAYER);
             _isPlayerDead = true;
+            targetRotation = Quaternion.Euler(0, 0, minAngle);
         }
 
         private void DeathMovement()
         {
             transform.position += _crashSpeed * Time.deltaTime * Vector3.down;
+            playerSprite.transform.rotation = Quaternion.RotateTowards(playerSprite.transform.rotation, targetRotation, rotationSpeed);
         }
 
         private void StartLevelPosition()

@@ -40,6 +40,11 @@ namespace CyberCruiser
             {
                 _addOnActiveStates[i].IsAddOnActive = false;
             }
+
+            IsBatteryPackActive = false;
+            IsPlasmaCacheActive = false;
+            IsHydrocoolantActive = false;
+            IsPulseDetonatorActive = false;
         }
 
         private void BuyOrSellAddOn(AddOnScriptableObject addOn, bool isBuyingAddOn)
@@ -53,8 +58,6 @@ namespace CyberCruiser
         private void ChangeAddOnActiveState(int addOnId, bool isActive)
         {
             _addOnActiveStates[addOnId].IsAddOnActive = isActive;
-
-
             switch (addOnId)
             {
                 case 0:

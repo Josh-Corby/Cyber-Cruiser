@@ -14,7 +14,7 @@ namespace CyberCruiser
         protected bool _shieldsActive;
         [SerializeField] private int _shieldMaxStrength;
         [SerializeField] private float _shieldCurrentStrength;
-        private float _shieldCollisionDamage;
+        [SerializeField] private float _shieldCollisionDamage;
 
         [SerializeField] protected bool _reflectorShield;
         [SerializeField] protected bool _shieldsActiveOnSpawn;
