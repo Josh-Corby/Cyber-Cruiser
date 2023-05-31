@@ -26,7 +26,7 @@ namespace CyberCruiser
         #endregion
 
         #region PlayerPrefs Strings
-        private const string CURRENT_MISSION_ID = "CurrentMissionID";
+        private const string CATEGORY_ID_OF_CURRENT_MISSION = "CurrentMissionID";
         private const string CURRENT_MISSION_CATEGORY_ID = "CurrentMissionCategoryID";
         private const string CURRENT_MISSION_PROGRESS = "CurrentMissionProgress";
         #endregion
@@ -34,7 +34,6 @@ namespace CyberCruiser
         #region Fields
         [SerializeField] private int _currentMissionGoal;
         [SerializeField] private int _currentMissionProgress;
-        [SerializeField] private int _currentMissionID;
         [SerializeField] private bool _isMissionFailed;
         [SerializeField] private bool _isAnyMissionCompleted;
         #endregion
@@ -87,7 +86,11 @@ namespace CyberCruiser
         #region Mission Assigning
         public void SetMission(MissionScriptableObject missionToSet)
         {
-            UnassignMission();
+            if(_currentMission != null)
+            {
+                return;
+            }
+
             _currentMission = missionToSet;
             SetMissionObjective();
         }
@@ -104,6 +107,14 @@ namespace CyberCruiser
             _currentMission = null;
         }
         #endregion
+
+        private void FillMissionsToComplete()
+        {
+            for (int i = 0; i < _currentMissionCategory.Missions.Length; i++)
+            {
+                _missionsToCompleteInCategory.Add(_currentMissionCategory.Missions[i]);
+            }
+        }
 
         #region Mission Condition Assigning
         private void SetMissionObjective()
@@ -327,7 +338,6 @@ namespace CyberCruiser
             }
 
             UnassignMission();
-            _currentMissionID++;
         }
 
         private void FailMission()
@@ -340,7 +350,7 @@ namespace CyberCruiser
         private void StorePlayerData()
         {
             StoreMissionCategory();
-            StoreMissionID();
+            StoreCategoryIDOfCurrentMission();
             StoreMissionProgress();
             StoreMissionsToCompleteInCategoryToJSON();
         }
@@ -350,11 +360,11 @@ namespace CyberCruiser
             PlayerPrefs.SetInt(CURRENT_MISSION_CATEGORY_ID, _currentMissionCategory.ID);
         }
 
-        private void StoreMissionID()
+        private void StoreCategoryIDOfCurrentMission()
         {
             if (_currentMission != null)
             {
-                PlayerPrefs.SetInt(CURRENT_MISSION_ID, _currentMissionID);
+                PlayerPrefs.SetInt(CATEGORY_ID_OF_CURRENT_MISSION, _currentMission.CategoryID);
             }
         }
 
@@ -371,9 +381,9 @@ namespace CyberCruiser
         private void RestorePlayerData()
         {
             RestoreMissionCategory();
-            RestoreMissionID();
             RestoreMissionProgress();
             RestoreMissionsToCompleteInCategoryFromJSON();
+            RestoreCategoryIDOfCurrentMission();
         }
 
         private void RestoreMissionCategory()
@@ -381,9 +391,10 @@ namespace CyberCruiser
             _currentMissionCategory = _missionCategories[PlayerPrefs.GetInt(CURRENT_MISSION_CATEGORY_ID, 0)];
         }
 
-        private void RestoreMissionID()
+        private void RestoreCategoryIDOfCurrentMission()
         {
-            _currentMissionID = PlayerPrefs.GetInt(CURRENT_MISSION_ID, 0);
+            int categoryIDOfCurrentMission = PlayerPrefs.GetInt(CATEGORY_ID_OF_CURRENT_MISSION, 0);
+            SetMission(_currentMissionCategory.Missions[categoryIDOfCurrentMission]);
         }
 
         private void RestoreMissionProgress()
@@ -397,19 +408,19 @@ namespace CyberCruiser
 
             if(_missionsToCompleteInCategory.Count == 0)
             {
-                Debug.Log("Missions left to complete is empty, repopulating list.");
-                for (int i = 0; i < _currentMissionCategory.Missions.Length; i++)
-                {
-                    _missionsToCompleteInCategory.Add(_currentMissionCategory.Missions[i]);
-                }
+            Debug.Log("Missions left to complete is empty, repopulating list.");
+                FillMissionsToComplete();
             }
         }
 
         private void ClearSaveData()
         {
             _currentMission = null;
-            _currentMissionID = 0;
             _currentMissionProgress = 0;
+            _currentMissionCategory = _missionCategories[0];
+            SetMission(_currentMissionCategory.Missions[0]);
+            _missionsToCompleteInCategory.Clear();
+            FillMissionsToComplete();
         }
         #endregion
 
@@ -418,10 +429,7 @@ namespace CyberCruiser
             _currentMissionCategory = _missionCategories[_currentMissionCategory.ID + 1];
 
             _missionsToCompleteInCategory.Clear();
-            for (int i = 0; i < _currentMissionCategory.Missions.Length; i++)
-            {
-                _missionsToCompleteInCategory.Add(_currentMissionCategory.Missions[i]);
-            }
+            FillMissionsToComplete();
         }
 
         //choose next mission when requested
