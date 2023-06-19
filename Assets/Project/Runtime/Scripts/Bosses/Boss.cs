@@ -47,9 +47,9 @@ namespace CyberCruiser
 
         protected virtual void ChooseRandomAttack()
         {
+            _attackTimer = _attackCooldown;
             int randomAttackID = Random.Range(0, 2);
             PerformAttack(randomAttackID);
-            _attackTimer = _attackCooldown;
         }
 
         protected void PerformAttack(int ID)

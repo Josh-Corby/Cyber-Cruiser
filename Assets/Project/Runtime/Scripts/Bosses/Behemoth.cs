@@ -11,7 +11,7 @@ namespace CyberCruiser
         [SerializeField] private EnemyScriptableObject _missile;
         [SerializeField] private EnemyScriptableObject _homingMissile;
 
-        private int _attacksSinceHomingAttack;
+        [SerializeField] private int _attacksSinceHomingAttack;
 
         public static event Action OnDied;
 
@@ -25,7 +25,9 @@ namespace CyberCruiser
         {
             if (_attacksSinceHomingAttack == 1)
             {
+                _attackTimer = _attackCooldown;
                 Attack2();
+                return;
             }
             else
             {
