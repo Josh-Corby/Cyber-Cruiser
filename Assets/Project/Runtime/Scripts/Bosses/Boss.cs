@@ -8,7 +8,7 @@ namespace CyberCruiser
     {
         public static event Action<float> OnBossDamage = null;
         public static event Action<PickupType, Vector3> OnBossDiedPosition = null;
-        public static event Action<EnemyTypes> OnBossDeath = null;
+        public static event Action<EnemyTypes> OnBossTypeDied = null;
 
         [SerializeField] protected float _attackCooldown, _attackTimer;
 
@@ -80,7 +80,7 @@ namespace CyberCruiser
 
         public override void Destroy()
         {
-            OnBossDeath?.Invoke(EnemyInfo.GeneralStats.Type);
+            OnBossTypeDied?.Invoke(EnemyInfo.GeneralStats.Type);
             base.Destroy();
         }
     }

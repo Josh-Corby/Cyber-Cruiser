@@ -10,7 +10,7 @@ namespace CyberCruiser
         [SerializeField] private AddOnScriptableObject _addOnInfo;
         private int _addOnCost;
         private Button _addOnButton;
-        [SerializeField] private bool _doesPlayerHaveAddOn;
+        [SerializeField] public bool _doesPlayerHaveAddOn;
         [SerializeField] private AddonType _addonType;
 
         public static event Action<AddOnScriptableObject> OnMouseEnter = null;
@@ -25,39 +25,18 @@ namespace CyberCruiser
         private void Awake()
         {
             _addOnButton = GetComponent<Button>();
-            _addOnCost = _addOnInfo.IonCost;
-           
+            _addOnCost = _addOnInfo.IonCost;       
         }
 
         private void OnEnable()
         {
             PlayerStatsManager.OnIonChange -= ValidateButtonState;
             ValidateButtonState(PlayerStatsManagerInstance.PlayerIon);
-            CheckIfPlayerHasAddOn();
         }
 
         private void OnDisable()
         {
             PlayerStatsManager.OnIonChange -= ValidateButtonState;
-        }
-
-        private void CheckIfPlayerHasAddOn()
-        {
-            switch(_addonType)
-            { 
-            case AddonType.BatteryPack:
-                    _doesPlayerHaveAddOn = PlayerAddOnManagerInstance.IsBatteryPackActive;
-                    break;
-                case AddonType.HydroCoolant:
-                    _doesPlayerHaveAddOn = PlayerAddOnManagerInstance.IsHydrocoolantActive;
-                    break;
-                case AddonType.PlasmaCache:
-                    _doesPlayerHaveAddOn = PlayerAddOnManagerInstance.IsPlasmaCacheActive;
-                  break;
-                case AddonType.PulseDetonator:
-                    _doesPlayerHaveAddOn = PlayerAddOnManagerInstance.IsPulseDetonatorActive;
-                    break;
-            }
         }
 
         private void ValidateButtonState(int playerIon)

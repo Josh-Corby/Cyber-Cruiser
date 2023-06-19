@@ -56,6 +56,7 @@ namespace CyberCruiser
 
         private void Start()
         {
+            _gameplayPanel.SetActive(false);
             _currentPanel = _titlePanel;
             _isResumingGame = true;
         }

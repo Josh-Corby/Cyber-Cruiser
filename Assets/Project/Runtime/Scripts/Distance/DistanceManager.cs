@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 namespace CyberCruiser
@@ -11,29 +12,24 @@ namespace CyberCruiser
         #region References
         [SerializeField] private TMP_Text _distanceCounterText;
         [SerializeField] private UISlider _distanceSlider;
+        [SerializeField] private GameObject _distanceSliderObject;
+        [SerializeField] private PickupManager _pickupManager;
         #endregion
 
         #region Fields
-        [Header("Check Distances")]
-        [SerializeField] private int _bossSpawnDistance = 500;
-        private const int MILESTONE_DISTANCE = 100;
+        [Header("Distance Increments")]
+        [SerializeField] private float _distancePerSecond = 10;
+        [SerializeField] private int _plasmaGenerationDistance = 100;
+        [SerializeField] private int _bossDistanceIncrement = 500;
 
-        [Header("General Distance")]
-        [SerializeField] private float _distanceFloat;
-        [SerializeField] private int _distanceInt;
-        [SerializeField] private bool _isDistanceIncreasing;
-
-        [Header("Boss distances")]
-        private int _previousBossDistance, _currentBossDistance;
-
-        [Header("Distance Milestones")]
-        private int _currentDistanceMilestone;
-        private bool isDistanceMilestoneIncreased;
-
-        [Header("Pickup values")]
-        [SerializeField] private int _plasmaDropDistance, _weaponUpgradeDropDistance;
-        private bool _isPlasmaSpawned, _isWeaponUpgradeSpawned = false;
+        private int _distanceInt;
+        private int _plasmaDropDistance;
+        private int _weaponUpgradeDropDistance;
+        private int _previousBossDistance;
+        private int _currentBossDistance;
         #endregion
+
+        private Coroutine _increaseDistanceCoroutine = null;
 
         #region Properties
         private int DistanceInt
@@ -48,145 +44,104 @@ namespace CyberCruiser
 
                 _distanceInt = value;
                 OnDistanceChanged?.Invoke(_distanceInt);
+                UpdateDistanceSlider();
                 UpdateDistanceText();
             }
         }
+
         #endregion
 
         #region Actions
-        public static event Action<PickupType> OnPlasmaDistanceReached = null;
         public static event Action<int> OnDistanceChanged = null;
         public static event Action OnDistanceTraveled = null;
-        public static event Action OnWeaponUpgradeDistanceReached = null;
         public static event Action OnBossDistanceReached = null;
         #endregion
 
+        #region Unity Functions
+        private void Awake()
+        {
+            _distanceSliderObject.SetActive(false);
+        }
+
         private void OnEnable()
         {
-            Boss.OnBossDiedPosition += (p, v) => StartIncreasingDistance();
-            PickupManager.OnPlasmaSpawned += () => StartCoroutine(WaitToResetPlasmaSpawned());
-            PickupManager.OnWeaponUpgradeSpawned += () => StartCoroutine(WaitToResetPickupSpawned());
+            Boss.OnBossTypeDied += (bossType) => StartIncreasingDistance();
         }
 
         private void OnDisable()
         {
-            Boss.OnBossDiedPosition -= (p, v) => StartIncreasingDistance();
-            PickupManager.OnPlasmaSpawned -= () => StartCoroutine(WaitToResetPlasmaSpawned());
-            PickupManager.OnWeaponUpgradeSpawned -= () => StartCoroutine(WaitToResetPickupSpawned());
+            Boss.OnBossTypeDied -= (bossType) => StartIncreasingDistance();
         }
 
-        private void Start()
+        #endregion
+
+        #region Distance Control
+        public void OnMissionStart()
         {
-            _isDistanceIncreasing = false;
+            StartIncreasingDistance();
+            GenerateNewPlasmaDropDistance();
+            GenerateNewWeaponUpgradeDropDistance();
         }
 
-        private void Update()
+        public void StartIncreasingDistance()
         {
-            if (!_isDistanceIncreasing) return;
-
-            IncreaseDistance();
+            _increaseDistanceCoroutine = StartCoroutine(IncreaseDistance());
+            _distanceSliderObject.SetActive(true);
+        }
+       
+        private IEnumerator IncreaseDistance()
+        {
+            while (true)
+            {
+                DistanceInt += 1;
+              
+                CheckDistance();
+                yield return new WaitForSeconds(1 / _distancePerSecond);
+            }
         }
 
-
-        private void IncreaseDistance()
+        public void StopIncreasingDistance()
         {
-            _distanceFloat += Time.deltaTime * 10;
-            DistanceInt = (int)_distanceFloat;
-
-            CheckDistance();
+            if (_increaseDistanceCoroutine != null)
+            {
+                StopCoroutine(_increaseDistanceCoroutine);
+            }
         }
 
         private void CheckDistance()
         {
-            if(_distanceInt <=0)
+            if (_distanceInt <= 0)
             {
                 return;
             }
 
-            //increment distance milestone every 100 units
-            if (_distanceInt % MILESTONE_DISTANCE == 0 && !isDistanceMilestoneIncreased)
+            if (_distanceInt % _plasmaGenerationDistance == 0)
             {
-                StartCoroutine(IncreaseDistanceMilestone());
                 GenerateNewPlasmaDropDistance();
             }
 
-            //start boss fight at boss distance
-            if (_distanceInt > 0)
+            if (_distanceInt == _currentBossDistance)
             {
-                if (_distanceInt % _currentBossDistance == 0)
-                {
-                    BossDistanceReached();
-                }
+                BossDistanceReached();
             }
 
-            //spawn plasma at seeded distance
-            if (_distanceInt == _plasmaDropDistance && !_isPlasmaSpawned)
+            if (_distanceInt == _plasmaDropDistance)
             {
                 PlasmaDistanceReached();
             }
 
-            //spawn weapon pack at seeded distance
-            if (_distanceInt == _weaponUpgradeDropDistance && !_isWeaponUpgradeSpawned)
+            if (_distanceInt == _weaponUpgradeDropDistance)
             {
                 WeaponUpgradeDistanceReached();
             }
         }
 
-
-        private void PlasmaDistanceReached()
-        {
-            _isPlasmaSpawned = true;
-            OnPlasmaDistanceReached(PickupType.Plasma);
-        }
-
-        private void WeaponUpgradeDistanceReached()
-        {
-            _isWeaponUpgradeSpawned = true;
-            OnWeaponUpgradeDistanceReached?.Invoke();
-        }
-
-        private IEnumerator WaitToResetPlasmaSpawned()
-        {
-            yield return new WaitForSeconds(0.1f);
-            _isPlasmaSpawned = false;
-        }
-
-        private IEnumerator WaitToResetPickupSpawned()
-        {
-            yield return new WaitForSeconds(0.1f);
-            _isWeaponUpgradeSpawned = false;
-        }
-
- 
-
-        private void GenerateNewPlasmaDropDistance()
-        {
-            _plasmaDropDistance = Random.Range(_currentDistanceMilestone + 15, _currentDistanceMilestone + 99);
-            _isPlasmaSpawned = false;
-        }
-
-        private void GenerateNewWeaponUpgradeDropDistance()
-        {
-            _weaponUpgradeDropDistance = Random.Range(_previousBossDistance + 15, _currentBossDistance);
-            Debug.Log(_weaponUpgradeDropDistance);
-            _isWeaponUpgradeSpawned = false;
-        }
-
-
-        private IEnumerator IncreaseDistanceMilestone()
-        {
-            isDistanceMilestoneIncreased = true;
-            _currentDistanceMilestone += MILESTONE_DISTANCE;
-
-            yield return new WaitForSeconds(1f);
-            isDistanceMilestoneIncreased = false;
-        }
-
         private void BossDistanceReached()
         {
-            StopIncreasingDistance();
+            _distanceSliderObject.SetActive(false);
             _previousBossDistance = _currentBossDistance;
-            _currentBossDistance += _bossSpawnDistance;    
+            _currentBossDistance += _bossDistanceIncrement;
+            StopIncreasingDistance();
             GenerateNewWeaponUpgradeDropDistance();
             GenerateNewPlasmaDropDistance();
             OnBossDistanceReached?.Invoke();
@@ -194,29 +149,37 @@ namespace CyberCruiser
 
         public void ResetValues()
         {
-            _currentDistanceMilestone = 0;
-            _previousBossDistance = 0;
-            _distanceFloat = 0;
+            StopIncreasingDistance();
+            ResetDistanceSlider();
             DistanceInt = 0;
-            _currentBossDistance = _bossSpawnDistance;
-            isDistanceMilestoneIncreased = false;
-            _isDistanceIncreasing = false;
+            _previousBossDistance = 0;
+            _currentBossDistance = _bossDistanceIncrement;
         }
 
-        public void StartIncreasingDistance()
+        #endregion
+
+        #region Pickup Distance Management
+        private void GenerateNewPlasmaDropDistance()
         {
-            _distanceFloat += 1;
-            _distanceInt += 1;
-            _isDistanceIncreasing = true;
-            GenerateNewPlasmaDropDistance();
-            GenerateNewWeaponUpgradeDropDistance();
+            _plasmaDropDistance = Random.Range(_distanceInt + 15, _distanceInt + 99);
         }
 
-        public void StopIncreasingDistance()
+        private void GenerateNewWeaponUpgradeDropDistance()
         {
-            _isDistanceIncreasing = false;
+            _weaponUpgradeDropDistance = Random.Range(_previousBossDistance + 15, _currentBossDistance - 1);
+            Debug.Log(_weaponUpgradeDropDistance);
         }
 
+        private void PlasmaDistanceReached()
+        {
+            _pickupManager.SpawnPickupAtRandomPosition(PickupType.Plasma);
+        }
+
+        private void WeaponUpgradeDistanceReached()
+        {
+            _pickupManager.SpawnPickupAtRandomPosition(PickupType.Weapon);
+        }
+        #endregion
 
         #region UI
         private void ResetDistanceSlider()
@@ -224,11 +187,10 @@ namespace CyberCruiser
             _distanceSlider.EnableAndSetSlider(0, 0, _currentBossDistance);
         }
 
-        private void IncrementDistanceSlider()
+        private void UpdateDistanceSlider()
         {
             _distanceSlider.EnableAndSetSlider(DistanceInt, _previousBossDistance, _currentBossDistance);
         }
-
 
         private void UpdateDistanceText()
         {

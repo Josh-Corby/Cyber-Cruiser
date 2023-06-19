@@ -135,23 +135,33 @@ namespace CyberCruiser
             _fireInput = false;
             CurrentHeat = 0;
             _heatMax = BASE_HEAT_MAX;
-            _heatPerShot = BASE_HEAT_PER_SHOT;
             _heatLossPerFrame = BASE_HEAT_LOSS_PER_FRAME;
             _cooldownHeatLossPerFrame = BASE_COOLDOWN_HEAT_LOSS_PER_FRAME;
+            OnWeaponHeatInitialized?.Invoke(_heatMax);
+        }
 
-            if (PlayerAddOnManagerInstance.IsHydrocoolantActive)
+        public void SetHydrocoolantUpgrade(bool isAddOnActive)
+        {
+            if (isAddOnActive)
             {
                 _heatPerShot -= 0.25f;
             }
+            else
+            {
+                _heatPerShot = BASE_HEAT_PER_SHOT;
+            }
+        }
 
-            _weaponUpgradeDuration = BASE_UPGRADE_DURATION;
-
-            if (PlayerAddOnManagerInstance.IsBatteryPackActive)
+        public void SetBatteryPackUpgrade(bool isAddOnActive)
+        {
+            if(isAddOnActive)
             {
                 _weaponUpgradeDuration += 5;
             }
-
-            OnWeaponHeatInitialized?.Invoke(_heatMax);
+            else
+            {
+                _weaponUpgradeDuration = BASE_UPGRADE_DURATION;
+            }
         }
 
         private void Update()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CyberCruiser
 {
-    public class PlayerAddOnManager : GameBehaviour<PlayerAddOnManager>
+    public class PlayerAddOnManager : GameBehaviour
     {
         [SerializeField] private PlayerManager _playerManager;
         [SerializeField] private PlayerShieldController _shieldController;
@@ -15,6 +15,7 @@ namespace CyberCruiser
         public bool IsPlasmaCacheActive { get; private set; }
         public bool IsHydrocoolantActive { get; private set; }
         public bool IsPulseDetonatorActive { get; private set; }
+        public bool IsRamAddOnActive{get; private set; }
 
         [Serializable]
         public class AddOnActiveState

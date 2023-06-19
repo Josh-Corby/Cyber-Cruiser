@@ -130,7 +130,10 @@ namespace CyberCruiser
 
         public void SetSliderFillColour(Color colour)
         {
-            _fillImage.color = colour;
+            if(_fillImage != null)
+            {
+                _fillImage.color = colour;
+            }
         }
 
         public void LerpSliderFillColour()

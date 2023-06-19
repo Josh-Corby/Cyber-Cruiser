@@ -5,6 +5,8 @@ namespace CyberCruiser
 {
     public class AddOnUIManager : GameBehaviour
     {
+        [SerializeField] private PlayerAddOnManager _addOnManager;
+        [SerializeField] private AddOnButton[] _addOnButtons;
         [SerializeField] private TMP_Text _addOnName;
         [SerializeField] private TMP_Text _addOnDescription;
         private AddOnScriptableObject _currentAddon;
@@ -43,6 +45,14 @@ namespace CyberCruiser
         {
             _addOnName.text = "";
             _addOnDescription.text = "";
+        }
+
+        public void SetButtonStates()
+        {
+            for (int i = 0; i < _addOnManager.AddOnActiveStates.Count; i++)
+            {
+                _addOnButtons[i]._doesPlayerHaveAddOn = _addOnManager.AddOnActiveStates[i].IsAddOnActive;
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ namespace CyberCruiser
 
         #region Actions
         public static event Action<int, int, int> OnResourcePickup = null;
-        public static event Action<GameObject> OnPickup = null;
+        public static event Action<GameObject> OnPickedUp = null;
         public static event Action<WeaponUpgradeType> OnWeaponUpgradePickup = null;
         #endregion
 
@@ -44,7 +44,7 @@ namespace CyberCruiser
                     }
                     break;
             }
-            OnPickup(gameObject);
+            OnPickedUp(gameObject);
         }
 
         private void Update()

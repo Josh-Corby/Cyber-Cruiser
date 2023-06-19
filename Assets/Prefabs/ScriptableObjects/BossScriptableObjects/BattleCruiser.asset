@@ -21,7 +21,7 @@ MonoBehaviour:
     Explosion: {fileID: 0}
   MovementStats:
     MoveType: 0
-    Speed: 2
+    Speed: 3
     SpeedWhenCrashing: 4
     UpDownMovementPattern: 0
     UpDownSpeed: 0

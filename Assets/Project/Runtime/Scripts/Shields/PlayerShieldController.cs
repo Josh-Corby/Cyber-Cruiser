@@ -59,7 +59,6 @@ namespace CyberCruiser
         {
             InputManager.OnShield += CheckShieldsState;
             GameManager.OnMissionEnd += DeactivateShields;
-            CheckPulseDetonator();
         }
 
         private void OnDisable()
@@ -93,10 +92,12 @@ namespace CyberCruiser
             _controlsEnabled = false;
         }
 
-        private void CheckPulseDetonator()
+        public void SetPulseDetonator(bool isPulseDetonatorActive)
         {
-            _isPulseDetonatorActive = PlayerAddOnManagerInstance.IsPulseDetonatorActive;
+            _isPulseDetonatorActive = isPulseDetonatorActive;
         }
+
+
 
         private void CheckShieldsState()
         {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -12,6 +13,11 @@ namespace CyberCruiser
         [SerializeField] private EnemyScriptableObject _homingMissile;
 
         [SerializeField] private int _attacksSinceHomingAttack;
+
+
+        [SerializeField] private CircleCollider2D _warCryCollider;
+        private float _currentWarCryRadius;
+        [SerializeField] private float _warCryRange;
 
         public static event Action OnDied;
 
@@ -48,6 +54,7 @@ namespace CyberCruiser
             _homingMissileLauncher.CheckFireTypes();
             _attacksSinceHomingAttack = 0;
         }
+
 
         protected override void Crash()
         {

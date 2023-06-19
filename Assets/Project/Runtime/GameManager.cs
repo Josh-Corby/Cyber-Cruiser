@@ -73,7 +73,7 @@ namespace CyberCruiser
 
         public void StartSystems()
         {
-            _distanceManager.StartIncreasingDistance();
+            _distanceManager.OnMissionStart();
             _enemySpawnerManager.StartSpawningEnemies();
         }
 

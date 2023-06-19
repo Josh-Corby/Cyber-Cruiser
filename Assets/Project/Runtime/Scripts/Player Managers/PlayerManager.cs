@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -173,6 +174,23 @@ namespace CyberCruiser
             Pickup.OnResourcePickup -= AddResources;
         }
 
+        private void ApplyAddOns()
+        {
+            _playerWeaponController.SetBatteryPackUpgrade(_addOnManager.IsBatteryPackActive);
+            _playerWeaponController.SetHydrocoolantUpgrade(_addOnManager.IsHydrocoolantActive);
+
+            if (_addOnManager.IsPlasmaCacheActive)
+            {
+                _plasmaCost -= 1;
+            }
+
+
+            if (_addOnManager.IsPulseDetonatorActive)
+            {
+                _playerShieldController.SetPulseDetonator(_addOnManager.IsPulseDetonatorActive);
+            }
+        }
+
         private void SetPlayerControls(bool isControlsDisabled)
         {
             if (isControlsDisabled)
@@ -204,14 +222,11 @@ namespace CyberCruiser
         private void ResetStats()
         {
             _plasmaCost = BASE_PLASMA_COST;
-            if (PlayerAddOnManagerInstance.IsPlasmaCacheActive)
-            {
-                _plasmaCost -= 1;
-            }
             _iFramesDuration = BASE_I_FRAMES_DURATION;
             PlayerMaxHealth = BASE_MAX_HEALTH;
             PlayerPlasma = PlayerStatsManagerInstance.PlayerPlasma;
             FullHeal();
+            ApplyAddOns();
         }
 
         private void AddResources(int healthAmount, int plasmaAmount, int ionAmount)

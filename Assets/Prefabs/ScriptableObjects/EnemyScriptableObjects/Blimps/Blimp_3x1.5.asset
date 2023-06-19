@@ -22,7 +22,7 @@ MonoBehaviour:
   MovementStats:
     MoveType: 0
     Speed: 2
-    SpeedWhenCrashing: 4
+    SpeedWhenCrashing: 7
     UpDownMovementPattern: 0
     UpDownSpeed: 0
     UpDownDistance: 0

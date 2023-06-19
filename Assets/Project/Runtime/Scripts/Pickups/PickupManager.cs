@@ -21,41 +21,34 @@ namespace CyberCruiser
         [SerializeField] private float _indicatorAngle;
         protected readonly float _indicatorTimer = 2f;
 
-        public static event Action OnPlasmaSpawned = null;
-        public static event Action OnWeaponUpgradeSpawned = null;
-
         protected void OnEnable()
         {
             GameManager.OnMissionEnd += ClearPickups;
-            DistanceManager.OnPlasmaDistanceReached += SpawnPickupAtRandomPosition;
-            DistanceManager.OnWeaponUpgradeDistanceReached += () => StartCoroutine(SpawnWeaponUpgrade());
             Boss.OnBossDiedPosition += SpawnPickupAtPosition;
-            Pickup.OnPickup += RemovePickup;
+            Pickup.OnPickedUp += RemovePickup;
+            PickupSpawner.OnPickupSpawned += AddPickup;
         }
 
         protected void OnDisable()
         {
             GameManager.OnMissionEnd -= ClearPickups;
-            DistanceManager.OnPlasmaDistanceReached -= SpawnPickupAtRandomPosition;
-            DistanceManager.OnWeaponUpgradeDistanceReached -= () => StartCoroutine(SpawnWeaponUpgrade());
             Boss.OnBossDiedPosition -= SpawnPickupAtPosition;
-            Pickup.OnPickup -= RemovePickup;
+            Pickup.OnPickedUp -= RemovePickup;
+            PickupSpawner.OnPickupSpawned -= AddPickup;
         }
 
-        protected void SpawnPickupAtRandomPosition(PickupType pickupType)
+        public void SpawnPickupAtRandomPosition(PickupType pickupType)
         {
             switch (pickupType)
             {
                 case PickupType.Plasma:
                     _pickupSpawner.SpawnPickupAtRandomPosition(_plasmaPickup);
-                    OnPlasmaSpawned?.Invoke();
                     break;
                 case PickupType.Health:
                     _pickupSpawner.SpawnPickupAtRandomPosition(_healthPickup);
                     break;
                 case PickupType.Weapon:
                     _upgradeSpawner.SpawnPickupAtRandomPosition(GetRandomWeaponUpgrade());
-                    OnWeaponUpgradeSpawned?.Invoke();
                     break;
             }
         }

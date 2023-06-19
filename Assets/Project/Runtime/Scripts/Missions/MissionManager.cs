@@ -184,14 +184,14 @@ namespace CyberCruiser
                     break;
 
                 case EnemyTypes.AllBosses:
-                    Boss.OnBossDeath += (bossType) => IncrementMissionProgress();
+                    Boss.OnBossTypeDied += (bossType) => IncrementMissionProgress();
                     break;
 
                 case EnemyTypes.Robodactyl:
                 case EnemyTypes.Behemoth:
                 case EnemyTypes.Battlecruiser:
                 case EnemyTypes.CyberKraken:
-                    Boss.OnBossDeath += CheckBossType;
+                    Boss.OnBossTypeDied += CheckBossType;
                     break;
             }
         }
@@ -216,14 +216,14 @@ namespace CyberCruiser
                     break;
 
                 case EnemyTypes.AllBosses:
-                    Boss.OnBossDeath -= (bossType) => IncrementMissionProgress();
+                    Boss.OnBossTypeDied -= (bossType) => IncrementMissionProgress();
                     break;
 
                 case EnemyTypes.Robodactyl:
                 case EnemyTypes.Behemoth:
                 case EnemyTypes.Battlecruiser:
                 case EnemyTypes.CyberKraken:
-                    Boss.OnBossDeath -= CheckBossType;
+                    Boss.OnBossTypeDied -= CheckBossType;
                     break;
             }
         }
