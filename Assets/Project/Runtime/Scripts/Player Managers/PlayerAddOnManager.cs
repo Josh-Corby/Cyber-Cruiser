@@ -15,7 +15,7 @@ namespace CyberCruiser
         public bool IsPlasmaCacheActive { get; private set; }
         public bool IsHydrocoolantActive { get; private set; }
         public bool IsPulseDetonatorActive { get; private set; }
-        public bool IsRamAddOnActive{get; private set; }
+        public bool IsRamAddOnActive{ get; private set; }
 
         [Serializable]
         public class AddOnActiveState
@@ -46,6 +46,7 @@ namespace CyberCruiser
             IsPlasmaCacheActive = false;
             IsHydrocoolantActive = false;
             IsPulseDetonatorActive = false;
+            IsRamAddOnActive = false;
         }
 
         private void BuyOrSellAddOn(AddOnScriptableObject addOn, bool isBuyingAddOn)

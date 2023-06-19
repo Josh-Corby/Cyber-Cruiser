@@ -10,7 +10,6 @@ namespace CyberCruiser
         #region References
         public GameObject player;
         [SerializeField] private PlayerAddOnManager _addOnManager;
-        [SerializeField] private PlayerUIManager _playerUI;
         private Collider2D _playerCollider;
 
         [SerializeField] private PlayerShipController _playerShipController;
@@ -178,17 +177,14 @@ namespace CyberCruiser
         {
             _playerWeaponController.SetBatteryPackUpgrade(_addOnManager.IsBatteryPackActive);
             _playerWeaponController.SetHydrocoolantUpgrade(_addOnManager.IsHydrocoolantActive);
+            _playerShieldController.SetPulseDetonator(_addOnManager.IsPulseDetonatorActive);
+            _ramDamage = _addOnManager.IsRamAddOnActive ? 5 : 1;
 
             if (_addOnManager.IsPlasmaCacheActive)
             {
                 _plasmaCost -= 1;
             }
-
-
-            if (_addOnManager.IsPulseDetonatorActive)
-            {
-                _playerShieldController.SetPulseDetonator(_addOnManager.IsPulseDetonatorActive);
-            }
+            
         }
 
         private void SetPlayerControls(bool isControlsDisabled)
