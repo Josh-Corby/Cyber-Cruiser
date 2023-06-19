@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Indicator : MonoBehaviour
 {
-    private float tweenTime = 1f;
+    private float tweenTime = 2f;
     private Transform myTransform;
     private Tween myTween;
     [HideInInspector] public float timer;
@@ -14,7 +14,7 @@ public class Indicator : MonoBehaviour
         myTransform = transform;
 
         float distance = 1f;
-        myTween = myTransform.DOLocalMove(myTransform.localPosition + (myTransform.up * distance), tweenTime).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
+        myTween = myTransform.DOLocalMove(myTransform.localPosition + (myTransform.up * distance), tweenTime).SetEase(Ease.InOutSine).SetLoops(-1);
         StartCoroutine(IndicatorTimer());
     }
 

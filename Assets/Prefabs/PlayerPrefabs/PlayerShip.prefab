@@ -1210,6 +1210,7 @@ MonoBehaviour:
   _collisionParticles: {fileID: 8611581191203232223, guid: bcd084b07ae840f49bc8526ab122ce58, type: 3}
   _shieldMaxStrength: 1
   _shieldCurrentStrength: 0
+  _shieldCollisionDamage: 0
   _reflectorShield: 0
   _shieldsActiveOnSpawn: 0
   _isShieldImmuneToDamage: 1

@@ -119,19 +119,19 @@ namespace CyberCruiser
 
         protected void CreateIndicator(Vector2 position, PickupSpawner spawner)
         {
-            GameObject Indicator = Instantiate(_pickupIndicator, spawner.gameObject.transform.position, Quaternion.identity);
+            GameObject Indicator = Instantiate(_pickupIndicator, position, Quaternion.identity);
 
-            Indicator.transform.position += spawner._pickupIndicatorOffset;
+            //Indicator.transform.position += spawner._pickupIndicatorOffset;
 
-            if (spawner._pickupIndicatorOffset.x == 0)
-            {
-                Indicator.transform.position += new Vector3(position.x, 0);
-            }
+            //if (spawner._pickupIndicatorOffset.x == 0)
+            //{
+            //    Indicator.transform.position += new Vector3(position.x, 0);
+            //}
 
-            if (spawner._pickupIndicatorOffset.y == 0)
-            {
-                Indicator.transform.position += new Vector3(0, position.y);
-            }
+            //if (spawner._pickupIndicatorOffset.y == 0)
+            //{
+            //    Indicator.transform.position += new Vector3(0, position.y);
+            //}
 
             Indicator.transform.rotation = Quaternion.Euler(0, 0, _indicatorAngle);
             Indicator.GetComponent<Indicator>().timer = _indicatorTimer;

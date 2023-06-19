@@ -41,6 +41,12 @@ namespace CyberCruiser
             }
         }
 
+        private int MinValue
+        {
+            get => (int)_slider.minValue;
+            set => _slider.minValue = value;
+        }
+
         private int MaxValue
         {
             get => (int)_slider.maxValue;
@@ -76,10 +82,13 @@ namespace CyberCruiser
             SetSliderToMax(maxValue);
         }
 
-        public void EnableAndSetSlider(float currentValue, int maxValue)
+        public void EnableAndSetSlider(float currentValue, int minValue, int maxValue)
         {
             gameObject.SetActive(true);
-            SetSliderValues(currentValue, maxValue);
+
+            MaxValue = maxValue;
+            MinValue = minValue;
+            CurrentValue = currentValue;
         }
 
         public void DisableSlider()
