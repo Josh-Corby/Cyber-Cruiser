@@ -9,20 +9,13 @@ namespace CyberCruiser
         [SerializeField] private TMP_Text _missionDescription;
         [SerializeField] private TMP_Text _missionProgress;
         [SerializeField] private Image[] _missionImages;
-        [SerializeField] private Image[] _missionStars;
+        [SerializeField] private GameObject[] _missionStars;
         private MissionScriptableObject _currentMission;
 
         private void OnEnable()
         {
-            if (MissionManagerInstance.CurrentMission == null)
-            {
                 ClearMissionUI();
-            }
-
-            else
-            {
                 AssignMissionUI();
-            }
         }
 
         private void ClearMissionUI()
@@ -37,10 +30,8 @@ namespace CyberCruiser
 
             for (int i = 0; i < _missionStars.Length; i++)
             {
-                _missionStars[i].enabled = false;
+                _missionStars[i].SetActive(false);  
             }
-
-            _currentMission = null;
         }
 
         private void AssignMissionUI()
@@ -58,7 +49,7 @@ namespace CyberCruiser
 
             for (int i = 0; i < _currentMission.missionStarReward; i++)
             {
-                _missionStars[i].enabled = true;
+                _missionStars[i].SetActive(true);
             }
         }
     }

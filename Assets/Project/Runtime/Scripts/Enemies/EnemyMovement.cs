@@ -7,10 +7,12 @@ namespace CyberCruiser
     public class EnemyMovement : GameBehaviour
     {
         private Transform _player;
+        private float _upDownTimer;
         private float _homeCounter;
         private float _homeDelayCounter;
         private float _randomSinSeed;
         private bool _isBackForthDirectionUp;
+        private const string UPDOWNCHECKLAYER = "UpDown";
 
         #region Local Movement Stats
         private EnemyMovementType _movementType;
@@ -37,11 +39,13 @@ namespace CyberCruiser
         private float _homeDelayTimeInSeconds;
         #endregion
 
+        private float _startingYRotation;
         public bool IsEnemyDead { get; set; }
 
         protected virtual void Awake()
         {
             _player = PlayerManagerInstance.player.transform;
+            _startingYRotation = transform.eulerAngles.y;
         }
 
         //Could definately reference local movement stats directly but at the moment I prefer this approach as it takes away a step in referencing
@@ -188,17 +192,35 @@ namespace CyberCruiser
                 return;
             }
 
-            Vector3 direction = _player.transform.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, angle);
-            //Quaternion targetRotation = Quaternion.Euler(0f, _startRotation.y, angle);
-            //transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _homeTurnSpeed * Time.deltaTime);
+            Vector2 direction = _player.transform.position - transform.position;
+
+            float angle;
+            if (Mathf.Abs(_startingYRotation) == 180)
+            {
+                angle = Vector2.SignedAngle(transform.right, direction);
+                angle = -angle;
+            }
+
+            else
+            {
+                angle = MathF.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            }
+
+            Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, angle);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _homeTurnSpeed * Time.deltaTime);
         }
         #endregion
 
         #region Up Down Movement
         private void UpDownMovement()
         {
+            _upDownTimer -= Time.deltaTime;
+
+            if (_upDownTimer <= 0)
+            {
+                FlipUpDownDirection();
+            }
+
             if (_isBackForthDirectionUp)
             {
                 MoveUp();
@@ -210,30 +232,22 @@ namespace CyberCruiser
             }
         }
 
+
         private void MoveUp()
         {
-            if (transform.position.y < _upDownDistance)
-            {
-                transform.position += new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
-            }
-
-            else
-            {
-                _isBackForthDirectionUp = false;
-            }
+            transform.position += new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
         }
 
         private void MoveDown()
         {
-            if (transform.position.y > -_upDownDistance)
-            {
-                transform.position -= new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
-            }
 
-            else
-            {
-                _isBackForthDirectionUp = true;
-            }
+            transform.position -= new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
+        }
+
+        private void FlipUpDownDirection()
+        {
+            _isBackForthDirectionUp = !_isBackForthDirectionUp;
+            _upDownTimer = Random.Range(2, 5);
         }
         #endregion
 
@@ -266,6 +280,10 @@ namespace CyberCruiser
         #region Sin Movement
         private void SinMovement()
         {
+            if (Time.timeScale == 0f)
+            {
+                return;
+            }
             float yPos = Mathf.Sin((Time.time - _randomSinSeed) * _sinWaveFrequency) * _sinWaveMagnitude;
             transform.position = new Vector3(transform.position.x, transform.position.y + yPos, transform.position.z);
         }
@@ -275,42 +293,52 @@ namespace CyberCruiser
         {
             transform.position += _crashSpeed * Time.deltaTime * Vector3.down;
         }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+
+            if (collision.gameObject.CompareTag(UPDOWNCHECKLAYER))
+            {
+                FlipUpDownDirection();
+            }
+
+        }
     }
 
-        [Serializable]
-        public struct EnemyMovementStats
-        {
-            [Header("Movement Info")]
-            public EnemyMovementType MoveType;
-            public float Speed;
-            public float SpeedWhenCrashing;
+    [Serializable]
+    public struct EnemyMovementStats
+    {
+        [Header("Movement Info")]
+        public EnemyMovementType MoveType;
+        public float Speed;
+        public float SpeedWhenCrashing;
 
-            [Header("Up/Down Settings")]
-            public bool UpDownMovementPattern;
-            public float UpDownSpeed;
-            public float UpDownDistance;
+        [Header("Up/Down Settings")]
+        public bool UpDownMovementPattern;
+        public float UpDownSpeed;
+        public float UpDownDistance;
 
-            [Header("Sin Movement Settings")]
-            public bool IsEnemyMovingInSinPattern;
-            public float SinWaveFrequency;
-            public float SinWaveMagnitude;
+        [Header("Sin Movement Settings")]
+        public bool IsEnemyMovingInSinPattern;
+        public float SinWaveFrequency;
+        public float SinWaveMagnitude;
 
-            [Header("Seek Settings")]
-            public bool IsEnemySeekingPlayer;
-            public bool IsEnemySeekingPlayerOnYAxis;
-            public bool IsEnemySeekingPlayerOnXAxis;
-            public float SeekSpeed;
+        [Header("Seek Settings")]
+        public bool IsEnemySeekingPlayer;
+        public bool IsEnemySeekingPlayerOnYAxis;
+        public bool IsEnemySeekingPlayerOnXAxis;
+        public float SeekSpeed;
 
-            [Header("Homing Settings")]
-            public bool IsEnemyHomingOnPlayer;
-            public float HomeTurnSpeed;
-            public float HomeTimeInSeconds;
-            public bool IsHomingDelayed;
-            public float HomeDelayTimeInSeconds;
-        }
+        [Header("Homing Settings")]
+        public bool IsEnemyHomingOnPlayer;
+        public float HomeTurnSpeed;
+        public float HomeTimeInSeconds;
+        public bool IsHomingDelayed;
+        public float HomeDelayTimeInSeconds;
+    }
 
-        public enum EnemyMovementType
-        {
-            Default, UpDown, SeekPlayer, SinUpDown, HomeOnPlayer
-        }
+    public enum EnemyMovementType
+    {
+        Default, UpDown, SeekPlayer, SinUpDown, HomeOnPlayer
+    }
 }

@@ -24,7 +24,7 @@ namespace CyberCruiser
         }
         protected override void Start()
         {
-            ChooseMovementType();
+            //ChooseMovementType();
             base.Start();
         }
 

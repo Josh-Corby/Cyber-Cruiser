@@ -41,7 +41,5 @@ namespace CyberCruiser
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(transform.position, bossMoveArea);
         }
-
-
     }
 }

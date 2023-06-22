@@ -288,6 +288,7 @@ namespace CyberCruiser
 
         public void DisableControls()
         {
+            SetFireInput(false);
             _controlsEnabled = false;
         }
 

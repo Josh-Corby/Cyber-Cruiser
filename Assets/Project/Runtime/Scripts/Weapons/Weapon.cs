@@ -72,6 +72,7 @@ namespace CyberCruiser
 
             else
             {
+                PlayFireSound();
                 SpreadCheck();
             }
 
@@ -90,6 +91,7 @@ namespace CyberCruiser
                 else
                 {
                     SpreadCheck();
+                    PlayFireSound();
                 }
 
                 yield return new WaitForSeconds(_stats.TimeBetweenBurstShots);
@@ -99,6 +101,7 @@ namespace CyberCruiser
 
         private void MultiFire()
         {
+            PlayFireSound();
             if (_stats.IsMultiFireSpreadRandom)
             {
                 for (int i = 0; i < _stats.MultiFireShots; i++)
@@ -145,6 +148,11 @@ namespace CyberCruiser
         private void FireBullet(Quaternion direction)
         {
             GameObject bullet = Instantiate(_stats.objectToFire, _firePointTransform.position, direction);
+            _soundController.PlayNewClip(_stats.Clip);
+        }
+
+        private void PlayFireSound()
+        {
             _soundController.PlayNewClip(_stats.Clip);
         }
 

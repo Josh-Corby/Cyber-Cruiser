@@ -129,6 +129,7 @@ namespace CyberCruiser
 
         private void CheckGameOverPanelToOpen()
         {
+            Cursor.visible = true;
             if (MissionManagerInstance.IsAnyMissionCompleted)
             {
                 ChangeScreen(_missionCompleteScreen);
