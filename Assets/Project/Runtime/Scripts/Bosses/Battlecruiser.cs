@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Specialized;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,8 +12,11 @@ namespace CyberCruiser
         [SerializeField] private EnemyScriptableObject _seekerMineInfo;
         [SerializeField] private int _minesToFire = 1;
 
+        [SerializeField] private ParticleSystem _chargingParticles;
         [SerializeField] private GameObject _pulverizerBeam;
         [SerializeField] private BeamAttack _beamAttack;
+
+        private bool _isBeamCharging = false;
 
         public static event Action OnDied = null;
 
@@ -45,7 +50,7 @@ namespace CyberCruiser
         {
             _attackTimer = _attackCooldown;
 
-            if (_beamAttack.IsBeamActive)
+            if (_beamAttack.IsBeamActive && !_isBeamCharging)
             {
                 Attack1();
             }
@@ -76,6 +81,16 @@ namespace CyberCruiser
         //fire laser
         public void Attack2()
         {
+            _isBeamCharging = true;
+            _chargingParticles.Play();
+            Debug.Log("beam charging");
+            Invoke(nameof(BeamAttack), 2f);            
+        }
+
+        private void BeamAttack()
+        {
+            _isBeamCharging = false;    
+            _chargingParticles.Stop();
             _beamAttack.ResetBeam();
             _beamAttack.lineRenderer.enabled = true;
             _beamAttack.EnableBeam();

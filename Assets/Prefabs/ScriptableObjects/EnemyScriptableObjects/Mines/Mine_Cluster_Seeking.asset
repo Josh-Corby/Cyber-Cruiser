@@ -18,9 +18,9 @@ MonoBehaviour:
     Type: 2
     MaxHealth: 1
     DoesEnemyExplodeOnDeath: 1
-    Explosion: {fileID: 762726913902296103, guid: 4c12fb1ce68f53f4ba9702687134b17e, type: 3}
+    Explosion: {fileID: 762726913902296103, guid: 5e8bc5d4843eec14286a645776ccd22b, type: 3}
   MovementStats:
-    MoveType: 2
+    MoveType: 4
     Speed: 3
     SpeedWhenCrashing: 0
     UpDownMovementPattern: 0
@@ -29,12 +29,12 @@ MonoBehaviour:
     IsEnemyMovingInSinPattern: 0
     SinWaveFrequency: 0
     SinWaveMagnitude: 0
-    IsEnemySeekingPlayer: 1
-    IsEnemySeekingPlayerOnYAxis: 1
+    IsEnemySeekingPlayer: 0
+    IsEnemySeekingPlayerOnYAxis: 0
     IsEnemySeekingPlayerOnXAxis: 0
     SeekSpeed: 3
-    IsEnemyHomingOnPlayer: 0
-    HomeTurnSpeed: 0
-    HomeTimeInSeconds: 0
-    IsHomingDelayed: 0
+    IsEnemyHomingOnPlayer: 1
+    HomeTurnSpeed: 100
+    HomeTimeInSeconds: 3
+    IsHomingDelayed: 1
     HomeDelayTimeInSeconds: 0

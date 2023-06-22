@@ -67,7 +67,11 @@ namespace CyberCruiser
 
             if (_chainTarget != null)
             {
-                transform.LookAt(_chainTarget.transform.position);
+                Vector3 directionToTarget = (_chainTarget.transform.position - transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(directionToTarget, transform.up);
+
+                transform.right = directionToTarget;
+                //transform.LookAt(_chainTarget.transform.position);
                 transform.position = Vector2.MoveTowards(transform.position, _chainTarget.transform.position, _chainSpeed * Time.deltaTime);
             }
         }

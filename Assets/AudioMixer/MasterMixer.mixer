@@ -234,13 +234,14 @@ AudioMixerController:
     - a4a6ff4837c257a4b88bba1a0a13d37d
     name: Weapons
   - guids:
-    - cb2ef5161292b3c49a2271e2a04b00c8
+    - ec94bc8555e2573408fb096470554de2
+    - 3147a1df227553e4781f12178e2d7955
     name: Explosions
   - guids:
     - 8808fdb348ca8f94eb813a93a595048d
     - c457ba8f43ca9864486b86e7aa7465e5
     name: BossSFX
-  m_CurrentViewIndex: 0
+  m_CurrentViewIndex: 5
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
@@ -287,8 +288,9 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 44e2d00826334624abbbb4af49f1f927
   m_FloatValues:
+    812570026dbaa234db51ecfb4a43b9f2: -51.09845
     5c11e02675970ec4c8709e48c40b828c: -12.498478
-    c6ba71477a2f3264ca709f4fb252f538: 2.090601
+    c6ba71477a2f3264ca709f4fb252f538: -8.841784
     dd3da2ca6b3204449bc8869d9930e314: -9.833286
     a1ba20cb9c27d234296ab4c14490e7d4: -11.400904
     7f9fb32ddcd9db84fa20990d713eb7e9: 0

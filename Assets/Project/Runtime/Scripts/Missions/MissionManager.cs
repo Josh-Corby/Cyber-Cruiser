@@ -408,7 +408,7 @@ namespace CyberCruiser
 
             if(_missionsToCompleteInCategory.Count == 0)
             {
-            Debug.Log("Missions left to complete is empty, repopulating list.");
+                Debug.Log("Missions left to complete is empty, repopulating list.");
                 FillMissionsToComplete();
             }
         }

@@ -46,6 +46,7 @@ namespace CyberCruiser
             }
         }
 
+
         public void EnableBeam()
         {
             _isBeamActive = true;

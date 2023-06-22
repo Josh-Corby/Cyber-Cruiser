@@ -13,6 +13,9 @@ namespace CyberCruiser
         [SerializeField] private float _explosionDuration;
         #endregion
 
+
+        [SerializeField] private ClipInfo _explosionClip;
+
         #region Cluster
         [SerializeField] private bool clusterOnDeath;
         [SerializeField] private bool isClusterSpawningAUnit;
@@ -76,7 +79,25 @@ namespace CyberCruiser
                 float y = _spawnRadius * Mathf.Sin(rad);
                 Vector3 spawnPos = transform.position + new Vector3(x, y, 0);
 
-                Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
+                Quaternion spawnRotation;
+
+                if (Mathf.Abs(angle) == 90)
+                {
+                    spawnRotation = Quaternion.Euler(0, 180, angle);
+
+                }
+
+                else if (Mathf.Abs(angle) == 180)
+                {
+                    spawnRotation = Quaternion.Euler(180, 0, angle);
+                }
+
+                else
+                {
+                    spawnRotation = Quaternion.Euler(0, 0, angle);
+                }
+
+               // Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
                 GameObject _go = Instantiate(_objectSpawnedOnCluster, spawnPos, spawnRotation);
             }
         }

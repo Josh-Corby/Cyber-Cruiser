@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 396160147959850325}
   - component: {fileID: 8853170189904861176}
   m_Layer: 0
-  m_Name: BGFExplosion
+  m_Name: ClusterMineExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 762726913902296103}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5.233342, y: 1.5056378, z: -0.06441928}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -47,18 +47,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 519f9381a3c8c814a8486e1ca2642b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explosionRadius: 3
-  _explosionDamage: 10
+  _explosionRadius: 1
+  _explosionDamage: 1
   _explosionMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 512
   _explosionDuration: 1
   clusterOnDeath: 1
-  isClusterSpawningAUnit: 0
-  enemyToSpawn: {fileID: 0}
-  objectToSpawn: {fileID: 760453196464390188, guid: aefca9002aa15e2478302a3f2253c1b1, type: 3}
-  _amountOfObjectsToSpawn: 12
-  _spawnRadius: 0.5
+  isClusterSpawningAUnit: 1
+  enemyToSpawn: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
+  objectToSpawn: {fileID: 0}
+  _amountOfObjectsToSpawn: 4
+  _spawnRadius: 1
 --- !u!114 &396160147959850325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 0}
+  _audioSource: {fileID: 8853170189904861176}
 --- !u!82 &8853170189904861176
 AudioSource:
   m_ObjectHideFlags: 0
@@ -81,7 +81,7 @@ AudioSource:
   m_GameObject: {fileID: 762726913902296103}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 8174743387738383697, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
+  OutputAudioMixerGroup: {fileID: -2152508025596229900, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
   m_audioClip: {fileID: 8300000, guid: 97f2d77393620f6409175ab290dc3512, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -175,25 +175,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5789708609481566215}
     m_Modifications:
-    - target: {fileID: 221867296470986284, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 4f0955164e6795a4099fe450e4cce81b, type: 3}
     - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.545522
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.545522
-      objectReference: {fileID: 0}
-    - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.545522
       objectReference: {fileID: 0}
     - target: {fileID: 3660900643955642783, guid: f9088ab58b665d84d921d414e0070571, type: 3}
       propertyPath: m_LocalPosition.x
