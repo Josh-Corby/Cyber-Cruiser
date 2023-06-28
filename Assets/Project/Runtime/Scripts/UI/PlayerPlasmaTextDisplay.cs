@@ -15,13 +15,13 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            PlayerStatsManager.OnPlasmaChange += UpdatePlasmaText;
+            PlayerSaveManager.OnPlasmaChange += UpdatePlasmaText;
             UpdatePlasmaText(PlayerStatsManagerInstance.PlayerPlasma);
         }
 
         private void OnDisable()
         {
-            PlayerStatsManager.OnPlasmaChange -= UpdatePlasmaText;
+            PlayerSaveManager.OnPlasmaChange -= UpdatePlasmaText;
         }
 
         private void UpdatePlasmaText(int plasma)

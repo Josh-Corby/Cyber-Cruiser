@@ -14,11 +14,13 @@ namespace CyberCruiser
         {
             _col = GetComponent<Collider2D>();
         }
+
         private void Start()
         {
             transform.localScale = _minSize;
             _col.enabled = false;
         }
+
         private void Update()
         {
             if (_isDetonating)
@@ -26,6 +28,7 @@ namespace CyberCruiser
                 Detonation();
             }
         }
+
         public void Detonate()
         {
             _isDetonating = true;
@@ -43,7 +46,6 @@ namespace CyberCruiser
             _col.enabled = false;
             transform.localScale = _minSize;
         }
-
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

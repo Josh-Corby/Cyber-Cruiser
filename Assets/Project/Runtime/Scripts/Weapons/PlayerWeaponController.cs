@@ -21,6 +21,8 @@ namespace CyberCruiser
         #region Fields
         private bool _controlsEnabled;
 
+        [SerializeField] private IntReference _weaponUpgradeDurationInSeconds;
+
         private const int BASE_HEAT_MAX = 100;
         private const float BASE_HEAT_PER_SHOT = 1.75f;
         private const int BASE_UPGRADE_DURATION = 10;
@@ -36,7 +38,6 @@ namespace CyberCruiser
 
         private int _heatMax;
         private float _timeSinceLastShot;
-        private int _weaponUpgradeDuration;
         private float _weaponUpgradeCounter;
 
         private bool _isOverheated;
@@ -152,17 +153,6 @@ namespace CyberCruiser
             }
         }
 
-        public void SetBatteryPackUpgrade(bool isAddOnActive)
-        {
-            if(isAddOnActive)
-            {
-                _weaponUpgradeDuration += 5;
-            }
-            else
-            {
-                _weaponUpgradeDuration = BASE_UPGRADE_DURATION;
-            }
-        }
 
         private void Update()
         {
@@ -334,8 +324,8 @@ namespace CyberCruiser
 
             CurrentHeat = 0;
             _isWeaponUpgradeActive = true;
-            _weaponUpgradeCounter = _weaponUpgradeDuration;
-            OnWeaponUpgradeStart?.Invoke(_weaponUpgradeDuration);
+            _weaponUpgradeCounter = _weaponUpgradeDurationInSeconds.Value;
+            OnWeaponUpgradeStart?.Invoke((int)_weaponUpgradeDurationInSeconds.Value);
             _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimerCoroutine(upgradeType));
         }
 

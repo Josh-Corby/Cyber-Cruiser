@@ -3,8 +3,7 @@ using UnityEngine;
 namespace CyberCruiser
 {
     [CreateAssetMenu]
-    public class FloatValue : ScriptableObject
+    public class FloatValue : ScriptableObjectValue<float>
     {
-        public float Value;
     }
 }

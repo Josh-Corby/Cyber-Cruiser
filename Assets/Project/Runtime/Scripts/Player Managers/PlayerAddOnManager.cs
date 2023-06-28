@@ -10,6 +10,12 @@ namespace CyberCruiser
         [SerializeField] private PlayerShieldController _shieldController;
         [SerializeField] private List<AddOnActiveState> _addOnActiveStates = new();
 
+        [SerializeField] private float _batteryPackEffectInSeconds;
+
+        [SerializeField] private BoolValue _doesPlayerHaveHydrocoolant;
+        [SerializeField] private BoolValue _doesPlayerHavePlasmaCache;
+       
+
         public List<AddOnActiveState> AddOnActiveStates { get => _addOnActiveStates; }
         public bool IsBatteryPackActive { get; private set; }
         public bool IsPlasmaCacheActive { get; private set; }
@@ -26,15 +32,15 @@ namespace CyberCruiser
         private void OnEnable()
         {
             AddOnButton.OnAddonBuyOrSell += BuyOrSellAddOn;
-            GameManager.OnMissionEnd += DisableAllAddOns;
+            DisableAllAddOns();
         }
 
         private void OnDisable()
         {
             AddOnButton.OnAddonBuyOrSell -= BuyOrSellAddOn;
-            GameManager.OnMissionEnd -= DisableAllAddOns;
         }
 
+      
         private void DisableAllAddOns()
         {
             for (int i = 0; i < _addOnActiveStates.Count; i++)

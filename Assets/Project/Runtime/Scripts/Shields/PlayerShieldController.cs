@@ -7,10 +7,11 @@ namespace CyberCruiser
     {
         private PulseDetonator _pulseDetonator;
 
+
         #region Fields
+        [SerializeField] private BoolReference _doesPlayerHavePulseDetonator;
         [SerializeField] private int _shieldActiveDuration;
         [SerializeField] private float _shieldActiveTimer;
-        [SerializeField] private bool _isPulseDetonatorActive;
         private bool _controlsEnabled;
         #endregion
 
@@ -92,12 +93,6 @@ namespace CyberCruiser
             _controlsEnabled = false;
         }
 
-        public void SetPulseDetonator(bool isPulseDetonatorActive)
-        {
-            _isPulseDetonatorActive = isPulseDetonatorActive;
-        }
-
-
 
         private void CheckShieldsState()
         {
@@ -119,16 +114,14 @@ namespace CyberCruiser
 
         protected override void ActivateShields()
         {
-            if (_isPulseDetonatorActive)
+            if (_doesPlayerHavePulseDetonator.Value)
             {
                 _pulseDetonator.Detonate();
+                return;
             }
 
-            if (!_isPulseDetonatorActive)
-            {
-                IsShieldsActive = true;
-                PlayerManagerInstance.IsPlayerColliderEnabled = false;
-            }
+            IsShieldsActive = true;
+            PlayerManagerInstance.IsPlayerColliderEnabled = false;
         }
 
         protected override void DeactivateShields()

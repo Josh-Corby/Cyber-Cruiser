@@ -4,9 +4,8 @@ using UnityEngine;
 
 namespace CyberCruiser
 {
-    [CreateAssetMenu]
-    public class BoolValue : ScriptableObject
+    public class AddOnPickupBool : AddOnPickup<bool>
     {
-        public bool Value;
+
     }
 }

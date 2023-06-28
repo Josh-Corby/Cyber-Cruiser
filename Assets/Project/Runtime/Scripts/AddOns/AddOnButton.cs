@@ -30,13 +30,13 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            PlayerStatsManager.OnIonChange -= ValidateButtonState;
+            PlayerSaveManager.OnIonChange -= ValidateButtonState;
             ValidateButtonState(PlayerStatsManagerInstance.PlayerIon);
         }
 
         private void OnDisable()
         {
-            PlayerStatsManager.OnIonChange -= ValidateButtonState;
+            PlayerSaveManager.OnIonChange -= ValidateButtonState;
         }
 
         private void ValidateButtonState(int playerIon)

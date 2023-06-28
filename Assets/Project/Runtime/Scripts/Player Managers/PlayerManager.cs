@@ -18,6 +18,7 @@ namespace CyberCruiser
 
         #endregion
 
+     
         #region Fields
         private const int BASE_MAX_HEALTH = 5;
         private const int BASE_PLASMA_COST = 5;
@@ -161,6 +162,7 @@ namespace CyberCruiser
         {
             ResetStats();
             EnablePlayerControls();
+
             _isPlayerImmuneToDamage = false;
             _playerCollider.enabled = true;
             GameManager.OnIsTimeScalePaused += SetPlayerControls;
@@ -173,11 +175,13 @@ namespace CyberCruiser
             Pickup.OnResourcePickup -= AddResources;
         }
 
+     
+
         private void ApplyAddOns()
         {
-            _playerWeaponController.SetBatteryPackUpgrade(_addOnManager.IsBatteryPackActive);
+            //_playerWeaponController.SetBatteryPackUpgrade(_addOnManager.IsBatteryPackActive);
             _playerWeaponController.SetHydrocoolantUpgrade(_addOnManager.IsHydrocoolantActive);
-            _playerShieldController.SetPulseDetonator(_addOnManager.IsPulseDetonatorActive);
+            //_playerShieldController.SetPulseDetonator(_addOnManager.IsPulseDetonatorActive);
             _ramDamage = _addOnManager.IsRamAddOnActive ? 5 : 1;
 
             if (_addOnManager.IsPlasmaCacheActive)
@@ -340,6 +344,13 @@ namespace CyberCruiser
             {
                 pickup.PickupEffect();
                 Destroy(pickup.gameObject);
+            }
+
+
+
+            else if (collider.TryGetComponent<IPickup>(out var addOnPickup))
+            {
+                addOnPickup.OnPickup();
             }
 
         }

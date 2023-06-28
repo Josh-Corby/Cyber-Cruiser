@@ -15,13 +15,13 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            PlayerStatsManager.OnIonChange += UpdateIonText;
+            PlayerSaveManager.OnIonChange += UpdateIonText;
             UpdateIonText(PlayerStatsManagerInstance.PlayerIon);
         }
 
         private void OnDisable()
         {
-            PlayerStatsManager.OnIonChange -= UpdateIonText;
+            PlayerSaveManager.OnIonChange -= UpdateIonText;
         }
 
         private void UpdateIonText(int ion)

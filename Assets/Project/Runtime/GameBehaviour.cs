@@ -11,7 +11,7 @@ namespace CyberCruiser
         protected static InputManager InputManagerInstance { get { return InputManager.INSTANCE; } }
         protected static MissionManager MissionManagerInstance { get { return MissionManager.INSTANCE; } }
         protected static PlayerManager PlayerManagerInstance { get { return PlayerManager.INSTANCE; } }
-        protected static PlayerStatsManager PlayerStatsManagerInstance { get { return PlayerStatsManager.INSTANCE; } }
+        protected static PlayerSaveManager PlayerStatsManagerInstance { get { return PlayerSaveManager.INSTANCE; } }
         protected static RankManager RankManagerInstance { get { return RankManager.INSTANCE; } }
     }
 

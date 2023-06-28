@@ -3,8 +3,7 @@ using UnityEngine;
 namespace CyberCruiser
 {
     [CreateAssetMenu]
-    public class IntValue : ScriptableObject
+    public class IntValue : ScriptableObjectValue<int>
     {
-        public int Value;
     }
 }

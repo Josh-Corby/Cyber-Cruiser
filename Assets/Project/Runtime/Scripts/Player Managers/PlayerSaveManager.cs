@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CyberCruiser
 {
-    public class PlayerStatsManager : GameBehaviour<PlayerStatsManager>
+    public class PlayerSaveManager : GameBehaviour<PlayerSaveManager>
     {
         private const string PLAYER_PLASMA = "PlayerPlasma";
         private const string PLAYER_ION = "PlayerIon";
