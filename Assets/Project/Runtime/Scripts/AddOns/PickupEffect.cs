@@ -1,16 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace CyberCruiser
 {
-    public class AddOnPickup<T> : MonoBehaviour, IPickup
+    [Serializable]
+    public class PickupEffect<T> : PickupEffectBase
     {
         [SerializeField] private ScriptableObjectValue<T> _scriptableObjectValueToChange;
         [SerializeField] private ScriptableObjectValueChanger<T> _valueChanger;
         [SerializeField] private ScriptableObjectReference<T> _valueToChangeWith;
 
-        public void OnPickup()
+        public override void OnPickup()
         {
             _valueChanger.ChangeValue(_scriptableObjectValueToChange, _valueToChangeWith.Value);
         }

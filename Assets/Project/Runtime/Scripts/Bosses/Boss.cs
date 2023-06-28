@@ -75,7 +75,7 @@ namespace CyberCruiser
         {
             _isBossDead = true;
             base.Crash();
-            OnBossDiedPosition(PickupType.Health, transform.position);
+            OnBossDiedPosition(PickupType.Boss, transform.position);
         }
 
         public override void Destroy()

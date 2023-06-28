@@ -340,19 +340,17 @@ namespace CyberCruiser
                 Damage(1);
             }
 
-            else if (collider.TryGetComponent<Pickup>(out var pickup))
+            if (collider.TryGetComponent<Pickup>(out var pickup))
             {
                 pickup.PickupEffect();
-                Destroy(pickup.gameObject);
+
+                if (collider.TryGetComponent<PickupEffectBase>(out var addOnPickup))
+                {
+                    addOnPickup.OnPickup();
+                }
+
+                Destroy(collider);
             }
-
-
-
-            else if (collider.TryGetComponent<IPickup>(out var addOnPickup))
-            {
-                addOnPickup.OnPickup();
-            }
-
         }
         #endregion
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CyberCruiser
 {
-    public class AddOnPickupBool : AddOnPickup<bool>
+    public class AddOnPickupBool : PickupEffect<bool>
     {
 
     }

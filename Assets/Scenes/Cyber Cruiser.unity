@@ -255,7 +255,7 @@ Transform:
   - {fileID: 1462614171}
   - {fileID: 1401583081}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &71091563
 GameObject:
@@ -539,6 +539,37 @@ Transform:
   - {fileID: 1266649863}
   m_Father: {fileID: 281578421}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &142358230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 142358231}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &142358231
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142358230}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &146605592
 PrefabInstance:
@@ -1101,6 +1132,90 @@ Transform:
   - {fileID: 1041104451}
   m_Father: {fileID: 64670858}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &357243056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 357243059}
+  - component: {fileID: 357243058}
+  - component: {fileID: 357243057}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &357243057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357243056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickupType: 0
+  _upgradeType: 0
+  _speed: 0
+  _test:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 0}
+  _healthOnPickup:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 0}
+  _plasmaOnPickup:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 0}
+  _ionOnPickup:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 0}
+--- !u!114 &357243058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357243056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3e8c255419c59489917969e4b295e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseWeaponMaxHeat: {fileID: 0}
+  _baseWeaponUpgradeDurationInSeconds: {fileID: 0}
+  _baseHeatPerShot: {fileID: 0}
+  _baseHeatLossPerFrame: {fileID: 0}
+  _baseCooldownHeatLossPerFrame: {fileID: 0}
+  _currentWeaponUpgradeDurationInSeconds: {fileID: 0}
+  _doesPlayerHavePulseDetonator: {fileID: 0}
+  _BatteryPackUpgradeValue: {fileID: 0}
+--- !u!4 &357243059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357243056}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &363359289
 GameObject:
@@ -1694,7 +1809,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &492079264
 GameObject:
@@ -1802,7 +1917,7 @@ GameObject:
   - component: {fileID: 498751017}
   - component: {fileID: 498751016}
   m_Layer: 0
-  m_Name: PlayerStatsManager
+  m_Name: PlayerSaveManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2832,6 +2947,11 @@ MonoBehaviour:
   _behemothWarning: {fileID: 21300000, guid: 886465a01f65f41438939a37c77013e4, type: 3}
   _cyberKrakenWarning: {fileID: 21300000, guid: 6f3bd97d9520d8b4ea72c284b5b429f1, type: 3}
   _robodactylWarning: {fileID: 21300000, guid: 7c821fb23b2cce943999f74f8a9d0cdb, type: 3}
+--- !u!1 &717695644 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8907491432247727163, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+  m_PrefabInstance: {fileID: 8907491432400472847}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &758824274
 GameObject:
   m_ObjectHideFlags: 0
@@ -3088,7 +3208,7 @@ RectTransform:
   m_Children:
   - {fileID: 1498877854}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3142,6 +3262,63 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &859461624
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.879803
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.5668693
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.2260976
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5190738629216888542, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6951969226015609480, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+      propertyPath: m_Name
+      value: PulseDetonatorPickup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
 --- !u!1 &876750291
 GameObject:
   m_ObjectHideFlags: 0
@@ -3873,6 +4050,9 @@ MonoBehaviour:
     IsAddOnActive: 0
   - Name: Pulse Detonator
     IsAddOnActive: 0
+  _batteryPackEffectInSeconds: 0
+  _doesPlayerHaveHydrocoolant: {fileID: 0}
+  _doesPlayerHavePlasmaCache: {fileID: 0}
 --- !u!1 &1148502290
 GameObject:
   m_ObjectHideFlags: 0
@@ -4293,12 +4473,32 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
   m_PrefabInstance: {fileID: 8907491432400472847}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 717695644}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 077d4773bb84afa4f922dd9299e9eb4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1324404178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717695644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3e8c255419c59489917969e4b295e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseWeaponMaxHeat: {fileID: 0}
+  _baseWeaponUpgradeDurationInSeconds: {fileID: 11400000, guid: 0105a809567c1a3489824ae208dd41b6, type: 2}
+  _baseHeatPerShot: {fileID: 0}
+  _baseHeatLossPerFrame: {fileID: 0}
+  _baseCooldownHeatLossPerFrame: {fileID: 0}
+  _currentWeaponUpgradeDurationInSeconds: {fileID: 0}
+  _doesPlayerHavePulseDetonator: {fileID: 11400000, guid: 18055d9adfac546488460e5249e0c5f3, type: 2}
+  _BatteryPackUpgradeValue: {fileID: 0}
 --- !u!1 &1326374112
 GameObject:
   m_ObjectHideFlags: 0
@@ -5029,7 +5229,7 @@ Transform:
   - {fileID: 1751233349}
   - {fileID: 1324404175}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1498877853
 GameObject:
@@ -6448,6 +6648,56 @@ Canvas:
   m_SortingLayerID: 386601429
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &1922546865
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1922546867}
+  - component: {fileID: 1922546866}
+  m_Layer: 0
+  m_Name: Int Pickup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1922546866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922546865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de394872b20de74cb434082efd06c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectValueToChange: {fileID: 11400000, guid: 0105a809567c1a3489824ae208dd41b6, type: 2}
+  _valueChanger: {fileID: 0}
+  _valueToChangeWith:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 0}
+--- !u!4 &1922546867
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922546865}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.791622, y: -2.8028603, z: -1.1798013}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1943552042 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1943552042, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
@@ -7809,6 +8059,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _weaponUpgradeDurationInSeconds.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bc78e388cd28844e9b05d1c0c3d72c2, type: 2}
     - target: {fileID: 4105431680881908016, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -7845,6 +8099,10 @@ PrefabInstance:
       propertyPath: _audioSource
       value: 
       objectReference: {fileID: 812120941}
+    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _doesPlayerHavePulseDetonator.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 18055d9adfac546488460e5249e0c5f3, type: 2}
     - target: {fileID: 6738796415013509279, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_IsActive
       value: 0

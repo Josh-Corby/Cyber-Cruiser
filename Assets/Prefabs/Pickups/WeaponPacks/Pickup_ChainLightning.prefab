@@ -183,6 +183,15 @@ MonoBehaviour:
   _pickupType: 0
   _upgradeType: 5
   _speed: 3
-  _healthAmount: 0
-  _plasmaAmount: 0
-  _ionAmount: 0
+  _healthOnPickup:
+    UseConstant: 1
+    ConstantValue: 0
+    Variable: {fileID: 0}
+  _plasmaOnPickup:
+    UseConstant: 1
+    ConstantValue: 0
+    Variable: {fileID: 0}
+  _ionOnPickup:
+    UseConstant: 1
+    ConstantValue: 0
+    Variable: {fileID: 0}

@@ -172,7 +172,7 @@ namespace CyberCruiser
 
         private void PlasmaDistanceReached()
         {
-            _pickupManager.SpawnPickupAtRandomPosition(PickupType.Plasma);
+            _pickupManager.SpawnPickupAtRandomPosition(PickupType.Normal);
         }
 
         private void WeaponUpgradeDistanceReached()

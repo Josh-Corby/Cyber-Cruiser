@@ -13,9 +13,11 @@ namespace CyberCruiser
         [SerializeField] private PickupSpawner _pickupSpawner;
         [SerializeField] private PickupSpawner _upgradeSpawner;
 
-        [SerializeField] private GameObject _plasmaPickup;
-        [SerializeField] protected GameObject _healthPickup;
-        [SerializeField] private GameObject[] _weaponUpgradePrefabs;
+        [SerializeField] protected GameObject _bossPickup;
+
+        [SerializeField] private List<PickupEffectBase> _shipUpgradesPool = new();
+        [SerializeField] private GameObject[] _weaponUpgradesPool;
+        [SerializeField] private GameObject _normalPickup;
         [SerializeField] private GameObject _pickupIndicator;
 
         [SerializeField] private float _indicatorAngle;
@@ -41,11 +43,11 @@ namespace CyberCruiser
         {
             switch (pickupType)
             {
-                case PickupType.Plasma:
-                    _pickupSpawner.SpawnPickupAtRandomPosition(_plasmaPickup);
+                case PickupType.Normal:
+                    _pickupSpawner.SpawnPickupAtRandomPosition(_normalPickup);
                     break;
-                case PickupType.Health:
-                    _pickupSpawner.SpawnPickupAtRandomPosition(_healthPickup);
+                case PickupType.Boss:
+                    _pickupSpawner.SpawnPickupAtRandomPosition(_bossPickup);
                     break;
                 case PickupType.Weapon:
                     _upgradeSpawner.SpawnPickupAtRandomPosition(GetRandomWeaponUpgrade());
@@ -57,11 +59,11 @@ namespace CyberCruiser
         {
             switch (pickupType)
             {
-                case PickupType.Plasma:
-                    _pickupSpawner.SpawnPickupAtPosition(_plasmaPickup, position);
+                case PickupType.Normal:
+                    _pickupSpawner.SpawnPickupAtPosition(_normalPickup, position);
                     break;
-                case PickupType.Health:
-                    _pickupSpawner.SpawnPickupAtPosition(_healthPickup, position);
+                case PickupType.Boss:
+                    _pickupSpawner.SpawnPickupAtPosition(_bossPickup, position);
                     break;
                 case PickupType.Weapon:
                     _upgradeSpawner.SpawnPickupAtPosition(GetRandomWeaponUpgrade(), position);
@@ -71,8 +73,8 @@ namespace CyberCruiser
 
         protected GameObject GetRandomWeaponUpgrade()
         {
-            int randomIndex = Random.Range(0, _weaponUpgradePrefabs.Length);
-            GameObject randomUpgradePrefab = _weaponUpgradePrefabs[randomIndex];
+            int randomIndex = Random.Range(0, _weaponUpgradesPool.Length);
+            GameObject randomUpgradePrefab = _weaponUpgradesPool[randomIndex];
             return randomUpgradePrefab;
         }
 

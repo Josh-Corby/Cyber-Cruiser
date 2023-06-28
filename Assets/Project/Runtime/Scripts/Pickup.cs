@@ -1,17 +1,20 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace CyberCruiser
 {
-    public class Pickup : GameBehaviour
+    public class Pickup : MonoBehaviour
     {
         #region Fields
         public PickupType _pickupType;
         public WeaponUpgradeType _upgradeType;
         [SerializeField] private float _speed;
-        [SerializeField] private int _healthAmount;
-        [SerializeField] private int _plasmaAmount;
-        [SerializeField] private int _ionAmount;
+
+        [SerializeField] private IntReference _healthOnPickup;
+        [SerializeField] private IntReference _plasmaOnPickup;
+        [SerializeField] private IntReference _ionOnPickup;
+
         #endregion
 
         #region Actions
@@ -24,11 +27,12 @@ namespace CyberCruiser
         {
             switch (_pickupType)
             {
-                case PickupType.Plasma:
-                case PickupType.Health:
-                    OnResourcePickup(_healthAmount, _plasmaAmount, _ionAmount);
+                case PickupType.Normal:
+                case PickupType.Boss:
+                    OnResourcePickup(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
                     break;
                 case PickupType.Weapon:
+                    OnResourcePickup(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
                     switch (_upgradeType)
                     {
                         case WeaponUpgradeType.None:
@@ -60,7 +64,7 @@ namespace CyberCruiser
 
         public enum PickupType
         {
-            Weapon, Plasma, Health
+            Normal, Boss, Weapon
         }
 
         public enum WeaponUpgradeType
