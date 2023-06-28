@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8444519193150985497}
   - component: {fileID: 5443539861385694973}
   - component: {fileID: 8745648869564726004}
+  - component: {fileID: 1280142038}
   m_Layer: 10
   m_Name: PulseDetonatorPickup
   m_TagString: Untagged
@@ -120,3 +121,30 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: 1
     Variable: {fileID: 11400000, guid: 18055d9adfac546488460e5249e0c5f3, type: 2}
+--- !u!114 &1280142038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951969226015609480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pickupType: 1
+  _upgradeType: 0
+  _speed: 3
+  _healthOnPickup:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6f677ff1af64934fb255372a76f7a1c, type: 2}
+  _plasmaOnPickup:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: e8a2002e6cf263f4f9b06e49d987c0f8, type: 2}
+  _ionOnPickup:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 8b9b1602b97c8c444835c67af79f56cc, type: 2}

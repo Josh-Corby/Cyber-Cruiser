@@ -13,11 +13,12 @@ namespace CyberCruiser
         [SerializeField] private PickupSpawner _pickupSpawner;
         [SerializeField] private PickupSpawner _upgradeSpawner;
 
-        [SerializeField] protected GameObject _bossPickup;
-
-        [SerializeField] private List<PickupEffectBase> _shipUpgradesPool = new();
+        [SerializeField] private List<GameObject> _bossDropsPool = new();
+        [SerializeField] private List<GameObject> _bossDropsToSpawn = new();
         [SerializeField] private GameObject[] _weaponUpgradesPool;
         [SerializeField] private GameObject _normalPickup;
+        [SerializeField] private GameObject _baseBossDrop;
+
         [SerializeField] private GameObject _pickupIndicator;
 
         [SerializeField] private float _indicatorAngle;
@@ -25,18 +26,38 @@ namespace CyberCruiser
 
         protected void OnEnable()
         {
+            GameManager.OnMissionStart += ResetBossDropsList;
             GameManager.OnMissionEnd += ClearPickups;
             Boss.OnBossDiedPosition += SpawnPickupAtPosition;
             Pickup.OnPickedUp += RemovePickup;
-            PickupSpawner.OnPickupSpawned += AddPickup;
+            PickupSpawner.OnPickupSpawned += AddPickup;         
         }
 
         protected void OnDisable()
         {
+            GameManager.OnMissionStart -= ResetBossDropsList;
             GameManager.OnMissionEnd -= ClearPickups;
             Boss.OnBossDiedPosition -= SpawnPickupAtPosition;
             Pickup.OnPickedUp -= RemovePickup;
             PickupSpawner.OnPickupSpawned -= AddPickup;
+        }
+
+        private void ResetBossDropsList()
+        {
+            _bossDropsToSpawn = _bossDropsPool;
+        }
+
+        private GameObject GetRandomBossPickup()
+        {        
+            if( _bossDropsToSpawn == null )
+            {
+                return _baseBossDrop;
+            }
+
+            int RandomBossDropIndex = Random.Range(0, _bossDropsPool.Count);
+            GameObject randomBossDrop = _bossDropsPool[RandomBossDropIndex];
+            _bossDropsToSpawn.RemoveAt(RandomBossDropIndex);
+            return randomBossDrop;
         }
 
         public void SpawnPickupAtRandomPosition(PickupType pickupType)
@@ -47,7 +68,7 @@ namespace CyberCruiser
                     _pickupSpawner.SpawnPickupAtRandomPosition(_normalPickup);
                     break;
                 case PickupType.Boss:
-                    _pickupSpawner.SpawnPickupAtRandomPosition(_bossPickup);
+                    _pickupSpawner.SpawnPickupAtRandomPosition(GetRandomBossPickup());
                     break;
                 case PickupType.Weapon:
                     _upgradeSpawner.SpawnPickupAtRandomPosition(GetRandomWeaponUpgrade());
@@ -63,7 +84,7 @@ namespace CyberCruiser
                     _pickupSpawner.SpawnPickupAtPosition(_normalPickup, position);
                     break;
                 case PickupType.Boss:
-                    _pickupSpawner.SpawnPickupAtPosition(_bossPickup, position);
+                    _pickupSpawner.SpawnPickupAtPosition(GetRandomBossPickup(), position);
                     break;
                 case PickupType.Weapon:
                     _upgradeSpawner.SpawnPickupAtPosition(GetRandomWeaponUpgrade(), position);
