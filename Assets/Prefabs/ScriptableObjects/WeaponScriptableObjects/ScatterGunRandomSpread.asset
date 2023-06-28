@@ -17,7 +17,7 @@ MonoBehaviour:
     TimeBetweenShots: 0.1
     IsWeaponAutomatic: 1
     Clip:
-      Clip: {fileID: 8300000, guid: 4517ca5002617704998cd5341723ce81, type: 3}
+      Clip: {fileID: 8300000, guid: 69978527b4480414bbf449aa751ad852, type: 3}
       OverrideSourceVolume: 0
       Volume: 1
       PlayOneShot: 0

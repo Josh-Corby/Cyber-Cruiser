@@ -323,8 +323,7 @@ namespace CyberCruiser
         }
 
         private void ProcessCollision(GameObject collider)
-        {
-          
+        {   
 
             if (collider.TryGetComponent<Enemy>(out var enemy))
             {
