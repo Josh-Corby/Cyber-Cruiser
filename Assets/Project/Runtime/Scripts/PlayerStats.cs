@@ -13,10 +13,13 @@ namespace CyberCruiser
         [SerializeField] private FloatValue _baseHeatLossPerFrame;
         [SerializeField] private FloatValue _baseCooldownHeatLossPerFrame;
 
-
         [Header("Current Stats")]
         [SerializeField] private IntValue _currentWeaponUpgradeDurationInSeconds;
         [SerializeField] private BoolValue _doesPlayerHavePulseDetonator;
+
+
+        [Header("Addon Modifiers")]
+        [SerializeField] private IntValue _BatteryPackUpgradeValue;
 
         private void OnEnable()
         {
@@ -25,7 +28,7 @@ namespace CyberCruiser
 
         private void ResetStats()
         {
-            _currentWeaponUpgradeDurationInSeconds.Value = _baseWeaponUpgradeDurationInSeconds.Value;
+            //_currentWeaponUpgradeDurationInSeconds.Value = _baseWeaponUpgradeDurationInSeconds.Value;
             _doesPlayerHavePulseDetonator.Value = false;
         }
     }

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5190738629216888542}
   - component: {fileID: 8444519193150985497}
   - component: {fileID: 5443539861385694973}
-  - component: {fileID: 8745648869564726004}
+  - component: {fileID: 6025528392192912381}
   m_Layer: 10
-  m_Name: PulseDetonatorPickup
+  m_Name: BatteryPackPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.1
---- !u!114 &8745648869564726004
+--- !u!114 &6025528392192912381
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,12 +111,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6951969226015609480}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e4a88cb5c1d11f44b14418206ac71e4, type: 3}
+  m_Script: {fileID: 11500000, guid: 7de394872b20de74cb434082efd06c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectValueToChange: {fileID: 11400000, guid: 18055d9adfac546488460e5249e0c5f3, type: 2}
-  _valueChanger: {fileID: 11400000, guid: 30bdc62ec69414a4ba2ff224b9c27cf7, type: 2}
+  _scriptableObjectValueToChange: {fileID: 11400000, guid: 4bc78e388cd28844e9b05d1c0c3d72c2, type: 2}
+  _valueChanger: {fileID: 11400000, guid: 5d1e1be51e8386947b216fb4883d20b7, type: 2}
   _valueToChangeWith:
-    UseConstant: 1
-    ConstantValue: 1
-    Variable: {fileID: 11400000, guid: 18055d9adfac546488460e5249e0c5f3, type: 2}
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6e2dd4012bdb63468f8ccad043e746a, type: 2}

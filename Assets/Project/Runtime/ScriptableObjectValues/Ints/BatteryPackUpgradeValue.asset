@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ddce0f69cfaf6747a7b8b3841ae0697, type: 3}
-  m_Name: TestFloat
+  m_Script: {fileID: 11500000, guid: 91e296595b1733a478a37753d2be4c0f, type: 3}
+  m_Name: BatteryPackUpgradeValue
   m_EditorClassIdentifier: 
-  Value: 0.1
+  Value: 0

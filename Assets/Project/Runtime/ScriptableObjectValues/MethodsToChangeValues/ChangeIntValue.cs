@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace CyberCruiser
 {
-    public class SubtractIntValue<T> : ScriptableObjectValueChanger<int>
+    public class ChangeIntValue : ScriptableObjectValueChanger<int>
     {
         public override void ChangeValue(ScriptableObjectValue<int> valueToChange, int valueToChangeWith)
         {
-            valueToChange.Value -= valueToChangeWith;
+            valueToChange.Value += valueToChangeWith;
         }
     }
 }
