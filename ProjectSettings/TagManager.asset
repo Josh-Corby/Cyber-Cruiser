@@ -51,11 +51,11 @@ TagManager:
   - name: Effects
     uniqueID: 1362004309
     locked: 0
-  - name: EnemyProjectile
-    uniqueID: 2329735
-    locked: 0
   - name: Enemies
     uniqueID: 4189217035
+    locked: 0
+  - name: EnemyProjectile
+    uniqueID: 2329735
     locked: 0
   - name: Boss
     uniqueID: 583995123

@@ -6,6 +6,8 @@ namespace CyberCruiser
 {
     public class Boss : Enemy, IDamageable
     {
+
+
         public static event Action<float> OnBossDamage = null;
         public static event Action<PickupType, Vector3> OnBossDiedPosition = null;
         public static event Action<EnemyTypes> OnBossTypeDied = null;

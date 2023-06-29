@@ -7,6 +7,7 @@ namespace CyberCruiser
     public class Pickup : MonoBehaviour
     {
         #region Fields
+        [SerializeField] private string _pickupName;
         public PickupType _pickupType;
         public WeaponUpgradeType _upgradeType;
         [SerializeField] private float _speed;
@@ -21,6 +22,7 @@ namespace CyberCruiser
         public static event Action<int, int, int> OnResourcePickup = null;
         public static event Action<GameObject> OnPickedUp = null;
         public static event Action<WeaponUpgradeType> OnWeaponUpgradePickup = null;
+        public static event Action<string> OnBossPickup = null;
         #endregion
 
         public void PickupEffect()
@@ -29,8 +31,11 @@ namespace CyberCruiser
             switch (_pickupType)
             {
                 case PickupType.Normal:
+                    OnResourcePickup(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
+                    break;
                 case PickupType.Boss:
                     OnResourcePickup(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
+                    OnBossPickup?.Invoke(_pickupName);
                     break;
 
                 case PickupType.Weapon:

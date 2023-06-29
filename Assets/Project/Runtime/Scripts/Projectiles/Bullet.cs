@@ -171,8 +171,11 @@ namespace CyberCruiser
 
         private void ProcessCollision(GameObject collider)
         {
-            GameObject particles = Instantiate(_collisionParticles, transform);
-            particles.transform.parent = null;
+            if (_collisionParticles != null)
+            {
+                GameObject particles = Instantiate(_collisionParticles, transform);
+                particles.transform.parent = null;
+            }
 
             if (_doesBulletExplode)
             {

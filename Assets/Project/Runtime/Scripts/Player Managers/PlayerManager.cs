@@ -260,7 +260,12 @@ namespace CyberCruiser
             {
                 _isPlayerImmuneToDamage = true;
                 PlayerCurrentHealth -= damage;
-
+                if (_collisionParticles != null)
+                {
+                    Debug.Log("PlayerDamaged");
+                    //_collisionParticles.Stop();
+                    _collisionParticles.Play();
+                }
                 StartIFrames();
             }
         }
@@ -339,12 +344,6 @@ namespace CyberCruiser
             {
                 Damage(1);
             }
-
-            if (_collisionParticles != null)
-            {
-                _collisionParticles.Play();
-            }
-
         }
         #endregion
     }

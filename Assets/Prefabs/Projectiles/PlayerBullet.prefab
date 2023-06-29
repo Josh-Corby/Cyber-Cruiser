@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8899889120285292700}
   - component: {fileID: 7839072767556152723}
   - component: {fileID: 5475609997023007151}
-  - component: {fileID: 2974499546341751299}
   m_Layer: 8
   m_Name: PlayerBullet
   m_TagString: Untagged
@@ -67,7 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerProjectileSprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
   _enemyProjectileSprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
-  _collisionParticles: {fileID: 8611581191203232223, guid: bcd084b07ae840f49bc8526ab122ce58, type: 3}
+  _collisionParticles: {fileID: 8553602988473826497, guid: a7131c836fe474a4bbc3421fc2714d96, type: 3}
   _speed: 40
   _damage: 0.334
   _doesBulletExplode: 0
@@ -78,22 +77,6 @@ MonoBehaviour:
   _homeDelay: 0
   _homeDelayTime: 0
   _homeCounter: 0
---- !u!70 &2974499546341751299
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 760453196464390188}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.96, y: 0}
-  m_Size: {x: 2.22, y: 0.285}
-  m_Direction: 1
 --- !u!1 &967464220310727118
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +270,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4522279530706926198}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.334, y: 0.019, z: 0}
+  m_LocalPosition: {x: -3.414, y: 0.019, z: 0}
   m_LocalScale: {x: 1.6642888, y: 0.5932969, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
