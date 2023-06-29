@@ -247,7 +247,7 @@ namespace CyberCruiser
         private void FlipUpDownDirection()
         {
             _isBackForthDirectionUp = !_isBackForthDirectionUp;
-            _upDownTimer = Random.Range(2, 5);
+            _upDownTimer = Random.Range(1f, 5f);
         }
         #endregion
 
@@ -299,9 +299,9 @@ namespace CyberCruiser
 
             if (collision.gameObject.CompareTag(UPDOWNCHECKLAYER))
             {
+                //Debug.Log("border hit");
                 FlipUpDownDirection();
             }
-
         }
     }
 

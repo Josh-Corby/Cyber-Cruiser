@@ -16,6 +16,7 @@ namespace CyberCruiser
         [SerializeField] private PlayerShieldController _playerShieldController;
         [SerializeField] private PlayerWeaponController _playerWeaponController;
 
+        [SerializeField] private ParticleSystem _collisionParticles;
         #endregion
 
      
@@ -323,11 +324,42 @@ namespace CyberCruiser
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
+            //Vector2 closestCollosion = GetClosestCollisionPoint(collision.contacts);
             ProcessCollision(collision.gameObject);
         }
 
+        //private Vector2 GetClosestCollisionPoint(ContactPoint2D[] contacts)
+        //{
+        //    Vector2 closestPoint = Vector2.zero;
+        //    float closestDistance = Mathf.Infinity;
+
+        //    foreach (ContactPoint2D contact in contacts)
+        //    {
+        //        float distance = Vector2.Distance(transform.position, contact.point);
+
+        //        if (distance < closestDistance)
+        //        {
+        //            closestDistance = distance;
+        //            closestPoint = contact.point;
+        //        }
+        //    }
+        //    return closestPoint;
+        //}
+
         private void ProcessCollision(GameObject collider)
-        {   
+        {
+            if (collider.TryGetComponent<Pickup>(out var pickup))
+            {
+                pickup.PickupEffect();
+
+                if (collider.TryGetComponent<PickupEffectBase>(out var addOnPickup))
+                {
+                    addOnPickup.OnPickup();
+                }
+
+                Destroy(collider);
+                return;
+            }
 
             if (collider.TryGetComponent<Enemy>(out var enemy))
             {
@@ -340,17 +372,13 @@ namespace CyberCruiser
                 Damage(1);
             }
 
-            if (collider.TryGetComponent<Pickup>(out var pickup))
+            if (_collisionParticles != null)
             {
-                pickup.PickupEffect();
-
-                if (collider.TryGetComponent<PickupEffectBase>(out var addOnPickup))
-                {
-                    addOnPickup.OnPickup();
-                }
-
-                Destroy(collider);
+                _collisionParticles.Play();
+                //GameObject collisionParticles = Instantiate(_collisionParticles, collisionPoint, Quaternion.identity);
+                //collisionParticles.transform.parent = null;
             }
+
         }
         #endregion
     }

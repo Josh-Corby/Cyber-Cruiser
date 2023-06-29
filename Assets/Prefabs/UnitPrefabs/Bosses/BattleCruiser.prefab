@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1173707745902960436}
   - component: {fileID: 361785294246377548}
   - component: {fileID: 5080155971223978179}
+  - component: {fileID: 2660537452371148163}
   m_Layer: 7
   m_Name: BeamAttack
   m_TagString: Untagged
@@ -155,6 +156,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2660537452371148163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313375864532200023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 5080155971223978179}
 --- !u!1 &1686505066082717662
 GameObject:
   m_ObjectHideFlags: 0

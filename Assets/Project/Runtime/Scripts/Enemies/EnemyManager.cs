@@ -6,7 +6,7 @@ namespace CyberCruiser
     public class EnemyManager : GameBehaviour<EnemyManager>
     {
         public List<SlicerMovement> slicersSeeking = new();
-        [HideInInspector] public List<GunshipMovement> gunshipsToProcess = new();
+        [HideInInspector] public List<GunshipMovement> GunshipsAlive = new();
         [SerializeField] private List<GameObject> _enemiesAlive = new();
         [SerializeField] private List<GameObject> _crashingEnemies = new();
 
@@ -17,7 +17,7 @@ namespace CyberCruiser
             SlicerMovement.OnStartSeeking += RecieveUnit;
             GunshipMovement.OnGunshipSpawned += RecieveUnit;
             GameManager.OnMissionEnd += ClearLists;
-            EnemySpawnerManager.OnSpawnEnemyGroup += ClearMovementLists;
+            //EnemySpawnerManager.OnSpawnEnemyGroup += ClearMovementLists;
         }
 
         private void OnDisable()
@@ -27,14 +27,14 @@ namespace CyberCruiser
             SlicerMovement.OnStartSeeking -= RecieveUnit;
             GunshipMovement.OnGunshipSpawned -= RecieveUnit;
             GameManager.OnMissionEnd -= ClearLists;
-            EnemySpawnerManager.OnSpawnEnemyGroup -= ClearMovementLists;
+            //EnemySpawnerManager.OnSpawnEnemyGroup -= ClearMovementLists;
         }
 
         private void RecieveUnit(GameObject unit)
         {
             if (unit.TryGetComponent<GunshipMovement>(out var gunship))
             {
-                AddToList(gunshipsToProcess, gunship);
+                AddToList(GunshipsAlive, gunship);
                 return;
             }
 
@@ -73,7 +73,7 @@ namespace CyberCruiser
         private void ClearMovementLists()
         {
             slicersSeeking.Clear();
-            gunshipsToProcess.Clear();
+            GunshipsAlive.Clear();
         }
 
         private void ClearLists()

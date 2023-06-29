@@ -53,6 +53,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _explosionDuration: 1
+  _soundController: {fileID: 0}
+  _explosionClip:
+    Clip: {fileID: 8300000, guid: 97f2d77393620f6409175ab290dc3512, type: 3}
+    OverrideSourceVolume: 0
+    Volume: 0.128
+    PlayOneShot: 0
   clusterOnDeath: 0
   isClusterSpawningAUnit: 0
   enemyToSpawn: {fileID: 0}
@@ -83,8 +89,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2152508025596229900, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
   m_audioClip: {fileID: 8300000, guid: 97f2d77393620f6409175ab290dc3512, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.35
+  m_PlayOnAwake: 0
+  m_Volume: 0.132
   m_Pitch: 1
   Loop: 0
   Mute: 0

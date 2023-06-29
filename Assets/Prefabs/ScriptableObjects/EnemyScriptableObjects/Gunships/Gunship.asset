@@ -20,12 +20,12 @@ MonoBehaviour:
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:
-    MoveType: 0
+    MoveType: 1
     Speed: 2
     SpeedWhenCrashing: 4
-    UpDownMovementPattern: 0
-    UpDownSpeed: 0
-    UpDownDistance: 0
+    UpDownMovementPattern: 1
+    UpDownSpeed: 4
+    UpDownDistance: 5
     IsEnemyMovingInSinPattern: 0
     SinWaveFrequency: 0
     SinWaveMagnitude: 0

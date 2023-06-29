@@ -23,6 +23,7 @@ namespace CyberCruiser
         [SerializeField] private MissionCategory _currentMissionCategory;
         [SerializeField] private List<MissionScriptableObject> _missionsToCompleteInCategory = new();
         [SerializeField] private MissionScriptableObject _currentMission;
+        [SerializeField] private MissionScriptableObject _nextMissionTostart;
         #endregion
 
         #region PlayerPrefs Strings
@@ -48,6 +49,14 @@ namespace CyberCruiser
             {
                 _currentMissionProgress = value;
                 CheckMissionProgress();
+            }
+        }
+
+        public int MissionProgressLeft
+        {
+            get
+            {
+                return _currentMissionGoal - _currentMissionProgress;
             }
         }
 
@@ -338,6 +347,8 @@ namespace CyberCruiser
             }
 
             UnassignMission();
+
+            ChooseNextMission();
         }
 
         private void FailMission()
@@ -381,9 +392,9 @@ namespace CyberCruiser
         private void RestorePlayerData()
         {
             RestoreMissionCategory();
-            RestoreMissionProgress();
             RestoreMissionsToCompleteInCategoryFromJSON();
             RestoreCategoryIDOfCurrentMission();
+            RestoreMissionProgress();
         }
 
         private void RestoreMissionCategory()

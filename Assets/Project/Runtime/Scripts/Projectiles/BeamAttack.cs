@@ -1,3 +1,4 @@
+using CyberCruiser.Audio;
 using UnityEngine;
 
 
@@ -20,7 +21,14 @@ namespace CyberCruiser
         [SerializeField] private float _beamWidth;
 
         [SerializeField] private AudioSource _audioSource;
-        [SerializeField] private AudioClip _beamClip;
+        [SerializeField] private SoundControllerBase _beamSoundController;
+        [SerializeField] private ClipInfo _beamClip;
+        //[SerializeField] private AudioClip _beamClip;
+
+        private void Awake()
+        {
+            _beamSoundController = GetComponent<SoundControllerBase>();
+        }
 
         public bool IsBeamActive { get => _isBeamActive; }
         private void OnDisable()
@@ -50,7 +58,9 @@ namespace CyberCruiser
         public void EnableBeam()
         {
             _isBeamActive = true;
-            _audioSource.Play();
+
+            _beamSoundController.PlayNewClip(_beamClip);
+            //_audioSource.Play();
         }
 
         public void DisableBeam()

@@ -24,22 +24,22 @@ namespace CyberCruiser
         }
         protected override void Start()
         {
-            //ChooseMovementType();
-            base.Start();
+            ChooseMovementType();
+            //base.Start();
         }
 
         //check how many other gunships are currently alive to check what movetype should be assigned
         private void ChooseMovementType()
         {
             //if this gunship is the only one in the list default
-            if (EnemyManagerInstance.gunshipsToProcess.Count == 1)
+            if (EnemyManagerInstance.GunshipsAlive.Count == 1)
             {
                 gunshipMoveType = GunshipMoveTypes.PlayerFollow;
                 SetEnemyMovementType(gunshipMoveType);
             }
 
             //if there are currently any other gunships alive go through them to check what movetype should be assigned to this gunship
-            else if (EnemyManagerInstance.gunshipsToProcess.Count > 1)
+            else if (EnemyManagerInstance.GunshipsAlive.Count > 1)
             {
                 CheckForPlayerFollow();
             }
@@ -48,7 +48,7 @@ namespace CyberCruiser
         private void CheckForPlayerFollow()
         {
             //check if any of the other currently alive gunships are directly following the player
-            foreach (GunshipMovement gunship in EnemyManagerInstance.gunshipsToProcess)
+            foreach (GunshipMovement gunship in EnemyManagerInstance.GunshipsAlive)
             {
                 if (gunship == this) continue;
 
@@ -67,7 +67,7 @@ namespace CyberCruiser
         private void CheckForSlowPlayerFollow()
         {
             //chekc if any of the other currently alive gunships are slow following the player
-            foreach (GunshipMovement gunship in EnemyManagerInstance.gunshipsToProcess)
+            foreach (GunshipMovement gunship in EnemyManagerInstance.GunshipsAlive)
             {
                 if (gunship == this) continue;
 
@@ -102,7 +102,7 @@ namespace CyberCruiser
                 case GunshipMoveTypes.UpDown:
                     _isEnemyMovingUpDown = true;
                     _upDownSpeed = _speed;
-                    _upDownDistance = 1;
+                    _upDownDistance = 5;
                     break;
             }
         }

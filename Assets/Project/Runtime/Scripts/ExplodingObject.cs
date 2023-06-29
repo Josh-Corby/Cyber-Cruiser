@@ -13,7 +13,7 @@ namespace CyberCruiser
         [SerializeField] private float _explosionDuration;
         #endregion
 
-
+        [SerializeField] private SoundControllerBase _soundController;
         [SerializeField] private ClipInfo _explosionClip;
 
         #region Cluster
@@ -26,6 +26,11 @@ namespace CyberCruiser
         private GameObject _objectSpawnedOnCluster;
         #endregion
 
+        private void Awake()
+        {
+            _soundController = GetComponent<SoundControllerBase>();
+        }
+
         private void Start()
         {
             if (clusterOnDeath)
@@ -34,6 +39,7 @@ namespace CyberCruiser
             }
 
             Explode();
+            _soundController.PlayNewClip(_explosionClip);
         }
 
         private void ValidateObjectToSpawn()

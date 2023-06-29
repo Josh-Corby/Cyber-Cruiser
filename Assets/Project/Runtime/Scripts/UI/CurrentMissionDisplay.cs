@@ -36,10 +36,17 @@ namespace CyberCruiser
 
         private void AssignMissionUI()
         {
+
             _currentMission = MissionManagerInstance.CurrentMission;
 
+            if(_currentMission == null)
+            {
+                _missionDescription.text = "Mission Complete";
+                return;
+            }
+
             _missionDescription.text = _currentMission.missionDescription;
-            _missionProgress.text = MissionManagerInstance.CurrentMissionProgress.ToString();
+            _missionProgress.text = MissionManagerInstance.MissionProgressLeft.ToString() + " left";
 
             for (int i = 0; i < _missionImages.Length; i++)
             {

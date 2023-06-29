@@ -190,7 +190,7 @@ MonoBehaviour:
   _plasmaOnPickup:
     UseConstant: 0
     ConstantValue: 0
-    Variable: {fileID: 11400000, guid: f6f677ff1af64934fb255372a76f7a1c, type: 2}
+    Variable: {fileID: 11400000, guid: e8a2002e6cf263f4f9b06e49d987c0f8, type: 2}
   _ionOnPickup:
     UseConstant: 0
     ConstantValue: 0
