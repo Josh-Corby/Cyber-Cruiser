@@ -7,6 +7,7 @@ namespace CyberCruiser
     public class PlayerPlasmaTextDisplay : GameBehaviour
     {
         private TMP_Text _plasmaText;
+        [SerializeField] private IntReference _playerPlasmaReference;
 
         private void Awake()
         {
@@ -15,13 +16,13 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            PlayerSaveManager.OnPlasmaChange += UpdatePlasmaText;
-            UpdatePlasmaText(PlayerStatsManagerInstance.PlayerPlasma);
+            PlayerManager.OnPlasmaChange += UpdatePlasmaText;
+            UpdatePlasmaText(_playerPlasmaReference.Value);
         }
 
         private void OnDisable()
         {
-            PlayerSaveManager.OnPlasmaChange -= UpdatePlasmaText;
+            PlayerManager.OnPlasmaChange -= UpdatePlasmaText;
         }
 
         private void UpdatePlasmaText(int plasma)

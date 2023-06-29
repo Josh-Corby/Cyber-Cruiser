@@ -42,6 +42,8 @@ namespace CyberCruiser
         private float _startingYRotation;
         public bool IsEnemyDead { get; set; }
 
+        public bool IsEnemyMovingUpDown { get => _isEnemyMovingUpDown; }
+
         protected virtual void Awake()
         {
             _player = PlayerManagerInstance.player.transform;
@@ -244,8 +246,12 @@ namespace CyberCruiser
             transform.position -= new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
         }
 
-        private void FlipUpDownDirection()
+        public void FlipUpDownDirection()
         {
+            if(IsEnemyDead)
+            {
+                return;
+            }
             _isBackForthDirectionUp = !_isBackForthDirectionUp;
             _upDownTimer = Random.Range(1f, 5f);
         }
@@ -297,11 +303,15 @@ namespace CyberCruiser
         private void OnCollisionEnter2D(Collision2D collision)
         {
 
-            if (collision.gameObject.CompareTag(UPDOWNCHECKLAYER))
+            if (_isEnemyMovingUpDown)
             {
-                //Debug.Log("border hit");
-                FlipUpDownDirection();
+                if (collision.gameObject.CompareTag(UPDOWNCHECKLAYER))
+                {
+                    //Debug.Log("border hit");
+                    //FlipUpDownDirection();
+                }
             }
+        
         }
     }
 

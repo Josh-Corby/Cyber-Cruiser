@@ -6,7 +6,7 @@ namespace CyberCruiser
     public class EnemyManager : GameBehaviour<EnemyManager>
     {
         public List<SlicerMovement> slicersSeeking = new();
-        [HideInInspector] public List<GunshipMovement> GunshipsAlive = new();
+        public List<GunshipMovement> GunshipsAlive = new();
         [SerializeField] private List<GameObject> _enemiesAlive = new();
         [SerializeField] private List<GameObject> _crashingEnemies = new();
 

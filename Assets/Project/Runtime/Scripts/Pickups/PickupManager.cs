@@ -49,7 +49,7 @@ namespace CyberCruiser
 
         private GameObject GetRandomBossPickup()
         {        
-            if( _bossDropsToSpawn == null )
+            if( _bossDropsToSpawn.Count == 0)
             {
                 return _baseBossDrop;
             }

@@ -25,30 +25,30 @@ namespace CyberCruiser
 
         public void PickupEffect()
         {
+            Debug.Log("Picked up");
             switch (_pickupType)
             {
                 case PickupType.Normal:
                 case PickupType.Boss:
                     OnResourcePickup(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
                     break;
+
                 case PickupType.Weapon:
-                    OnResourcePickup(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
                     switch (_upgradeType)
                     {
                         case WeaponUpgradeType.None:
                             return;
 
-                        case WeaponUpgradeType.Scatter_Fixed:
-                        case WeaponUpgradeType.Scatter_Random:
-                        case WeaponUpgradeType.Pulverizer:
-                        case WeaponUpgradeType.Homing:
-                        case WeaponUpgradeType.ChainLightning:
+                        default:
                             OnWeaponUpgradePickup(_upgradeType);
                             break;
                     }
+                    OnResourcePickup(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
+
                     break;
             }
             OnPickedUp(gameObject);
+            Destroy(gameObject);
         }
 
         private void Update()

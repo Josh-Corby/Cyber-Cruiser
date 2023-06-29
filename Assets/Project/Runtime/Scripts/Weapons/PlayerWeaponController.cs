@@ -1,3 +1,4 @@
+using PlasticGui.WorkspaceWindow.Diff;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -287,6 +288,7 @@ namespace CyberCruiser
             {
                 StopCoroutine(_weaponUpgradeCoroutine);
             }
+            Debug.Log("weapon upgrade pickup");
 
             _soundController.PlaySound(0);
 
@@ -319,6 +321,10 @@ namespace CyberCruiser
                 case WeaponUpgradeType.Smart:
                     ChangeWeapon(_smartGun);
                     break;
+
+                default:
+                    Debug.Log("no upgrade found");
+                    break;
             }
 
             CurrentHeat = 0;
@@ -337,6 +343,7 @@ namespace CyberCruiser
                 yield return new WaitForSeconds(0.01f);
             }
 
+            Debug.Log("Upgrade finished");
             //reset player weapon to its original values after upgrade duration is over
             _soundController.PlaySound(1);
             OnWeaponUpgradeFinish();

@@ -105,7 +105,6 @@ namespace CyberCruiser
             PlayerPrefs.SetInt(IS_EFFECTS_MUTED, _isEffectsMuted ? 1 : 0);
         }
 
-
         #region Set Audio Levels
         public void SetMasterVolumeIfNotMuted(float volume)
         {

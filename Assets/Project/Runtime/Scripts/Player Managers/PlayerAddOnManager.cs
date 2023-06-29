@@ -6,7 +6,7 @@ namespace CyberCruiser
 {
     public class PlayerAddOnManager : GameBehaviour
     {
-        [SerializeField] private PlayerManager _playerManager;
+        [SerializeField] private PlayerSaveManager _playerSaveManager;
         [SerializeField] private PlayerShieldController _shieldController;
         [SerializeField] private List<AddOnActiveState> _addOnActiveStates = new();
 
@@ -29,6 +29,7 @@ namespace CyberCruiser
             public string Name;
             public bool IsAddOnActive;
         }
+
         private void OnEnable()
         {
             AddOnButton.OnAddonBuyOrSell += BuyOrSellAddOn;
@@ -39,8 +40,7 @@ namespace CyberCruiser
         {
             AddOnButton.OnAddonBuyOrSell -= BuyOrSellAddOn;
         }
-
-      
+ 
         private void DisableAllAddOns()
         {
             for (int i = 0; i < _addOnActiveStates.Count; i++)
@@ -59,7 +59,7 @@ namespace CyberCruiser
         {
             int buyOrRefundValue = addOn.IonCost;
             buyOrRefundValue = isBuyingAddOn ? -buyOrRefundValue : buyOrRefundValue;
-            PlayerStatsManagerInstance.ChangeIon(buyOrRefundValue);
+            _playerSaveManager.ChangeIon(buyOrRefundValue);
             ChangeAddOnActiveState(addOn.ID, isBuyingAddOn);
         }
 

@@ -31,6 +31,7 @@ namespace CyberCruiser
         }
 
         public bool IsBeamActive { get => _isBeamActive; }
+
         private void OnDisable()
         {
             ResetBeam();
@@ -57,9 +58,11 @@ namespace CyberCruiser
 
         public void EnableBeam()
         {
-            _isBeamActive = true;
-
-            _beamSoundController.PlayNewClip(_beamClip);
+            if (IsBeamActive == false)
+            {
+                _isBeamActive = true;
+                _beamSoundController.PlayNewClip(_beamClip);
+            }
             //_audioSource.Play();
         }
 

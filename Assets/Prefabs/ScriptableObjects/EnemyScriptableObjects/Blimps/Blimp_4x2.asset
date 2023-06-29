@@ -16,7 +16,7 @@ MonoBehaviour:
   EnemyName: Blimp_4x2
   GeneralStats:
     Type: 4
-    MaxHealth: 6
+    MaxHealth: 5
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:

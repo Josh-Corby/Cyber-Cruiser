@@ -1823,6 +1823,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
+  _playerPlasma: {fileID: 11400000, guid: 5425bcde8a2f463469093b17d5cd874b, type: 2}
+  _playerIon: {fileID: 11400000, guid: b983bebd524e4e14396d5ccd3f2faa1a, type: 2}
 --- !u!4 &498751017
 Transform:
   m_ObjectHideFlags: 0
@@ -3849,7 +3851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac877b247733675438d7badf6f9c3c9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerManager: {fileID: 1324404176}
+  _playerSaveManager: {fileID: 0}
   _shieldController: {fileID: 1617183391}
   _addOnActiveStates:
   - Name: Battery Pack
@@ -4278,17 +4280,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1165463880448735964, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
   m_PrefabInstance: {fileID: 8907491432400472847}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1324404176 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-  m_PrefabInstance: {fileID: 8907491432400472847}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 077d4773bb84afa4f922dd9299e9eb4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1326374112
 GameObject:
   m_ObjectHideFlags: 0
@@ -4726,7 +4717,7 @@ MonoBehaviour:
     Missions: []
   _missionsToCompleteInCategory: []
   _currentMission: {fileID: 0}
-  _nextMissionTostart: {fileID: 0}
+  _nextMissionToStart: {fileID: 0}
   _currentMissionGoal: 0
   _currentMissionProgress: 0
   _isMissionFailed: 0
@@ -4813,7 +4804,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1464198312}
   - component: {fileID: 1464198314}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: UpDownBorder (1)
   m_TagString: UpDown
   m_Icon: {fileID: 0}
@@ -5058,7 +5049,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1482695090}
   - component: {fileID: 1482695092}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: UpDownBorder
   m_TagString: UpDown
   m_Icon: {fileID: 0}
@@ -5728,6 +5719,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1724041573828495962, guid: 3b01a66e0a14ddb46acb087bf0e3d128, type: 3}
+      propertyPath: _playerPlasmaReference.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 5425bcde8a2f463469093b17d5cd874b, type: 2}
     - target: {fileID: 3742441219461857059, guid: 3b01a66e0a14ddb46acb087bf0e3d128, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -7108,6 +7103,9 @@ MonoBehaviour:
   _bossSpawner: {fileID: 1370326090}
   _bosses:
   - {fileID: 11400000, guid: b3eead9fae217544fbca7e9c01d12c17, type: 2}
+  - {fileID: 11400000, guid: f9f7b71e06d9e7347a816ac37c62f91f, type: 2}
+  - {fileID: 11400000, guid: 78f9a89cd02828243b6c80b47d51d549, type: 2}
+  - {fileID: 11400000, guid: 45c00a2ce362ab249b4c9699c248f74d, type: 2}
   _enemiesToSpawnBase: 1
   _enemiesToSpawn: 2
   _spawnEnemyIntervalBase: 1
@@ -7667,6 +7665,10 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1386677167}
+    - target: {fileID: 6608819467477397061, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
+      propertyPath: _playerPlasmaReference.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 5425bcde8a2f463469093b17d5cd874b, type: 2}
     - target: {fileID: 7371006466222535761, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -7983,9 +7985,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _currentIon
+      value: 
+      objectReference: {fileID: 11400000, guid: b983bebd524e4e14396d5ccd3f2faa1a, type: 2}
+    - target: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _addOnManager
       value: 
       objectReference: {fileID: 1118535384}
+    - target: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _currentPlasma
+      value: 
+      objectReference: {fileID: 11400000, guid: 5425bcde8a2f463469093b17d5cd874b, type: 2}
     - target: {fileID: 5944951165642406349, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0

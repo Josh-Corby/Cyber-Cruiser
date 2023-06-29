@@ -20,14 +20,16 @@ namespace CyberCruiser
         #endregion
 
         [SerializeField] private IntValue _currentPlasma;
-     
+        [SerializeField] private IntValue _currentIon;
+
+
+
         #region Fields
         private const int BASE_MAX_HEALTH = 5;
         private const int BASE_PLASMA_COST = 5;
         private const float BASE_I_FRAMES_DURATION = 0.3f;
        
 
-        [SerializeField] private int _playerPlasma;
         [SerializeField] private int _plasmaCost;
         [SerializeField] private int _maxHealth;
         [SerializeField] private float _currentHealth;
@@ -41,8 +43,20 @@ namespace CyberCruiser
         #endregion
 
         #region Properties
-        public int PlasmaCost { get => _plasmaCost; set => _plasmaCost = value; }
+        private int PlasmaCost { get => _plasmaCost; set => _plasmaCost = value; }
  
+        private int CurrentPlasma
+        {
+            get => _currentPlasma.Value; 
+            set
+            {
+                value = value < 0 ? 0 : value;
+                _currentPlasma.Value = value;
+                OnPlasmaChange?.Invoke(CurrentPlasma);
+            }
+        }
+
+        private int CurrentIon { get => _currentIon.Value; set => _currentIon.Value = value; }
 
         private float PlayerCurrentHealth
         {
@@ -82,6 +96,7 @@ namespace CyberCruiser
                 }
             }
         }
+
         private int PlayerMaxHealth
         {
             get => _maxHealth;
@@ -139,8 +154,8 @@ namespace CyberCruiser
         #endregion
 
         #region Actions
-        public static event Action OnPlayerDeath = null;    
-        public static event Action<int> OnIonPickup = null;
+        public static event Action OnPlayerDeath = null;
+        public static event Action<int> OnPlasmaChange = null;
         public static event Action<int> OnPlasmaPickupValue = null;
         public static event Action<int> OnPlayerMaxHealthSet = null;
         public static event Action<float> OnPlayerCurrentHealthChange = null;
@@ -170,8 +185,6 @@ namespace CyberCruiser
             Pickup.OnResourcePickup -= AddResources;
         }
 
-     
-
         private void ApplyAddOns()
         {
             //_playerWeaponController.SetBatteryPackUpgrade(_addOnManager.IsBatteryPackActive);
@@ -200,7 +213,7 @@ namespace CyberCruiser
 
         private void EnablePlayerControls()
         {
-            Debug.Log("Controls enabled");
+            //Debug.Log("Controls enabled");
             _playerShipController.EnableControls();
             _playerWeaponController.EnableControls();
             _playerShieldController.EnableControls();
@@ -208,7 +221,7 @@ namespace CyberCruiser
 
         private void DisablePlayerControls()
         {
-            Debug.Log("Controls disabled");
+            //Debug.Log("Controls disabled");
             _playerShipController.DisableControls();
             _playerWeaponController.DisableControls();
             _playerShieldController.DisableControls();
@@ -219,7 +232,6 @@ namespace CyberCruiser
             _plasmaCost = BASE_PLASMA_COST;
             _iFramesDuration = BASE_I_FRAMES_DURATION;
             PlayerMaxHealth = BASE_MAX_HEALTH;
-            PlayerPlasma = PlayerStatsManagerInstance.PlayerPlasma;
             FullHeal();
             ApplyAddOns();
         }
@@ -227,11 +239,11 @@ namespace CyberCruiser
         private void AddResources(int healthAmount, int plasmaAmount, int ionAmount)
         {
             PlayerCurrentHealth += healthAmount;
-            OnIonPickup(ionAmount);
+            CurrentIon += ionAmount;
 
             if (plasmaAmount > 0)
             {
-                PlayerPlasma += plasmaAmount;
+                CurrentPlasma += plasmaAmount;
                 OnPlasmaPickupValue?.Invoke(plasmaAmount);
             }
         }
@@ -243,15 +255,15 @@ namespace CyberCruiser
 
         public bool CheckPlasma()
         {
-            if (PlayerPlasma < _plasmaCost)
+            if (CurrentPlasma < _plasmaCost)
             {
                 Debug.Log("Not enough plasma");
                 return false;
             }
 
-            if (PlayerPlasma >= _plasmaCost)
+            if (CurrentPlasma >= _plasmaCost)
             {
-                PlayerPlasma -= _plasmaCost;
+                CurrentPlasma -= _plasmaCost;
                 return true;
             }
 
@@ -318,40 +330,19 @@ namespace CyberCruiser
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            //Vector2 closestCollosion = GetClosestCollisionPoint(collision.contacts);
             ProcessCollision(collision.gameObject);
         }
-
-        //private Vector2 GetClosestCollisionPoint(ContactPoint2D[] contacts)
-        //{
-        //    Vector2 closestPoint = Vector2.zero;
-        //    float closestDistance = Mathf.Infinity;
-
-        //    foreach (ContactPoint2D contact in contacts)
-        //    {
-        //        float distance = Vector2.Distance(transform.position, contact.point);
-
-        //        if (distance < closestDistance)
-        //        {
-        //            closestDistance = distance;
-        //            closestPoint = contact.point;
-        //        }
-        //    }
-        //    return closestPoint;
-        //}
 
         private void ProcessCollision(GameObject collider)
         {
             if (collider.TryGetComponent<Pickup>(out var pickup))
             {
-                pickup.PickupEffect();
-
                 if (collider.TryGetComponent<PickupEffectBase>(out var addOnPickup))
                 {
                     addOnPickup.OnPickup();
                 }
+                pickup.PickupEffect();
 
-                Destroy(collider);
                 return;
             }
 
@@ -369,8 +360,6 @@ namespace CyberCruiser
             if (_collisionParticles != null)
             {
                 _collisionParticles.Play();
-                //GameObject collisionParticles = Instantiate(_collisionParticles, collisionPoint, Quaternion.identity);
-                //collisionParticles.transform.parent = null;
             }
 
         }

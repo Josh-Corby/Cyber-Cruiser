@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _totalChainBounces: 5
   _currentChainBounces: 0
-  _chainDamage: 10
+  _chainDamage: 6
   _chainRange: 100
   _objectsInRange: []
   _objectsBouncedTo: []
