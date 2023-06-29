@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -55,9 +56,9 @@ namespace CyberCruiser
 
         private void SetSlidersToSavedPositions()
         {
-            _masterSlider.value = _masterVolume;
-            _musicSlider.value = _musicVolume;
-            _effectsSlider.value = _effectsVolume;
+            _masterSlider.value = MathF.Pow(10f, _masterVolume / 20f);
+            _musicSlider.value = MathF.Pow(10f, _musicVolume/20f);
+            _effectsSlider.value = MathF.Pow(10f, _effectsVolume / 20f);
         }
 
         private void CheckAudioBools()
@@ -69,7 +70,7 @@ namespace CyberCruiser
 
             else
             {
-                SetMasterVolumeIfNotMuted(_masterVolume);
+                SetMasterVolumeIfNotMuted(_masterSlider.value);
             }
 
             if(_isMusicMuted) 
@@ -79,7 +80,7 @@ namespace CyberCruiser
 
             else
             {
-                SetMusicVolumeIfNotMuted(_musicVolume);
+                SetMusicVolumeIfNotMuted(_musicSlider.value);
 
             }
 
@@ -90,7 +91,7 @@ namespace CyberCruiser
 
             else
             {
-                SetEffectsVolumeIfNotMuted(_effectsVolume);
+                SetEffectsVolumeIfNotMuted(_effectsSlider.value);
             }
         }
 
@@ -110,7 +111,7 @@ namespace CyberCruiser
         {
             if (!_isAudioMuted)
             {
-                _masterVolume = volume;
+                _masterVolume = Mathf.Log10(volume) * 20;
                 _audioMixer.SetFloat(MASTER_VOLUME, _masterVolume);
             }
         }
@@ -119,7 +120,7 @@ namespace CyberCruiser
         {
             if (!_isMusicMuted)
             {
-                _musicVolume = volume;
+                _musicVolume = Mathf.Log10(volume) * 20;
                 _audioMixer.SetFloat(MUSIC_VOLUME, _musicVolume);
             }
         }
@@ -128,7 +129,7 @@ namespace CyberCruiser
         {
             if (!_isEffectsMuted)
             {
-                _effectsVolume = volume;
+                _effectsVolume = Mathf.Log10(volume);
                 _audioMixer.SetFloat(EFFECTS_VOLUME, _effectsVolume);
             }
         }
