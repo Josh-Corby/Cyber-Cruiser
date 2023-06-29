@@ -19,6 +19,7 @@ namespace CyberCruiser
         [SerializeField] private ParticleSystem _collisionParticles;
         #endregion
 
+        [SerializeField] private IntValue _currentPlasma;
      
         #region Fields
         private const int BASE_MAX_HEALTH = 5;
@@ -41,15 +42,8 @@ namespace CyberCruiser
 
         #region Properties
         public int PlasmaCost { get => _plasmaCost; set => _plasmaCost = value; }
-        private int PlayerPlasma
-        {
-            get => _playerPlasma;
-            set
-            {
-                _playerPlasma = value;
-                OnPlasmaChange(_playerPlasma);
-            }
-        }
+ 
+
         private float PlayerCurrentHealth
         {
             get => _currentHealth;
@@ -97,6 +91,7 @@ namespace CyberCruiser
                 OnPlayerMaxHealthSet(_maxHealth);
             }
         }
+
         public bool IsPlayerColliderEnabled
         {
             set
@@ -146,7 +141,6 @@ namespace CyberCruiser
         #region Actions
         public static event Action OnPlayerDeath = null;    
         public static event Action<int> OnIonPickup = null;
-        public static event Action<int> OnPlasmaChange = null;
         public static event Action<int> OnPlasmaPickupValue = null;
         public static event Action<int> OnPlayerMaxHealthSet = null;
         public static event Action<float> OnPlayerCurrentHealthChange = null;

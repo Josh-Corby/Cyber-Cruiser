@@ -6,6 +6,7 @@ namespace CyberCruiser
 {
     public class CurrentMissionDisplay : GameBehaviour
     {
+        [SerializeField] private MissionManager _missionManager;
         [SerializeField] private TMP_Text _missionDescription;
         [SerializeField] private TMP_Text _missionProgress;
         [SerializeField] private Image[] _missionImages;
@@ -37,7 +38,7 @@ namespace CyberCruiser
         private void AssignMissionUI()
         {
 
-            _currentMission = MissionManagerInstance.CurrentMission;
+            _currentMission = _missionManager.CurrentMission;
 
             if(_currentMission == null)
             {
@@ -46,7 +47,7 @@ namespace CyberCruiser
             }
 
             _missionDescription.text = _currentMission.missionDescription;
-            _missionProgress.text = MissionManagerInstance.MissionProgressLeft.ToString() + " left";
+            _missionProgress.text = _missionManager.MissionProgressLeft.ToString() + " left";
 
             for (int i = 0; i < _missionImages.Length; i++)
             {

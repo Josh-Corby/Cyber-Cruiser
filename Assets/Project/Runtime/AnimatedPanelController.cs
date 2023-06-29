@@ -1,5 +1,6 @@
 using CyberCruiser.Audio;
 using System;
+using TowerDefenseGame;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -7,6 +8,7 @@ namespace CyberCruiser
     [RequireComponent(typeof(Animator))]
     public class AnimatedPanelController : GameBehaviour
     {
+        [SerializeField] private MissionManager _missionManager;
         [SerializeField] private AnimatedPanelSoundController _soundController;
         private Animator _animator;
 
@@ -29,7 +31,6 @@ namespace CyberCruiser
         private string _currentState;
         private const string PANEL_UP = "Panel_Up";
         private const string PANEL_DOWN = "Panel_Down";
-
         public static event Action OnAnimationStart = null;
         public static event Action OnAnimationEnd = null;
 
@@ -130,7 +131,7 @@ namespace CyberCruiser
         private void CheckGameOverPanelToOpen()
         {
             Cursor.visible = true;
-            if (MissionManagerInstance.IsAnyMissionCompleted)
+            if (_missionManager.IsAnyMissionCompleted)
             {
                 ChangeScreen(_missionCompleteScreen);
             }
@@ -157,7 +158,7 @@ namespace CyberCruiser
 
             if(_screenToOpen == _missionScreen)
             {
-                MissionManagerInstance.ChooseNextMission();
+                //_missionManager.StartMission();
             }
 
             //Debug.Log("Screen Open");

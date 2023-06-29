@@ -25,7 +25,6 @@ namespace CyberCruiser
 
         private const int BASE_HEAT_MAX = 100;
         private const float BASE_HEAT_PER_SHOT = 1.75f;
-        private const int BASE_UPGRADE_DURATION = 10;
         private const float BASE_HEAT_LOSS_PER_FRAME = 0.4f;
         private const float BASE_COOLDOWN_HEAT_LOSS_PER_FRAME = 0.6f;
 
@@ -325,7 +324,7 @@ namespace CyberCruiser
             CurrentHeat = 0;
             _isWeaponUpgradeActive = true;
             _weaponUpgradeCounter = _weaponUpgradeDurationInSeconds.Value;
-            OnWeaponUpgradeStart?.Invoke((int)_weaponUpgradeDurationInSeconds.Value);
+            OnWeaponUpgradeStart?.Invoke(_weaponUpgradeDurationInSeconds.Value);
             _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimerCoroutine(upgradeType));
         }
 

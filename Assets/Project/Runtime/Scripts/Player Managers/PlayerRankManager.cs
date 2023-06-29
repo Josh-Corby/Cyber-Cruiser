@@ -12,14 +12,26 @@ namespace CyberCruiser
         private Rank _rankBeforeMissionStart;
         [SerializeField] private int _currentStars;
         [SerializeField] private int _starsBeforeMissionStart;
-        private int _starsToGain;
+        [SerializeField] private int _starsToGain;
         [SerializeField] private int _totalStarReward;
         #endregion
 
         #region Proerties
         public Rank CurrentRank { get => _currentRank; }
         public Rank RankBeforeMissionStart { get => _rankBeforeMissionStart; }
-        public int CurrentStars { get => _currentStars; }
+        public int CurrentStars
+        {
+            get => _currentStars;
+
+            set
+            {
+                _currentStars = value;
+                if(_currentStars >= _currentRank.StarsToRankUp)
+                {
+                    RankUp();
+                }
+            }
+        }
         public int StarsBeforeMissionStart { get => _starsBeforeMissionStart; }
         public int TotalStarReward { get => _totalStarReward; }
         #endregion
@@ -58,7 +70,7 @@ namespace CyberCruiser
 
         private void RestoreStars()
         {
-            _currentStars = PlayerPrefs.GetInt(PLAYER_STARS, 0);
+            CurrentStars = PlayerPrefs.GetInt(PLAYER_STARS, 0);
             _starsBeforeMissionStart = _currentStars;
         }
 
@@ -77,19 +89,19 @@ namespace CyberCruiser
 
         private void IncreaseStars()
         {
-            _currentStars += _starsToGain;
+            CurrentStars += _starsToGain;
 
-            if (_currentStars >= _currentRank.StarsToRankUp)
-            {
-                _starsToGain -= _currentRank.StarsToRankUp;
-                RankUp();
-            }
+            //if (_currentStars >= _currentRank.StarsToRankUp)
+            //{
+            //    _starsToGain -= _currentRank.StarsToRankUp;
+            //    RankUp();
+            //}
         }
 
         private void RankUp()
         {
+            CurrentStars -= _currentRank.StarsToRankUp;
             _currentRank = RankManagerInstance.RankUp(_currentRank.RankID);
-
             if (_starsToGain > 0)
             {
                 IncreaseStars();
@@ -107,7 +119,7 @@ namespace CyberCruiser
             _currentRank = RankManagerInstance.GetRank(0);
             _rankBeforeMissionStart = RankManagerInstance.GetRank(0);
             _currentStars = 0;
-            _starsBeforeMissionStart = 0;       
+            _starsBeforeMissionStart = 0;
         }
 
         private void OnApplicationQuit()

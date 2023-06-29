@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,7 +15,7 @@ namespace CyberCruiser
     /// When a mission is assigned the manager checks its parameters to find what events it should subscribe to for mission progress and completion
     /// the opposite is done when a mission is completed
     /// </summary>
-    public class MissionManager : GameBehaviour<MissionManager>
+    public class MissionManager : GameBehaviour
     {
         #region References
         [SerializeField] private string fileName;
@@ -68,14 +69,15 @@ namespace CyberCruiser
         #endregion
 
         #region Unity Methods
-        protected override void Awake()
-        {
-            RestorePlayerData();
-        }
+        //protected void Awake()
+        //{
+        //    RestorePlayerData();
+        //}
 
         private void OnEnable()
         {
             GameManager.OnMissionStart += () => IsAnyMissionCompleted = false;
+            GameManager.OnMissionEnd += StartMission;
             GameManager.OnSaveDataCleared += ClearSaveData;
         }
 
@@ -83,7 +85,14 @@ namespace CyberCruiser
         {
 
             GameManager.OnMissionStart -= () => IsAnyMissionCompleted = false;
+            GameManager.OnMissionEnd += StartMission;
             GameManager.OnSaveDataCleared -= ClearSaveData;
+        }
+
+        private void Start()
+        {
+            RestorePlayerData();
+            StartMission();
         }
 
         private void OnApplicationQuit()
@@ -93,14 +102,15 @@ namespace CyberCruiser
         #endregion
 
         #region Mission Assigning
-        public void SetMission(MissionScriptableObject missionToSet)
+        public void StartMission()
         {
-            if(_currentMission != null)
+            if (_currentMission != null)
             {
                 return;
             }
 
-            _currentMission = missionToSet;
+            _currentMission = _nextMissionTostart;
+            _nextMissionTostart = null;
             SetMissionObjective();
         }
 
@@ -115,21 +125,55 @@ namespace CyberCruiser
             ResetMissionProgress();
             _currentMission = null;
         }
-        #endregion
 
-        private void FillMissionsToComplete()
+        private void GetNextMissionCategory()
         {
-            for (int i = 0; i < _currentMissionCategory.Missions.Length; i++)
+            _currentMissionCategory = _missionCategories[_currentMissionCategory.ID + 1];
+
+            _missionsToCompleteInCategory.Clear();
+            FillMissionsToComplete();
+        }
+
+        //choose next mission when requested
+        //public void ChooseNextMission()
+        //{
+        //    //if player is in tutorial missions assign next mission directly, otherwise select random mission
+        //    if (_currentMissionCategory.ID == 0)
+        //    {
+        //        SetMission(_missionsToCompleteInCategory[0]);
+        //    }
+        //    else
+        //    {
+        //        PickRandomUncompletedMissionInCategory();
+        //    }
+        //}
+
+        private void ChooseNextMission()
+        {
+            if (_currentMissionCategory.ID == 0)
             {
-                _missionsToCompleteInCategory.Add(_currentMissionCategory.Missions[i]);
+                _nextMissionTostart = _missionsToCompleteInCategory[0];
+            }
+            else
+            {
+                PickRandomUncompletedMissionInCategory();
             }
         }
+
+        //pick random mission in category
+        private void PickRandomUncompletedMissionInCategory()
+        {
+            _nextMissionTostart = _missionsToCompleteInCategory[Random.Range(0, _missionsToCompleteInCategory.Count)];
+        }
+        #endregion
+
+        
 
         #region Mission Condition Assigning
         private void SetMissionObjective()
         {
             _currentMissionGoal = _currentMission.missionObjectiveAmount;
-            CurrentMissionProgress = 0;
+            //CurrentMissionProgress = 0;
             _isMissionFailed = false;
 
             if (_currentMission.missionPersistence == MissionPersistence.OneRun)
@@ -334,13 +378,14 @@ namespace CyberCruiser
         private void CompleteMission()
         {
             Debug.Log("mission complete");
+            CurrentMissionProgress = 0;
             IsAnyMissionCompleted = true;
             OnMissionComplete(_currentMission.missionStarReward);
 
             if (_missionsToCompleteInCategory.Contains(_currentMission))
             {
                 _missionsToCompleteInCategory.Remove(_currentMission);
-                if(_missionsToCompleteInCategory == null)
+                if (_missionsToCompleteInCategory == null)
                 {
                     GetNextMissionCategory();
                 }
@@ -373,10 +418,23 @@ namespace CyberCruiser
 
         private void StoreCategoryIDOfCurrentMission()
         {
+            int missionIndexInMissionsToComplete;
+
             if (_currentMission != null)
             {
-                PlayerPrefs.SetInt(CATEGORY_ID_OF_CURRENT_MISSION, _currentMission.CategoryID);
+                Debug.Log("current mission saved");
+                missionIndexInMissionsToComplete = _missionsToCompleteInCategory.ToList().FindIndex(obj => obj == _currentMission);
             }
+
+            else if (_nextMissionTostart != null)
+            {
+                Debug.Log("next mission saved");
+                missionIndexInMissionsToComplete = _missionsToCompleteInCategory.ToList().FindIndex(obj => obj == _nextMissionTostart);
+            }
+
+            else missionIndexInMissionsToComplete = 0;
+            Debug.Log(missionIndexInMissionsToComplete);
+            PlayerPrefs.SetInt(CATEGORY_ID_OF_CURRENT_MISSION, missionIndexInMissionsToComplete);
         }
 
         private void StoreMissionProgress()
@@ -405,7 +463,8 @@ namespace CyberCruiser
         private void RestoreCategoryIDOfCurrentMission()
         {
             int categoryIDOfCurrentMission = PlayerPrefs.GetInt(CATEGORY_ID_OF_CURRENT_MISSION, 0);
-            SetMission(_currentMissionCategory.Missions[categoryIDOfCurrentMission]);
+            Debug.Log(categoryIDOfCurrentMission);
+            _nextMissionTostart = _missionsToCompleteInCategory[categoryIDOfCurrentMission];
         }
 
         private void RestoreMissionProgress()
@@ -417,52 +476,33 @@ namespace CyberCruiser
         {
             _missionsToCompleteInCategory = FileHandler.ReadFromJSON<MissionScriptableObject>(fileName);
 
-            if(_missionsToCompleteInCategory.Count == 0)
+            if (_missionsToCompleteInCategory.Count == 0)
             {
                 Debug.Log("Missions left to complete is empty, repopulating list.");
                 FillMissionsToComplete();
             }
         }
 
+        private void FillMissionsToComplete()
+        {
+            for (int i = 0; i < _currentMissionCategory.Missions.Length; i++)
+            {
+                _missionsToCompleteInCategory.Add(_currentMissionCategory.Missions[i]);
+            }
+        }
+
         private void ClearSaveData()
         {
+            Debug.Log("save data cleared");
             _currentMission = null;
             _currentMissionProgress = 0;
             _currentMissionCategory = _missionCategories[0];
-            SetMission(_currentMissionCategory.Missions[0]);
             _missionsToCompleteInCategory.Clear();
             FillMissionsToComplete();
+            _nextMissionTostart = _currentMissionCategory.Missions[0];
+            StartMission();
         }
-        #endregion
-
-        private void GetNextMissionCategory()
-        {
-            _currentMissionCategory = _missionCategories[_currentMissionCategory.ID + 1];
-
-            _missionsToCompleteInCategory.Clear();
-            FillMissionsToComplete();
-        }
-
-        //choose next mission when requested
-        public void ChooseNextMission()
-        {
-            //if player is in tutorial missions assign next mission directly, otherwise select random mission
-            if (_currentMissionCategory.ID == 0)
-            {
-                SetMission(_missionsToCompleteInCategory[0]);
-            }
-            else
-            {
-                PickRandomUncompletedMissionInCategory();
-            }
-        }
-
-        //pick random mission in category
-        private void PickRandomUncompletedMissionInCategory()
-        {
-            MissionScriptableObject randomMission = _missionsToCompleteInCategory[Random.Range(0, _missionsToCompleteInCategory.Count)];
-            SetMission(randomMission);
-        }
+        #endregion  
 
         [Serializable]
         private struct MissionCategory

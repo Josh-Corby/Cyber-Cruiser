@@ -13,6 +13,8 @@ namespace CyberCruiser
         [SerializeField] public bool _doesPlayerHaveAddOn;
         [SerializeField] private AddonType _addonType;
 
+        [SerializeField] private IntReference _playerIonReference;
+
         public static event Action<AddOnScriptableObject> OnMouseEnter = null;
         public static event Action OnMouseExit = null;
         public static event Action<AddOnScriptableObject, bool> OnAddonBuyOrSell = null;
@@ -31,7 +33,7 @@ namespace CyberCruiser
         private void OnEnable()
         {
             PlayerSaveManager.OnIonChange -= ValidateButtonState;
-            ValidateButtonState(PlayerStatsManagerInstance.PlayerIon);
+            ValidateButtonState(_playerIonReference.Value);
         }
 
         private void OnDisable()

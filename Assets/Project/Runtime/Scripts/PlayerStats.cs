@@ -28,7 +28,7 @@ namespace CyberCruiser
 
         private void ResetStats()
         {
-            //_currentWeaponUpgradeDurationInSeconds.Value = _baseWeaponUpgradeDurationInSeconds.Value;
+            _currentWeaponUpgradeDurationInSeconds.Value = _baseWeaponUpgradeDurationInSeconds.Value;
             _doesPlayerHavePulseDetonator.Value = false;
         }
     }

@@ -16,7 +16,11 @@ MonoBehaviour:
     objectToFire: {fileID: 760453196464390188, guid: 130585e77da054b4ba24c84b35d78629, type: 3}
     TimeBetweenShots: 1
     IsWeaponAutomatic: 0
-    FireClip: {fileID: 8300000, guid: b36d9e4c7b335b9438add8ba1b2b484f, type: 3}
+    Clip:
+      Clip: {fileID: 8300000, guid: b36d9e4c7b335b9438add8ba1b2b484f, type: 3}
+      OverrideSourceVolume: 1
+      Volume: 0.356
+      PlayOneShot: 0
     DoesWeaponUseSpread: 0
     SpreadHalfAngle: 0
     IsWeaponBurstFire: 0

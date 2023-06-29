@@ -7,10 +7,11 @@ namespace CyberCruiser
     {
         private const string PLAYER_PLASMA = "PlayerPlasma";
         private const string PLAYER_ION = "PlayerIon";
-        private int _playerIon;
+
+        [SerializeField] private IntValue _playerPwlasma;
+        [SerializeField] private IntValue _playerIon;
         private int _playerPlasma;
 
-        public int PlayerIon { get => _playerIon; }
         public int PlayerPlasma { get => _playerPlasma; }
 
         public static event Action<int> OnIonChange = null;
@@ -33,15 +34,15 @@ namespace CyberCruiser
 
         private void RestoreValues()
         {
-            _playerIon = PlayerPrefs.GetInt(PLAYER_ION);
+            _playerIon.Value = PlayerPrefs.GetInt(PLAYER_ION);
             _playerPlasma = PlayerPrefs.GetInt(PLAYER_PLASMA);
         }
 
         public void ChangeIon(int value)
         {
-            _playerIon += value;
-            _playerIon = ValidateValue(_playerIon);
-            OnIonChange?.Invoke(_playerIon);
+            _playerIon.Value += value;
+            _playerIon.Value = ValidateValue(_playerIon.Value);
+            OnIonChange?.Invoke(_playerIon.Value);
         }
 
         public void ChangePlasma(int value)
@@ -67,13 +68,13 @@ namespace CyberCruiser
         private void SaveValues()
         {
             PlayerPrefs.SetInt(PLAYER_PLASMA, _playerPlasma);
-            PlayerPrefs.SetInt(PLAYER_ION, _playerIon);
+            PlayerPrefs.SetInt(PLAYER_ION, _playerIon.Value);
         }
 
         private void ClearSaveData()
         {
             _playerPlasma = 0;
-            _playerIon = 0;
+            _playerIon.Value = 0;
         }
 
         private void OnApplicationQuit()

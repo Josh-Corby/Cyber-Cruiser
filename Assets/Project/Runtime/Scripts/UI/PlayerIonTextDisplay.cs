@@ -7,6 +7,7 @@ namespace CyberCruiser
     public class PlayerIonTextDisplay : GameBehaviour
     {
         private TMP_Text _ionTMPText;
+        [SerializeField] private IntReference _playerIonReference;
 
         private void Awake()
         {
@@ -16,7 +17,7 @@ namespace CyberCruiser
         private void OnEnable()
         {
             PlayerSaveManager.OnIonChange += UpdateIonText;
-            UpdateIonText(PlayerStatsManagerInstance.PlayerIon);
+            UpdateIonText(_playerIonReference.Value);
         }
 
         private void OnDisable()
