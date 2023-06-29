@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 6025528392192912381}
   - component: {fileID: 1743152175}
   m_Layer: 10
-  m_Name: BatteryPackPickup
+  m_Name: UpgradePlasmaPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

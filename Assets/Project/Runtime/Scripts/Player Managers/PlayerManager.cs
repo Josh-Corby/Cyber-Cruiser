@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -15,13 +14,12 @@ namespace CyberCruiser
         [SerializeField] private PlayerShipController _playerShipController;
         [SerializeField] private PlayerShieldController _playerShieldController;
         [SerializeField] private PlayerWeaponController _playerWeaponController;
-
         [SerializeField] private ParticleSystem _collisionParticles;
         #endregion
 
         [SerializeField] private IntValue _currentPlasma;
         [SerializeField] private IntValue _currentIon;
-
+        [SerializeField] private IntReference _ramDamage;
 
 
         #region Fields
@@ -38,7 +36,6 @@ namespace CyberCruiser
         public bool isDead;
         [SerializeField] private float _iFramesDuration;
         private bool _isPlayerImmuneToDamage;
-        [SerializeField] private int _ramDamage;
         private Coroutine _iFramesCoroutine;
         #endregion
 
@@ -185,20 +182,6 @@ namespace CyberCruiser
             Pickup.OnResourcePickup -= AddResources;
         }
 
-        private void ApplyAddOns()
-        {
-            //_playerWeaponController.SetBatteryPackUpgrade(_addOnManager.IsBatteryPackActive);
-            _playerWeaponController.SetHydrocoolantUpgrade(_addOnManager.IsHydrocoolantActive);
-            //_playerShieldController.SetPulseDetonator(_addOnManager.IsPulseDetonatorActive);
-            _ramDamage = _addOnManager.IsRamAddOnActive ? 5 : 1;
-
-            if (_addOnManager.IsPlasmaCacheActive)
-            {
-                _plasmaCost -= 1;
-            }
-            
-        }
-
         private void SetPlayerControls(bool isControlsDisabled)
         {
             if (isControlsDisabled)
@@ -233,7 +216,7 @@ namespace CyberCruiser
             _iFramesDuration = BASE_I_FRAMES_DURATION;
             PlayerMaxHealth = BASE_MAX_HEALTH;
             FullHeal();
-            ApplyAddOns();
+
         }
 
         private void AddResources(int healthAmount, int plasmaAmount, int ionAmount)
@@ -348,7 +331,7 @@ namespace CyberCruiser
 
             if (collider.TryGetComponent<Enemy>(out var enemy))
             {
-                enemy.Damage(_ramDamage);
+                enemy.Damage(_ramDamage.Value);
                 Damage(1);
             }
 

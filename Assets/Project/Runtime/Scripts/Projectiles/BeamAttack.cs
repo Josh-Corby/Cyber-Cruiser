@@ -69,6 +69,7 @@ namespace CyberCruiser
         public void DisableBeam()
         {
             _isBeamActive = false;
+            lineRenderer.enabled = false;
             _audioSource.Stop();
         }
 

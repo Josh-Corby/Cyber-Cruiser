@@ -1,4 +1,3 @@
-using PlasticGui.WorkspaceWindow.Diff;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -23,6 +22,9 @@ namespace CyberCruiser
         private bool _controlsEnabled;
 
         [SerializeField] private IntReference _weaponUpgradeDurationInSeconds;
+        [SerializeField] private FloatReference _currentHeatPerShotReference;
+
+
 
         private const int BASE_HEAT_MAX = 100;
         private const float BASE_HEAT_PER_SHOT = 1.75f;
@@ -31,7 +33,6 @@ namespace CyberCruiser
 
         [Header("Heat")]
         [SerializeField] private float _currentHeat;
-        private float _heatPerShot;
         private float _heatLossPerFrame;
         private float _cooldownHeatLossPerFrame;
         [SerializeField] private float _timeBeforeHeatLoss;
@@ -141,19 +142,6 @@ namespace CyberCruiser
             OnWeaponHeatInitialized?.Invoke(_heatMax);
         }
 
-        public void SetHydrocoolantUpgrade(bool isAddOnActive)
-        {
-            if (isAddOnActive)
-            {
-                _heatPerShot -= 0.25f;
-            }
-            else
-            {
-                _heatPerShot = BASE_HEAT_PER_SHOT;
-            }
-        }
-
-
         private void Update()
         {
             CheckOverHeated();
@@ -260,7 +248,7 @@ namespace CyberCruiser
                 _currentWeapon.CheckFireTypes();
                 if (!_isWeaponUpgradeActive)
                 {
-                    CurrentHeat += _heatPerShot;
+                    CurrentHeat += _currentHeatPerShotReference.Value;
                     TimeSinceLastShot = 0;
                 }
             }

@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 6025528392192912381}
   - component: {fileID: 1743152175}
   m_Layer: 10
-  m_Name: BatteryPackPickup
+  m_Name: UpgradeHealthPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7de394872b20de74cb434082efd06c36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectValueToChange: {fileID: 11400000, guid: 4bc78e388cd28844e9b05d1c0c3d72c2, type: 2}
+  _scriptableObjectValueToChange: {fileID: 11400000, guid: f2bd373178f81194a953edb6ed8c42dd, type: 2}
   _valueChanger: {fileID: 11400000, guid: 5d1e1be51e8386947b216fb4883d20b7, type: 2}
   _valueToChangeWith:
     UseConstant: 0

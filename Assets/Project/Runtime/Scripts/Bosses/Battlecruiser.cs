@@ -99,6 +99,7 @@ namespace CyberCruiser
         protected override void Crash()
         {
             base.Crash();
+            
             _beamAttack.DisableBeam();
             OnDied?.Invoke();
         }

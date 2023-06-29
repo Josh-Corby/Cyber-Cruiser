@@ -4998,6 +4998,7 @@ GameObject:
   - component: {fileID: 634649626243274673}
   - component: {fileID: 634649626243274674}
   - component: {fileID: 2377607894216803837}
+  - component: {fileID: 1806197345}
   m_Layer: 0
   m_Name: BeamAttack
   m_TagString: Untagged
@@ -5143,9 +5144,9 @@ MonoBehaviour:
     m_Bits: 128
   _beamWidth: 1
   _audioSource: {fileID: 2377607894216803837}
-  _beamSoundController: {fileID: 0}
+  _beamSoundController: {fileID: 1806197345}
   _beamClip:
-    Clip: {fileID: 0}
+    Clip: {fileID: 8300000, guid: 0600fb3b5ab2d62409b4e82c5d9ee09d, type: 3}
     OverrideSourceVolume: 0
     Volume: 1
     PlayOneShot: 0
@@ -5163,7 +5164,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5245,6 +5246,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1806197345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634649626243274679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 2377607894216803837}
 --- !u!1 &1105963819901786238
 GameObject:
   m_ObjectHideFlags: 0
@@ -10701,6 +10715,10 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 4bc78e388cd28844e9b05d1c0c3d72c2, type: 2}
+  _currentHeatPerShotReference:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 0}
   _currentHeat: 0
   _timeBeforeHeatLoss: 0.3
 --- !u!114 &7594662664462515631
@@ -11166,14 +11184,18 @@ MonoBehaviour:
   _playerShieldController: {fileID: 6496008905095027466}
   _playerWeaponController: {fileID: 2424794497359752222}
   _collisionParticles: {fileID: 9211627681728336329}
-  _playerPlasma: 0
+  _currentPlasma: {fileID: 11400000, guid: 5425bcde8a2f463469093b17d5cd874b, type: 2}
+  _currentIon: {fileID: 11400000, guid: b983bebd524e4e14396d5ccd3f2faa1a, type: 2}
+  _ramDamage:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: aa276e2714fc69841b52677e3cb3cc60, type: 2}
   _plasmaCost: 5
   _maxHealth: 0
   _currentHealth: 0
   _playerHealthState: 0
   isDead: 0
   _iFramesDuration: 0
-  _ramDamage: 1
 --- !u!114 &1324404178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11188,12 +11210,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseWeaponMaxHeat: {fileID: 0}
   _baseWeaponUpgradeDurationInSeconds: {fileID: 11400000, guid: 0105a809567c1a3489824ae208dd41b6, type: 2}
-  _baseHeatPerShot: {fileID: 0}
+  _baseHealthOnPickup: {fileID: 11400000, guid: cb13a566e4fa0dc418ff25a4d240cfd2, type: 2}
+  _basePlasmaOnPickup: {fileID: 11400000, guid: 89893a68d663c27439261c5283996d71, type: 2}
+  _baseRamDamage: 0
+  _baseHeatPerShot: {fileID: 11400000, guid: 2458f85d47f8ede4a9983b4cb1742f54, type: 2}
   _baseHeatLossPerFrame: {fileID: 0}
   _baseCooldownHeatLossPerFrame: {fileID: 0}
-  _currentWeaponUpgradeDurationInSeconds: {fileID: 0}
+  _currentWeaponUpgradeDurationInSeconds: {fileID: 11400000, guid: 4bc78e388cd28844e9b05d1c0c3d72c2, type: 2}
+  _currentRamDamage: {fileID: 11400000, guid: aa276e2714fc69841b52677e3cb3cc60, type: 2}
+  _currentHealthOnPickup: {fileID: 11400000, guid: f2bd373178f81194a953edb6ed8c42dd, type: 2}
+  _currentPlasmaOnPickup: {fileID: 11400000, guid: e8a2002e6cf263f4f9b06e49d987c0f8, type: 2}
   _doesPlayerHavePulseDetonator: {fileID: 11400000, guid: 18055d9adfac546488460e5249e0c5f3, type: 2}
-  _BatteryPackUpgradeValue: {fileID: 0}
+  _batteryPackUpgradeValue: {fileID: 11400000, guid: 0105a809567c1a3489824ae208dd41b6, type: 2}
+  _ramDamageUpgradeValue: {fileID: 11400000, guid: c8d5bd4bfe64b2b45a84a9534e499367, type: 2}
+  _healthPickupUpgradeValue: {fileID: 11400000, guid: bc9f466a84deaf246a01e474bafffd59, type: 2}
+  _plasmaPickupUpgradeValue: {fileID: 11400000, guid: c9fd54c6a8ff6604094a501fa7fef6bc, type: 2}
 --- !u!1001 &172643183710198084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11264,6 +11295,10 @@ PrefabInstance:
     - target: {fileID: 4662151075472529233, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.297
+      objectReference: {fileID: 0}
+    - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: OutputAudioMixerGroup
@@ -11405,6 +11440,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4662151075472529233, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
@@ -12286,6 +12325,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6640960726374861538, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: burstFire
       value: 0
@@ -12371,6 +12414,10 @@ PrefabInstance:
     - target: {fileID: 1980104222054435664, guid: 1e50e63d4c19b1f46ba61800a1800624, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1980104222054435664, guid: 1e50e63d4c19b1f46ba61800a1800624, type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime1
+      value: 38165
       objectReference: {fileID: 0}
     - target: {fileID: 1980104222054435664, guid: 1e50e63d4c19b1f46ba61800a1800624, type: 3}
       propertyPath: ColorModule.gradient.maxGradient.ctime1
@@ -12528,6 +12575,10 @@ PrefabInstance:
       value: -0.374
       objectReference: {fileID: 0}
     - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
       objectReference: {fileID: 1700422259606103914, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
@@ -12658,6 +12709,10 @@ PrefabInstance:
       value: -0.297
       objectReference: {fileID: 0}
     - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
       objectReference: {fileID: 5415765485526934196, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
@@ -12786,6 +12841,10 @@ PrefabInstance:
     - target: {fileID: 4662151075472529233, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.374
+      objectReference: {fileID: 0}
+    - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5829328737251401865, guid: ab24aa843f9bfa1418e3b70b6ce86dea, type: 3}
       propertyPath: OutputAudioMixerGroup

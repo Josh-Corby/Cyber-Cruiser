@@ -19,7 +19,7 @@ MonoBehaviour:
     Clip:
       Clip: {fileID: 8300000, guid: 69978527b4480414bbf449aa751ad852, type: 3}
       OverrideSourceVolume: 1
-      Volume: 0.186
+      Volume: 0.201
       PlayOneShot: 1
     DoesWeaponUseSpread: 1
     SpreadHalfAngle: 30
