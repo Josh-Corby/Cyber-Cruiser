@@ -8,35 +8,20 @@ namespace CyberCruiser
     {
         [SerializeField] private DistanceManager _distanceManager;
         [SerializeField] private EnemySpawnerManager _enemySpawnerManager;
-
         [SerializeField] private BoolValue _isGamePaused;
-        //[SerializeField] private bool _isGamePaused = false;
-        [SerializeField] private GameObject gameplayObjects;
-        private GameState _gameState;
-
-        public GameState CurrentGameState
-        {
-            get => _gameState;
-        }
-
-        public bool IsGamePaused
-        {
-            get => _isGamePaused.Value; private set => _isGamePaused.Value = value;
-        }
+        [SerializeField] private GameObject _playerObject;
+        [SerializeField] private AnimatedPanelController _animPanelController;
 
         #region Actions
         public static event Action<bool> OnIsTimeScalePaused = null;
-        public static event Action OnGamePaused = null;
-        public static event Action OnGameResumed = null;
         public static event Action OnMissionStart = null;
         public static event Action OnMissionEnd = null;
-        public static event Action OnSaveDataCleared = null;
         #endregion
 
         protected override void Awake()
         {
             base.Awake();
-            gameplayObjects.SetActive(false);
+            _playerObject.SetActive(false);
             Application.targetFrameRate = 60;
         }
 
@@ -56,30 +41,22 @@ namespace CyberCruiser
 
         public void StartLevel()
         {
-            _gameState = GameState.Mission;
-            ResumeGame();
-            ToggleGameplayObjects(true);
             OnMissionStart?.Invoke();
+            ResumeGame();
+            TogglePlayerObject(true);
             ResetSystems();
         }
 
         public void EndMission()
         {
-            StopSystems();
-            //TogglePause();
             OnMissionEnd?.Invoke();
-            ToggleGameplayObjects(false);
-        }
-
-        public void ResetSystems()
-        {
-            _distanceManager.ResetValues();
-            _enemySpawnerManager.ResetSpawning();
+            StopSystems();
+            TogglePlayerObject(false);
         }
 
         public void StartSystems()
         {
-            _distanceManager.OnMissionStart();
+            _distanceManager.StartLevelCounting();
             _enemySpawnerManager.StartSpawningEnemies();
         }
 
@@ -89,59 +66,43 @@ namespace CyberCruiser
             _enemySpawnerManager.StopSpawningEnemies();
         }
 
-        private void ToggleGameplayObjects(bool value)
+        public void ResetSystems()
         {
-            gameplayObjects.SetActive(value);
+            _distanceManager.ResetValues();
+            _enemySpawnerManager.ResetSpawning();
+        }
+
+        private void TogglePlayerObject(bool value)
+        {
+            _playerObject.SetActive(value);
         }
 
         public void TogglePause()
         {
-
-            if (!IsGamePaused)
-            {
-                IsGamePaused = true;
-                PauseGame();
-                OnGamePaused?.Invoke();
+            if (!_isGamePaused.Value)
+            {             
+                PauseGame();              
             }
 
-            else if (IsGamePaused)
+            else if (_isGamePaused.Value)
             {
-                //IsGamePaused = false;
-                OnGameResumed?.Invoke();
-                //ResumeGame();
+                _animPanelController.CloseCurrentScreen();
             }
         }
 
         private void PauseGame()
         {
-            StopGame();
-            _gameState = GameState.Menu;
-            OnIsTimeScalePaused?.Invoke(true);
-        }
-
-        public void StopGame()
-        {
             Time.timeScale = 0f;
+            OnIsTimeScalePaused?.Invoke(true);
+            _isGamePaused.Value = true;
+            _animPanelController.ChangeToPauseScreen();
         }
 
         public void ResumeGame()
         {
-            IsGamePaused = false;
+            _isGamePaused.Value = false;
             Time.timeScale = 1f;
-            _gameState = GameState.Mission;
             OnIsTimeScalePaused?.Invoke(false);
-        }
-
-        public void ClearSaveData()
-        {
-            OnSaveDataCleared?.Invoke();
-            /*current stars
-             * current rank
-             * current mission
-             * ion
-             * plasma
-             * quests cleared
-            */
         }
     }
 

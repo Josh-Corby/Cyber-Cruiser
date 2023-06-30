@@ -76,7 +76,7 @@ namespace CyberCruiser
         #endregion
 
         #region Distance Control
-        public void OnMissionStart()
+        public void StartLevelCounting()
         {
             StartIncreasingDistance();
             GenerateNewPlasmaDropDistance();

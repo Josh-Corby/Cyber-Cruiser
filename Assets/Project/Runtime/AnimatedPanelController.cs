@@ -41,17 +41,11 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            GameManager.OnGamePaused += () => ChangeScreen(_pauseScreen);
-            GameManager.OnGameResumed += CloseCurrentScreen;
-
             PlayerDeathTrigger.OnPlayerDeadOffScreen += CheckGameOverPanelToOpen;
         }
 
         private void OnDisable()
         {
-            GameManager.OnGamePaused -= () => ChangeScreen(_pauseScreen);
-            GameManager.OnGameResumed -= CloseCurrentScreen;
-
             PlayerDeathTrigger.OnPlayerDeadOffScreen -= CheckGameOverPanelToOpen;
         }
 
@@ -118,12 +112,17 @@ namespace CyberCruiser
             OpenScreen();
         }
 
+        public void ChangeToPauseScreen()
+        {
+            ChangeScreen(_pauseScreen);
+        }
+
         public void GoToMenuPanel()
         {
             _panelToEnable = _menuPanel;
         }
 
-        public void IsResumingGame(bool isResumingGame)
+        public void IsGameResumingWhenScreenCloses(bool isResumingGame)
         {
             _isResumingGame = isResumingGame;
         }
@@ -142,6 +141,13 @@ namespace CyberCruiser
             }
         }
 
+        public void EndMission()
+        {
+            _isResumingGame = false;
+            GoToMenuPanel();
+            ChangeScreen(_missionScreen);
+        }
+
         #region Animation Events
 
         private void OnOpenScreenAnimationStart()
@@ -156,12 +162,6 @@ namespace CyberCruiser
                 OnAnimationEnd?.Invoke();
             }
 
-            if(_screenToOpen == _missionScreen)
-            {
-                //_missionManager.StartMission();
-            }
-
-            //Debug.Log("Screen Open");
             _screenToOpen.SetActive(true);
             _currentScreen = _screenToOpen;
             _screenToOpen = null;

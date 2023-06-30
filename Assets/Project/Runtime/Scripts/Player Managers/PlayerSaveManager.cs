@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CyberCruiser
 {
-    public class PlayerSaveManager : GameBehaviour<PlayerSaveManager>
+    public class PlayerSaveManager : GameBehaviour
     {
         private const string PLAYER_PLASMA = "PlayerPlasma";
         private const string PLAYER_ION = "PlayerIon";
@@ -29,15 +29,9 @@ namespace CyberCruiser
         public static event Action<int> OnIonChange = null;
 
 
-        private void OnEnable()
+        private void Awake()
         {
-            GameManager.OnSaveDataCleared += ClearSaveData;
             RestoreValues();
-        }
-
-        private void OnDisable()
-        {
-            GameManager.OnSaveDataCleared -= ClearSaveData;
         }
 
         private void RestoreValues()
@@ -65,7 +59,7 @@ namespace CyberCruiser
             PlayerPrefs.SetInt(PLAYER_ION, _playerIon.Value);
         }
 
-        private void ClearSaveData()
+        public void ClearSaveData()
         {
             PlayerPlasma = 0;
             _playerIon.Value = 0;

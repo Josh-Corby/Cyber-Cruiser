@@ -19,8 +19,8 @@ namespace CyberCruiser
 
         [SerializeField] private IntValue _currentPlasma;
         [SerializeField] private IntValue _currentIon;
-        [SerializeField] private IntReference _ramDamage;
-
+        [SerializeField] private IntReference _currentRamDamageReference;
+        [SerializeField] private BoolValue _isPlayerDead;
 
         #region Fields
         private const int BASE_MAX_HEALTH = 5;
@@ -33,13 +33,14 @@ namespace CyberCruiser
         [SerializeField] private float _currentHealth;
         [SerializeField] private PlayerHealthState _playerHealthState;
 
-        public bool isDead;
         [SerializeField] private float _iFramesDuration;
         private bool _isPlayerImmuneToDamage;
         private Coroutine _iFramesCoroutine;
         #endregion
 
         #region Properties
+        public bool IsPlayerDead { get => _isPlayerDead.Value; private set => _isPlayerDead.Value = value; }
+
         private int PlasmaCost { get => _plasmaCost; set => _plasmaCost = value; }
  
         private int CurrentPlasma
@@ -63,7 +64,7 @@ namespace CyberCruiser
                 _currentHealth = value;
                 if (_currentHealth > 0)
                 {
-                    isDead = false;
+                    IsPlayerDead = false;
                     if (_currentHealth >= PlayerMaxHealth)
                     {
                         _currentHealth = PlayerMaxHealth;
@@ -88,7 +89,7 @@ namespace CyberCruiser
                 OnPlayerCurrentHealthChange(_currentHealth);
                 if (_currentHealth <= 0)
                 {
-                    isDead = true;
+                    IsPlayerDead = true;
                     Destroy();
                 }
             }
@@ -336,7 +337,7 @@ namespace CyberCruiser
 
             if (collider.TryGetComponent<Enemy>(out var enemy))
             {
-                enemy.Damage(_ramDamage.Value);
+                enemy.Damage(_currentRamDamageReference.Value);
                 Damage(1);
             }
 

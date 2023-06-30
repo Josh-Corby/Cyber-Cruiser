@@ -18,10 +18,10 @@ namespace CyberCruiser
         {
             if (_isPlayerGrappled)
             {
-                if (!PlayerManagerInstance.isDead)
-                {
-                    ResetPlayerMovement();
-                }
+                //if (!PlayerManagerInstance.isDead)
+                //{
+                //    ResetPlayerMovement();
+                //}
             }
         }
 
