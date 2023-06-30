@@ -5,8 +5,8 @@ namespace CyberCruiser
 {
     public class PlayerShieldController : ShieldControllerBase
     {
+        [SerializeField] PlayerUIManager _playerUIManager;
         private PulseDetonator _pulseDetonator;
-
 
         #region Fields
         [SerializeField] private BoolReference _doesPlayerHavePulseDetonator;
@@ -22,7 +22,7 @@ namespace CyberCruiser
             set
             {
                 _shieldActiveTimer = value;
-                OnPlayerShieldsValueChange(_shieldActiveTimer);
+                _playerUIManager.ChangeSliderValue(PlayerSliderTypes.Shield, _shieldActiveTimer);
             }
         }
 
@@ -34,20 +34,20 @@ namespace CyberCruiser
                 base.IsShieldsActive = value;
                 if (!_shieldsActive)
                 {
-                    OnPlayerShieldsDeactivated();
+                    _playerUIManager.DisableSlider(PlayerSliderTypes.Shield);
                 }
+
                 if (_shieldsActive)
                 {
-                    OnPlayerShieldsActivated(_shieldActiveDuration);
+                    _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.Shield, _shieldActiveDuration);
+                    OnPlayerShieldsActivated?.Invoke();
                 }
             }
         }
         #endregion
 
         #region Actions
-        public static event Action OnPlayerShieldsDeactivated = null;
-        public static event Action<int> OnPlayerShieldsActivated = null;
-        public static event Action<float> OnPlayerShieldsValueChange = null;
+        public static event Action OnPlayerShieldsActivated = null;
         #endregion
 
         protected override void Awake()

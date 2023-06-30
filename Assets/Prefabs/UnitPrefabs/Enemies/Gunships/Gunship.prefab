@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0702ba6cee210479e32ae588f71995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponBase: {fileID: 11400000, guid: 9818121d79463934baba9740bb6cab5d, type: 2}
+  _currentWeapon: {fileID: 11400000, guid: b034ace63ad0dd841930feaaf4474c83, type: 2}
   _soundController: {fileID: 0}
 --- !u!82 &2590652807368049367
 AudioSource:
@@ -275,6 +275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioSource: {fileID: 0}
+  _muteOnPause: 1
 --- !u!1 &3823487148860911231
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +379,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -105750261
-  m_SortingLayer: 5
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a433968fd46b2aa4a93e9f0cf70156c4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

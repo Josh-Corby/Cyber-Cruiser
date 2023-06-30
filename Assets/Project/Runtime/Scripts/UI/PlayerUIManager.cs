@@ -6,73 +6,32 @@ namespace CyberCruiser
     {
         [SerializeField] private UISlider _playerHealthSlider;
         [SerializeField] private UISlider _playerShieldSlider;
-        [SerializeField] private UISlider _weaponUpgradeSlider;
         [SerializeField] private UISlider _weaponHeatSlider;
+        [SerializeField] private UISlider _weaponUpgradeSlider;
 
-        [SerializeField] private GameObject _playerHealthBarUI;
-        [SerializeField] private GameObject _playerShieldBarUI;
         [SerializeField] private GameObject _weaponUpgradeBarUI;
 
         private void Awake()
         {
-
             _weaponUpgradeBarUI.SetActive(false);
         }
 
-        #region Delegates
-        private void OnEnable()
+        public void EnableSliderAtMaxValue(PlayerSliderTypes slider, int maxValue)
         {
-            PlayerManager.OnPlayerMaxHealthSet += (maxHealth) => EnableSliderAtMaxValue(_playerHealthSlider, maxHealth);
-            PlayerManager.OnPlayerCurrentHealthChange += (currentHealth) => ChangeSliderValue(_playerHealthSlider, currentHealth);
-
-            PlayerWeaponController.OnWeaponUpgradeStart += (weaponUpgradeDuration) => EnableSliderAtMaxValue(_weaponUpgradeSlider, weaponUpgradeDuration);
-            PlayerWeaponController.OnWeaponUpgradeTimerTick += (weaponUpgradeCurrentTime) => ChangeSliderValue(_weaponUpgradeSlider, weaponUpgradeCurrentTime);
-            PlayerWeaponController.OnWeaponUpgradeFinished += () => DisableSlider(_weaponUpgradeSlider);
-
-            PlayerWeaponController.OnWeaponHeatInitialized += (maxHeat) => EnableSliderAtMaxValue(_weaponHeatSlider, maxHeat);
-            PlayerWeaponController.OnHeatChange += (currentHeat) => ChangeSliderValue(_weaponHeatSlider, currentHeat);
-            PlayerWeaponController.OnOverheatStatusChange += OverheatUI;
-
-            PlayerShieldController.OnPlayerShieldsActivated += (shieldDuration) => EnableSliderAtMaxValue(_playerShieldSlider, shieldDuration);
-            PlayerShieldController.OnPlayerShieldsDeactivated += () => DisableSlider(_playerShieldSlider);
-            PlayerShieldController.OnPlayerShieldsValueChange += (currentShieldHealth) => ChangeSliderValue(_playerShieldSlider, currentShieldHealth);
+            GetSliderFromEnum(slider).EnableSliderAtMaxValue(maxValue);
         }
 
-        private void OnDisable()
+        public void DisableSlider(PlayerSliderTypes slider)
         {
-            PlayerManager.OnPlayerMaxHealthSet -= (maxHealth) => EnableSliderAtMaxValue(_playerHealthSlider, maxHealth);
-            PlayerManager.OnPlayerCurrentHealthChange -= (currentHealth) => ChangeSliderValue(_playerHealthSlider, currentHealth);
-
-            PlayerWeaponController.OnWeaponUpgradeStart -= (weaponUpgradeDuration) => EnableSliderAtMaxValue(_weaponUpgradeSlider, weaponUpgradeDuration);
-            PlayerWeaponController.OnWeaponUpgradeTimerTick -= (weaponUpgradeCurrentTime) => ChangeSliderValue(_weaponUpgradeSlider, weaponUpgradeCurrentTime);
-            PlayerWeaponController.OnWeaponUpgradeFinished -= () => DisableSlider(_weaponUpgradeSlider);
-
-            PlayerWeaponController.OnWeaponHeatInitialized -= (maxHeat) => EnableSliderAtMaxValue(_weaponHeatSlider, maxHeat);
-            PlayerWeaponController.OnHeatChange -= (currentHeat) => ChangeSliderValue(_weaponHeatSlider, currentHeat);
-            PlayerWeaponController.OnOverheatStatusChange -= OverheatUI;
-
-            PlayerShieldController.OnPlayerShieldsActivated -= (shieldDuration) => EnableSliderAtMaxValue(_playerShieldSlider, shieldDuration);
-            PlayerShieldController.OnPlayerShieldsDeactivated -= () => DisableSlider(_playerShieldSlider);
-            PlayerShieldController.OnPlayerShieldsValueChange -= (currentShieldHealth) => ChangeSliderValue(_playerShieldSlider, currentShieldHealth);
-        }
-        #endregion
-
-        private void EnableSliderAtMaxValue(UISlider slider, int maxValue)
-        {
-            slider.EnableSliderAtMaxValue(maxValue);
+            GetSliderFromEnum(slider).DisableSlider();
         }
 
-        private void DisableSlider(UISlider slider)
+        public void ChangeSliderValue(PlayerSliderTypes slider, float value)
         {
-            slider.DisableSlider();
+            GetSliderFromEnum(slider).ChangeSliderValue(value);
         }
 
-        private void ChangeSliderValue(UISlider slider, float value)
-        {
-            slider.ChangeSliderValue(value);
-        }
-
-        private void OverheatUI(bool status)
+        public void OverheatUI(bool status)
         {
             if (status)
             {
@@ -83,5 +42,35 @@ namespace CyberCruiser
                 _weaponHeatSlider.SetSliderFillColour(Color.cyan);
             }
         }
+
+        private UISlider GetSliderFromEnum(PlayerSliderTypes slider)
+        {
+            UISlider currentSlider = null;
+            switch (slider)
+            {
+                case PlayerSliderTypes.Health:
+                    currentSlider = _playerHealthSlider;
+                    break;
+                case PlayerSliderTypes.Shield:
+                    currentSlider = _playerShieldSlider;
+                    break;
+                case PlayerSliderTypes.Heat:
+                    currentSlider = _weaponHeatSlider;
+                    break;
+                case PlayerSliderTypes.WeaponUpgrade:
+                    currentSlider = _weaponUpgradeSlider;
+                    break;
+            }
+
+            return currentSlider;
+        }
     }
+}
+
+public enum PlayerSliderTypes
+{
+    Health,
+    Shield,
+    Heat,
+    WeaponUpgrade
 }

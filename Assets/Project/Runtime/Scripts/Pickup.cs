@@ -9,7 +9,7 @@ namespace CyberCruiser
         #region Fields
         [SerializeField] private string _pickupName;
         public PickupType _pickupType;
-        public WeaponUpgradeType _upgradeType;
+        public WeaponSO _weaponSO;
         [SerializeField] private float _speed;
 
         [SerializeField] private IntReference _healthOnPickup;
@@ -21,7 +21,7 @@ namespace CyberCruiser
         #region Actions
         public static event Action<int, int, int> OnResourcePickup = null;
         public static event Action<GameObject> OnPickedUp = null;
-        public static event Action<WeaponUpgradeType> OnWeaponUpgradePickup = null;
+        public static event Action<WeaponSO> OnWeaponUpgradePickup = null;
         public static event Action<string> OnBossPickup = null;
         #endregion
 
@@ -31,27 +31,20 @@ namespace CyberCruiser
             switch (_pickupType)
             {
                 case PickupType.Normal:
-                    OnResourcePickup(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
+                    OnResourcePickup?.Invoke(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
                     break;
+
                 case PickupType.Boss:
-                    OnResourcePickup(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
+                    OnResourcePickup?.Invoke(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
                     OnBossPickup?.Invoke(_pickupName);
                     break;
 
                 case PickupType.Weapon:
-                    switch (_upgradeType)
-                    {
-                        case WeaponUpgradeType.None:
-                            return;
-
-                        default:
-                            OnWeaponUpgradePickup(_upgradeType);
-                            break;
-                    }
-                    OnResourcePickup(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
-
+                    OnWeaponUpgradePickup?.Invoke(_weaponSO);
+                    OnResourcePickup?.Invoke(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
                     break;
             }
+
             OnPickedUp(gameObject);
             Destroy(gameObject);
         }
@@ -70,10 +63,5 @@ namespace CyberCruiser
         public enum PickupType
         {
             Normal, Boss, Weapon
-        }
-
-        public enum WeaponUpgradeType
-        {
-            None, Scatter_Random, Scatter_Fixed, Pulverizer, Homing, ChainLightning, BFG, Smart
         }
 }

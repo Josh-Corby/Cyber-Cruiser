@@ -41,10 +41,10 @@ namespace CyberCruiser
 
         public void StartLevel()
         {
-            OnMissionStart?.Invoke();
             ResumeGame();
             TogglePlayerObject(true);
             ResetSystems();
+            OnMissionStart?.Invoke();
         }
 
         public void EndMission()

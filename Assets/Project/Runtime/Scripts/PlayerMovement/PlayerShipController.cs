@@ -21,7 +21,6 @@ namespace CyberCruiser
         [SerializeField] private float distanceToStopRotation = 5f;
         private readonly bool _lerpMovement = true;
         private bool _controlsEnabled;
-        private bool _isPlayerDead;
         private float _crashSpeed;
 
         private readonly float minAngle = -20;
@@ -35,13 +34,10 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            _isPlayerDead = false;
             InputManager.OnMouseMove += RecieveInput;
-            GameManager.OnMissionStart += GoToStartPos;
-
             CyberKrakenGrappleTentacle.OnGrappleEnd += EnableControls;
-            PlayerManager.OnPlayerDeath += PlayerDead;
 
+            GoToStartPos();
             Cursor.lockState = CursorLockMode.Confined;
             gameObject.layer = LayerMask.NameToLayer(PLAYER_ALIVE_LAYER);
         }
@@ -49,15 +45,12 @@ namespace CyberCruiser
         private void OnDisable()
         {
             InputManager.OnMouseMove -= RecieveInput;
-            GameManager.OnMissionStart -= GoToStartPos;
-
             CyberKrakenGrappleTentacle.OnGrappleEnd -= EnableControls;
-            PlayerManager.OnPlayerDeath -= PlayerDead;
         }
 
         private void Update()
         {
-            if (_isPlayerDead)
+            if (_isPlayerDeadReference.Value == true)
             {
                 DeathMovement();
                 return;
@@ -107,10 +100,9 @@ namespace CyberCruiser
             _playerSprite.transform.rotation = Quaternion.RotateTowards(_playerSprite.transform.rotation, targetRotation, rotationSpeed);
         }
 
-        private void PlayerDead()
+        public void OnPlayerDeath()
         {
             gameObject.layer = LayerMask.NameToLayer(PLAYER_DEAD_LAYER);
-            _isPlayerDead = true;
             targetRotation = Quaternion.Euler(0, 0, minAngle);
         }
 

@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponBase: {fileID: 11400000, guid: cd856ec32a1ec4a4cb4e89a8a5ba24c7, type: 2}
+  _currentWeapon: {fileID: 11400000, guid: 4d4f912b160dbeb44bc299a023fa5cd5, type: 2}
   _soundController: {fileID: 1250293327161303791}
 --- !u!82 &7508844165937560583
 AudioSource:
@@ -429,6 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 7508844165937560583}
+  _muteOnPause: 1
 --- !u!1 &3807874348917580334
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +508,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponBase: {fileID: 11400000, guid: cd856ec32a1ec4a4cb4e89a8a5ba24c7, type: 2}
+  _currentWeapon: {fileID: 11400000, guid: 4d4f912b160dbeb44bc299a023fa5cd5, type: 2}
   _soundController: {fileID: 4143019195304805755}
 --- !u!82 &6589020536793650243
 AudioSource:
@@ -618,6 +619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 6589020536793650243}
+  _muteOnPause: 1
 --- !u!1 &7020472227476826103
 GameObject:
   m_ObjectHideFlags: 0

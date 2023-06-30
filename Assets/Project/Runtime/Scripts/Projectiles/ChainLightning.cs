@@ -63,6 +63,11 @@ namespace CyberCruiser
                 {
                     transform.position += transform.right * _speed * Time.deltaTime;
                 }
+
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
 
             if (_chainTarget != null)

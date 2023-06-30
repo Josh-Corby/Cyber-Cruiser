@@ -1,11 +1,10 @@
 ﻿using CyberCruiser.Audio;
-using System;
 using UnityEngine;
 
 namespace CyberCruiser
 {
-    [Serializable]
-    public class WeaponStats
+    [CreateAssetMenu]
+    public class WeaponSO : ScriptableObject
     {
         public GameObject objectToFire;
         public float TimeBetweenShots;

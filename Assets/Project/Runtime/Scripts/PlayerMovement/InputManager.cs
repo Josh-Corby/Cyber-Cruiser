@@ -32,19 +32,12 @@ namespace CyberCruiser
                 controls.Controls.Pause.performed += i => OnPause?.Invoke();
             }
 
-            AnimatedPanelController.OnAnimationEnd += EnableControls;
-            AnimatedPanelController.OnAnimationStart += DisableControls;
             GameManager.OnMissionStart += EnableControls;
-            //PlayerManager.OnPlayerDeath += DisableControls;
-
         }
 
         private void OnDisable()
         {
-            AnimatedPanelController.OnAnimationEnd -= EnableControls;
-            AnimatedPanelController.OnAnimationStart -= DisableControls;
             GameManager.OnMissionStart -= EnableControls;
-            //PlayerManager.OnPlayerDeath -= DisableControls;
 
             if(controls != null)
             {

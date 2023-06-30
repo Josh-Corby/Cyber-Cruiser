@@ -10,29 +10,28 @@ namespace CyberCruiser
     {
         [SerializeField] private MissionManager _missionManager;
         [SerializeField] private AnimatedPanelSoundController _soundController;
+        [SerializeField] private InputManager _inputManager;
+
         private Animator _animator;
 
         private GameObject _currentScreen;
         private GameObject _screenToOpen;
         [SerializeField] private GameObject _missionScreen;
+        [SerializeField] private GameObject _pauseScreen;
         [SerializeField] private GameObject _missionCompleteScreen;
         [SerializeField] private GameObject _gameOverScreen;
 
         private GameObject _panelToEnable;
-
         private GameObject _currentPanel;
         [SerializeField] private GameObject _titlePanel;
         [SerializeField] private GameObject _gameplayPanel;
         [SerializeField] private GameObject _menuPanel;
-        [SerializeField] private GameObject _pauseScreen;
 
         private bool _isResumingGame;
 
         private string _currentState;
         private const string PANEL_UP = "Panel_Up";
         private const string PANEL_DOWN = "Panel_Down";
-        public static event Action OnAnimationStart = null;
-        public static event Action OnAnimationEnd = null;
 
         private void Awake()
         {
@@ -50,6 +49,11 @@ namespace CyberCruiser
         }
 
         private void Start()
+        {
+            OnGameStart();
+        }
+
+        private void OnGameStart()
         {
             _gameplayPanel.SetActive(false);
             _currentPanel = _titlePanel;
@@ -150,16 +154,16 @@ namespace CyberCruiser
 
         #region Animation Events
 
-        private void OnOpenScreenAnimationStart()
+        public void OnOpenScreenAnimationStart()
         {
-            OnAnimationStart?.Invoke();
+            _inputManager.DisableControls();
         }
 
-        private void OnOpenScreenAnimationEnd()
+        public void OnOpenScreenAnimationEnd()
         {
             if (_screenToOpen == _pauseScreen)
             {
-                OnAnimationEnd?.Invoke();
+                _inputManager.EnableControls();
             }
 
             _screenToOpen.SetActive(true);
@@ -167,14 +171,13 @@ namespace CyberCruiser
             _screenToOpen = null;
         }
 
-        private void OnCloseScreenAnimationStart()
+        public void OnCloseScreenAnimationStart()
         {
-            OnAnimationStart?.Invoke();
-
+            _inputManager.DisableControls();
             _currentScreen.SetActive(false);          
         }
 
-        private void OnCloseScreenAnimationEnd()
+        public void OnCloseScreenAnimationEnd()
         {
 
             if (_screenToOpen != null)
@@ -199,7 +202,7 @@ namespace CyberCruiser
             {
                 if (_isResumingGame)
                 {
-                    OnAnimationEnd?.Invoke();
+                    _inputManager.EnableControls();
                     GameManagerInstance.ResumeGame();
                 }
             }

@@ -231,7 +231,6 @@ AudioMixerController:
     name: CombatSFX
   - guids:
     - 2999d4e0c7f860c46b8bd903b786021f
-    - 83755fa42ee97e54c818c2cbab270e7c
     - a4a6ff4837c257a4b88bba1a0a13d37d
     name: Weapons
   - guids:
@@ -348,25 +347,6 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
---- !u!243 &1700422259606103914
-AudioMixerGroupController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BFG
-  m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 83755fa42ee97e54c818c2cbab270e7c
-  m_Children: []
-  m_Volume: 2d0c295ec52034b4caa4e76b372dc96b
-  m_Pitch: f0d9d43cfe897ce4e900df2f5d1fe17b
-  m_Send: 00000000000000000000000000000000
-  m_Effects:
-  - {fileID: 6988502752068068642}
-  m_UserColorIndex: 0
-  m_Mute: 0
-  m_Solo: 0
-  m_BypassEffects: 0
 --- !u!243 &1963912771246066944
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -468,7 +448,6 @@ AudioMixerGroupController:
   m_GroupID: c4ff86e84e781fd418c1e5f23ed54c02
   m_Children:
   - {fileID: 5415765485526934196}
-  - {fileID: 1700422259606103914}
   - {fileID: -3435521519813647288}
   m_Volume: d72afe659baccbf43a130617ca27df23
   m_Pitch: ece66621b011b9a4e85398c48f93c2c1
@@ -553,7 +532,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NeuronLaser
+  m_Name: PlayerWeapon
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 2999d4e0c7f860c46b8bd903b786021f
   m_Children: []
@@ -606,20 +585,6 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
---- !u!244 &6988502752068068642
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: 2d59499436e1f6548b3851c067b167ef
-  m_EffectName: Attenuation
-  m_MixLevel: 3042c30fd1b327142b6160f07d6926a8
-  m_Parameters: []
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!243 &8174743387738383697
 AudioMixerGroupController:
   m_ObjectHideFlags: 0

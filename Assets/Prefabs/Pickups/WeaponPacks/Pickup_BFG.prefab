@@ -180,8 +180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pickupName: 
   _pickupType: 2
-  _upgradeType: 6
+  _weaponSO: {fileID: 11400000, guid: e3cf246cb39404d4b94ed6a77615ac07, type: 2}
   _speed: 3
   _healthOnPickup:
     UseConstant: 1

@@ -8,6 +8,7 @@ namespace CyberCruiser
     {
         #region References
         public GameObject player;
+        [SerializeField] private PlayerUIManager _playerUIManager;
         [SerializeField] private PlayerAddOnManager _addOnManager;
         private Collider2D _playerCollider;
 
@@ -86,7 +87,7 @@ namespace CyberCruiser
                     }
                 }
 
-                OnPlayerCurrentHealthChange(_currentHealth);
+                _playerUIManager.ChangeSliderValue(PlayerSliderTypes.Health, _currentHealth);
                 if (_currentHealth <= 0)
                 {
                     IsPlayerDead = true;
@@ -101,7 +102,7 @@ namespace CyberCruiser
             set
             {
                 _maxHealth = value;
-                OnPlayerMaxHealthSet(_maxHealth);
+                _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.Health, _maxHealth);
             }
         }
 
@@ -155,8 +156,6 @@ namespace CyberCruiser
         public static event Action OnPlayerDeath = null;
         public static event Action<int> OnPlasmaChange = null;
         public static event Action<int> OnPlasmaPickupValue = null;
-        public static event Action<int> OnPlayerMaxHealthSet = null;
-        public static event Action<float> OnPlayerCurrentHealthChange = null;
         public static event Action<PlayerHealthState> OnPlayerHealthStateChange = null;
         #endregion
 
@@ -315,6 +314,7 @@ namespace CyberCruiser
         {
             OnPlayerDeath?.Invoke();
             DisablePlayerControls();
+            _playerShipController.OnPlayerDeath();
         }
 
         private void OnCollisionEnter2D(Collision2D collision)

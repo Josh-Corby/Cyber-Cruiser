@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0702ba6cee210479e32ae588f71995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponBase: {fileID: 11400000, guid: 9818121d79463934baba9740bb6cab5d, type: 2}
+  _currentWeapon: {fileID: 11400000, guid: b034ace63ad0dd841930feaaf4474c83, type: 2}
   _soundController: {fileID: 0}
 --- !u!114 &3966429793413987614
 MonoBehaviour:
@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 0}
+  _muteOnPause: 1
 --- !u!82 &2825455483060087752
 AudioSource:
   m_ObjectHideFlags: 0

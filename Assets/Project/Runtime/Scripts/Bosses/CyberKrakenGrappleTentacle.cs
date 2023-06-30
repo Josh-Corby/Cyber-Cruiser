@@ -83,7 +83,6 @@ namespace CyberCruiser
 
                 player.ControlsEnabled = false;
                 _isPlayerGrappled = true;
-
             }
         }
     }

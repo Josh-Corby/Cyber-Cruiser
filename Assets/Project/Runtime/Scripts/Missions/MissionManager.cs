@@ -195,7 +195,7 @@ namespace CyberCruiser
                     break;
 
                 case MissionConditions.UseShield:
-                    PlayerShieldController.OnPlayerShieldsActivated += (i) => IncrementMissionProgress();
+                    PlayerShieldController.OnPlayerShieldsActivated += IncrementMissionProgress;
                     break;
 
                 case MissionConditions.UseWeaponPack:
@@ -297,7 +297,7 @@ namespace CyberCruiser
                     break;
 
                 case MissionConditions.UseShield:
-                    PlayerShieldController.OnPlayerShieldsActivated -= (i) => IncrementMissionProgress();
+                    PlayerShieldController.OnPlayerShieldsActivated -= IncrementMissionProgress;
                     break;
 
                 case MissionConditions.UseWeaponPack:
@@ -420,18 +420,19 @@ namespace CyberCruiser
 
             if (_currentMission != null)
             {
-                Debug.Log("current mission saved");
                 missionIndexInMissionsToComplete = _missionsToCompleteInCategory.ToList().FindIndex(obj => obj == _currentMission);
             }
 
             else if (_nextMissionToStart != null)
             {
-                Debug.Log("next mission saved");
                 missionIndexInMissionsToComplete = _missionsToCompleteInCategory.ToList().FindIndex(obj => obj == _nextMissionToStart);
             }
 
-            else missionIndexInMissionsToComplete = 0;
-            Debug.Log(missionIndexInMissionsToComplete);
+            else
+            {
+                missionIndexInMissionsToComplete = 0;
+            }
+            
             PlayerPrefs.SetInt(CATEGORY_ID_OF_CURRENT_MISSION, missionIndexInMissionsToComplete);
         }
 

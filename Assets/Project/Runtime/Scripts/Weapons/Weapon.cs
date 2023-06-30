@@ -8,9 +8,8 @@ namespace CyberCruiser
     [RequireComponent(typeof(SoundControllerBase))]
     public class Weapon : GameBehaviour
     {
-        [SerializeField] private WeaponScriptableObject _weaponBase;
+        [SerializeField] private WeaponSO _currentWeapon;
         [SerializeField] private SoundControllerBase _soundController;
-        private WeaponStats _stats;
         private GameObject _firePoint;
         private Transform _firePointTransform;
 
@@ -19,29 +18,18 @@ namespace CyberCruiser
 
         public bool ReadyToFire { get => _readyToFire; }
 
-        public WeaponStats CurrentStats { get => _stats; set => _stats = value; }
+        //public WeaponSO CurrentStats { get => _currentWeapon; set => _currentWeapon = value; }
 
         private void Awake()
         {
             _soundController = GetComponent<SoundControllerBase>();
             _firePoint = transform.GetChild(0).gameObject;
             _firePointTransform = _firePoint.transform;
-            WeaponSetup();
         }
 
         protected virtual void OnEnable()
         {
             _readyToFire = true;
-        }
-
-        private void WeaponSetup()
-        {
-            ResetWeapon();
-        }
-
-        public void ResetWeapon()
-        {
-            _stats = _weaponBase.Stats;
         }
 
         private void Update()
@@ -55,17 +43,22 @@ namespace CyberCruiser
             }
         }
 
+        public void SetWeapon(WeaponSO newWeapon)
+        {
+            _currentWeapon = newWeapon;
+        }
+
         public void CheckFireTypes()
         {
             _readyToFire = false;
 
-            if (_stats.IsWeaponBurstFire)
+            if (_currentWeapon.IsWeaponBurstFire)
             {
                 StartCoroutine(BurstFire());
                 return;
             }
 
-            else if (_stats.IsWeaponMultiFire)
+            else if (_currentWeapon.IsWeaponMultiFire)
             {
                 MultiFire();
             }
@@ -81,9 +74,9 @@ namespace CyberCruiser
 
         private IEnumerator BurstFire()
         {
-            for (int i = 0; i < _stats.AmountOfBursts; i++)
+            for (int i = 0; i < _currentWeapon.AmountOfBursts; i++)
             {
-                if (_stats.IsWeaponMultiFire)
+                if (_currentWeapon.IsWeaponMultiFire)
                 {
                     MultiFire();
                 }
@@ -94,7 +87,7 @@ namespace CyberCruiser
                     PlayFireSound();
                 }
 
-                yield return new WaitForSeconds(_stats.TimeBetweenBurstShots);
+                yield return new WaitForSeconds(_currentWeapon.TimeBetweenBurstShots);
             }
             StartCoroutine(ResetShooting());
         }
@@ -102,16 +95,16 @@ namespace CyberCruiser
         private void MultiFire()
         {
             PlayFireSound();
-            if (_stats.IsMultiFireSpreadRandom)
+            if (_currentWeapon.IsMultiFireSpreadRandom)
             {
-                for (int i = 0; i < _stats.MultiFireShots; i++)
+                for (int i = 0; i < _currentWeapon.MultiFireShots; i++)
                 {
                     FireBullet(GetRandomSpreadAngle());
                 }
                 return;
             }
 
-            for (int i = 0; i < _stats.MultiFireShots; i++)
+            for (int i = 0; i < _currentWeapon.MultiFireShots; i++)
             {
                 Quaternion projectileSpread = GetMultiShotFixedAngle(i);
                 FireBullet(projectileSpread);
@@ -120,7 +113,7 @@ namespace CyberCruiser
 
         private void SpreadCheck()
         {
-            if (!_stats.DoesWeaponUseSpread)
+            if (!_currentWeapon.DoesWeaponUseSpread)
             {
                 FireBullet(_firePointTransform.rotation);
             }
@@ -132,33 +125,33 @@ namespace CyberCruiser
 
         private Quaternion GetRandomSpreadAngle()
         {
-            Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-_stats.SpreadHalfAngle, _stats.SpreadHalfAngle));
+            Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, Random.Range(-_currentWeapon.SpreadHalfAngle, _currentWeapon.SpreadHalfAngle));
             return directionWithSpread;
         }
 
         private Quaternion GetMultiShotFixedAngle(int multifireBulletIndex)
         {
-            float totalSpreadAngle = _stats.SpreadHalfAngle * 2;
-            float bulletFireAngle = totalSpreadAngle / (_stats.MultiFireShots - 1) * multifireBulletIndex;
-            float finalAngle = bulletFireAngle - _stats.SpreadHalfAngle;
+            float totalSpreadAngle = _currentWeapon.SpreadHalfAngle * 2;
+            float bulletFireAngle = totalSpreadAngle / (_currentWeapon.MultiFireShots - 1) * multifireBulletIndex;
+            float finalAngle = bulletFireAngle - _currentWeapon.SpreadHalfAngle;
             Quaternion directionWithSpread = _firePointTransform.rotation * Quaternion.Euler(0, 0, finalAngle);
             return directionWithSpread;
         }
 
         private void FireBullet(Quaternion direction)
         {
-            GameObject bullet = Instantiate(_stats.objectToFire, _firePointTransform.position, direction);
-            _soundController.PlayNewClip(_stats.Clip);
+            GameObject bullet = Instantiate(_currentWeapon.objectToFire, _firePointTransform.position, direction);
+            _soundController.PlayNewClip(_currentWeapon.Clip);
         }
 
         private void PlayFireSound()
         {
-            _soundController.PlayNewClip(_stats.Clip);
+            _soundController.PlayNewClip(_currentWeapon.Clip);
         }
 
         private IEnumerator ResetShooting()
         {
-            yield return new WaitForSeconds(_stats.TimeBetweenShots);
+            yield return new WaitForSeconds(_currentWeapon.TimeBetweenShots);
             _readyToFire = true;
         }
     }

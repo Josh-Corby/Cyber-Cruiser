@@ -6,16 +6,20 @@ namespace CyberCruiser
 {
     public class PlayerWeaponController : GameBehaviour
     {
+        [SerializeField] private Weapon _playerWeapon;
+        [SerializeField] private WeaponSO _baseWeaponSO;
+        [SerializeField] private WeaponSO _currentWeaponSO;
         [SerializeField] private PlayerSoundController _soundController;
-        [SerializeField] private Weapon _currentWeapon;
+        [SerializeField] private PlayerUIManager _playerUIManager;
+        //[SerializeField] private Weapon _currentWeapon;
 
-        [Header("Player Weapon Prefabs")]
-        [SerializeField] private Weapon _baseWeapon;
-        [SerializeField] private Weapon _chainLightning;
-        [SerializeField] private Weapon _bFG;
-        [SerializeField] private Weapon _scatterGunFixedSpread;
-        [SerializeField] private Weapon _scatterGunRandomSpread;
-        [SerializeField] private Weapon _smartGun;
+        //[Header("Player Weapon Prefabs")]
+        //[SerializeField] private Weapon _baseWeapon;
+        //[SerializeField] private Weapon _chainLightning;
+        //[SerializeField] private Weapon _bFG;
+        //[SerializeField] private Weapon _scatterGunFixedSpread;
+        //[SerializeField] private Weapon _scatterGunRandomSpread;
+        //[SerializeField] private Weapon _smartGun;
         [SerializeField] private BeamAttack _beamAttack;
 
         #region Fields
@@ -23,8 +27,6 @@ namespace CyberCruiser
 
         [SerializeField] private IntReference _weaponUpgradeDurationInSeconds;
         [SerializeField] private FloatReference _currentHeatPerShotReference;
-
-
 
         private const int BASE_HEAT_MAX = 100;
         private const float BASE_HEAT_PER_SHOT = 1.75f;
@@ -63,14 +65,14 @@ namespace CyberCruiser
                 {
                     _currentHeat = _heatMax;
                     IsOverheated = true;
-                    OnOverheatStatusChange(true);
+                    _playerUIManager.OverheatUI(IsOverheated);
                 }
 
                 else if (_currentHeat < 0)
                 {
                     _currentHeat = 0;
                 }
-                OnHeatChange?.Invoke(_currentHeat);
+                _playerUIManager.ChangeSliderValue(PlayerSliderTypes.Heat, _currentHeat);
             }
         }
 
@@ -90,24 +92,19 @@ namespace CyberCruiser
             set
             {
                 _isOverheated = value;
-                OnOverheatStatusChange?.Invoke(_isOverheated);
+                _playerUIManager.OverheatUI(_isOverheated);
             }
         }
         #endregion
 
         #region Actions
         public static event Action<int> OnWeaponUpgradeStart = null;
-        public static event Action<float> OnWeaponUpgradeTimerTick = null;
-        public static event Action OnWeaponUpgradeFinished = null;
-        public static event Action<int> OnWeaponHeatInitialized = null;
-        public static event Action<float> OnHeatChange = null;
-        public static event Action<bool> OnOverheatStatusChange = null;
         public static event Action OnShoot = null;
         #endregion
 
         private void Awake()
         {
-            _currentWeapon = _baseWeapon;
+            _playerWeapon.SetWeapon(_baseWeaponSO);
             _beamAttack = GetComponentInChildren<BeamAttack>();
         }
 
@@ -116,6 +113,7 @@ namespace CyberCruiser
             InputManager.OnFire += SetFireInput;
             GameManager.OnMissionEnd += DisableBeam;
             Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
+            _currentWeaponSO = _baseWeaponSO;
             _fireInput = false;
             DisableBeam();
         }
@@ -139,7 +137,7 @@ namespace CyberCruiser
             _heatMax = BASE_HEAT_MAX;
             _heatLossPerFrame = BASE_HEAT_LOSS_PER_FRAME;
             _cooldownHeatLossPerFrame = BASE_COOLDOWN_HEAT_LOSS_PER_FRAME;
-            OnWeaponHeatInitialized?.Invoke(_heatMax);
+            _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.Heat, _heatMax);
         }
 
         private void Update()
@@ -167,6 +165,7 @@ namespace CyberCruiser
             {
                 CurrentHeat -= _cooldownHeatLossPerFrame;
             }
+
             else
             {
                 CurrentHeat = 0;
@@ -196,12 +195,19 @@ namespace CyberCruiser
             }
         }
 
+        private void SetFireInput(bool input)
+        {
+            if (_controlsEnabled)
+            {
+                _fireInput = input;
+            }
+        }
+
         private void CheckForInput()
         {
             if (_fireInput)
             {
                 CheckHoldToFire();
-
 
                 if (_beamAttack.IsBeamActive)
                 {
@@ -220,23 +226,17 @@ namespace CyberCruiser
                     _beamAttack.ResetBeam();
                 }
             }
-            OnShoot?.Invoke();
-        }
 
-        private void SetFireInput(bool input)
-        {
-            if(_controlsEnabled)
-            {
-                _fireInput = input;
-            }
-        }
+            OnShoot?.Invoke();
+        } 
 
         private void CheckHoldToFire()
         {
-            if (!_currentWeapon.CurrentStats.IsWeaponAutomatic)
+            if (!_currentWeaponSO.IsWeaponAutomatic)
             {
                 CancelFireInput();
             }
+
             FireWeapon();
         }
 
@@ -248,14 +248,9 @@ namespace CyberCruiser
                 return;
             }
 
-            if (!_currentWeapon.gameObject.activeSelf)
+            if (_playerWeapon.ReadyToFire)
             {
-                return;
-            }
-
-            if (_currentWeapon.ReadyToFire)
-            {
-                _currentWeapon.CheckFireTypes();
+                _playerWeapon.CheckFireTypes();
                 if (!_isWeaponUpgradeActive)
                 {
                     CurrentHeat += _currentHeatPerShotReference.Value;
@@ -280,84 +275,60 @@ namespace CyberCruiser
             _controlsEnabled = false;
         }
 
-        private void WeaponUpgrade(WeaponUpgradeType upgradeType)
+        private void WeaponUpgrade(WeaponSO upgradeWeapon)
         {
+            Debug.Log("weapon upgrade pickup");
             if (_weaponUpgradeCoroutine != null)
             {
                 StopCoroutine(_weaponUpgradeCoroutine);
             }
-            Debug.Log("weapon upgrade pickup");
 
             _soundController.PlaySound(0);
-
+            ChangeWeapon(upgradeWeapon);
             //reset in case a different type of pickup is picked up while an upgrade is currently active
-            switch (upgradeType)
-            {
-                case WeaponUpgradeType.Scatter_Fixed:
-                    ChangeWeapon(_scatterGunFixedSpread);
-                    break;
-
-                case WeaponUpgradeType.Scatter_Random:
-                    ChangeWeapon(_scatterGunRandomSpread);
-                    break;
-
-                case WeaponUpgradeType.Pulverizer:
-                    PulverizerUpgrade();
-                    break;
-
-                case WeaponUpgradeType.Homing:
-                    ChangeWeapon(_smartGun);
-
-                    break;
-                case WeaponUpgradeType.ChainLightning:
-                    ChangeWeapon(_chainLightning);
-                    break;
-
-                case WeaponUpgradeType.BFG:
-                    ChangeWeapon(_bFG);
-                    break;
-                case WeaponUpgradeType.Smart:
-                    ChangeWeapon(_smartGun);
-                    break;
-
-                default:
-                    Debug.Log("no upgrade found");
-                    break;
-            }
+            // need a case for pulverizer
 
             CurrentHeat = 0;
             _isWeaponUpgradeActive = true;
             _weaponUpgradeCounter = _weaponUpgradeDurationInSeconds.Value;
             OnWeaponUpgradeStart?.Invoke(_weaponUpgradeDurationInSeconds.Value);
-            _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimerCoroutine(upgradeType));
+            _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.WeaponUpgrade, _weaponUpgradeDurationInSeconds.Value);
+            _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimerCoroutine());
         }
 
-        private IEnumerator WeaponUpgradeTimerCoroutine(WeaponUpgradeType upgradeType)
+        private IEnumerator WeaponUpgradeTimerCoroutine()
         {
             while (_weaponUpgradeCounter > 0)
             {
                 _weaponUpgradeCounter -= Time.deltaTime;
-                OnWeaponUpgradeTimerTick?.Invoke(_weaponUpgradeCounter);
+                _playerUIManager.ChangeSliderValue(PlayerSliderTypes.WeaponUpgrade, _weaponUpgradeCounter);
                 yield return new WaitForSeconds(0.01f);
             }
 
-            Debug.Log("Upgrade finished");
             //reset player weapon to its original values after upgrade duration is over
+            Debug.Log("Upgrade finished");
             _soundController.PlaySound(1);
             OnWeaponUpgradeFinish();
         }
 
-        private void ChangeWeapon(Weapon newWeapon)
+        private void OnWeaponUpgradeFinish()
+        {
+            _playerUIManager.DisableSlider(PlayerSliderTypes.WeaponUpgrade);
+            ChangeWeapon(_baseWeaponSO);
+            _isWeaponUpgradeActive = false;
+            DisableBeam();
+        }
+
+        private void ChangeWeapon(WeaponSO newWeapon)
         {
             CurrentHeat = 0;
-            _currentWeapon.gameObject.SetActive(false);
-            _currentWeapon = newWeapon;
-            _currentWeapon.gameObject.SetActive(true);
+            _currentWeaponSO = newWeapon;
+            _playerWeapon.SetWeapon(newWeapon);
         }
 
         private void PulverizerUpgrade()
         {
-            _baseWeapon.gameObject.SetActive(false);
+            //_baseWeapon.gameObject.SetActive(false);
             _beamAttack.enabled = true;
         }
 
@@ -365,14 +336,6 @@ namespace CyberCruiser
         {
             _beamAttack.DisableBeam();
             _beamAttack.enabled = false;
-        }
-
-        private void OnWeaponUpgradeFinish()
-        {    
-            OnWeaponUpgradeFinished?.Invoke();          
-            ChangeWeapon(_baseWeapon);
-            _isWeaponUpgradeActive = false;
-            DisableBeam();
-        }
+        }   
     }
 }
