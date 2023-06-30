@@ -8,14 +8,16 @@ namespace CyberCruiser
         {
             [SerializeField] private ClipInfo _spawnClip;
             [SerializeField] private ClipInfo _deathClip;
-            private void OnEnable()
+            protected override void OnEnable()
             {
+                base.OnEnable();
                 EnemySpawner.OnBossSpawned += (_) => PlaySpawnSound();
                 Boss.OnBossDiedPosition += (_, _) => PlayDeathSound();
             }
 
-            private void OnDisable()
+            protected override void OnDisable()
             {
+                base.OnDisable();
                 EnemySpawner.OnBossSpawned -= (_) => PlaySpawnSound();
                 Boss.OnBossDiedPosition -= (_, _) => PlayDeathSound();
             }

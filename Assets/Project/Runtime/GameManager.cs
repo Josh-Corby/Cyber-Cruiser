@@ -9,13 +9,19 @@ namespace CyberCruiser
         [SerializeField] private DistanceManager _distanceManager;
         [SerializeField] private EnemySpawnerManager _enemySpawnerManager;
 
-        [SerializeField] private bool _isPaused = false;
+        [SerializeField] private BoolValue _isGamePaused;
+        //[SerializeField] private bool _isGamePaused = false;
         [SerializeField] private GameObject gameplayObjects;
         private GameState _gameState;
 
         public GameState CurrentGameState
         {
             get => _gameState;
+        }
+
+        public bool IsGamePaused
+        {
+            get => _isGamePaused.Value; private set => _isGamePaused.Value = value;
         }
 
         #region Actions
@@ -90,17 +96,19 @@ namespace CyberCruiser
 
         public void TogglePause()
         {
-            _isPaused = !_isPaused;
 
-            if (_isPaused)
+            if (!IsGamePaused)
             {
+                IsGamePaused = true;
                 PauseGame();
                 OnGamePaused?.Invoke();
             }
 
-            else if (!_isPaused)
+            else if (IsGamePaused)
             {
+                //IsGamePaused = false;
                 OnGameResumed?.Invoke();
+                //ResumeGame();
             }
         }
 
@@ -118,7 +126,7 @@ namespace CyberCruiser
 
         public void ResumeGame()
         {
-            _isPaused = false;
+            IsGamePaused = false;
             Time.timeScale = 1f;
             _gameState = GameState.Mission;
             OnIsTimeScalePaused?.Invoke(false);

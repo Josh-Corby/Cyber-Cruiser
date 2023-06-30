@@ -1,7 +1,7 @@
 
 namespace CyberCruiser
 {
-    public class GoldStarMovementAnimation : GameBehaviour
+    public class StarMovementAnimation : GameBehaviour
     {
         StarAnimation _goldStar;
 
@@ -10,7 +10,7 @@ namespace CyberCruiser
             _goldStar = GetComponentInParent<StarAnimation>();
         }
 
-        private void OnStarMovementAnimationFinish()
+        public void OnStarMovementAnimationFinish()
         {
             _goldStar.PlayEffectAnimation();
         }

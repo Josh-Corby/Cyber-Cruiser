@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cac812aa083a77c43b583ac9af787470, type: 3}
-  m_Name: TestBool
+  m_Name: IsGamePaused
   m_EditorClassIdentifier: 
   Value: 0

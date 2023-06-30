@@ -1,7 +1,5 @@
 using TMPro;
 using UnityEngine;
-using DG.Tweening;
-using UnityEditorInternal;
 
 namespace CyberCruiser
 {
@@ -25,10 +23,8 @@ namespace CyberCruiser
         private void DisplayPickupDescription(string pickupName)
         {
             _pickupDisplayText.enabled = true;
-            //_pickupDisplayText.material.color = Color.black;
             _pickupDisplayText.text = pickupName + " Picked up";
             Invoke(nameof(DisableText), 2f);
-            //_pickupDisplayText.material.DOFade(0.0f, 2f);
         }
 
         private void DisableText()

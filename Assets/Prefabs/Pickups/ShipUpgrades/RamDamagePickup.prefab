@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pickupName: Ram Upgrade
   _pickupType: 1
   _upgradeType: 0
   _speed: 3

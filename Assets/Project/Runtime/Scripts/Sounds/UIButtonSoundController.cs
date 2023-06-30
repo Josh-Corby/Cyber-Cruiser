@@ -23,6 +23,10 @@ namespace CyberCruiser
 
             public void PlaySound(int clipIndex)
             {
+                if(_audioSource.isPlaying) 
+                    {
+                        return;
+                    } 
                 PlayNewClip(_clips[clipIndex].ClipInfo);
             }
         }

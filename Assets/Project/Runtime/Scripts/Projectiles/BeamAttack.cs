@@ -1,4 +1,5 @@
 using CyberCruiser.Audio;
+using System.Xml.Serialization;
 using UnityEngine;
 
 
@@ -8,6 +9,7 @@ namespace CyberCruiser
     public class BeamAttack : GameBehaviour
     {
         private bool _isBeamActive;
+        public bool IsBeamFiring;
         public LineRenderer lineRenderer;
         private float _beamSize;
         public float beamDuration;
@@ -23,8 +25,8 @@ namespace CyberCruiser
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private SoundControllerBase _beamSoundController;
         [SerializeField] private ClipInfo _beamClip;
-        //[SerializeField] private AudioClip _beamClip;
 
+        [SerializeField] private BoolReference _isGamePausedReference;
         private void Awake()
         {
             _beamSoundController = GetComponent<SoundControllerBase>();
@@ -45,16 +47,17 @@ namespace CyberCruiser
 
         private void Update()
         {
-            if (_isBeamActive)
+            if (_isGamePausedReference.Value != true)
             {
-                ExtendBeam();
-            }
-            else
-            {
-                ResetBeam();
+                if (IsBeamActive)
+                {
+                    if (IsBeamFiring)
+                    {
+                        ExtendBeam();
+                    }
+                }
             }
         }
-
 
         public void EnableBeam()
         {
@@ -63,13 +66,25 @@ namespace CyberCruiser
                 _isBeamActive = true;
                 _beamSoundController.PlayNewClip(_beamClip);
             }
-            //_audioSource.Play();
         }
 
         public void DisableBeam()
         {
+            IsBeamFiring = false;
             _isBeamActive = false;
             lineRenderer.enabled = false;
+            _audioSource.Stop();
+        }
+
+        public void StartFiring()
+        {
+            IsBeamFiring = true;
+            _beamSoundController.PlayNewClip(_beamClip);
+        }
+
+        public void StopFiring()
+        {
+            IsBeamFiring = false;
             _audioSource.Stop();
         }
 

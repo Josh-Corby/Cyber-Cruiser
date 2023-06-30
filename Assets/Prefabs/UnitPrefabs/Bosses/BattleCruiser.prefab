@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be82309f2de2f444dacf353d98f25543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBeamFiring: 0
   lineRenderer: {fileID: 8300924498132005569}
   beamDuration: 3
   _beamDamage: 0.6
@@ -65,6 +66,10 @@ MonoBehaviour:
     OverrideSourceVolume: 1
     Volume: 0.425
     PlayOneShot: 0
+  _isGamePausedReference:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f33a1f7bf7d43d0419248478daca4c78, type: 2}
 --- !u!82 &5080155971223978179
 AudioSource:
   m_ObjectHideFlags: 0
@@ -174,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 5080155971223978179}
+  _muteOnPause: 1
 --- !u!1 &1686505066082717662
 GameObject:
   m_ObjectHideFlags: 0

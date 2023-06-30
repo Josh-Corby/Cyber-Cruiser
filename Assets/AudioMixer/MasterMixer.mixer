@@ -227,6 +227,7 @@ AudioMixerController:
   - guids:
     - cb2ef5161292b3c49a2271e2a04b00c8
     - c4ff86e84e781fd418c1e5f23ed54c02
+    - 9eff3ed8fe57a02478ccd9558713f069
     name: CombatSFX
   - guids:
     - 2999d4e0c7f860c46b8bd903b786021f
@@ -241,7 +242,7 @@ AudioMixerController:
     - 8808fdb348ca8f94eb813a93a595048d
     - c457ba8f43ca9864486b86e7aa7465e5
     name: BossSFX
-  m_CurrentViewIndex: 5
+  m_CurrentViewIndex: 3
   m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
@@ -293,6 +294,7 @@ AudioMixerSnapshotController:
     c6ba71477a2f3264ca709f4fb252f538: -8.841784
     dd3da2ca6b3204449bc8869d9930e314: -9.833286
     a1ba20cb9c27d234296ab4c14490e7d4: -11.400904
+    1174c2cb4fade834b88595313e158aef: 19.32921
     7f9fb32ddcd9db84fa20990d713eb7e9: 0
     b00ebe7d9ccc42d49874148edacf5c43: 0
     2d0c295ec52034b4caa4e76b372dc96b: -11.400904

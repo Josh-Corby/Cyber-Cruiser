@@ -28,14 +28,15 @@ namespace CyberCruiser
             [SerializeField]
             [Range(0f, 1f)] private float _pausedVolume;
 
-            private void OnEnable()
+            protected override void OnEnable()
             {
+
                 GameManager.OnMissionEnd += StartMenuMusic;
                 GameManager.OnMissionStart += StartMissionMusic;
                 GameManager.OnIsTimeScalePaused += SetMissionMusicOnTogglePause;
             }
 
-            private void OnDisable()
+            protected override void OnDisable()
             {
                 GameManager.OnMissionEnd -= StartMenuMusic;
                 GameManager.OnMissionStart -= StartMissionMusic;

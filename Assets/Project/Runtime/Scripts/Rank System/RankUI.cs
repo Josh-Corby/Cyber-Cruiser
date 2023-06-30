@@ -1,3 +1,4 @@
+using CyberCruiser.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,8 +22,10 @@ namespace CyberCruiser
         private List <StarAnimation> _starAnimations = new();
         [SerializeField] private Rank _currentRank;
 
-        [SerializeField] private AudioSource _audioSource;
-        [SerializeField] private AudioClip _starClip;
+        [SerializeField] private SoundControllerBase _soundController;
+        [SerializeField] private ClipInfo _starClip;
+        //[SerializeField] private AudioSource _audioSource;
+        //[SerializeField] private AudioClip _starClip;
 
         [SerializeField] private int _starsToGain;
         [SerializeField] private int _starsEnabled;
@@ -36,7 +39,7 @@ namespace CyberCruiser
         {
             if(_uiType == UIType.Animated)
             {
-                _audioSource = GetComponent<AudioSource>();
+                //_audioSource = GetComponent<AudioSource>();
                 InitializeStarAnimationsList();
             }
         }
@@ -167,7 +170,8 @@ namespace CyberCruiser
 
         private void StarSoundEffect()
         {
-            _audioSource.PlayOneShot(_starClip);
+            _soundController.PlayNewClip(_starClip);
+            //_audioSource.PlayOneShot(_starClip);
         }
 
         private void RankUp()

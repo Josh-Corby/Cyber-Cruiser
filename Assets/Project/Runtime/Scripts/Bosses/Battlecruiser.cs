@@ -50,7 +50,7 @@ namespace CyberCruiser
         {
             _attackTimer = _attackCooldown;
 
-            if (_beamAttack.IsBeamActive && !_isBeamCharging)
+            if (_beamAttack.IsBeamFiring && !_isBeamCharging)
             {
                 Attack1();
             }
@@ -94,6 +94,14 @@ namespace CyberCruiser
             _beamAttack.ResetBeam();
             _beamAttack.lineRenderer.enabled = true;
             _beamAttack.EnableBeam();
+            _beamAttack.StartFiring();
+        }
+
+        private void StopBeam()
+        {
+            _beamAttack.StopFiring();
+            _beamAttack.DisableBeam();
+            _beamAttack.lineRenderer.enabled = false;
         }
 
         protected override void Crash()

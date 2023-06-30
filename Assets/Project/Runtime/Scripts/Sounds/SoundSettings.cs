@@ -57,7 +57,7 @@ namespace CyberCruiser
         private void SetSlidersToSavedPositions()
         {
             _masterSlider.value = MathF.Pow(10f, _masterVolume / 20f);
-            _musicSlider.value = MathF.Pow(10f, _musicVolume/20f);
+            _musicSlider.value = MathF.Pow(10f, _musicVolume / 20f);
             _effectsSlider.value = MathF.Pow(10f, _effectsVolume / 20f);
         }
 
@@ -129,7 +129,7 @@ namespace CyberCruiser
         {
             if (!_isEffectsMuted)
             {
-                _effectsVolume = Mathf.Log10(volume);
+                _effectsVolume = Mathf.Log10(volume) * 20;
                 _audioMixer.SetFloat(EFFECTS_VOLUME, _effectsVolume);
             }
         }

@@ -201,12 +201,22 @@ namespace CyberCruiser
             if (_fireInput)
             {
                 CheckHoldToFire();
+
+
+                if (_beamAttack.IsBeamActive)
+                {
+                    if(_beamAttack.IsBeamFiring == false)
+                    {
+                        _beamAttack.StartFiring();
+                    }
+                }
             }
 
             if (!_fireInput)
             {
                 if (_beamAttack.IsBeamActive)
                 {
+                    _beamAttack.IsBeamFiring = false;
                     _beamAttack.ResetBeam();
                 }
             }
