@@ -24,15 +24,15 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            Enemy.OnEnemyAliveStateChange += RemoveEnemyBuffer;
+            Enemy.OnEnemyDied += (enemyObject, enemyType) => RemoveEnemyBuffer(enemyObject);
         }
 
         private void OnDisable()
         {
-            Enemy.OnEnemyAliveStateChange -= RemoveEnemyBuffer;
+            Enemy.OnEnemyDied -= (enemyObject, enemyType) => RemoveEnemyBuffer(enemyObject);
         }
 
-        private void RemoveEnemyBuffer(GameObject enemy, bool val)
+        private void RemoveEnemyBuffer(GameObject enemy)
         {
             RemoveEnemy(enemy);
         }
@@ -43,18 +43,19 @@ namespace CyberCruiser
             {
                 _objectsInRange.Remove(enemy);
             }
+
             if (_objectsBouncedTo.Contains(enemy))
             {
                 _objectsBouncedTo.Remove(enemy);
             }
         }
 
-
         private void Start()
         {
             _chainTarget = null;
             _currentChainBounces = 0;
         }
+
         private void Update()
         {
             if (_chainTarget == null)
@@ -73,10 +74,7 @@ namespace CyberCruiser
             if (_chainTarget != null)
             {
                 Vector3 directionToTarget = (_chainTarget.transform.position - transform.position).normalized;
-                Quaternion lookRotation = Quaternion.LookRotation(directionToTarget, transform.up);
-
                 transform.right = directionToTarget;
-                //transform.LookAt(_chainTarget.transform.position);
                 transform.position = Vector2.MoveTowards(transform.position, _chainTarget.transform.position, _chainSpeed * Time.deltaTime);
             }
         }
@@ -124,13 +122,13 @@ namespace CyberCruiser
                     _chainTarget = enemy;
                 }
             }
+
             if (_chainTarget == null)
             {
                 Destroy(gameObject);
             }
         }
 
-        //enemy collision detection
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (_chainTarget != null)
@@ -161,6 +159,7 @@ namespace CyberCruiser
 
             _objectsBouncedTo.Add(collision.gameObject);
             _currentChainBounces += 1;
+
             if (_currentChainBounces < _totalChainBounces)
             {
                 FindTargetsInRange();

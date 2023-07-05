@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace CyberCruiser
 {
+    public enum PlayerHealthState
+    {
+        Healthy, Low, Critical
+    }
+
     public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         #region References
@@ -27,7 +32,7 @@ namespace CyberCruiser
         private const int BASE_MAX_HEALTH = 5;
         private const int BASE_PLASMA_COST = 5;
         private const float BASE_I_FRAMES_DURATION = 0.3f;
-       
+
 
         [SerializeField] private int _plasmaCost;
         [SerializeField] private int _maxHealth;
@@ -43,10 +48,10 @@ namespace CyberCruiser
         public bool IsPlayerDead { get => _isPlayerDead.Value; private set => _isPlayerDead.Value = value; }
 
         private int PlasmaCost { get => _plasmaCost; set => _plasmaCost = value; }
- 
+
         private int CurrentPlasma
         {
-            get => _currentPlasma.Value; 
+            get => _currentPlasma.Value;
             set
             {
                 value = value < 0 ? 0 : value;
@@ -63,6 +68,7 @@ namespace CyberCruiser
             set
             {
                 _currentHealth = value;
+
                 if (_currentHealth > 0)
                 {
                     IsPlayerDead = false;
@@ -73,21 +79,22 @@ namespace CyberCruiser
 
                     if (_currentHealth > 2)
                     {
-                        PlayerHealthState = PlayerHealthState.Healthy;
+                        CurrentHealthState = PlayerHealthState.Healthy;
                     }
 
                     else if (_currentHealth <= 2 && _currentHealth > 1)
                     {
-                        PlayerHealthState = PlayerHealthState.Low;
+                        CurrentHealthState = PlayerHealthState.Low;
                     }
 
                     else if (_currentHealth <= 1)
                     {
-                        PlayerHealthState = PlayerHealthState.Critical;
+                        CurrentHealthState = PlayerHealthState.Critical;
                     }
                 }
 
                 _playerUIManager.ChangeSliderValue(PlayerSliderTypes.Health, _currentHealth);
+
                 if (_currentHealth <= 0)
                 {
                     IsPlayerDead = true;
@@ -134,7 +141,7 @@ namespace CyberCruiser
             }
         }
 
-        public PlayerHealthState PlayerHealthState
+        public PlayerHealthState CurrentHealthState
         {
             set
             {
@@ -196,7 +203,6 @@ namespace CyberCruiser
 
         private void EnablePlayerControls()
         {
-            //Debug.Log("Controls enabled");
             _playerShipController.EnableControls();
             _playerWeaponController.EnableControls();
             _playerShieldController.EnableControls();
@@ -204,7 +210,6 @@ namespace CyberCruiser
 
         private void DisablePlayerControls()
         {
-            //Debug.Log("Controls disabled");
             _playerShipController.DisableControls();
             _playerWeaponController.DisableControls();
             _playerShieldController.DisableControls();
@@ -216,7 +221,6 @@ namespace CyberCruiser
             _iFramesDuration = BASE_I_FRAMES_DURATION;
             PlayerMaxHealth = BASE_MAX_HEALTH;
             FullHeal();
-
         }
 
         private void AddResources(int healthAmount, int plasmaAmount, int ionAmount)
@@ -260,12 +264,12 @@ namespace CyberCruiser
             {
                 _isPlayerImmuneToDamage = true;
                 PlayerCurrentHealth -= damage;
+
                 if (_collisionParticles != null)
                 {
-                    Debug.Log("PlayerDamaged");
-                    //_collisionParticles.Stop();
                     _collisionParticles.Play();
                 }
+
                 StartIFrames();
             }
         }
@@ -348,8 +352,4 @@ namespace CyberCruiser
         }
         #endregion
     }
-        public enum PlayerHealthState
-        {
-            Healthy, Low, Critical
-        }
 }

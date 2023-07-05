@@ -344,7 +344,7 @@ public class Utilities : MonoBehaviour
     /// </summary>
     /// <typeparam name="T">The type of he list</typeparam>
     /// <param name="list">List to clear</param>
-    public void ClearList<T>(List<T> list)
+    public void ClearListAndDestroyObjects<T>(List<T> list)
     {
         if (list.Count > 0)
         {

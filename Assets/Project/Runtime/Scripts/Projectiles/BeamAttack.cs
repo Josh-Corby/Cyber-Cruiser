@@ -10,25 +10,29 @@ namespace CyberCruiser
     {
         private bool _isBeamActive;
         public bool IsBeamFiring;
-        public LineRenderer lineRenderer;
-        private float _beamSize;
-        public float beamDuration;
+        private LineRenderer _lineRenderer;
         [SerializeField] private float _beamDamage;
         [SerializeField] private float _basicEnemyBeamDamage;
-
         [SerializeField] private float _beamSpeed;
-        [SerializeField] bool _isBeamTimed;
-        [SerializeField] private float _beamTimer;
-        [SerializeField] private LayerMask _beamCollisionMask;
         [SerializeField] private float _beamWidth;
+        [SerializeField] private LayerMask _beamCollisionMask;
+        private float _currentBeamLength;
 
-        [SerializeField] private AudioSource _audioSource;
-        [SerializeField] private SoundControllerBase _beamSoundController;
+        [SerializeField] bool _isBeamTimed;
+        [SerializeField] private float beamDuration;
+        private float _beamTimer;
+
+        private AudioSource _audioSource;
+        private SoundControllerBase _beamSoundController;
         [SerializeField] private ClipInfo _beamClip;
 
         [SerializeField] private BoolReference _isGamePausedReference;
+
         private void Awake()
         {
+            _lineRenderer = GetComponentInChildren<LineRenderer>();
+            _beamSoundController = GetComponent<SoundControllerBase>();
+            _audioSource = GetComponent<AudioSource>();
             _beamSoundController = GetComponent<SoundControllerBase>();
         }
 
@@ -41,8 +45,8 @@ namespace CyberCruiser
 
         private void Start()
         {
-            lineRenderer.startWidth = _beamWidth;
-            lineRenderer.endWidth = _beamWidth;
+            _lineRenderer.startWidth = _beamWidth;
+            _lineRenderer.endWidth = _beamWidth;
         }
 
         private void Update()
@@ -65,15 +69,8 @@ namespace CyberCruiser
             {
                 _isBeamActive = true;
                 _beamSoundController.PlayNewClip(_beamClip);
+                _lineRenderer.enabled = true;
             }
-        }
-
-        public void DisableBeam()
-        {
-            IsBeamFiring = false;
-            _isBeamActive = false;
-            lineRenderer.enabled = false;
-            _audioSource.Stop();
         }
 
         public void StartFiring()
@@ -85,14 +82,16 @@ namespace CyberCruiser
         public void StopFiring()
         {
             IsBeamFiring = false;
+            _isBeamActive = false;
+            _lineRenderer.enabled = false;
             _audioSource.Stop();
         }
 
         public void ExtendBeam()
         {
-            if (lineRenderer.enabled == false)
+            if (_lineRenderer.enabled == false)
             {
-                lineRenderer.enabled = true;
+                _lineRenderer.enabled = true;
             }
 
             if (_isBeamTimed)
@@ -101,33 +100,35 @@ namespace CyberCruiser
 
                 if (_beamTimer > 0)
                 {
-                    _beamSize += _beamSpeed * Time.deltaTime;
-                    Vector3 targetPosition = Vector3.zero + transform.right * _beamSize;
-                    lineRenderer.SetPosition(1, new Vector3(Mathf.Abs(targetPosition.x), targetPosition.y));
+                    _currentBeamLength += _beamSpeed * Time.deltaTime;
+                    Vector3 targetPosition = Vector3.zero + transform.right * _currentBeamLength;
+                    _lineRenderer.SetPosition(1, new Vector3(Mathf.Abs(targetPosition.x), targetPosition.y));
 
                     BeamCollision();
                 }
+
                 if (_beamTimer <= 0)
                 {
-                    lineRenderer.enabled = false;
-                    _isBeamActive = false;
+                    StopFiring();
+                  
                 }
             }
+
             else
             {
-                _beamSize += _beamSpeed * Time.deltaTime;
-                lineRenderer.SetPosition(1, Vector3.zero + transform.right * _beamSize);
+                _currentBeamLength += _beamSpeed * Time.deltaTime;
+                _lineRenderer.SetPosition(1, Vector3.zero + transform.right * _currentBeamLength);
                 BeamCollision();
             }
         }
 
         public void ResetBeam()
         {
-            lineRenderer.SetPosition(0, Vector3.zero);
-            lineRenderer.SetPosition(1, Vector3.zero);
-            _beamSize = 0;
+            _lineRenderer.SetPosition(0, Vector3.zero);
+            _lineRenderer.SetPosition(1, Vector3.zero);
+            _currentBeamLength = 0;
             _beamTimer = beamDuration;
-            lineRenderer.enabled = false;
+            _lineRenderer.enabled = false;
             _audioSource.Stop();
         }
 
@@ -157,8 +158,8 @@ namespace CyberCruiser
 
         private Vector2 GetPointWorldPosition(int pointIndex)
         {
-            Vector2 localPosition = lineRenderer.GetPosition(pointIndex);
-            Vector2 worldPosition = lineRenderer.transform.TransformPoint(localPosition);
+            Vector2 localPosition = _lineRenderer.GetPosition(pointIndex);
+            Vector2 worldPosition = _lineRenderer.transform.TransformPoint(localPosition);
 
             return worldPosition;
         }
@@ -173,7 +174,7 @@ namespace CyberCruiser
 
         private float GetDistanceXBetweenPoints()
         {
-            float distanceBetweenPoints = lineRenderer.GetPosition(0).x + Mathf.Abs(lineRenderer.GetPosition(1).x);
+            float distanceBetweenPoints = _lineRenderer.GetPosition(0).x + Mathf.Abs(_lineRenderer.GetPosition(1).x);
             distanceBetweenPoints *= transform.parent.localScale.x;
             //Debug.Log(distanceBetweenPoints);
             return distanceBetweenPoints;

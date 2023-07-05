@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 2108252862311498203}
   - component: {fileID: 723177284607907028}
   - component: {fileID: 817370410347714398}
+  - component: {fileID: -5269393867985782010}
   m_Layer: 8
   m_Name: ChainLightningProjectile
   m_TagString: Untagged
@@ -159,6 +160,18 @@ MonoBehaviour:
   _speed: 50
   _chainSpeed: 50
   _chainDelay: 0
+--- !u!114 &-5269393867985782010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7804011280605575531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307d8b7a8ede4f54d9f4c2538651a4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8296576136752054357
 GameObject:
   m_ObjectHideFlags: 0

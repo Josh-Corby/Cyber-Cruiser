@@ -9506,6 +9506,7 @@ GameObject:
   - component: {fileID: 9213029082381227451}
   - component: {fileID: 9214108789282954269}
   - component: {fileID: 933748296182230433}
+  - component: {fileID: -6654605556509581688}
   m_Layer: 0
   m_Name: PlayerDamageParticles
   m_TagString: Untagged
@@ -14202,6 +14203,18 @@ MonoBehaviour:
   - {fileID: 9015826194958167187}
   - {fileID: 9015826194958186009}
   _crashParticles: []
+--- !u!114 &-6654605556509581688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9015826194958140947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307d8b7a8ede4f54d9f4c2538651a4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9015826194958143127
 GameObject:
   m_ObjectHideFlags: 0

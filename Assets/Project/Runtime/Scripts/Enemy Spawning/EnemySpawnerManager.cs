@@ -8,6 +8,8 @@ namespace CyberCruiser
 {
     public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     {
+        [SerializeField] private EnemyManager _enemyManager;
+
         [Header("Spawners")]
         public EnemySpawner _topSpawner;
         public EnemySpawner _bottomSpawner;
@@ -205,7 +207,7 @@ namespace CyberCruiser
             StopSpawningEnemies();
             bossReadyToSpawn = true;
 
-            if (EnemyManagerInstance.AreAllEnemiesDead())
+            if (_enemyManager.AreAllEnemiesDead())
             {
                 StartBossSpawn();
             }

@@ -48,23 +48,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBeamFiring: 0
-  lineRenderer: {fileID: 8300924498132005569}
-  beamDuration: 3
   _beamDamage: 0.6
   _basicEnemyBeamDamage: 0
   _beamSpeed: 100
-  _isBeamTimed: 1
-  _beamTimer: 3
+  _beamWidth: 2
   _beamCollisionMask:
     serializedVersion: 2
     m_Bits: 512
-  _beamWidth: 2
-  _audioSource: {fileID: 5080155971223978179}
-  _beamSoundController: {fileID: 0}
+  _isBeamTimed: 1
+  beamDuration: 3
   _beamClip:
     Clip: {fileID: 8300000, guid: 81d57303a914704489ffc4f6db86da77, type: 3}
     OverrideSourceVolume: 1
-    Volume: 0.425
+    Volume: 1
     PlayOneShot: 0
   _isGamePausedReference:
     UseConstant: 0
@@ -79,7 +75,7 @@ AudioSource:
   m_GameObject: {fileID: 313375864532200023}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -9074964379650767150, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
   m_audioClip: {fileID: 8300000, guid: 81d57303a914704489ffc4f6db86da77, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -179,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 5080155971223978179}
-  _muteOnPause: 1
+  _pauseOnGamePaused: 1
 --- !u!1 &1686505066082717662
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CyberCruiser
 {
-    public class GameManager : GameBehaviour<GameManager>
+    public class GameManager : GameBehaviour
     {
         [SerializeField] private DistanceManager _distanceManager;
         [SerializeField] private EnemySpawnerManager _enemySpawnerManager;
@@ -18,9 +18,8 @@ namespace CyberCruiser
         public static event Action OnMissionEnd = null;
         #endregion
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             _playerObject.SetActive(false);
             Application.targetFrameRate = 60;
         }
@@ -30,6 +29,7 @@ namespace CyberCruiser
             InputManager.OnPause += TogglePause;
             PlayerManager.OnPlayerDeath += StopSystems;
             WaveCountdownManager.OnCountdownDone += StartSystems;
+            AnimatedPanelController.OnGameplayPanelClosed += DisablePlayerObject;
         }
 
         private void OnDisable()
@@ -37,12 +37,13 @@ namespace CyberCruiser
             InputManager.OnPause -= TogglePause;
             PlayerManager.OnPlayerDeath -= StopSystems;
             WaveCountdownManager.OnCountdownDone -= StartSystems;
+            AnimatedPanelController.OnGameplayPanelClosed -= DisablePlayerObject;
         }
 
-        public void StartLevel()
+        public void StartMission()
         {
             ResumeGame();
-            TogglePlayerObject(true);
+            EnablePlayerObject();
             ResetSystems();
             OnMissionStart?.Invoke();
         }
@@ -51,7 +52,6 @@ namespace CyberCruiser
         {
             OnMissionEnd?.Invoke();
             StopSystems();
-            TogglePlayerObject(false);
         }
 
         public void StartSystems()
@@ -72,9 +72,14 @@ namespace CyberCruiser
             _enemySpawnerManager.ResetSpawning();
         }
 
-        private void TogglePlayerObject(bool value)
+        private void EnablePlayerObject()
         {
-            _playerObject.SetActive(value);
+            _playerObject.SetActive(true);
+        }
+
+        private void DisablePlayerObject()
+        {
+            _playerObject.SetActive(false);
         }
 
         public void TogglePause()
@@ -105,9 +110,4 @@ namespace CyberCruiser
             OnIsTimeScalePaused?.Invoke(false);
         }
     }
-
-        public enum GameState
-        {
-            Mission, Menu
-        }
 }

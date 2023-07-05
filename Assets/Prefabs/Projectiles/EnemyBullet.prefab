@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 617927084437878402}
   - component: {fileID: 5475609997023007151}
   - component: {fileID: 5019873920586328569}
+  - component: {fileID: -7622553333629018837}
   m_Layer: 6
   m_Name: EnemyBullet
   m_TagString: Untagged
@@ -64,19 +65,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527497be6615eaf4f88a354ffeb3fb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  homingTarget: {fileID: 0}
   _playerProjectileSprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
   _enemyProjectileSprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
   _collisionParticles: {fileID: 8611581191203232223, guid: bcd084b07ae840f49bc8526ab122ce58, type: 3}
   _speed: 40
   _damage: 1
+  _doesBulletExplode: 0
+  _explosion: {fileID: 0}
   _isHoming: 0
   _homeTurnSpeed: 0
   _homeTime: 0
   _homeDelay: 0
   _homeDelayTime: 0
   _homeCounter: 0
-  _homeDelayCounter: 0
 --- !u!70 &5019873920586328569
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -93,6 +94,18 @@ CapsuleCollider2D:
   m_Offset: {x: -0.65, y: 0}
   m_Size: {x: 1.5, y: 0.2}
   m_Direction: 1
+--- !u!114 &-7622553333629018837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760453196464390188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307d8b7a8ede4f54d9f4c2538651a4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4840643128340617894
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +239,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2329735
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -105750261
-  m_SortingLayer: 6
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 51b835cfbee39fb4e8208047fa4c8afd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -180,11 +180,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitInfo: {fileID: 11400000, guid: e03405c5a7fe28c46a87c2efa5d4d395, type: 2}
+  EnemyInfo: {fileID: 0}
+  _soundController: {fileID: 0}
+  _crashClip:
+    Clip: {fileID: 8300000, guid: 26f3ab17f7604c24fb93b546e31fc84b, type: 3}
+    OverrideSourceVolume: 0
+    Volume: 1
+    PlayOneShot: 0
   _spriteRenderer: {fileID: 984562295027037458}
   _deadSprite: {fileID: 21300000, guid: 1787fe64c0bd0ca43aa90d38605448d6, type: 3}
-  unitName: 
-  _currentHealth: 0
 --- !u!114 &8942100890769099280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -197,29 +201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0001f840db7d58340a4fd553c2f56ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnemyDead: 0
-  direction: {x: 0, y: 0}
-  _startRotation: {x: 0, y: 0, z: 0}
-  _speed: 0
-  _upDownMovement: 0
-  _upDownSpeed: 0
-  isBackForthMovingUp: 0
-  _upDownMoveDistance: 0
-  _seekPlayer: 0
-  _seekPlayerY: 0
-  _seekPlayerX: 0
-  _seekSpeed: 0
-  _sinUpDownMovement: 0
-  _sinFrequency: 0
-  _sinMagnitude: 0
-  _sinRandomSeed: 0
-  _homeOnPlayer: 0
-  _homeTurnSpeed: 0
-  _homeTime: 0
-  homeCounter: 0
-  _homeDelay: 0
-  _homeDelayTime: 0
-  _homeDelayCounter: 0
   arcMove: 0
   bottomLeftPoint: {fileID: 0}
   startRotation: {x: 0, y: 0, z: 0}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8899889120285292700}
   - component: {fileID: 617927084437878402}
   - component: {fileID: 5475609997023007151}
+  - component: {fileID: -7988927613299114979}
   m_Layer: 6
   m_Name: RobodactylBullet
   m_TagString: Untagged
@@ -65,7 +66,7 @@ MonoBehaviour:
   _playerProjectileSprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
   _enemyProjectileSprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
   _collisionParticles: {fileID: 8611581191203232223, guid: bcd084b07ae840f49bc8526ab122ce58, type: 3}
-  _speed: 40
+  _speed: 25
   _damage: 1
   _doesBulletExplode: 0
   _explosion: {fileID: 0}
@@ -75,6 +76,18 @@ MonoBehaviour:
   _homeDelay: 0
   _homeDelayTime: 0
   _homeCounter: 0
+--- !u!114 &-7988927613299114979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760453196464390188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307d8b7a8ede4f54d9f4c2538651a4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2921806069905344785
 GameObject:
   m_ObjectHideFlags: 0

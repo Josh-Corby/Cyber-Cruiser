@@ -90,7 +90,7 @@ namespace CyberCruiser
         private void Start()
         {
             RestorePlayerData();
-            StartNextMissionIfReady();
+          
         }
 
         private void OnApplicationQuit()
@@ -170,7 +170,10 @@ namespace CyberCruiser
         #region Mission Condition Assigning
         private void SetMissionObjective()
         {
-            _currentMissionGoal = _currentMission.missionObjectiveAmount;
+            if(_currentMission != null)
+            {
+                _currentMissionGoal = _currentMission.missionObjectiveAmount;
+            }
             //CurrentMissionProgress = 0;
             _isMissionFailed = false;
 
@@ -222,7 +225,7 @@ namespace CyberCruiser
             switch (currentMissionEnemyType)
             {
                 case EnemyTypes.AllBasicEnemies:
-                    Enemy.OnEnemyDeath += (enemyType) => IncrementMissionProgress();
+                    Enemy.OnEnemyDied += (enemyObject, enemyType) => IncrementMissionProgress();
                     break;
 
                 case EnemyTypes.Gunship:
@@ -231,7 +234,7 @@ namespace CyberCruiser
                 case EnemyTypes.Blimp:
                 case EnemyTypes.Slicer:
                 case EnemyTypes.Dragon:
-                    Enemy.OnEnemyDeath += CheckEnemyType;
+                    Enemy.OnEnemyDied += (enemyObject, enemyType) => CheckEnemyType(enemyType);
                     break;
 
                 case EnemyTypes.AllBosses:
@@ -254,7 +257,7 @@ namespace CyberCruiser
             switch (currentMissionEnemyType)
             {
                 case EnemyTypes.AllBasicEnemies:
-                    Enemy.OnEnemyDeath -= (enemyType) => IncrementMissionProgress();
+                    Enemy.OnEnemyDied -= (enemyObject, enemyType) => IncrementMissionProgress();
                     break;
 
                 case EnemyTypes.Gunship:
@@ -263,7 +266,7 @@ namespace CyberCruiser
                 case EnemyTypes.Blimp:
                 case EnemyTypes.Slicer:
                 case EnemyTypes.Dragon:
-                    Enemy.OnEnemyDeath -= CheckEnemyType;
+                    Enemy.OnEnemyDied -= (enemyObject, enemyType) => CheckEnemyType(enemyType);
                     break;
 
                 case EnemyTypes.AllBosses:
@@ -452,6 +455,7 @@ namespace CyberCruiser
             RestoreMissionsToCompleteInCategoryFromJSON();
             RestoreCategoryIDOfCurrentMission();
             RestoreMissionProgress();
+            StartNextMissionIfReady();
         }
 
         private void RestoreMissionCategory()

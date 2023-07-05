@@ -85,7 +85,6 @@ namespace CyberCruiser
                 {
                     HomingMovement();
                 }
-                return;
             }
 
             MoveRight();

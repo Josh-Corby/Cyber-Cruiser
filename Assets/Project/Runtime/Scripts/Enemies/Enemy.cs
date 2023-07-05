@@ -1,3 +1,4 @@
+using CyberCruiser.Audio;
 using System;
 using UnityEngine;
 
@@ -12,7 +13,6 @@ namespace CyberCruiser
         public EnemyScriptableObject EnemyInfo;
         private EnemyMovement _enemyMovement;
         private EnemyWeaponController _weapon;
-
         private GameObject _crashParticles;
         private GameObject _explosion;
         #endregion
@@ -29,9 +29,8 @@ namespace CyberCruiser
         #endregion
 
         #region Actions
-        public static event Action<GameObject, bool> OnEnemyAliveStateChange = null;
-        public static event Action<GameObject> OnEnemyCrash = null;
-        public static event Action<EnemyTypes> OnEnemyDeath = null;
+        public static event Action<GameObject> OnEnemySpawned = null;
+        public static event Action<GameObject, EnemyTypes> OnEnemyDied = null;
         #endregion
 
         protected virtual void Awake()
@@ -50,7 +49,7 @@ namespace CyberCruiser
 
             GetComponents();
             _enemyMovement.AssignEnemyMovementInfo(EnemyInfo.MovementStats);
-            OnEnemyAliveStateChange(gameObject, true);
+            OnEnemySpawned(gameObject);
         }
 
         private void GetComponents()
@@ -96,37 +95,43 @@ namespace CyberCruiser
 
         protected virtual void Crash()
         {
+            //start crashing movement
             if (_enemyMovement != null)
             {
                 _enemyMovement.IsEnemyDead = true;
             }
 
+            //stop weapon firing
             if (_weapon != null)
             {
                 _weapon.gameObject.SetActive(false);
             }
 
+            //stop animating
             if (_animator != null)
             {
                 _animator.enabled = false;
             }
 
+            //change enemy sprite
             _spriteRenderer.sprite = _deadSprite;
+
+            //move sprite behind other sprites
             _spriteRenderer.sortingOrder = -1;
+
+            //enable crashing particles
             _crashParticles.SetActive(true);
 
             //change object layer to layer that only collides with cull area
             gameObject.layer = LayerMask.NameToLayer(DEAD_ENEMY_LAYER_NAME);
 
-            //remove enemy from enemies alive so it doesn't make boss spawner wait for it
-            OnEnemyAliveStateChange(gameObject, false);
-            OnEnemyCrash(gameObject);
+            //remove enemy from enemies alive so it doesn't make boss spawner wait for it to fully die
+            OnEnemyDied(gameObject, EnemyInfo.GeneralStats.Type);
         }
 
         public virtual void Destroy()
         {
-            OnEnemyAliveStateChange(gameObject, false);
-            OnEnemyDeath?.Invoke(EnemyInfo.GeneralStats.Type);
+            OnEnemyDied(gameObject, EnemyInfo.GeneralStats.Type);
             Destroy(gameObject);
         }
     }

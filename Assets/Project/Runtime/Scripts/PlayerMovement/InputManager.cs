@@ -39,20 +39,17 @@ namespace CyberCruiser
         {
             GameManager.OnMissionStart -= EnableControls;
 
-            if(controls != null)
-            {
-                DisableControls();
-            }
+            DisableControls();          
         }
 
         public void EnableControls()
         {
-            controls.Enable();
+            controls?.Enable();
         }
 
         public void DisableControls()
         {
-            controls.Disable();
+            controls?.Disable();
         }
 
     }

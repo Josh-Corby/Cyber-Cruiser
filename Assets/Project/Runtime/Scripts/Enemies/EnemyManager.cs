@@ -5,29 +5,27 @@ namespace CyberCruiser
 {
     public class EnemyManager : GameBehaviour<EnemyManager>
     {
+        [SerializeField] private EnemySpawnerManager _enemySpawnerManager;
         public List<SlicerMovement> slicersSeeking = new();
         public List<GunshipMovement> GunshipsAlive = new();
         [SerializeField] private List<GameObject> _enemiesAlive = new();
-        [SerializeField] private List<GameObject> _crashingEnemies = new();
 
         private void OnEnable()
         {
-            Enemy.OnEnemyAliveStateChange += IsEnemyAlive;
-            Enemy.OnEnemyCrash += AddCrashingEnemy;
+            Enemy.OnEnemySpawned += AddEnemy;
+            Enemy.OnEnemyDied += (enemyObject, enemyType) => RemoveEnemy(enemyObject);
             SlicerMovement.OnStartSeeking += RecieveUnit;
             GunshipMovement.OnGunshipSpawned += RecieveUnit;
-            GameManager.OnMissionEnd += ClearLists;
-            //EnemySpawnerManager.OnSpawnEnemyGroup += ClearMovementLists;
+            AnimatedPanelController.OnGameplayPanelClosed += ClearLists;
         }
 
         private void OnDisable()
         {
-            Enemy.OnEnemyAliveStateChange -= IsEnemyAlive;
-            Enemy.OnEnemyCrash -= AddCrashingEnemy;
+            Enemy.OnEnemySpawned -= AddEnemy;
+            Enemy.OnEnemyDied -= (enemyObject, enemyType) => RemoveEnemy(enemyObject);
             SlicerMovement.OnStartSeeking -= RecieveUnit;
             GunshipMovement.OnGunshipSpawned -= RecieveUnit;
-            GameManager.OnMissionEnd -= ClearLists;
-            //EnemySpawnerManager.OnSpawnEnemyGroup -= ClearMovementLists;
+            AnimatedPanelController.OnGameplayPanelClosed -= ClearLists;
         }
 
         private void RecieveUnit(GameObject unit)
@@ -45,29 +43,22 @@ namespace CyberCruiser
             }
         }
 
-        private void IsEnemyAlive(GameObject enemy, bool aliveState)
+        private void AddEnemy(GameObject enemy)
         {
-            if (aliveState)
-            {
-                AddToList(_enemiesAlive, enemy);
-            }
-            if (!aliveState)
-            {
-                RemoveFromList(_enemiesAlive, enemy);
-                //If an enemy was removed from enemies alive, and if the boss is ready to be spawned, check how many enemies are alive
-                if (EnemySpawnerManagerInstance.bossReadyToSpawn)
-                {
-                    if (AreAllEnemiesDead())
-                    {
-                        EnemySpawnerManagerInstance.StartBossSpawn();
-                    }
-                }
-            }
+            _enemiesAlive.Add(enemy);
         }
 
-        private void AddCrashingEnemy(GameObject enemy)
+        private void RemoveEnemy(GameObject enemy)
         {
-            _crashingEnemies.Add(enemy);
+            RemoveFromList(_enemiesAlive, enemy);
+
+            if (_enemySpawnerManager.bossReadyToSpawn)
+            {
+                if (AreAllEnemiesDead())
+                {
+                    _enemySpawnerManager.StartBossSpawn();
+                }
+            }
         }
 
         private void ClearMovementLists()
@@ -78,8 +69,7 @@ namespace CyberCruiser
 
         private void ClearLists()
         {
-            ClearList(_enemiesAlive);
-            ClearList(_crashingEnemies);
+            ClearListAndDestroyObjects(_enemiesAlive);
             ClearMovementLists();
         }
 

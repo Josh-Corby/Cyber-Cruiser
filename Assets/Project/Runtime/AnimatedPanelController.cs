@@ -8,6 +8,7 @@ namespace CyberCruiser
     [RequireComponent(typeof(Animator))]
     public class AnimatedPanelController : GameBehaviour
     {
+        [SerializeField] private GameManager _gameManager;
         [SerializeField] private MissionManager _missionManager;
         [SerializeField] private AnimatedPanelSoundController _soundController;
         [SerializeField] private InputManager _inputManager;
@@ -32,6 +33,8 @@ namespace CyberCruiser
         private string _currentState;
         private const string PANEL_UP = "Panel_Up";
         private const string PANEL_DOWN = "Panel_Down";
+
+        public static event Action OnGameplayPanelClosed = null;
 
         private void Awake()
         {
@@ -107,7 +110,7 @@ namespace CyberCruiser
         public void ChangeScreen(GameObject screenToOpen)
         {
             _screenToOpen = screenToOpen;
-            if(_currentScreen != null)
+            if (_currentScreen != null)
             {
                 CloseCurrentScreen();
                 return;
@@ -119,11 +122,6 @@ namespace CyberCruiser
         public void ChangeToPauseScreen()
         {
             ChangeScreen(_pauseScreen);
-        }
-
-        public void GoToMenuPanel()
-        {
-            _panelToEnable = _menuPanel;
         }
 
         public void IsGameResumingWhenScreenCloses(bool isResumingGame)
@@ -148,7 +146,7 @@ namespace CyberCruiser
         public void EndMission()
         {
             _isResumingGame = false;
-            GoToMenuPanel();
+            _panelToEnable = _menuPanel;
             ChangeScreen(_missionScreen);
         }
 
@@ -174,7 +172,7 @@ namespace CyberCruiser
         public void OnCloseScreenAnimationStart()
         {
             _inputManager.DisableControls();
-            _currentScreen.SetActive(false);          
+            _currentScreen.SetActive(false);
         }
 
         public void OnCloseScreenAnimationEnd()
@@ -185,25 +183,29 @@ namespace CyberCruiser
                 OpenScreen();
             }
 
-            if(_panelToEnable != null)
+            if (_panelToEnable != null)
             {
+                if (_currentPanel == _gameplayPanel)
+                {
+                    OnGameplayPanelClosed?.Invoke();
+                }
                 _currentPanel.SetActive(false);
-                _panelToEnable.SetActive(true);
                 _currentPanel = _panelToEnable;
+                _panelToEnable.SetActive(true);
                 _panelToEnable = null;
 
-                if(_currentPanel == _gameplayPanel)
+                if (_currentPanel == _gameplayPanel)
                 {
-                    GameManagerInstance.StartLevel();
+                    _gameManager.StartMission();
                 }
             }
 
-            if(_currentScreen == _pauseScreen)
+            if (_currentScreen == _pauseScreen)
             {
                 if (_isResumingGame)
                 {
                     _inputManager.EnableControls();
-                    GameManagerInstance.ResumeGame();
+                    _gameManager.ResumeGame();
                 }
             }
 

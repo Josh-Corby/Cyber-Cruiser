@@ -57,7 +57,7 @@ MonoBehaviour:
   _explosionClip:
     Clip: {fileID: 8300000, guid: 97f2d77393620f6409175ab290dc3512, type: 3}
     OverrideSourceVolume: 0
-    Volume: 0.128
+    Volume: 1
     PlayOneShot: 0
   clusterOnDeath: 0
   isClusterSpawningAUnit: 0
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 8853170189904861176}
+  _pauseOnGamePaused: 1
 --- !u!82 &8853170189904861176
 AudioSource:
   m_ObjectHideFlags: 0
@@ -90,7 +91,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -2152508025596229900, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
   m_audioClip: {fileID: 8300000, guid: 97f2d77393620f6409175ab290dc3512, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.132
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -229,7 +230,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: ExplosionGraphic
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8596959302327450194, guid: f9088ab58b665d84d921d414e0070571, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f9088ab58b665d84d921d414e0070571, type: 3}
 --- !u!4 &4964603101239486881 stripped
 Transform:

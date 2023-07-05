@@ -43,6 +43,7 @@ namespace CyberCruiser
         private void StartWaveCountdown()
         {
             _isCountdownDone = false;
+            _waveCountdownText.color = Color.red;
             _waveCountdownText.enabled = true;
             _waveCountdownTime = WAVECOUNTDOWNTIME;
             _startTextTimer = STARTTEXTTIMER;
@@ -69,6 +70,7 @@ namespace CyberCruiser
             {
                 OnCountdownDone?.Invoke();
                 WaveCountdownText = "GO!";
+                _waveCountdownText.color = Color.green;
                 _isCountdownDone = true;
             }
             while (_startTextTimer >= 0)

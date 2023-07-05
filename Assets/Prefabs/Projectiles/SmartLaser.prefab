@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7839072767556152723}
   - component: {fileID: 5475609997023007151}
   - component: {fileID: 2974499546341751299}
+  - component: {fileID: -4653023174186717194}
   m_Layer: 8
   m_Name: SmartLaser
   m_TagString: Untagged
@@ -94,6 +95,18 @@ CapsuleCollider2D:
   m_Offset: {x: -0.96, y: 0}
   m_Size: {x: 2.22, y: 0.285}
   m_Direction: 1
+--- !u!114 &-4653023174186717194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760453196464390188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307d8b7a8ede4f54d9f4c2538651a4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &967464220310727118
 GameObject:
   m_ObjectHideFlags: 0

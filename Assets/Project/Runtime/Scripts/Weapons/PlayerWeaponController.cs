@@ -11,15 +11,6 @@ namespace CyberCruiser
         [SerializeField] private WeaponSO _currentWeaponSO;
         [SerializeField] private PlayerSoundController _soundController;
         [SerializeField] private PlayerUIManager _playerUIManager;
-        //[SerializeField] private Weapon _currentWeapon;
-
-        //[Header("Player Weapon Prefabs")]
-        //[SerializeField] private Weapon _baseWeapon;
-        //[SerializeField] private Weapon _chainLightning;
-        //[SerializeField] private Weapon _bFG;
-        //[SerializeField] private Weapon _scatterGunFixedSpread;
-        //[SerializeField] private Weapon _scatterGunRandomSpread;
-        //[SerializeField] private Weapon _smartGun;
         [SerializeField] private BeamAttack _beamAttack;
 
         #region Fields
@@ -27,6 +18,7 @@ namespace CyberCruiser
 
         [SerializeField] private IntReference _weaponUpgradeDurationInSeconds;
         [SerializeField] private FloatReference _currentHeatPerShotReference;
+        [SerializeField] private BoolReference _isGamePausedReference;
 
         private const int BASE_HEAT_MAX = 100;
         private const float BASE_HEAT_PER_SHOT = 1.75f;
@@ -113,9 +105,7 @@ namespace CyberCruiser
             InputManager.OnFire += SetFireInput;
             GameManager.OnMissionEnd += DisableBeam;
             Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
-            _currentWeaponSO = _baseWeaponSO;
-            _fireInput = false;
-            DisableBeam();
+            InitializeWeapon();
         }
 
         private void OnDisable()
@@ -132,8 +122,10 @@ namespace CyberCruiser
 
         private void InitializeWeapon()
         {
+            _currentWeaponSO = _baseWeaponSO;
             _fireInput = false;
             CurrentHeat = 0;
+            DisableBeam();
             _heatMax = BASE_HEAT_MAX;
             _heatLossPerFrame = BASE_HEAT_LOSS_PER_FRAME;
             _cooldownHeatLossPerFrame = BASE_COOLDOWN_HEAT_LOSS_PER_FRAME;
@@ -142,7 +134,10 @@ namespace CyberCruiser
 
         private void Update()
         {
-            CheckOverHeated();
+            if (!_isGamePausedReference.Value)
+            {
+                CheckOverHeated();
+            }
         }
 
         private void CheckOverHeated()
@@ -334,7 +329,7 @@ namespace CyberCruiser
 
         public void DisableBeam()
         {
-            _beamAttack.DisableBeam();
+            _beamAttack.StopFiring();
             _beamAttack.enabled = false;
         }   
     }

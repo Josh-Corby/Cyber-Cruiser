@@ -20,8 +20,8 @@ namespace CyberCruiser
         [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private float distanceToStopRotation = 5f;
         private readonly bool _lerpMovement = true;
+        [SerializeField] private float _crashSpeed;
         private bool _controlsEnabled;
-        private float _crashSpeed;
 
         private readonly float minAngle = -20;
         private readonly float maxAngle = 20;
@@ -127,14 +127,12 @@ namespace CyberCruiser
         {
             _controlsEnabled = true;
             InputManagerInstance.IsCursorVisible = false;
-            //mouseInput.SetActive(true);
         }
 
         public void DisableControls()
         {
             _controlsEnabled = false;
             InputManagerInstance.IsCursorVisible = true;
-            //mouseInput.SetActive(false);
         }
     }
 }

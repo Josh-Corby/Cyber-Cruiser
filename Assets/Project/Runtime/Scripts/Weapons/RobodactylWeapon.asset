@@ -17,14 +17,14 @@ MonoBehaviour:
   IsWeaponAutomatic: 0
   Clip:
     Clip: {fileID: 8300000, guid: 69978527b4480414bbf449aa751ad852, type: 3}
-    OverrideSourceVolume: 0
-    Volume: 1
+    OverrideSourceVolume: 1
+    Volume: 0.65
     PlayOneShot: 0
   DoesWeaponUseSpread: 1
   SpreadHalfAngle: 15
-  IsWeaponBurstFire: 0
-  AmountOfBursts: 0
-  TimeBetweenBurstShots: 0
+  IsWeaponBurstFire: 1
+  AmountOfBursts: 2
+  TimeBetweenBurstShots: 0.4
   IsWeaponMultiFire: 1
-  MultiFireShots: 2
+  MultiFireShots: 3
   IsMultiFireSpreadRandom: 1

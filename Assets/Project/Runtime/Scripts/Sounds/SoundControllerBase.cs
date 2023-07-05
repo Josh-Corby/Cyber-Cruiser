@@ -8,7 +8,7 @@ namespace CyberCruiser
         public class SoundControllerBase : GameBehaviour
         {
             [SerializeField] protected AudioSource _audioSource;
-            [SerializeField] protected bool _muteOnPause = true;
+            [SerializeField] protected bool _pauseOnGamePaused = true;
 
             protected void Awake()
             {
@@ -17,7 +17,7 @@ namespace CyberCruiser
 
             protected virtual void OnEnable()
             {
-                if (_muteOnPause)
+                if (_pauseOnGamePaused)
                 {
                     GameManager.OnIsTimeScalePaused  += ToggleAudio;
                 }
@@ -25,7 +25,7 @@ namespace CyberCruiser
 
             protected virtual void OnDisable()
             {
-                if (_muteOnPause)
+                if (_pauseOnGamePaused)
                 {
                     GameManager.OnIsTimeScalePaused -= ToggleAudio;
                 }

@@ -92,23 +92,14 @@ namespace CyberCruiser
             _isBeamCharging = false;    
             _chargingParticles.Stop();
             _beamAttack.ResetBeam();
-            _beamAttack.lineRenderer.enabled = true;
             _beamAttack.EnableBeam();
             _beamAttack.StartFiring();
-        }
-
-        private void StopBeam()
-        {
-            _beamAttack.StopFiring();
-            _beamAttack.DisableBeam();
-            _beamAttack.lineRenderer.enabled = false;
         }
 
         protected override void Crash()
         {
             base.Crash();
             
-            _beamAttack.DisableBeam();
             OnDied?.Invoke();
         }
     }

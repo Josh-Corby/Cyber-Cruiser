@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1614547040528235197}
   - component: {fileID: 6026004926442184010}
   - component: {fileID: 1413435970046981200}
+  - component: {fileID: -4557607917995455377}
   m_Layer: 8
   m_Name: BFGProjectile
   m_TagString: Untagged
@@ -63,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527497be6615eaf4f88a354ffeb3fb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerProjectileSprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
+  _playerProjectileSprite: {fileID: 21300000, guid: 13689503086f298409ee52f3301f86a5, type: 3}
   _enemyProjectileSprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
   _collisionParticles: {fileID: 8611581191203232223, guid: bcd084b07ae840f49bc8526ab122ce58, type: 3}
   _speed: 30
@@ -76,6 +77,18 @@ MonoBehaviour:
   _homeDelay: 0
   _homeDelayTime: 0
   _homeCounter: 0
+--- !u!114 &-4557607917995455377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976552681326359198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307d8b7a8ede4f54d9f4c2538651a4b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1077270004722956637
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,7 +266,7 @@ SpriteRenderer:
   m_SortingLayerID: 1731554085
   m_SortingLayer: 8
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 13689503086f298409ee52f3301f86a5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
