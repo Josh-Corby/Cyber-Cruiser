@@ -263,9 +263,8 @@ namespace CyberCruiser
                 SetSpawnersModifiers(0.1f);
             }
 
-            Invoke(nameof(StartSpawningEnemies), BOSS_WAIT_TIME);
             //resume spawning enemies
-            StartSpawningEnemies();
+            Invoke(nameof(StartSpawningEnemies), BOSS_WAIT_TIME);
         }
 
         private void ChangeSpawnInterval()

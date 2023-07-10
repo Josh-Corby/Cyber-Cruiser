@@ -9,10 +9,6 @@ namespace CyberCruiser
     {
         [SerializeField] private AudioMixer _audioMixer;
 
-        [SerializeField] private Slider _masterSlider;
-        [SerializeField] private Slider _musicSlider;
-        [SerializeField] private Slider _effectsSlider;
-
         private const int DEFAULT_MIXER_VOLUME_IN_DB = 0;
         private const int VALUE_TO_MUTE_MIXER_IN_DB = -80;
 
@@ -21,19 +17,30 @@ namespace CyberCruiser
         private const string MUSIC_VOLUME = "musicVolume";
         private const string EFFECTS_VOLUME = "effectsVolume";
 
-        private float _masterVolume;
-        private float _musicVolume;
-        private float _effectsVolume;
-
         //const strings that represent the mute state of audio groups
         private const string IS_AUDIO_MUTED = "isAudioMuted";
         private const string IS_MUSIC_MUTED = "isMusicMuted";
         private const string IS_EFFECTS_MUTED = "isEffectsMuted";
 
-        [SerializeField] private bool _isAudioMuted;
-        [SerializeField] private bool _isMusicMuted;
-        [SerializeField] bool _isEffectsMuted;
+        //SO values of audio levels
+        [SerializeField] private FloatValue _masterVolume;
+        [SerializeField] private FloatValue _musicVolume;
+        [SerializeField] private FloatValue _effectsVolume;
 
+        [SerializeField] private BoolValue _isAudioMuted;
+        [SerializeField] private BoolValue _isMusicMuted;
+        [SerializeField] private BoolValue _isEffectsMuted;
+
+        //properties used to get and set SO values easier
+        private float MasterVolume { get => _masterVolume.Value; set => _masterVolume.Value = value; }
+        private float MusicVolume { get => _musicVolume.Value; set => _musicVolume.Value = value; }
+        private float EffectsVolume { get => _effectsVolume.Value; set => _effectsVolume.Value = value; }
+
+        private bool IsAudioMuted { get => _isAudioMuted.Value; set => _isAudioMuted.Value = value; }
+        private bool IsMusicMuted { get => _isMusicMuted.Value; set => _isMusicMuted.Value = value; }
+        private bool IsEffectsMuted { get => _isEffectsMuted.Value; set => _isEffectsMuted.Value = value; }
+
+        private delegate void SetMixerVolumeFunction(float volume);
         private void Start()
         {
             RestoreAudioSettings();
@@ -41,139 +48,149 @@ namespace CyberCruiser
 
         private void RestoreAudioSettings()
         {
-            _isAudioMuted = PlayerPrefs.GetInt(IS_AUDIO_MUTED, 0) != 0;
-            _isMusicMuted = PlayerPrefs.GetInt(IS_MUSIC_MUTED, 0) != 0;
-            _isEffectsMuted = PlayerPrefs.GetInt(IS_EFFECTS_MUTED, 0) != 0;
+            IsAudioMuted = PlayerPrefs.GetInt(IS_AUDIO_MUTED, 0) != 0;
+            IsMusicMuted = PlayerPrefs.GetInt(IS_MUSIC_MUTED, 0) != 0;
+            IsEffectsMuted = PlayerPrefs.GetInt(IS_EFFECTS_MUTED, 0) != 0;
 
-            _masterVolume = PlayerPrefs.GetFloat(MASTER_VOLUME, DEFAULT_MIXER_VOLUME_IN_DB);
-            _musicVolume = PlayerPrefs.GetFloat(MUSIC_VOLUME, DEFAULT_MIXER_VOLUME_IN_DB);
-            _effectsVolume = PlayerPrefs.GetFloat(EFFECTS_VOLUME, DEFAULT_MIXER_VOLUME_IN_DB);
-
-            SetSlidersToSavedPositions();
+            MasterVolume = PlayerPrefs.GetFloat(MASTER_VOLUME, DEFAULT_MIXER_VOLUME_IN_DB);
+            MusicVolume = PlayerPrefs.GetFloat(MUSIC_VOLUME, DEFAULT_MIXER_VOLUME_IN_DB);
+            EffectsVolume = PlayerPrefs.GetFloat(EFFECTS_VOLUME, DEFAULT_MIXER_VOLUME_IN_DB);
 
             CheckAudioBools();
         }
 
-        private void SetSlidersToSavedPositions()
-        {
-            _masterSlider.value = MathF.Pow(10f, _masterVolume / 20f);
-            _musicSlider.value = MathF.Pow(10f, _musicVolume / 20f);
-            _effectsSlider.value = MathF.Pow(10f, _effectsVolume / 20f);
-        }
-
         private void CheckAudioBools()
         {
-            if(_isAudioMuted)
+            if(IsAudioMuted)
             {
                 _audioMixer.SetFloat(MASTER_VOLUME, VALUE_TO_MUTE_MIXER_IN_DB);
             }
 
             else
             {
-                SetMasterVolumeIfNotMuted(_masterSlider.value);
+                SetMasterVolume(MasterVolume);
             }
 
-            if(_isMusicMuted) 
+            if(IsMusicMuted) 
             {
                 _audioMixer.SetFloat(MUSIC_VOLUME, VALUE_TO_MUTE_MIXER_IN_DB);
             }
 
             else
             {
-                SetMusicVolumeIfNotMuted(_musicSlider.value);
-
+                SetMusicVolume(MusicVolume);
             }
 
-            if (_isEffectsMuted)
+            if (IsEffectsMuted)
             {
                 _audioMixer.SetFloat(EFFECTS_VOLUME, VALUE_TO_MUTE_MIXER_IN_DB);
             }
 
             else
             {
-                SetEffectsVolumeIfNotMuted(_effectsSlider.value);
+                SetEffectsVolume(EffectsVolume);
             }
         }
 
         private void SaveAudioSettings()
         {
-            PlayerPrefs.SetFloat(MASTER_VOLUME, _masterVolume);
-            PlayerPrefs.SetFloat(MUSIC_VOLUME, _musicVolume);
-            PlayerPrefs.SetFloat(EFFECTS_VOLUME, _effectsVolume);
+            PlayerPrefs.SetFloat(MASTER_VOLUME, MasterVolume);
+            PlayerPrefs.SetFloat(MUSIC_VOLUME, MusicVolume);
+            PlayerPrefs.SetFloat(EFFECTS_VOLUME, EffectsVolume);
 
-            PlayerPrefs.SetInt(IS_AUDIO_MUTED, _isAudioMuted ? 1 : 0);
-            PlayerPrefs.SetInt(IS_MUSIC_MUTED, _isMusicMuted ? 1 : 0);
-            PlayerPrefs.SetInt(IS_EFFECTS_MUTED, _isEffectsMuted ? 1 : 0);
+            PlayerPrefs.SetInt(IS_AUDIO_MUTED, IsAudioMuted ? 1 : 0);
+            PlayerPrefs.SetInt(IS_MUSIC_MUTED, IsMusicMuted ? 1 : 0);
+            PlayerPrefs.SetInt(IS_EFFECTS_MUTED, IsEffectsMuted ? 1 : 0);
         }
 
         #region Set Audio Levels
-        public void SetMasterVolumeIfNotMuted(float volume)
+        private void SetMixerVolume(string mixerName, bool isMixerMuted, float mixerVolume, float newMixerVolume)
         {
-            if (!_isAudioMuted)
+            mixerVolume = newMixerVolume;
+            if(!isMixerMuted)
             {
-                _masterVolume = Mathf.Log10(volume) * 20;
-                _audioMixer.SetFloat(MASTER_VOLUME, _masterVolume);
+                _audioMixer.SetFloat(mixerName, mixerVolume);
             }
         }
 
-        public void SetMusicVolumeIfNotMuted(float volume)
+        private void SetMasterVolume(float newMasterVolume)
         {
-            if (!_isMusicMuted)
-            {
-                _musicVolume = Mathf.Log10(volume) * 20;
-                _audioMixer.SetFloat(MUSIC_VOLUME, _musicVolume);
-            }
+            SetMixerVolume(MASTER_VOLUME, IsAudioMuted, MasterVolume, newMasterVolume);
         }
 
-        public void SetEffectsVolumeIfNotMuted(float volume)
+        private void SetMusicVolume(float newMusicVolume)
         {
-            if (!_isEffectsMuted)
-            {
-                _effectsVolume = Mathf.Log10(volume) * 20;
-                _audioMixer.SetFloat(EFFECTS_VOLUME, _effectsVolume);
-            }
+            SetMixerVolume(MUSIC_VOLUME, IsMusicMuted, MusicVolume, newMusicVolume);
+        }
+
+        private void SetEffectsVolume(float newEffectsVolume)
+        {
+            SetMixerVolume(EFFECTS_VOLUME, IsEffectsMuted, EffectsVolume, newEffectsVolume);
+        }
+
+        public void SetMasterVolumeFromSlider(float sliderValue)
+        {
+            float sliderValueToDB = Mathf.Log10(sliderValue) * 20;
+            SetMasterVolume(sliderValueToDB);
+        }
+
+        public void SetMusicVolumeFromSlider(float sliderValue)
+        {
+            float sliderValueToDB = Mathf.Log10(sliderValue) * 20;
+            SetMusicVolume(sliderValueToDB);
+        }
+
+        public void SetEffectsVolumeFromSlider(float sliderValue)
+        {
+            float sliderValueToDB = Mathf.Log10(sliderValue) * 20;
+            SetEffectsVolume(sliderValueToDB);
         }
 
         #endregion
 
         #region Toggle Audio
-        public void ToggleAudio()
+
+        private void MuteMixer(string mixerName)
         {
-            _isAudioMuted = !_isAudioMuted;
-            if (_isAudioMuted)
+            _audioMixer.SetFloat(mixerName, VALUE_TO_MUTE_MIXER_IN_DB);
+        }
+
+        private void ToggleMixer(string mixerName, float mixerVolume, ref bool isMixerMuted, Action<float> function)
+        {
+            if(!isMixerMuted)
             {
-                _audioMixer.SetFloat(MASTER_VOLUME, VALUE_TO_MUTE_MIXER_IN_DB);
-                return;
+                MuteMixer(mixerName);
             }
 
-            _masterVolume = _masterSlider.value;
-            _audioMixer.SetFloat(MASTER_VOLUME, _masterVolume);
+            isMixerMuted = !isMixerMuted;
+            if (!isMixerMuted)
+            {
+                function(mixerVolume);
+            }
+        }
+
+        public void ToggleAudio()
+        {
+            bool currentMuteState = IsAudioMuted;
+            void wrapperFunction(float value) { SetMasterVolume(MasterVolume); }
+            ToggleMixer(MASTER_VOLUME, MasterVolume, ref _isAudioMuted.Value, wrapperFunction);
+            IsAudioMuted = !currentMuteState;
         }
 
         public void ToggleMusic()
         {
-            _isMusicMuted = !_isMusicMuted;
-            if (_isMusicMuted)
-            {
-                _audioMixer.SetFloat(MUSIC_VOLUME, VALUE_TO_MUTE_MIXER_IN_DB);
-                return;
-            }
-
-            _musicVolume = _musicSlider.value;
-            _audioMixer.SetFloat(MUSIC_VOLUME, _musicVolume);
+            bool currentMuteState = IsMusicMuted;
+            void wrapperFunction(float value) { SetMusicVolume(MusicVolume); }
+            ToggleMixer(MUSIC_VOLUME, MusicVolume, ref _isMusicMuted.Value, wrapperFunction);
+            IsMusicMuted = !currentMuteState;
         }
 
         public void ToggleEffects()
         {
-            _isEffectsMuted = !_isEffectsMuted;
-            if (_isEffectsMuted)
-            {
-                _audioMixer.SetFloat(EFFECTS_VOLUME, VALUE_TO_MUTE_MIXER_IN_DB);
-                return;
-            }
-
-            _effectsVolume = _effectsSlider.value;
-            _audioMixer.SetFloat(EFFECTS_VOLUME, _effectsVolume);
+            bool currentMuteState = IsEffectsMuted;
+            void wrapperFunction(float value) { SetEffectsVolume(EffectsVolume); }
+            ToggleMixer(EFFECTS_VOLUME,EffectsVolume,ref _isEffectsMuted.Value,wrapperFunction);
+            IsEffectsMuted = !currentMuteState;
         }
         #endregion
 

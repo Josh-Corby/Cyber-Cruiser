@@ -15,7 +15,6 @@ namespace CyberCruiser
         private const string UPDOWNCHECKLAYER = "UpDown";
 
         #region Local Movement Stats
-        private EnemyMovementType _movementType;
         protected float _speed;
         private float _crashSpeed;
 
@@ -53,28 +52,39 @@ namespace CyberCruiser
         //Could definately reference local movement stats directly but at the moment I prefer this approach as it takes away a step in referencing
         public void AssignEnemyMovementInfo(EnemyMovementStats movementStats)
         {
-            _movementType = movementStats.MoveType;
             _speed = movementStats.Speed;
             _crashSpeed = movementStats.SpeedWhenCrashing;
 
-            _isEnemyMovingUpDown = _movementType == EnemyMovementType.UpDown;
-            _upDownSpeed = movementStats.UpDownSpeed;
-            _upDownDistance = movementStats.UpDownDistance;
+            _isEnemyMovingUpDown = movementStats.UpDownMovementPattern;
+            if(_isEnemyMovingUpDown)
+            {
+                _upDownSpeed = movementStats.UpDownSpeed;
+                _upDownDistance = movementStats.UpDownDistance;
+            }          
 
-            _isEnemyMovingInSinPattern = _movementType == EnemyMovementType.SinUpDown;
-            _sinWaveFrequency = movementStats.SinWaveFrequency;
-            _sinWaveMagnitude = movementStats.SinWaveMagnitude;
+            _isEnemyMovingInSinPattern = movementStats.IsEnemyMovingInSinPattern;
+            if(_isEnemyMovingInSinPattern)
+            {
+                _sinWaveFrequency = movementStats.SinWaveFrequency;
+                _sinWaveMagnitude = movementStats.SinWaveMagnitude;
+            }
+           
+            _isEnemySeekingPlayer = movementStats.IsEnemySeekingPlayer;
+            if (_isEnemySeekingPlayer)
+            {
+                _isEnemySeekingPlayerOnYAxis = movementStats.IsEnemySeekingPlayerOnYAxis;
+                _isEnemySeekingPlayerOnXAxis = movementStats.IsEnemySeekingPlayerOnXAxis;
+                _seekSpeed = movementStats.SeekSpeed;
+            }         
 
-            _isEnemySeekingPlayer = _movementType == EnemyMovementType.SeekPlayer;
-            _isEnemySeekingPlayerOnYAxis = movementStats.IsEnemySeekingPlayerOnYAxis;
-            _isEnemySeekingPlayerOnXAxis = movementStats.IsEnemySeekingPlayerOnXAxis;
-            _seekSpeed = movementStats.SeekSpeed;
-
-            _isEnemyHomingOnPlayer = _movementType == EnemyMovementType.HomeOnPlayer;
-            _homeTurnSpeed = movementStats.HomeTurnSpeed;
-            _homeTimeInSeconds = movementStats.HomeTimeInSeconds;
-            _isHomingDelayed = movementStats.IsHomingDelayed;
-            _homeDelayTimeInSeconds = movementStats.HomeDelayTimeInSeconds;
+            _isEnemyHomingOnPlayer = movementStats.IsEnemyHomingOnPlayer;
+            if (_isEnemyHomingOnPlayer)
+            {
+                _homeTurnSpeed = movementStats.HomeTurnSpeed;
+                _homeTimeInSeconds = movementStats.HomeTimeInSeconds;
+                _isHomingDelayed = movementStats.IsHomingDelayed;
+                _homeDelayTimeInSeconds = movementStats.HomeDelayTimeInSeconds;
+            }          
         }
 
         public void ApplySpeedModifier(float speedModifier)
@@ -130,6 +140,7 @@ namespace CyberCruiser
                 return;
             }
 
+            //if enemy is homing rotate it before moving so it moves in the correct direction
             if (_isEnemyHomingOnPlayer)
             {
                 HomingMovement();
@@ -137,7 +148,7 @@ namespace CyberCruiser
 
             MoveForward();
 
-            //Functions that need to be after general movement
+            //Vertical Movement Patterns
             if (_isEnemyMovingUpDown)
             {
                 UpDownMovement();
@@ -319,7 +330,6 @@ namespace CyberCruiser
     public struct EnemyMovementStats
     {
         [Header("Movement Info")]
-        public EnemyMovementType MoveType;
         public float Speed;
         public float SpeedWhenCrashing;
 
@@ -345,10 +355,5 @@ namespace CyberCruiser
         public float HomeTimeInSeconds;
         public bool IsHomingDelayed;
         public float HomeDelayTimeInSeconds;
-    }
-
-    public enum EnemyMovementType
-    {
-        Default, UpDown, SeekPlayer, SinUpDown, HomeOnPlayer
     }
 }

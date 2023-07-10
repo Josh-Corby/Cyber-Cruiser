@@ -14,7 +14,7 @@ namespace CyberCruiser
         protected bool _shieldsActive;
         [SerializeField] private int _shieldMaxStrength;
         [SerializeField] private float _shieldCurrentStrength;
-        [SerializeField] private float _shieldCollisionDamage;
+        [SerializeField] protected float _shieldCollisionDamage;
 
         [SerializeField] protected bool _reflectorShield;
         [SerializeField] protected bool _shieldsActiveOnSpawn;
@@ -40,7 +40,7 @@ namespace CyberCruiser
 
         protected float ShieldCurrentStrength { get => _shieldCurrentStrength; set => _shieldCurrentStrength = value; }
 
-        protected float ShieldCollisionDamage { get => _shieldCollisionDamage; set => _shieldCollisionDamage = value; }
+        public float ShieldCollisionDamage { get => _shieldCollisionDamage; set => _shieldCollisionDamage = value; }
         #endregion
 
         protected virtual void Awake()

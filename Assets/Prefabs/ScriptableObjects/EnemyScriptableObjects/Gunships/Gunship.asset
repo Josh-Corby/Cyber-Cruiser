@@ -16,11 +16,10 @@ MonoBehaviour:
   EnemyName: Gunship
   GeneralStats:
     Type: 1
-    MaxHealth: 2
+    MaxHealth: 1
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:
-    MoveType: 1
     Speed: 2
     SpeedWhenCrashing: 4
     UpDownMovementPattern: 1

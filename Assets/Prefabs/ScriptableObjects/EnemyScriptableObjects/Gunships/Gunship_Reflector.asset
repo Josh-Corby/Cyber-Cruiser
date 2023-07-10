@@ -16,7 +16,7 @@ MonoBehaviour:
   EnemyName: Gunship_Reflector
   GeneralStats:
     Type: 1
-    MaxHealth: 2
+    MaxHealth: 1
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:

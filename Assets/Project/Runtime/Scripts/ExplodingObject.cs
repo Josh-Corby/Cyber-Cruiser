@@ -71,6 +71,9 @@ namespace CyberCruiser
             {
                 SpawnProjectile();
             }
+
+            Invoke(nameof(Destroy), 2f);
+
         }
 
         private void SpawnProjectile()
@@ -106,6 +109,11 @@ namespace CyberCruiser
                // Quaternion spawnRotation = Quaternion.Euler(0, 0, angle);
                 GameObject _go = Instantiate(_objectSpawnedOnCluster, spawnPos, spawnRotation);
             }
+        }
+
+        private void Destroy()
+        {
+            Destroy(gameObject);
         }
 
         private void OnDrawGizmosSelected()

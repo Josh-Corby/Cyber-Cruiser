@@ -86,6 +86,9 @@ namespace CyberCruiser
 
         private void SetEnemyMovementType(GunshipMoveTypes gunshipMoveType)
         {
+            _isEnemyMovingUpDown = false;
+            _isEnemySeekingPlayer = false;
+
             switch (gunshipMoveType)
             {
                 case GunshipMoveTypes.PlayerFollow:

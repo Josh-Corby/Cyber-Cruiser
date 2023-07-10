@@ -23,6 +23,7 @@ namespace CyberCruiser
         [SerializeField] private IntValue _currentPlasmaOnPickup;
         [SerializeField] private FloatValue _currentHeatPerShot;
         [SerializeField] private BoolValue _doesPlayerHavePulseDetonator;
+        [SerializeField] private BoolValue _doesPlayerShieldReflect;
 
 
         [Header("Addon Modifiers")]
@@ -44,6 +45,7 @@ namespace CyberCruiser
             _currentWeaponUpgradeDurationInSeconds.Value = _baseWeaponUpgradeDurationInSeconds.Value;
             _currentHeatPerShot.Value = _baseHeatPerShot.Value;
             _doesPlayerHavePulseDetonator.Value = false;
+            _doesPlayerShieldReflect.Value = false;
         }
     }
 }

@@ -84,6 +84,7 @@ namespace CyberCruiser
                 if (_homingTarget != null)
                 {
                     HomingMovement();
+                    return;
                 }
             }
 

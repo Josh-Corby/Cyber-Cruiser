@@ -10,6 +10,7 @@ namespace CyberCruiser
 
         #region Fields
         [SerializeField] private BoolReference _doesPlayerHavePulseDetonator;
+        [SerializeField] private BoolReference _doesPlayerShieldReflect;
         [SerializeField] private int _shieldActiveDuration;
         [SerializeField] private float _shieldActiveTimer;
         private bool _controlsEnabled;
@@ -25,6 +26,8 @@ namespace CyberCruiser
                 _playerUIManager.ChangeSliderValue(PlayerSliderTypes.Shield, _shieldActiveTimer);
             }
         }
+
+        public bool IsShieldReflecting { get => _reflectorShield; set => _reflectorShield = value; }
 
         protected override bool IsShieldsActive
         {
@@ -92,8 +95,6 @@ namespace CyberCruiser
         {
             _controlsEnabled = false;
         }
-
-
         private void CheckShieldsState()
         {
             if(!_controlsEnabled)
@@ -142,7 +143,46 @@ namespace CyberCruiser
                 Destroy(pickup.gameObject);
                 return;
             }
-            base.ProcessCollision(collider, collisionPoint);
+
+            if (collider.TryGetComponent<IDamageable>(out var damageable))
+            {
+                damageable.Damage(ShieldCollisionDamage);
+                if (!_isShieldImmuneToDamage)
+                {
+                    ReduceShields(1);
+                }
+
+                if (_collisionParticles != null)
+                {
+                    GameObject collisionParticles = Instantiate(_collisionParticles, collisionPoint, Quaternion.identity);
+                    collisionParticles.transform.parent = null;
+                }
+            }
+
+            else if (collider.TryGetComponent<ShieldControllerBase>(out var shield))
+            {
+                shield.ReduceShields(ShieldCollisionDamage);
+                if (!_isShieldImmuneToDamage)
+                {
+                    ReduceShields(shield.ShieldCollisionDamage);
+                }
+            }
+
+            else if (collider.TryGetComponent<Bullet>(out var bullet))
+            {
+                if (!_isShieldImmuneToDamage)
+                {
+                    ReduceShields(bullet.Damage);
+                }
+
+                if (_doesPlayerShieldReflect.Value)
+                {
+                    ReflectProjectile(bullet);
+                    return;
+                }
+
+                Destroy(bullet.gameObject);
+            }
         }
 
         public override void ReduceShields(float damage)

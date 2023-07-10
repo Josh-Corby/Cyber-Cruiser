@@ -175,6 +175,11 @@ namespace CyberCruiser
             _currentScreen.SetActive(false);
         }
 
+        public void SetIsResumingGame(bool isResumingGame)
+        {
+            _isResumingGame = isResumingGame;
+        }
+
         public void OnCloseScreenAnimationEnd()
         {
 
