@@ -10,6 +10,11 @@ namespace CyberCruiser
         public List<GunshipMovement> GunshipsAlive = new();
         [SerializeField] private List<GameObject> _enemiesAlive = new();
 
+        [SerializeField] private BoolValue _areAllEnemiesDead;
+        [SerializeField] private BoolReference _isBossReadyToSpawn;
+
+        private bool AreAllEnemiesDead { get => _areAllEnemiesDead.Value; set => _areAllEnemiesDead.Value = value; }
+
         private void OnEnable()
         {
             Enemy.OnEnemySpawned += AddEnemy;
@@ -46,17 +51,27 @@ namespace CyberCruiser
         private void AddEnemy(GameObject enemy)
         {
             _enemiesAlive.Add(enemy);
+
+            if(AreAllEnemiesDead)
+            {
+                AreAllEnemiesDead = false;
+            }
         }
 
         private void RemoveEnemy(GameObject enemy)
         {
             RemoveFromList(_enemiesAlive, enemy);
 
-            if (_enemySpawnerManager.bossReadyToSpawn)
+            if(_enemiesAlive.Count == 0)
             {
-                if (AreAllEnemiesDead())
+                AreAllEnemiesDead = true;
+            }
+            
+            if (_isBossReadyToSpawn.Value)
+            {
+                if (AreAllEnemiesDead)
                 {
-                    _enemySpawnerManager.StartBossSpawn();
+                    _enemySpawnerManager.SelectBossToSpawn();
                 }
             }
         }
@@ -71,11 +86,6 @@ namespace CyberCruiser
         {
             ClearListAndDestroyObjects(_enemiesAlive);
             ClearMovementLists();
-        }
-
-        public bool AreAllEnemiesDead()
-        {
-            return _enemiesAlive.Count == 0;
         }
 
         public GameObject CreateEnemyFromSO(EnemyScriptableObject enemyInfo)

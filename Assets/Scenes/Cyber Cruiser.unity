@@ -3079,6 +3079,12 @@ MonoBehaviour:
   _behemothWarning: {fileID: 21300000, guid: 886465a01f65f41438939a37c77013e4, type: 3}
   _cyberKrakenWarning: {fileID: 21300000, guid: 6f3bd97d9520d8b4ea72c284b5b429f1, type: 3}
   _robodactylWarning: {fileID: 21300000, guid: 7c821fb23b2cce943999f74f8a9d0cdb, type: 3}
+  _soundController: {fileID: 1605258059}
+  _bossWarningClip:
+    Clip: {fileID: 8300000, guid: cb8422b536641c64e940ccc710991781, type: 3}
+    OverrideSourceVolume: 1
+    Volume: 0.38
+    PlayOneShot: 0
 --- !u!1 &758824274
 GameObject:
   m_ObjectHideFlags: 0
@@ -6600,7 +6606,7 @@ MonoBehaviour:
   _pickupManager: {fileID: 1642317770}
   _distancePerSecond: 10
   _plasmaGenerationDistance: 100
-  _bossDistanceIncrement: 500
+  _bossDistanceIncrement: 20
 --- !u!1 &1744581506
 GameObject:
   m_ObjectHideFlags: 0
@@ -6743,6 +6749,11 @@ MonoBehaviour:
   slicersSeeking: []
   GunshipsAlive: []
   _enemiesAlive: []
+  _areAllEnemiesDead: {fileID: 11400000, guid: 20771b778c499fd42af69fd875626a9b, type: 2}
+  _isBossReadyToSpawn:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 1c1765d91cca04f4f96d5643a66a0af6, type: 2}
 --- !u!1 &1844895246
 GameObject:
   m_ObjectHideFlags: 0
@@ -7535,7 +7546,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022645779}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.75, y: 0, z: 0}
+  m_LocalPosition: {x: 18.55, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7646,20 +7657,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroy: 0
-  _enemyManager: {fileID: 1811844371}
   _topSpawner: {fileID: 47135018}
   _bottomSpawner: {fileID: 984547534}
   _bossSpawner: {fileID: 1370326090}
   _bosses:
   - {fileID: 11400000, guid: b3eead9fae217544fbca7e9c01d12c17, type: 2}
   _enemiesToSpawnBase: 2
-  _enemiesToSpawn: 2
   _spawnEnemyIntervalBase: 1.6
-  _enemySpawnInterval: 0
   _spawnEnemyReduction: 0.1
   _offsetPerEnemy: 0.01
   _timesToReduce: 2
-  _timesReduced: 0
   _enemySpawnerInfo:
   - spawner: {fileID: 984547534}
     SpawnerWeight: 0.35
@@ -7673,9 +7680,12 @@ MonoBehaviour:
     SpawnerWeight: 0
   _totalSpawnWeight: 1
   bossGoalPosition: {fileID: 1997121481}
-  dragonMovePoint: {fileID: 73215885}
+  _isBossReadyToSpawn: {fileID: 11400000, guid: 1c1765d91cca04f4f96d5643a66a0af6, type: 2}
+  _areAllEnemiesDead:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 20771b778c499fd42af69fd875626a9b, type: 2}
   bossReadyToSpawn: 0
-  _spawnEnemies: 0
 --- !u!1 &2052994989
 GameObject:
   m_ObjectHideFlags: 0
@@ -7721,6 +7731,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waveCountdownText: {fileID: 1885259248}
+  _soundController: {fileID: 1605258059}
+  _countdownClip:
+    Clip: {fileID: 8300000, guid: d2d6b0ec5d56136428a7ab564af063ef, type: 3}
+    OverrideSourceVolume: 1
+    Volume: 0.543
+    PlayOneShot: 0
 --- !u!1 &2144563961
 GameObject:
   m_ObjectHideFlags: 0

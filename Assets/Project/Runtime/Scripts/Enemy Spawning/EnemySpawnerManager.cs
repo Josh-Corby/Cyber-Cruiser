@@ -8,8 +8,6 @@ namespace CyberCruiser
 {
     public class EnemySpawnerManager : GameBehaviour<EnemySpawnerManager>
     {
-        [SerializeField] private EnemyManager _enemyManager;
-
         [Header("Spawners")]
         public EnemySpawner _topSpawner;
         public EnemySpawner _bottomSpawner;
@@ -18,39 +16,41 @@ namespace CyberCruiser
 
         [Header("Spawn Rate Info")]
         [SerializeField] private int _enemiesToSpawnBase;
-        [SerializeField] private int _enemiesToSpawn;
         [SerializeField] private float _spawnEnemyIntervalBase;
-        [SerializeField] private float _enemySpawnInterval;
-        private float _enemySpawnTimer;
         [SerializeField] private float _spawnEnemyReduction;
         [SerializeField] private float _offsetPerEnemy;
         [SerializeField] private int _timesToReduce;
-        [SerializeField] private int _timesReduced;
         [SerializeField] private EnemySpawnerInfo[] _enemySpawnerInfo;
         [SerializeField] private float _totalSpawnWeight;
 
+        private int _currentEnemiesToSpawn;
+        private float _currentEnemySpawnInterval;
+        private float _enemySpawnTimer;
+        private int _timesReduced;
+        private EnemyScriptableObject _currentBossToSpawn;
+
         [Header("Transform References")]
         public GameObject bossGoalPosition;
-        public Transform dragonMovePoint;
 
         [Header("Spawn bools")]
+        [SerializeField] private BoolValue _isBossReadyToSpawn;
+        [SerializeField] private BoolReference _areAllEnemiesDead;
+
         [HideInInspector] public bool bossReadyToSpawn;
         private const float BOSS_WAIT_TIME = 2f;
-        [SerializeField] private bool _spawnEnemies;
+        private bool _spawnEnemies;
 
-        [Header("Lists")]
         private List<EnemySpawner> _enemySpawners = new();
         private List<EnemySpawner> _spawnersSpawning = new();
         private List<EnemyScriptableObject> _bossesToSpawn = new();
 
-        [Header("Coroutines")]
         private Coroutine _spawnEnemiesCoroutine;
         private Coroutine _spawnBossCoroutine;
 
-        #region Actions
+        private bool IsBossReadyToSpawn { get => _isBossReadyToSpawn.Value; set => _isBossReadyToSpawn.Value = value; }
+
         public static event Action OnSpawnEnemyGroup = null;
         public static event Action<EnemyScriptableObject> OnBossSelected = null;
-        #endregion
 
         protected override void Awake()
         {
@@ -69,12 +69,14 @@ namespace CyberCruiser
         private void OnEnable()
         {
             DistanceManager.OnBossDistanceReached += SetupForBossSpawn;
+            BossUIManager.OnBossWarningComplete += SpawnBoss;
             Boss.OnBossDiedPosition += (p, v) => ProcessBossDied();
         }
 
         private void OnDisable()
         {
             DistanceManager.OnBossDistanceReached -= SetupForBossSpawn;
+            BossUIManager.OnBossWarningComplete -= SpawnBoss;
             Boss.OnBossDiedPosition -= (p, v) => ProcessBossDied();
         }
 
@@ -87,19 +89,21 @@ namespace CyberCruiser
         {
             while (_spawnEnemies)
             {
-                if (IsWaitingForSpawnTimer() == true)
+                if (IsWaitingForSpawnTimer())
                 {
                     return;
                 }
 
                 _spawnersSpawning.Clear();
                 OnSpawnEnemyGroup?.Invoke();
-                for (int i = 0; i < _enemiesToSpawn; i++)
+
+                for (int i = 0; i < _currentEnemiesToSpawn; i++)
                 {
                     GetRandomWeightedSpawners();
                 }
+
                 SpawnFromRandomSpawners();
-                _enemySpawnTimer = _enemySpawnInterval;
+                _enemySpawnTimer = _currentEnemySpawnInterval;
             }
         }
 
@@ -119,8 +123,8 @@ namespace CyberCruiser
             CancelBossSpawn();
             ResetBossesToSpawn();
             ResetSpawnersModifiers();
-            _enemiesToSpawn = _enemiesToSpawnBase;
-            _enemySpawnInterval = _spawnEnemyIntervalBase;
+            _currentEnemiesToSpawn = _enemiesToSpawnBase;
+            _currentEnemySpawnInterval = _spawnEnemyIntervalBase;
             _timesReduced = 0;
         }
 
@@ -140,7 +144,7 @@ namespace CyberCruiser
         public void StartSpawningEnemies()
         {
             _spawnEnemies = true;
-            _enemySpawnTimer = _enemySpawnInterval;
+            _enemySpawnTimer = _currentEnemySpawnInterval;
         }
 
         public void StopSpawningEnemies()
@@ -170,7 +174,7 @@ namespace CyberCruiser
         private List<EnemySpawner> GetRandomSpawners()
         {
             _spawnersSpawning.Clear();
-            for (int i = 0; i < _enemiesToSpawn; i++)
+            for (int i = 0; i < _currentEnemiesToSpawn; i++)
             {
                 EnemySpawner currentspawner = _enemySpawners[Random.Range(0, _enemySpawners.Count - 1)];
                 currentspawner.EnemiesToSpawn += 1;
@@ -205,42 +209,38 @@ namespace CyberCruiser
         public void SetupForBossSpawn()
         {
             StopSpawningEnemies();
-            bossReadyToSpawn = true;
+            IsBossReadyToSpawn = true;
 
-            if (_enemyManager.AreAllEnemiesDead())
+            if (_areAllEnemiesDead.Value == true)
             {
-                StartBossSpawn();
+                SelectBossToSpawn();
             }
         }
 
-        public void StartBossSpawn()
+        public void SelectBossToSpawn()
         {
-            if (_spawnBossCoroutine != null)
-            {
-                StopCoroutine(_spawnBossCoroutine);
-            }
-            _spawnBossCoroutine = StartCoroutine(SpawnBoss());
+            IsBossReadyToSpawn = false;
+            _currentBossToSpawn = GetRandomBossToSpawn();
+            OnBossSelected?.Invoke(_currentBossToSpawn);
         }
 
-        private IEnumerator SpawnBoss()
+        private void SpawnBoss()
         {
-            bossReadyToSpawn = false;
-            EnemyScriptableObject bossToSpawn = GetRandomBossToSpawn();
-            OnBossSelected(bossToSpawn);
-            yield return new WaitForSeconds(BOSS_WAIT_TIME);
-            _bossSpawner.SpawnBoss(bossToSpawn);
+            Debug.Log("spawning boss");
+            _bossSpawner.SpawnBoss(_currentBossToSpawn);
         }
 
         private EnemyScriptableObject GetRandomBossToSpawn()
         {
-            int index = Random.Range(0, _bossesToSpawn.Count - 1);
-            EnemyScriptableObject boss = _bossesToSpawn[index];
-            _bossesToSpawn.RemoveAt(index);
-
             if (_bossesToSpawn.Count == 0)
             {
                 ResetBossesToSpawn();
             }
+
+            int index = Random.Range(0, _bossesToSpawn.Count - 1);
+            EnemyScriptableObject boss = _bossesToSpawn[index];
+            _bossesToSpawn.RemoveAt(index);
+
             return boss;
         }
 
@@ -272,13 +272,13 @@ namespace CyberCruiser
             Debug.Log("Spawn interval change");
             if (_timesReduced >= _timesToReduce)
             {
-                _enemiesToSpawn += 1;
-                _enemySpawnInterval = _spawnEnemyIntervalBase + (_enemiesToSpawn * _offsetPerEnemy);
+                _currentEnemiesToSpawn += 1;
+                _currentEnemySpawnInterval = _spawnEnemyIntervalBase + (_currentEnemiesToSpawn * _offsetPerEnemy);
             }
 
             if (_timesReduced < _timesToReduce)
             {
-                _enemySpawnInterval -= _spawnEnemyReduction;
+                _currentEnemySpawnInterval -= _spawnEnemyReduction;
                 _timesReduced += 1;
             }
         }

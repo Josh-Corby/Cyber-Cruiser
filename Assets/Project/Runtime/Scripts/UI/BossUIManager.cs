@@ -1,3 +1,5 @@
+using CyberCruiser.Audio;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +19,11 @@ namespace CyberCruiser
         [SerializeField] private Sprite _cyberKrakenWarning;
         [SerializeField] private Sprite _robodactylWarning;
 
+        [SerializeField] private SoundControllerBase _soundController;
+        [SerializeField] private ClipInfo _bossWarningClip;
+
+        private float _warningClipLength;
+
         private string SetBossNameText
         {
             set
@@ -26,12 +33,13 @@ namespace CyberCruiser
             }
         }
 
+        public static event Action OnBossWarningComplete = null;
+
         private void OnEnable()
         {
             Boss.OnBossDamage += UpdateBossHealthBar;
             Boss.OnBossDiedPosition += (p, v) => DisableBossUI();
             EnemySpawner.OnBossSpawned += EnableBossUI;
-            EnemySpawner.OnBossSpawned += (e) => DisableBossWarningUI();
             EnemySpawnerManager.OnBossSelected += EnableBossWarningUI;
             GameManager.OnMissionEnd += DisableBossUI;
         }
@@ -41,14 +49,14 @@ namespace CyberCruiser
             Boss.OnBossDamage -= UpdateBossHealthBar;
             Boss.OnBossDiedPosition -= (p, v) => DisableBossUI();
             EnemySpawner.OnBossSpawned -= EnableBossUI;
-            EnemySpawner.OnBossSpawned -= (e) => DisableBossWarningUI();
             EnemySpawnerManager.OnBossSelected -= EnableBossWarningUI;
             GameManager.OnMissionEnd -= DisableBossUI;
         }
 
         private void Start()
         {
-            DisableBossUI();
+            _bossWarningUI.SetActive(false);
+            _warningClipLength = _bossWarningClip.Clip.length;
         }
 
         public void EnableBossWarningUI(EnemyScriptableObject bossInfo)
@@ -69,11 +77,14 @@ namespace CyberCruiser
                     break;
             }
             _bossWarningUI.SetActive(true);
+            _soundController.PlayNewClip(_bossWarningClip);
+            Invoke(nameof(DisableBossWarningUI), _warningClipLength + 1f);
         }
 
         private void DisableBossWarningUI()
         {
             _bossWarningUI.SetActive(false);
+            OnBossWarningComplete?.Invoke();
         }
 
         private void EnableBossUI(EnemyScriptableObject boss)
@@ -87,7 +98,6 @@ namespace CyberCruiser
             _bossHealthBarUI.SetActive(false);
             _bossNameText.enabled = false;
             SetBossNameText = "";
-            DisableBossWarningUI();
         }
 
         private void UpdateBossHealthBar(float value)

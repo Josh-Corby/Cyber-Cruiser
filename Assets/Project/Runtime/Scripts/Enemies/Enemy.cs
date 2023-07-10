@@ -120,7 +120,7 @@ namespace CyberCruiser
             _spriteRenderer.sortingOrder = -1;
 
             //enable crashing particles
-            _crashParticles.SetActive(true);
+            _crashParticles?.SetActive(true);
 
             //change object layer to layer that only collides with cull area
             gameObject.layer = LayerMask.NameToLayer(DEAD_ENEMY_LAYER_NAME);

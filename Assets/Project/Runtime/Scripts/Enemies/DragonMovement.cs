@@ -8,8 +8,6 @@ namespace CyberCruiser
         //1 for arc movement
         [SerializeField] private bool arcMove = false;
 
-        public Transform bottomLeftPoint;
-
         [Range(50, 360)] private float rotationSpeed;
 
         [SerializeField] private Vector3 startRotation;
