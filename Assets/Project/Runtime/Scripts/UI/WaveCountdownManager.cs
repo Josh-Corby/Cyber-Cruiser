@@ -1,3 +1,4 @@
+using CyberCruiser.Audio;
 using System;
 using TMPro;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace CyberCruiser
         private const float WAVECOUNTDOWNTIME = 3f;
         private const float STARTTEXTTIMER = 1f;
 
+        [SerializeField] private SoundControllerBase _soundController;
+        [SerializeField] private ClipInfo _countdownClip;
         #region Fields
         private float _waveCountdownTime = 3f;
         private float _startTextTimer = 1f;
@@ -40,9 +43,11 @@ namespace CyberCruiser
         {
             _isCountingDown = false;
         }
+
         private void StartWaveCountdown()
         {
             _isCountdownDone = false;
+            _soundController.PlayNewClip(_countdownClip);
             _waveCountdownText.color = Color.red;
             _waveCountdownText.enabled = true;
             _waveCountdownTime = WAVECOUNTDOWNTIME;

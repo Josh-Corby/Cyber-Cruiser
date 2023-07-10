@@ -30,7 +30,6 @@ namespace CyberCruiser
 
             protected override void OnEnable()
             {
-
                 GameManager.OnMissionEnd += StartMenuMusic;
                 GameManager.OnMissionStart += StartMissionMusic;
                 GameManager.OnIsTimeScalePaused += SetMissionMusicOnTogglePause;
