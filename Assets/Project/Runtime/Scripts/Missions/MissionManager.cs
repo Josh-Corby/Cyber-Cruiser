@@ -107,6 +107,11 @@ namespace CyberCruiser
                 return;
             }
 
+            if(_nextMissionToStart == null)
+            {
+                return;
+            }
+
             _currentMission = _nextMissionToStart;
             _nextMissionToStart = null;
             SetMissionObjective();
@@ -170,6 +175,11 @@ namespace CyberCruiser
         #region Mission Condition Assigning
         private void SetMissionObjective()
         {
+            if(_currentMission == null)
+            {
+                return;
+            }
+
             if(_currentMission != null)
             {
                 _currentMissionGoal = _currentMission.missionObjectiveAmount;

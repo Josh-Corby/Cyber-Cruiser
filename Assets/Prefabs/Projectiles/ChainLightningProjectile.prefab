@@ -156,7 +156,7 @@ MonoBehaviour:
   _enemyMask:
     serializedVersion: 2
     m_Bits: 128
-  _chainTarget: {fileID: 0}
+  _chainTarget: {fileID: 8553602988473826497, guid: 2b898e1a255d2b84ebc486bc4c99b9f4, type: 3}
   _speed: 50
   _chainSpeed: 50
   _chainDelay: 0

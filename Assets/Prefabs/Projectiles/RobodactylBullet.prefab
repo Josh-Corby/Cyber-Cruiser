@@ -65,7 +65,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerProjectileSprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
   _enemyProjectileSprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
-  _collisionParticles: {fileID: 8611581191203232223, guid: bcd084b07ae840f49bc8526ab122ce58, type: 3}
+  _collisionParticles: {fileID: 8553602988473826497, guid: 08865f867117733469bc08ef44229db0, type: 3}
   _speed: 25
   _damage: 1
   _doesBulletExplode: 0

@@ -10,7 +10,7 @@ namespace CyberCruiser
     {
         private bool _isBeamActive;
         public bool IsBeamFiring;
-        private LineRenderer _lineRenderer;
+        [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private float _beamDamage;
         [SerializeField] private float _basicEnemyBeamDamage;
         [SerializeField] private float _beamSpeed;
@@ -22,7 +22,7 @@ namespace CyberCruiser
         [SerializeField] private float beamDuration;
         private float _beamTimer;
 
-        private AudioSource _audioSource;
+        [SerializeField] private AudioSource _audioSource;
         private SoundControllerBase _beamSoundController;
         [SerializeField] private ClipInfo _beamClip;
 
