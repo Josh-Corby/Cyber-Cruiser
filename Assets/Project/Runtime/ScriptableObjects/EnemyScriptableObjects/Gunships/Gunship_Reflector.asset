@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
+  m_Name: Gunship_Reflector
+  m_EditorClassIdentifier: 
+  EnemyPrefab: {fileID: 2653145768784104840, guid: 5315175d49caa2c4d9ee273cc227786a, type: 3}
+  EnemyName: Gunship_Reflector
+  GeneralStats:
+    Type: 1
+    MaxHealth: 1
+    DoesEnemyExplodeOnDeath: 0
+    Explosion: {fileID: 0}
+  MovementStats:
+    MoveType: 0
+    Speed: 2
+    SpeedWhenCrashing: 4
+    UpDownMovementPattern: 1
+    UpDownSpeed: 4
+    UpDownDistance: 5
+    IsEnemyMovingInSinPattern: 0
+    SinWaveFrequency: 0
+    SinWaveMagnitude: 0
+    IsEnemySeekingPlayer: 0
+    IsEnemySeekingPlayerOnYAxis: 0
+    IsEnemySeekingPlayerOnXAxis: 0
+    SeekSpeed: 0
+    IsEnemyHomingOnPlayer: 0
+    HomeTurnSpeed: 0
+    HomeTimeInSeconds: 0
+    IsHomingDelayed: 0
+    HomeDelayTimeInSeconds: 0

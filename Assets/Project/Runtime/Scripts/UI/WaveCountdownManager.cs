@@ -14,6 +14,7 @@ namespace CyberCruiser
 
         [SerializeField] private SoundControllerBase _soundController;
         [SerializeField] private ClipInfo _countdownClip;
+
         #region Fields
         private float _waveCountdownTime = 3f;
         private float _startTextTimer = 1f;
@@ -73,8 +74,6 @@ namespace CyberCruiser
                 _waveCountdownText.enabled = false;
             }
         }
-
-        private 
 
         private void StartWaveCountdown()
         {
