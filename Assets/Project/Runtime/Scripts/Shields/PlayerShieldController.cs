@@ -9,15 +9,26 @@ namespace CyberCruiser
         private PulseDetonator _pulseDetonator;
 
         #region Fields
+        [Tooltip("SO Bool Reference for if player has pulse detonator")]
         [SerializeField] private BoolReference _doesPlayerHavePulseDetonator;
+
+        [Tooltip("SO Bool Reference for if player shield is reflecting")]
         [SerializeField] private BoolReference _doesPlayerShieldReflect;
+
+        [Tooltip("SO Bool Reference for if player has signal beacon")]
+        [SerializeField] private BoolReference _doesPlayerHaveSignalBeacon;
+
+        [Tooltip("Percentage of player winning signal beacon roll")]
+        [SerializeField] private int _signalBeaconSuccessPercentage =33;
+
+        [Tooltip("Total duration of player shield activation")]
         [SerializeField] private int _shieldActiveDuration;
-        [SerializeField] private float _shieldActiveTimer;
+        private float _shieldActiveTimer;
         private bool _controlsEnabled;
         #endregion
 
         #region Properties
-        public float ShieldActiveTimer
+        private float ShieldActiveTimer
         {
             get => _shieldActiveTimer;
             set
@@ -26,8 +37,6 @@ namespace CyberCruiser
                 _playerUIManager.ChangeSliderValue(PlayerSliderTypes.Shield, _shieldActiveTimer);
             }
         }
-
-        public bool IsShieldReflecting { get => _reflectorShield; set => _reflectorShield = value; }
 
         protected override bool IsShieldsActive
         {
@@ -52,6 +61,8 @@ namespace CyberCruiser
         #region Actions
         public static event Action OnPlayerShieldsActivated = null;
         #endregion
+
+        [SerializeField] private GameEvent _onSignalBeamSuccess;
 
         protected override void Awake()
         {
@@ -95,6 +106,7 @@ namespace CyberCruiser
         {
             _controlsEnabled = false;
         }
+
         private void CheckShieldsState()
         {
             if(!_controlsEnabled)
@@ -113,6 +125,7 @@ namespace CyberCruiser
             }
         }
 
+        //activate whatever shield effect is currently equipped
         protected override void ActivateShields()
         {
             if (_doesPlayerHavePulseDetonator.Value)
@@ -121,9 +134,34 @@ namespace CyberCruiser
                 return;
             }
 
+            if(_doesPlayerHaveSignalBeacon.Value)
+            {
+                bool signalBeaconSuccess = PercentageRoll(_signalBeaconSuccessPercentage);
+
+                if (signalBeaconSuccess)
+                {
+                    Debug.Log("Signal Beacon Called");
+                    _onSignalBeamSuccess.Raise();
+                }
+
+                else
+                {
+                    Debug.Log("Signal Beacon failed");
+
+                }
+            }
+
+            EnableShield();
+        }
+
+        //enable the shield object
+        private void EnableShield()
+        {
             IsShieldsActive = true;
             PlayerManagerInstance.IsPlayerColliderEnabled = false;
         }
+
+
 
         protected override void DeactivateShields()
         {
@@ -135,7 +173,10 @@ namespace CyberCruiser
 
         public override void ProcessCollision(GameObject collider, Vector2 collisionPoint)
         {
-            if (collider.GetComponent<Boss>()) return;
+            if (collider.GetComponent<Boss>())
+            {
+                return;
+            }
 
             else if (collider.TryGetComponent<Pickup>(out var pickup))
             {

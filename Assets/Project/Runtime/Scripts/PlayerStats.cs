@@ -24,7 +24,7 @@ namespace CyberCruiser
         [SerializeField] private FloatValue _currentHeatPerShot;
         [SerializeField] private BoolValue _doesPlayerHavePulseDetonator;
         [SerializeField] private BoolValue _doesPlayerShieldReflect;
-
+        [SerializeField] private BoolValue _doesPlayerHaveSignalBeam;
 
         [Header("Addon Modifiers")]
         [SerializeField] private IntValue _batteryPackUpgradeValue;
@@ -46,6 +46,7 @@ namespace CyberCruiser
             _currentHeatPerShot.Value = _baseHeatPerShot.Value;
             _doesPlayerHavePulseDetonator.Value = false;
             _doesPlayerShieldReflect.Value = false;
+            _doesPlayerHaveSignalBeam.Value = false;
         }
     }
 }

@@ -5,19 +5,29 @@ namespace CyberCruiser
     public class ShieldControllerBase : GameBehaviour
     {
         #region References
+        [Tooltip("Unit collider to be toggled when the shield is enabled")]
         [SerializeField] protected Collider2D _unitCollider;
-        [SerializeField] protected Shield _shields;
         [SerializeField] protected GameObject _collisionParticles;
+        protected Shield _shields;
         #endregion
 
         #region Fields
         protected bool _shieldsActive;
+        private float _shieldCurrentStrength;
+
+        [Tooltip("Strength of shield when activated")]
         [SerializeField] private int _shieldMaxStrength;
-        [SerializeField] private float _shieldCurrentStrength;
+
+        [Tooltip("Damage shield does when colliding with a damageable target")]
         [SerializeField] protected float _shieldCollisionDamage;
 
+        [Tooltip("Does the shield reflect projectiles")]
         [SerializeField] protected bool _reflectorShield;
+
+        [Tooltip("Is the shield active when it is enabled")]
         [SerializeField] protected bool _shieldsActiveOnSpawn;
+
+        [Tooltip("Is the shield immune to its duration being reduced by damage")]
         [SerializeField] protected bool _isShieldImmuneToDamage;
         #endregion
 
@@ -105,6 +115,7 @@ namespace CyberCruiser
                 {
                     ReduceShields(bullet.Damage);
                 }
+
                 if (_reflectorShield)
                 {
                     ReflectProjectile(bullet);

@@ -24,7 +24,7 @@ namespace CyberCruiser
         [SerializeField] private float _indicatorAngle;
         protected readonly float _indicatorTimer = 2f;
 
-        protected void OnEnable()
+        private void OnEnable()
         {
             GameManager.OnMissionStart += ResetBossDropsList;
             GameManager.OnMissionEnd += ClearPickups;
@@ -33,7 +33,7 @@ namespace CyberCruiser
             PickupSpawner.OnPickupSpawned += AddPickup;         
         }
 
-        protected void OnDisable()
+        private void OnDisable()
         {
             GameManager.OnMissionStart -= ResetBossDropsList;
             GameManager.OnMissionEnd -= ClearPickups;
@@ -42,25 +42,17 @@ namespace CyberCruiser
             PickupSpawner.OnPickupSpawned -= AddPickup;
         }
 
-        private void ResetBossDropsList()
+        public void SpawnPlasmaDrop()
         {
-            _bossDropsToSpawn = _bossDropsPool;
+            SpawnPickupAtRandomPosition(PickupType.Normal);
         }
 
-        private GameObject GetRandomBossPickup()
-        {        
-            if( _bossDropsToSpawn.Count == 0)
-            {
-                return _baseBossDrop;
-            }
-
-            int RandomBossDropIndex = Random.Range(0, _bossDropsPool.Count);
-            GameObject randomBossDrop = _bossDropsPool[RandomBossDropIndex];
-            _bossDropsToSpawn.RemoveAt(RandomBossDropIndex);
-            return randomBossDrop;
+        public void SpawnWeaponDrop()
+        {
+            SpawnPickupAtRandomPosition(PickupType.Weapon);
         }
 
-        public void SpawnPickupAtRandomPosition(PickupType pickupType)
+        private void SpawnPickupAtRandomPosition(PickupType pickupType)
         {
             switch (pickupType)
             {
@@ -91,34 +83,39 @@ namespace CyberCruiser
                     break;
             }
         }
+    
 
-        protected GameObject GetRandomWeaponUpgrade()
+        private GameObject GetRandomWeaponUpgrade()
         {
             int randomIndex = Random.Range(0, _weaponUpgradesPool.Length);
             GameObject randomUpgradePrefab = _weaponUpgradesPool[randomIndex];
             return randomUpgradePrefab;
         }
 
-        private IEnumerator SpawnWeaponUpgrade()
-        {
-            Vector2 position = _upgradeSpawner.GetRandomPosition();
-            CreateIndicator(position, _upgradeSpawner);
-            yield return new WaitForSeconds(_indicatorTimer);
-            GameObject pickup = GetRandomWeaponUpgrade();
-            _upgradeSpawner.SpawnPickupAtPosition(pickup, position);
+        private GameObject GetRandomBossPickup()
+        {        
+            if( _bossDropsToSpawn.Count == 0)
+            {
+                return _baseBossDrop;
+            }
+
+            int RandomBossDropIndex = Random.Range(0, _bossDropsPool.Count);
+            GameObject randomBossDrop = _bossDropsPool[RandomBossDropIndex];
+            _bossDropsToSpawn.RemoveAt(RandomBossDropIndex);
+            return randomBossDrop;
         }
 
-        public void AddPickup(GameObject pickup)
+        private void AddPickup(GameObject pickup)
         {
             pickupsOnScreen.Add(pickup);
         }
 
-        public void RemovePickup(GameObject pickup)
+        private void RemovePickup(GameObject pickup)
         {
             pickupsOnScreen.Remove(pickup);
         }
 
-        protected void ClearPickups()
+        private void ClearPickups()
         {
             if (pickupsOnScreen.Count > 0)
             {
@@ -133,7 +130,22 @@ namespace CyberCruiser
             pickupsOnScreen.Clear();
         }
 
-        protected void CreateIndicator(Vector2 position, PickupSpawner spawner)
+        private void ResetBossDropsList()
+        {
+            _bossDropsToSpawn = _bossDropsPool;
+        }
+
+        // not currently used functions
+        private IEnumerator SpawnWeaponUpgrade()
+        {
+            Vector2 position = _upgradeSpawner.GetRandomPosition();
+            CreateIndicator(position, _upgradeSpawner);
+            yield return new WaitForSeconds(_indicatorTimer);
+            GameObject pickup = GetRandomWeaponUpgrade();
+            _upgradeSpawner.SpawnPickupAtPosition(pickup, position);
+        }
+
+        private void CreateIndicator(Vector2 position, PickupSpawner spawner)
         {
             GameObject Indicator = Instantiate(_pickupIndicator, position, Quaternion.identity);
 

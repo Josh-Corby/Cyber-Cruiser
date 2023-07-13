@@ -72,7 +72,12 @@ namespace CyberCruiser
         public virtual void Damage(float damage)
         {
             _currentHealth -= damage;
-            _flash.Flash();
+
+            if(_flash != null)
+            {
+                _flash.Flash();
+            }
+
             if (_currentHealth <= 0)
             {
                 if (_doesEnemyExplodeOnDeath)

@@ -1,4 +1,3 @@
-using CyberCruiser.Audio;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -33,6 +32,7 @@ namespace CyberCruiser
                 return instance_;
             }
         }
+
         protected virtual void Awake()
         {
             if (instance_ == null)

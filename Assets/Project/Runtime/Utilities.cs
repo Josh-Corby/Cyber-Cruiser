@@ -782,4 +782,19 @@ public class Utilities : MonoBehaviour
         int stringToLayer = LayerMask.NameToLayer(layerName);
         return stringToLayer;
     }
+
+    public static bool PercentageRoll(int successPercentage)
+    {
+        int randomValue = UnityEngine.Random.Range(0, 100);
+
+        if(randomValue < successPercentage)
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
+        }
+    }
 }

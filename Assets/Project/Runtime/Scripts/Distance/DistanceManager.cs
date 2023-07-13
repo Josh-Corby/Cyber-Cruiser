@@ -2,19 +2,16 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 namespace CyberCruiser
 {
     public class DistanceManager : GameBehaviour
     {
-        #region References
+        [Header("UI References")]
         [SerializeField] private TMP_Text _distanceCounterText;
         [SerializeField] private UISlider _distanceSlider;
         [SerializeField] private GameObject _distanceSliderObject;
-        [SerializeField] private PickupManager _pickupManager;
-        #endregion
 
         #region Fields
         [Header("Distance Increments")]
@@ -57,7 +54,10 @@ namespace CyberCruiser
         public static event Action OnBossDistanceReached = null;
         #endregion
 
-        #region Unity Functions
+        [Header("Game Events")]
+        [SerializeField] private GameEvent OnPickupDistanceReached;
+        [SerializeField] private GameEvent OnWeaponPackDistanceReached;
+
         private void Awake()
         {
             _distanceSliderObject.SetActive(false);
@@ -72,8 +72,6 @@ namespace CyberCruiser
         {
             Boss.OnBossTypeDied -= (bossType) => StartIncreasingDistance();
         }
-
-        #endregion
 
         #region Distance Control
         public void StartLevelCounting()
@@ -127,12 +125,12 @@ namespace CyberCruiser
 
             if (_distanceInt == _plasmaDropDistance)
             {
-                PlasmaDistanceReached();
+                OnPickupDistanceReached.Raise();
             }
 
             if (_distanceInt == _weaponUpgradeDropDistance)
             {
-                WeaponUpgradeDistanceReached();
+                OnWeaponPackDistanceReached.Raise();
             }
         }
 
@@ -167,17 +165,6 @@ namespace CyberCruiser
         private void GenerateNewWeaponUpgradeDropDistance()
         {
             _weaponUpgradeDropDistance = Random.Range(_previousBossDistance + 15, _currentBossDistance - 1);
-            Debug.Log(_weaponUpgradeDropDistance);
-        }
-
-        private void PlasmaDistanceReached()
-        {
-            _pickupManager.SpawnPickupAtRandomPosition(PickupType.Normal);
-        }
-
-        private void WeaponUpgradeDistanceReached()
-        {
-            _pickupManager.SpawnPickupAtRandomPosition(PickupType.Weapon);
         }
         #endregion
 

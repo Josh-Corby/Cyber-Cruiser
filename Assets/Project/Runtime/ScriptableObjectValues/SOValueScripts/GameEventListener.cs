@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace TowerDefenseGame
+namespace CyberCruiser
 {
     public class GameEventListener : MonoBehaviour
     {
