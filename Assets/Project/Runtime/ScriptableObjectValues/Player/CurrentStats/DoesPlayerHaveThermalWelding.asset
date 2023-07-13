@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91e296595b1733a478a37753d2be4c0f, type: 3}
-  m_Name: PlayerPlasma
+  m_Script: {fileID: 11500000, guid: cac812aa083a77c43b583ac9af787470, type: 3}
+  m_Name: DoesPlayerHaveThermalWelding
   m_EditorClassIdentifier: 
-  Value: 67
+  Value: 1

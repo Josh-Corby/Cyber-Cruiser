@@ -25,6 +25,8 @@ namespace CyberCruiser
         [SerializeField] private BoolValue _doesPlayerHavePulseDetonator;
         [SerializeField] private BoolValue _doesPlayerShieldReflect;
         [SerializeField] private BoolValue _doesPlayerHaveSignalBeam;
+        [SerializeField] private BoolValue _doesPlayerHaveEmergencyArsenal;
+        [SerializeField] private BoolValue _doesPlayerHaveBackupSystem;
 
         [Header("Addon Modifiers")]
         [SerializeField] private IntValue _batteryPackUpgradeValue;
@@ -47,6 +49,8 @@ namespace CyberCruiser
             _doesPlayerHavePulseDetonator.Value = false;
             _doesPlayerShieldReflect.Value = false;
             _doesPlayerHaveSignalBeam.Value = false;
+            _doesPlayerHaveEmergencyArsenal.Value = false;
+            _doesPlayerHaveBackupSystem.Value = false;
         }
     }
 }

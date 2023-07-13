@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91e296595b1733a478a37753d2be4c0f, type: 3}
-  m_Name: PlayerPlasma
+  m_Script: {fileID: 11500000, guid: e82331aec8cb6934880a9d51b55a290b, type: 3}
+  m_Name: OnEmergencyArsenalSuccess
   m_EditorClassIdentifier: 
-  Value: 67

@@ -6,69 +6,89 @@ namespace CyberCruiser
 {
     public class PlayerWeaponController : GameBehaviour
     {
-        [SerializeField] private Weapon _playerWeapon;
         [SerializeField] private WeaponSO _baseWeaponSO;
-        [SerializeField] private WeaponSO _currentWeaponSO;
         [SerializeField] private PlayerSoundController _soundController;
         [SerializeField] private PlayerUIManager _playerUIManager;
         [SerializeField] private BeamAttack _beamAttack;
+        private Weapon _playerWeapon;
+        private WeaponSO _currentWeaponSO;
 
-        #region Fields
-        private bool _controlsEnabled;
-
+        #region SO References
         [SerializeField] private IntReference _weaponUpgradeDurationInSeconds;
         [SerializeField] private FloatReference _currentHeatPerShotReference;
         [SerializeField] private BoolReference _isGamePausedReference;
-
-        private const int BASE_HEAT_MAX = 100;
-        private const float BASE_HEAT_PER_SHOT = 1.75f;
-        private const float BASE_HEAT_LOSS_PER_FRAME = 0.4f;
-        private const float BASE_COOLDOWN_HEAT_LOSS_PER_FRAME = 0.6f;
+        #endregion
 
         [Header("Heat")]
-        [SerializeField] private float _currentHeat;
-        private float _heatLossPerFrame;
-        private float _cooldownHeatLossPerFrame;
+        [Tooltip("Time player needs to not fire before they start losing heat")]
         [SerializeField] private float _timeBeforeHeatLoss;
 
+        [Header("Emergency arsenal")]
+        [Tooltip("SO Bool Reference for if player has emergency arsenal")]
+        [SerializeField] private BoolReference _doesPlayerHaveEmergencyArsenal;
+
+        [Tooltip("Percentage change of player winning emergency arsenal roll")]
+        [SerializeField] private int _emergencyArsenalSuccessPercentage = 10;
+
+        [Tooltip("Game event that fires if player succeeds emergency arsenal roll")]
+        [SerializeField] private GameEvent _onEmergencyArsenalSuccess;
+
+        [Header("Backup System")]
+        [Tooltip("SO Bool Reference for if player has backup system")]
+        [SerializeField] private BoolReference _doesPlayerHaveBackupSystem;
+
+        [Tooltip("Game event that fires if player has backup system")]
+        [SerializeField] private GameEvent _onBackupSystemActivated;
+
+        [Header("Thermal Welding")]
+        [Tooltip("SO Bool Reference for in player has thermal welding")]
+        [SerializeField] private BoolReference _doesPlayerHaveThermalWelding;
+
+        [Tooltip("Game event that fires if player has thermal welding")]
+        [SerializeField] private GameEvent _onThermalWeldingActivated;
+
+        #region Private Fields
+        private const int BASE_HEAT_MAX = 100;
+        private const float BASE_HEAT_LOSS_PER_FRAME = 0.4f;
+        private const float BASE_COOLDOWN_HEAT_LOSS_PER_FRAME = 0.6f;
+        private bool _controlsEnabled;
+        private float _currentHeat;
+        private float _heatLossPerFrame;
+        private float _cooldownHeatLossPerFrame;
         private int _heatMax;
         private float _timeSinceLastShot;
-        private float _weaponUpgradeCounter;
-
         private bool _isOverheated;
-        private bool _isHoming;
         private bool _fireInput;
         private bool _isWeaponUpgradeActive;
         private bool _isHeatDecreasing;
-
-        private bool _isWeaponFiringHomingProjectiles;
-        private Coroutine _weaponUpgradeCoroutine;
         #endregion
 
+        private Coroutine _weaponUpgradeCoroutine;
+
         #region Properties
-        public float CurrentHeat
+        private float CurrentHeat
         {
             get => _currentHeat;
-            private set
+            set
             {
                 _currentHeat = value;
 
                 if (_currentHeat >= _heatMax)
                 {
                     _currentHeat = _heatMax;
-                    IsOverheated = true;
-                    _playerUIManager.OverheatUI(IsOverheated);
+                    OverHeat();
                 }
 
                 else if (_currentHeat < 0)
                 {
                     _currentHeat = 0;
                 }
+
                 _playerUIManager.ChangeSliderValue(PlayerSliderTypes.Heat, _currentHeat);
             }
         }
 
-        public float TimeSinceLastShot
+        private float TimeSinceLastShot
         {
             get => _timeSinceLastShot;
             set
@@ -78,7 +98,7 @@ namespace CyberCruiser
             }
         }
 
-        public bool IsOverheated
+        private bool IsOverheated
         {
             get => _isOverheated;
             set
@@ -94,8 +114,10 @@ namespace CyberCruiser
         public static event Action OnShoot = null;
         #endregion
 
+
         private void Awake()
         {
+            _playerWeapon = GetComponentInChildren<Weapon>();
             _playerWeapon.SetWeapon(_baseWeaponSO);
             _beamAttack = GetComponentInChildren<BeamAttack>();
         }
@@ -120,6 +142,14 @@ namespace CyberCruiser
             InitializeWeapon();
         }
 
+        private void Update()
+        {
+            if (!_isGamePausedReference.Value)
+            {
+                CheckOverHeated();
+            }
+        }
+
         private void InitializeWeapon()
         {
             _currentWeaponSO = _baseWeaponSO;
@@ -130,14 +160,6 @@ namespace CyberCruiser
             _heatLossPerFrame = BASE_HEAT_LOSS_PER_FRAME;
             _cooldownHeatLossPerFrame = BASE_COOLDOWN_HEAT_LOSS_PER_FRAME;
             _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.Heat, _heatMax);
-        }
-
-        private void Update()
-        {
-            if (!_isGamePausedReference.Value)
-            {
-                CheckOverHeated();
-            }
         }
 
         private void CheckOverHeated()
@@ -187,6 +209,36 @@ namespace CyberCruiser
                 {
                     CurrentHeat -= _heatLossPerFrame;
                 }
+            }
+        }
+
+        private void OverHeat()
+        {
+            IsOverheated = true;
+
+            if (_doesPlayerHaveEmergencyArsenal.Value)
+            {
+                EmergencyArsenalRoll();
+            }
+
+            if(_doesPlayerHaveBackupSystem.Value)
+            {
+                _onBackupSystemActivated.Raise();
+            }
+
+            if (_doesPlayerHaveThermalWelding.Value)
+            {
+                _onThermalWeldingActivated.Raise();
+            }
+        }
+
+        private void EmergencyArsenalRoll()
+        {
+            bool emergencyArsenalSuccess = PercentageRoll(_emergencyArsenalSuccessPercentage);
+
+            if (emergencyArsenalSuccess)
+            {
+                _onEmergencyArsenalSuccess.Raise();
             }
         }
 
@@ -248,10 +300,15 @@ namespace CyberCruiser
                 _playerWeapon.CheckFireTypes();
                 if (!_isWeaponUpgradeActive)
                 {
-                    CurrentHeat += _currentHeatPerShotReference.Value;
+                    IncreaseHeatOnWeaponFire();
                     TimeSinceLastShot = 0;
                 }
             }
+        }
+
+        private void IncreaseHeatOnWeaponFire()
+        {
+            CurrentHeat += _currentHeatPerShotReference.Value;
         }
 
         private void CancelFireInput()
@@ -285,7 +342,6 @@ namespace CyberCruiser
 
             CurrentHeat = 0;
             _isWeaponUpgradeActive = true;
-            _weaponUpgradeCounter = _weaponUpgradeDurationInSeconds.Value;
             OnWeaponUpgradeStart?.Invoke(_weaponUpgradeDurationInSeconds.Value);
             _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.WeaponUpgrade, _weaponUpgradeDurationInSeconds.Value);
             _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimerCoroutine());
@@ -293,10 +349,11 @@ namespace CyberCruiser
 
         private IEnumerator WeaponUpgradeTimerCoroutine()
         {
-            while (_weaponUpgradeCounter > 0)
+            float weaponUpgradeTimer = _weaponUpgradeDurationInSeconds.Value;
+            while (weaponUpgradeTimer > 0)
             {
-                _weaponUpgradeCounter -= Time.deltaTime;
-                _playerUIManager.ChangeSliderValue(PlayerSliderTypes.WeaponUpgrade, _weaponUpgradeCounter);
+                weaponUpgradeTimer -= Time.deltaTime;
+                _playerUIManager.ChangeSliderValue(PlayerSliderTypes.WeaponUpgrade, weaponUpgradeTimer);
                 yield return new WaitForSeconds(0.01f);
             }
 

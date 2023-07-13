@@ -18,7 +18,7 @@ namespace CyberCruiser
         [Tooltip("SO Bool Reference for if player has signal beacon")]
         [SerializeField] private BoolReference _doesPlayerHaveSignalBeacon;
 
-        [Tooltip("Percentage of player winning signal beacon roll")]
+        [Tooltip("Percentage chance of player winning signal beacon roll")]
         [SerializeField] private int _signalBeaconSuccessPercentage =33;
 
         [Tooltip("Total duration of player shield activation")]
@@ -125,6 +125,12 @@ namespace CyberCruiser
             }
         }
 
+        //a way to activate player shields from other classes, or from unity events
+        public void ActivateShield()
+        {
+            ActivateShields();
+        }
+
         //activate whatever shield effect is currently equipped
         protected override void ActivateShields()
         {
@@ -134,21 +140,9 @@ namespace CyberCruiser
                 return;
             }
 
-            if(_doesPlayerHaveSignalBeacon.Value)
+            if (_doesPlayerHaveSignalBeacon.Value)
             {
-                bool signalBeaconSuccess = PercentageRoll(_signalBeaconSuccessPercentage);
-
-                if (signalBeaconSuccess)
-                {
-                    Debug.Log("Signal Beacon Called");
-                    _onSignalBeamSuccess.Raise();
-                }
-
-                else
-                {
-                    Debug.Log("Signal Beacon failed");
-
-                }
+               SignalBeaconRoll();
             }
 
             EnableShield();
@@ -161,7 +155,14 @@ namespace CyberCruiser
             PlayerManagerInstance.IsPlayerColliderEnabled = false;
         }
 
-
+        private void SignalBeaconRoll()
+        {
+            bool signalBeaconSuccess = PercentageRoll(_signalBeaconSuccessPercentage);
+            if (signalBeaconSuccess)
+            {
+                _onSignalBeamSuccess.Raise();
+            }
+        }
 
         protected override void DeactivateShields()
         {

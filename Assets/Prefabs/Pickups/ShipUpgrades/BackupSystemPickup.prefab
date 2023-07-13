@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 8745648869564726004}
   - component: {fileID: 1280142038}
   m_Layer: 10
-  m_Name: SignalBeaconPickup
+  m_Name: BackupSystemPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,12 +181,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e4a88cb5c1d11f44b14418206ac71e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectValueToChange: {fileID: 11400000, guid: 7e73cec95cf319f4c8efc77cb2190f73, type: 2}
+  _scriptableObjectValueToChange: {fileID: 11400000, guid: 7f99c7a0b828ed548a4e0bd50bebc141, type: 2}
   _valueChanger: {fileID: 11400000, guid: 30bdc62ec69414a4ba2ff224b9c27cf7, type: 2}
   _valueToChangeWith:
     UseConstant: 1
     ConstantValue: 1
-    Variable: {fileID: 11400000, guid: 7e73cec95cf319f4c8efc77cb2190f73, type: 2}
+    Variable: {fileID: 0}
 --- !u!114 &1280142038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pickupName: Signal Beacon
+  _pickupName: Backup System
   _pickupType: 1
   _weaponSO: {fileID: 0}
   _speed: 3

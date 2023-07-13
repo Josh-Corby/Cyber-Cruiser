@@ -55,6 +55,7 @@ namespace CyberCruiser
             set
             {
                 value = value < 0 ? 0 : value;
+                value = value < 0 ? 0 : value;
                 _currentPlasma.Value = value;
                 OnPlasmaChange?.Invoke(CurrentPlasma);
             }
@@ -255,6 +256,11 @@ namespace CyberCruiser
             }
 
             else return false;
+        }
+
+        public void QuarterHeal()
+        {
+            PlayerCurrentHealth += PlayerMaxHealth / 4;
         }
 
         #region Player Damage Functions
