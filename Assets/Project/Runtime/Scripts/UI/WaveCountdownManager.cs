@@ -44,26 +44,10 @@ namespace CyberCruiser
             _isCountingDown = false;
         }
 
-        private void StartWaveCountdown()
-        {
-            _isCountdownDone = false;
-            _soundController.PlayNewClip(_countdownClip);
-            _waveCountdownText.color = Color.red;
-            _waveCountdownText.enabled = true;
-            _waveCountdownTime = WAVECOUNTDOWNTIME;
-            _startTextTimer = STARTTEXTTIMER;
-            _isCountingDown = true;
-        }
-
-        private void StopWaveCountdown()
-        {
-            _isCountingDown = false;
-
-        }
-
         private void Update()
         {
             if (!_isCountingDown) return;
+
             while (_waveCountdownTime >= 0)
             {
                 WaveCountdownText = _waveCountdownTime.ToString("F2");
@@ -88,6 +72,24 @@ namespace CyberCruiser
             {
                 _waveCountdownText.enabled = false;
             }
+        }
+
+        private 
+
+        private void StartWaveCountdown()
+        {
+            _isCountdownDone = false;
+            _soundController.PlayNewClip(_countdownClip);
+            _waveCountdownText.color = Color.red;
+            _waveCountdownText.enabled = true;
+            _waveCountdownTime = WAVECOUNTDOWNTIME;
+            _startTextTimer = STARTTEXTTIMER;
+            _isCountingDown = true;
+        }
+
+        private void StopWaveCountdown()
+        {
+            _isCountingDown = false;
         }
     }
 }

@@ -1,4 +1,3 @@
-using CyberCruiser.Audio;
 using System;
 using UnityEngine;
 
@@ -20,6 +19,7 @@ namespace CyberCruiser
         private Animator _animator;
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Sprite _deadSprite;
+        private SimpleFlash _flash;
 
         #region Local Enemy General Stats
         private string _enemyName;
@@ -54,6 +54,7 @@ namespace CyberCruiser
 
         private void GetComponents()
         {
+            _flash = GetComponent<SimpleFlash>();
             _animator = GetComponentInChildren<Animator>();
             _weapon = GetComponentInChildren<EnemyWeaponController>();
             _enemyMovement = GetComponent<EnemyMovement>();
@@ -71,6 +72,7 @@ namespace CyberCruiser
         public virtual void Damage(float damage)
         {
             _currentHealth -= damage;
+            _flash.Flash();
             if (_currentHealth <= 0)
             {
                 if (_doesEnemyExplodeOnDeath)
@@ -85,6 +87,7 @@ namespace CyberCruiser
                 }
             }
         }
+
 
         private void Explode()
         {
