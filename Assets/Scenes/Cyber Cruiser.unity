@@ -1264,9 +1264,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 348.345, y: -349.03003}
   m_SizeDelta: {x: 696.69, y: 100.2075}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &363359291
@@ -1711,9 +1711,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 348.345, y: -67.02379}
   m_SizeDelta: {x: 701.75, y: 128.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &446391541
@@ -2672,9 +2672,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 348.345, y: -482.8575}
   m_SizeDelta: {x: 696.69, y: 100.2075}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &598045738
@@ -3712,6 +3712,11 @@ Transform:
   m_Father: {fileID: 281578421}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &793551275 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7091729754616710028, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+  m_PrefabInstance: {fileID: 8907491432400472847}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &817652755
 GameObject:
   m_ObjectHideFlags: 0
@@ -5206,6 +5211,45 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1165463880448735964, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
   m_PrefabInstance: {fileID: 8907491432400472847}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1324404187 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+  m_PrefabInstance: {fileID: 8907491432400472847}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511984308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 077d4773bb84afa4f922dd9299e9eb4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1324404191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511984308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b7d2ddcd1d0ca45a1b9e8514b5ab11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 51fe8e4db90605540990571cd1c5574c, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1324404187}
+        m_TargetAssemblyTypeName: CyberCruiser.PlayerManager, CyberCruiser
+        m_MethodName: QuarterHeal
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1326374112
 GameObject:
   m_ObjectHideFlags: 0
@@ -6497,12 +6541,40 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
   m_PrefabInstance: {fileID: 8907491432400472847}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 793551275}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af7c83a58c7d6e148be02b453b399161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1617183393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 793551275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b7d2ddcd1d0ca45a1b9e8514b5ab11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 0b6f4beb275415d4c8a7b21a0a454209, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1617183391}
+        m_TargetAssemblyTypeName: CyberCruiser.PlayerShieldController, CyberCruiser
+        m_MethodName: ActivateShield
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1642317768
 GameObject:
   m_ObjectHideFlags: 0
@@ -6516,6 +6588,7 @@ GameObject:
   - component: {fileID: 1642317772}
   - component: {fileID: 1642317771}
   - component: {fileID: 1642317773}
+  - component: {fileID: 1642317774}
   m_Layer: 0
   m_Name: PickupManager
   m_TagString: Untagged
@@ -6556,6 +6629,10 @@ MonoBehaviour:
   _bossDropsPool:
   - {fileID: 6951969226015609480, guid: fcbc1935a53b298448cbf106fd381c73, type: 3}
   - {fileID: 6951969226015609480, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+  - {fileID: 6951969226015609480, guid: 3239d95dd34c8674ca822cd52f597610, type: 3}
+  - {fileID: 6951969226015609480, guid: ede17a7f90c55dd44bb3b5f2602e3174, type: 3}
+  - {fileID: 6951969226015609480, guid: 9968809ddc156cf49ba4df0a28263cc2, type: 3}
+  - {fileID: 6951969226015609480, guid: 3f1408d77e7a6894088b2243b7d0c53d, type: 3}
   _bossDropsToSpawn: []
   _weaponUpgradesPool:
   - {fileID: 9010852593865095087, guid: ea20a119d3080f6428d1eb515b77635d, type: 3}
@@ -6636,6 +6713,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Event: {fileID: 11400000, guid: b76e9aa5b08dfa64eba192aecc92b8da, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1642317770}
+        m_TargetAssemblyTypeName: CyberCruiser.PickupManager, CyberCruiser
+        m_MethodName: SpawnWeaponDrop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1642317774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642317768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b7d2ddcd1d0ca45a1b9e8514b5ab11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 7c28e493e491a4f4599d7ec347764976, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:
@@ -7696,9 +7801,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 348.345, y: -215.20253}
   m_SizeDelta: {x: 696.69, y: 100.2075}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1970179545
@@ -9098,6 +9203,14 @@ PrefabInstance:
       propertyPath: _doesPlayerHaveSignalBeam
       value: 
       objectReference: {fileID: 11400000, guid: 7e73cec95cf319f4c8efc77cb2190f73, type: 2}
+    - target: {fileID: 1324404178, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _doesPlayerHaveBackupSystem
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f99c7a0b828ed548a4e0bd50bebc141, type: 2}
+    - target: {fileID: 1324404178, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _doesPlayerHaveEmergencyArsenal
+      value: 
+      objectReference: {fileID: 11400000, guid: 41ef1470e77ef7c4885567b6c02e7595, type: 2}
     - target: {fileID: 634649626243274674, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -9175,9 +9288,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 506270504}
     - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _onBackupSystemActivated
+      value: 
+      objectReference: {fileID: 11400000, guid: 0b6f4beb275415d4c8a7b21a0a454209, type: 2}
+    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _onEmergencyArsenalSuccess
+      value: 
+      objectReference: {fileID: 11400000, guid: 7c28e493e491a4f4599d7ec347764976, type: 2}
+    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _onThermalWeldingActivated
+      value: 
+      objectReference: {fileID: 11400000, guid: 51fe8e4db90605540990571cd1c5574c, type: 2}
+    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _isGamePausedReference.Variable
       value: 
       objectReference: {fileID: 11400000, guid: f33a1f7bf7d43d0419248478daca4c78, type: 2}
+    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _emergencyArsenalSuccessPercentage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _doesPlayerHaveBackupSystem.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 7f99c7a0b828ed548a4e0bd50bebc141, type: 2}
+    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _doesPlayerHaveThermalWelding.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 8bfcee335f827ba45abe58218a197be5, type: 2}
+    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _doesPlayerHaveEmergencyArsenal.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: 41ef1470e77ef7c4885567b6c02e7595, type: 2}
     - target: {fileID: 2505861962732109647, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -9234,6 +9375,10 @@ PrefabInstance:
       propertyPath: _onSignalBeamSuccess
       value: 
       objectReference: {fileID: 11400000, guid: b76e9aa5b08dfa64eba192aecc92b8da, type: 2}
+    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _signalBeaconSuccessPercentage
+      value: 33
+      objectReference: {fileID: 0}
     - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _doesPlayerHaveSignalBeacon.Variable
       value: 

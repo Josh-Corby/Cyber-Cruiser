@@ -121,6 +121,7 @@ namespace CyberCruiser
                     ReflectProjectile(bullet);
                     return;
                 }
+
                 Destroy(bullet.gameObject);
             }
         }

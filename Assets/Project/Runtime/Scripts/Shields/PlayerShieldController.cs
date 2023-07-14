@@ -6,25 +6,34 @@ namespace CyberCruiser
     public class PlayerShieldController : ShieldControllerBase
     {
         [SerializeField] PlayerUIManager _playerUIManager;
-        private PulseDetonator _pulseDetonator;
 
         #region Fields
+        [Header("Player Shield Info")]
+        [Tooltip("Total duration of player shield activation")]
+        [SerializeField] private int _shieldActiveDuration;
+        private float _shieldActiveTimer;
+        private bool _controlsEnabled;
+        #endregion
+
+        #region Pickups
+        [Header("Pickups")]
+
+        [Header("Pulse Detonator")]
+        [SerializeField] private PulseDetonator _pulseDetonator;
+
         [Tooltip("SO Bool Reference for if player has pulse detonator")]
         [SerializeField] private BoolReference _doesPlayerHavePulseDetonator;
 
+        [Header("Reflector Shield")]
         [Tooltip("SO Bool Reference for if player shield is reflecting")]
         [SerializeField] private BoolReference _doesPlayerShieldReflect;
 
+        [Header("Signal Beacon")]
         [Tooltip("SO Bool Reference for if player has signal beacon")]
         [SerializeField] private BoolReference _doesPlayerHaveSignalBeacon;
 
         [Tooltip("Percentage chance of player winning signal beacon roll")]
         [SerializeField] private int _signalBeaconSuccessPercentage =33;
-
-        [Tooltip("Total duration of player shield activation")]
-        [SerializeField] private int _shieldActiveDuration;
-        private float _shieldActiveTimer;
-        private bool _controlsEnabled;
         #endregion
 
         #region Properties
@@ -63,12 +72,6 @@ namespace CyberCruiser
         #endregion
 
         [SerializeField] private GameEvent _onSignalBeamSuccess;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            _pulseDetonator = GetComponentInChildren<PulseDetonator>();
-        }
 
         private void OnEnable()
         {

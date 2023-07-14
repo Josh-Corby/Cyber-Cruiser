@@ -11,38 +11,53 @@ namespace CyberCruiser
 
     public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
-        #region References
         public GameObject player;
-        [SerializeField] private PlayerUIManager _playerUIManager;
-        [SerializeField] private PlayerAddOnManager _addOnManager;
         private Collider2D _playerCollider;
+        [SerializeField] private ParticleSystem _collisionParticles;
 
+        #region Player Systems
+        [Header(" Systems References")]
         [SerializeField] private PlayerShipController _playerShipController;
         [SerializeField] private PlayerShieldController _playerShieldController;
         [SerializeField] private PlayerWeaponController _playerWeaponController;
-        [SerializeField] private ParticleSystem _collisionParticles;
+        [SerializeField] private PlayerUIManager _playerUIManager;
         #endregion
 
+        #region SO References
+        [Header("SO References")]
         [SerializeField] private IntValue _currentPlasma;
         [SerializeField] private IntValue _currentIon;
-        [SerializeField] private IntReference _currentRamDamageReference;
         [SerializeField] private BoolValue _isPlayerDead;
+        [SerializeField] private IntReference _currentRamDamageReference;
+        #endregion
 
-        #region Fields
+        #region Pickups
+        [Header("Pickups")]
+
+        #region Retaliation Matrix
+        [Header("Retaliation Matrix")]
+        [SerializeField] private ExplodingObject _retaliationMatrix;
+        [SerializeField] private BoolReference _doesPlayerHaveRetaliationMatrix;
+        #endregion
+        #endregion
+
+        #region Constants
         private const int BASE_MAX_HEALTH = 5;
         private const int BASE_PLASMA_COST = 5;
         private const float BASE_I_FRAMES_DURATION = 0.3f;
-
-
-        [SerializeField] private int _plasmaCost;
-        [SerializeField] private int _maxHealth;
-        [SerializeField] private float _currentHealth;
-        [SerializeField] private PlayerHealthState _playerHealthState;
-
-        [SerializeField] private float _iFramesDuration;
-        private bool _isPlayerImmuneToDamage;
-        private Coroutine _iFramesCoroutine;
         #endregion
+
+        #region Player Current Info
+        [Header("Player Current Info")]
+        private int _plasmaCost;
+        private int _maxHealth;
+        private float _currentHealth;
+        private PlayerHealthState _playerHealthState;
+        private float _iFramesDuration;
+        private bool _isPlayerImmuneToDamage;
+        #endregion
+
+        private Coroutine _iFramesCoroutine;
 
         #region Properties
         public bool IsPlayerDead { get => _isPlayerDead.Value; private set => _isPlayerDead.Value = value; }
@@ -266,17 +281,32 @@ namespace CyberCruiser
         #region Player Damage Functions
         public void Damage(float damage)
         {
-            if (!_isPlayerImmuneToDamage)
+            if (_isPlayerImmuneToDamage)
             {
-                _isPlayerImmuneToDamage = true;
-                PlayerCurrentHealth -= damage;
+                return;
+            }
 
-                if (_collisionParticles != null)
-                {
-                    _collisionParticles.Play();
-                }
+            _isPlayerImmuneToDamage = true;
+            PlayerCurrentHealth -= damage;
 
-                StartIFrames();
+            RetaliationMatrixCheck();
+            PlayCollisionParticles();
+            StartIFrames();
+        }
+
+        private void PlayCollisionParticles()
+        {
+            if (_collisionParticles != null)
+            {
+                _collisionParticles.Play();
+            }
+        }
+
+        private void RetaliationMatrixCheck()
+        {
+            if (_doesPlayerHaveRetaliationMatrix.Value)
+            {
+                _retaliationMatrix.Explode();
             }
         }
 

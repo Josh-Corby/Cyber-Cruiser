@@ -22,11 +22,9 @@ namespace CyberCruiser
         [SerializeField] private IntValue _currentHealthOnPickup;
         [SerializeField] private IntValue _currentPlasmaOnPickup;
         [SerializeField] private FloatValue _currentHeatPerShot;
-        [SerializeField] private BoolValue _doesPlayerHavePulseDetonator;
-        [SerializeField] private BoolValue _doesPlayerShieldReflect;
-        [SerializeField] private BoolValue _doesPlayerHaveSignalBeam;
-        [SerializeField] private BoolValue _doesPlayerHaveEmergencyArsenal;
-        [SerializeField] private BoolValue _doesPlayerHaveBackupSystem;
+
+        [Header("Pickup States")]
+        [SerializeField] private BoolValue[] _pickupStates;
 
         [Header("Addon Modifiers")]
         [SerializeField] private IntValue _batteryPackUpgradeValue;
@@ -46,11 +44,16 @@ namespace CyberCruiser
             _currentPlasmaOnPickup.Value = _basePlasmaOnPickup.Value;
             _currentWeaponUpgradeDurationInSeconds.Value = _baseWeaponUpgradeDurationInSeconds.Value;
             _currentHeatPerShot.Value = _baseHeatPerShot.Value;
-            _doesPlayerHavePulseDetonator.Value = false;
-            _doesPlayerShieldReflect.Value = false;
-            _doesPlayerHaveSignalBeam.Value = false;
-            _doesPlayerHaveEmergencyArsenal.Value = false;
-            _doesPlayerHaveBackupSystem.Value = false;
+
+            ResetBools();
+        }
+
+        private void ResetBools()
+        {
+            for (int i = 0; i < _pickupStates.Length; i++)
+            {
+                _pickupStates[i].Value = false;
+            }
         }
     }
 }

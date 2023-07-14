@@ -52,19 +52,20 @@ MonoBehaviour:
   _explosionMask:
     serializedVersion: 2
     m_Bits: 128
-  _explosionDuration: 1
+  _explodeOnSpawn: 1
+  _destroyOnExplode: 1
+  _clusterOnDeath: 1
+  isClusterSpawningAUnit: 0
+  enemyToSpawn: {fileID: 0}
+  objectToSpawn: {fileID: 760453196464390188, guid: 1b3e20b833268c54a91ba787ca2e1d05, type: 3}
+  _amountOfObjectsToSpawn: 20
+  _spawnRadius: 0.5
   _soundController: {fileID: 0}
   _explosionClip:
     Clip: {fileID: 8300000, guid: ae68bf03292d8c64cba251f297788506, type: 3}
     OverrideSourceVolume: 0
     Volume: 1
     PlayOneShot: 0
-  clusterOnDeath: 1
-  isClusterSpawningAUnit: 0
-  enemyToSpawn: {fileID: 0}
-  objectToSpawn: {fileID: 760453196464390188, guid: 1b3e20b833268c54a91ba787ca2e1d05, type: 3}
-  _amountOfObjectsToSpawn: 20
-  _spawnRadius: 0.5
 --- !u!114 &396160147959850325
 MonoBehaviour:
   m_ObjectHideFlags: 0

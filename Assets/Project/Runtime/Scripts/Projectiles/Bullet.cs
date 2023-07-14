@@ -184,7 +184,7 @@ namespace CyberCruiser
 
             if (collider.GetComponent<Shield>())
             {
-                DestroyBullet();
+                //DestroyBullet();
                 return;
             }
 

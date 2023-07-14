@@ -7,13 +7,11 @@ namespace CyberCruiser
         private void OnEnable()
         {
             AnimatedPanelController.OnGameplayPanelClosed += DestroyParticle;
-            //GameManager.OnMissionEnd += DestroyParticle;
         }
 
         private void OnDisable()
         {
             AnimatedPanelController.OnGameplayPanelClosed -= DestroyParticle;
-            //GameManager.OnMissionEnd -= DestroyParticle;
         }
 
         private void DestroyParticle()

@@ -15,7 +15,6 @@ namespace CyberCruiser
 
         #region SO References
         [SerializeField] private IntReference _weaponUpgradeDurationInSeconds;
-        [SerializeField] private FloatReference _currentHeatPerShotReference;
         [SerializeField] private BoolReference _isGamePausedReference;
         #endregion
 
@@ -23,6 +22,13 @@ namespace CyberCruiser
         [Tooltip("Time player needs to not fire before they start losing heat")]
         [SerializeField] private float _timeBeforeHeatLoss;
 
+        [Tooltip("SO Float Reference of current heat per shot on weapon fire")]
+        [SerializeField] private FloatReference _currentHeatPerShotReference;
+
+        #region Pickups Setup
+        [Header("Pickups")]
+
+        #region Emergency Arsenal
         [Header("Emergency arsenal")]
         [Tooltip("SO Bool Reference for if player has emergency arsenal")]
         [SerializeField] private BoolReference _doesPlayerHaveEmergencyArsenal;
@@ -32,20 +38,34 @@ namespace CyberCruiser
 
         [Tooltip("Game event that fires if player succeeds emergency arsenal roll")]
         [SerializeField] private GameEvent _onEmergencyArsenalSuccess;
+        #endregion
 
+        #region Backup System
         [Header("Backup System")]
         [Tooltip("SO Bool Reference for if player has backup system")]
         [SerializeField] private BoolReference _doesPlayerHaveBackupSystem;
 
         [Tooltip("Game event that fires if player has backup system")]
         [SerializeField] private GameEvent _onBackupSystemActivated;
+        #endregion
 
+        #region Thermal Welding
         [Header("Thermal Welding")]
         [Tooltip("SO Bool Reference for in player has thermal welding")]
         [SerializeField] private BoolReference _doesPlayerHaveThermalWelding;
 
         [Tooltip("Game event that fires if player has thermal welding")]
         [SerializeField] private GameEvent _onThermalWeldingActivated;
+        #endregion
+
+        #region Burst Vents
+        [Header("Burst Vents")]
+        [SerializeField] private BurstVents _burstVents;
+
+        [Tooltip("So Bool Reference for if player has burst vents")]
+        [SerializeField] private BoolReference _doesPlayerHaveBurstVents;
+        #endregion
+        #endregion
 
         #region Private Fields
         private const int BASE_HEAT_MAX = 100;
@@ -113,7 +133,6 @@ namespace CyberCruiser
         public static event Action<int> OnWeaponUpgradeStart = null;
         public static event Action OnShoot = null;
         #endregion
-
 
         private void Awake()
         {
@@ -216,12 +235,17 @@ namespace CyberCruiser
         {
             IsOverheated = true;
 
+            PickupChecks();
+        }
+
+        private void PickupChecks()
+        {
             if (_doesPlayerHaveEmergencyArsenal.Value)
             {
                 EmergencyArsenalRoll();
             }
 
-            if(_doesPlayerHaveBackupSystem.Value)
+            if (_doesPlayerHaveBackupSystem.Value)
             {
                 _onBackupSystemActivated.Raise();
             }
@@ -229,6 +253,11 @@ namespace CyberCruiser
             if (_doesPlayerHaveThermalWelding.Value)
             {
                 _onThermalWeldingActivated.Raise();
+            }
+
+            if (_doesPlayerHaveBurstVents.Value)
+            {
+                _burstVents.Burst();
             }
         }
 

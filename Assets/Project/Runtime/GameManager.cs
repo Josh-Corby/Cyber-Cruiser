@@ -56,7 +56,7 @@ namespace CyberCruiser
 
         public void StartSystems()
         {
-            _distanceManager.StartLevelCounting();
+            _distanceManager.InitialiseLevelCounting();
             _enemySpawnerManager.StartSpawningEnemies();
         }
 

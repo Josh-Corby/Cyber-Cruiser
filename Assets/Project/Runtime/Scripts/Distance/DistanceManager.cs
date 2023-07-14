@@ -15,7 +15,9 @@ namespace CyberCruiser
 
         #region Fields
         [Header("Distance Increments")]
-        [SerializeField] private float _distancePerSecond = 10;
+        private float _currentDistancePerSecond;
+        [SerializeField] private float _baseDistancePerSecond = 10;
+        [SerializeField] private float _thrusterBoostDistancePerSecond = 20;
         [SerializeField] private int _plasmaGenerationDistance = 100;
         [SerializeField] private int _bossDistanceIncrement = 500;
 
@@ -74,8 +76,9 @@ namespace CyberCruiser
         }
 
         #region Distance Control
-        public void StartLevelCounting()
+        public void InitialiseLevelCounting()
         {
+            SetDistancePerSecond(_baseDistancePerSecond);
             StartIncreasingDistance();
             GenerateNewPlasmaDropDistance();
             GenerateNewWeaponUpgradeDropDistance();
@@ -86,7 +89,7 @@ namespace CyberCruiser
             _increaseDistanceCoroutine = StartCoroutine(IncreaseDistance());
             _distanceSliderObject.SetActive(true);
         }
-       
+
         private IEnumerator IncreaseDistance()
         {
             while (true)
@@ -94,7 +97,7 @@ namespace CyberCruiser
                 DistanceInt += 1;
               
                 CheckDistance();
-                yield return new WaitForSeconds(1 / _distancePerSecond);
+                yield return new WaitForSeconds(1 / _currentDistancePerSecond);
             }
         }
 
@@ -145,6 +148,16 @@ namespace CyberCruiser
             OnBossDistanceReached?.Invoke();
         }
 
+        private void SetDistancePerSecond(float newDistancePerSecond)
+        {
+            _currentDistancePerSecond = newDistancePerSecond;
+        }
+
+        public void ThrusterBoostUpgrade()
+        {
+            SetDistancePerSecond(_thrusterBoostDistancePerSecond);
+        }
+
         public void ResetValues()
         {
             StopIncreasingDistance();
@@ -153,7 +166,6 @@ namespace CyberCruiser
             _previousBossDistance = 0;
             _currentBossDistance = _bossDistanceIncrement;
         }
-
         #endregion
 
         #region Pickup Distance Management

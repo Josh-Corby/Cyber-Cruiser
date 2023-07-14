@@ -15,6 +15,7 @@ namespace CyberCruiser
         [SerializeField] private IntReference _healthOnPickup;
         [SerializeField] private IntReference _plasmaOnPickup;
         [SerializeField] private IntReference _ionOnPickup;
+        [SerializeField] private GameEvent _pickupEvent;
 
         #endregion
 
@@ -43,6 +44,10 @@ namespace CyberCruiser
                     OnWeaponUpgradePickup?.Invoke(_weaponSO);
                     OnResourcePickup?.Invoke(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
                     break;
+            }
+            if(_pickupEvent != null)
+            {
+                _pickupEvent.Raise();
             }
 
             OnPickedUp(gameObject);
