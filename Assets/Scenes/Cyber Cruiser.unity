@@ -219,7 +219,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0.544
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0.26
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!1 &64670857
 GameObject:
@@ -313,7 +313,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 0
+  spawnerWeight: 1
   totalCategoryWeight: 1
 --- !u!1 &73215884
 GameObject:
@@ -891,6 +891,7 @@ RectTransform:
   - {fileID: 271182006}
   - {fileID: 505540314}
   - {fileID: 623342395}
+  - {fileID: 683150503}
   m_Father: {fileID: 446903194}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1264,9 +1265,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 348.345, y: -349.03003}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 696.69, y: 100.2075}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &363359291
@@ -1711,9 +1712,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 348.345, y: -67.02379}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 701.75, y: 128.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &446391541
@@ -2006,7 +2007,7 @@ MonoBehaviour:
       spawnWeight: 1
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 0, z: 0}
-  spawnerWeight: 0.26
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!1 &486429624
 GameObject:
@@ -2256,11 +2257,6 @@ Transform:
   m_Father: {fileID: 281578421}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &499797197 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 2377607894216803837, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-  m_PrefabInstance: {fileID: 8907491432400472847}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &501637380 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 501637380, guid: 6e6fa92e6572d954aba5ee22b09ac95e, type: 3}
@@ -2325,6 +2321,7 @@ MonoBehaviour:
   _playerShieldSlider: {fileID: 654999976}
   _weaponHeatSlider: {fileID: 271182007}
   _weaponUpgradeSlider: {fileID: 7371915296400314674}
+  _pickupImage: {fileID: 683150504}
   _weaponUpgradeBarUI: {fileID: 1018978277538837331}
 --- !u!1 &511984308 stripped
 GameObject:
@@ -2672,9 +2669,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 348.345, y: -482.8575}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 696.69, y: 100.2075}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &598045738
@@ -3158,11 +3155,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!120 &673616933 stripped
-LineRenderer:
-  m_CorrespondingSourceObject: {fileID: 2984618082856845073, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-  m_PrefabInstance: {fileID: 8907491432400472847}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &677789743 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6727812726168475314, guid: 01d59c3d11219454ab5f209bcfb4783b, type: 3}
@@ -3210,6 +3202,82 @@ Transform:
   m_Father: {fileID: 281578421}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &683150502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 683150503}
+  - component: {fileID: 683150505}
+  - component: {fileID: 683150504}
+  m_Layer: 5
+  m_Name: PickupImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &683150503
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683150502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 250113892}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 18, y: 7.5999756}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &683150504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683150502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &683150505
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683150502}
+  m_CullTransparentMesh: 1
 --- !u!1 &689313709
 GameObject:
   m_ObjectHideFlags: 0
@@ -3712,11 +3780,6 @@ Transform:
   m_Father: {fileID: 281578421}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &793551275 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7091729754616710028, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-  m_PrefabInstance: {fileID: 8907491432400472847}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &817652755
 GameObject:
   m_ObjectHideFlags: 0
@@ -4384,7 +4447,7 @@ MonoBehaviour:
       spawnWeight: 0.5
     TotalTypeWeights: 0
   spawnArea: {x: 25, y: 0, z: 0}
-  spawnerWeight: 0.26
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!114 &989281830 stripped
 MonoBehaviour:
@@ -5222,34 +5285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 077d4773bb84afa4f922dd9299e9eb4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1324404191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511984308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91b7d2ddcd1d0ca45a1b9e8514b5ab11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 51fe8e4db90605540990571cd1c5574c, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1324404187}
-        m_TargetAssemblyTypeName: CyberCruiser.PlayerManager, CyberCruiser
-        m_MethodName: QuarterHeal
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1326374112
 GameObject:
   m_ObjectHideFlags: 0
@@ -5428,7 +5463,7 @@ MonoBehaviour:
       spawnWeight: 0.123
     TotalTypeWeights: 0
   spawnArea: {x: 0, y: 13, z: 0}
-  spawnerWeight: 0.22
+  spawnerWeight: 0
   totalCategoryWeight: 1
 --- !u!4 &1370326091
 Transform:
@@ -5824,8 +5859,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1464198312}
   - component: {fileID: 1464198314}
-  - component: {fileID: 1464198316}
   - component: {fileID: 1464198315}
+  - component: {fileID: 1464198316}
   m_Layer: 12
   m_Name: UpDownBorder (1)
   m_TagString: UpDown
@@ -5917,8 +5952,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1482695090}
   - component: {fileID: 1482695092}
-  - component: {fileID: 1482695094}
   - component: {fileID: 1482695093}
+  - component: {fileID: 1482695094}
   m_Layer: 12
   m_Name: UpDownBorder
   m_TagString: UpDown
@@ -6541,40 +6576,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
   m_PrefabInstance: {fileID: 8907491432400472847}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 793551275}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af7c83a58c7d6e148be02b453b399161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1617183393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 793551275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91b7d2ddcd1d0ca45a1b9e8514b5ab11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 0b6f4beb275415d4c8a7b21a0a454209, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1617183391}
-        m_TargetAssemblyTypeName: CyberCruiser.PlayerShieldController, CyberCruiser
-        m_MethodName: ActivateShield
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1642317768
 GameObject:
   m_ObjectHideFlags: 0
@@ -6627,12 +6634,19 @@ MonoBehaviour:
   _pickupSpawner: {fileID: 539388724}
   _upgradeSpawner: {fileID: 420019654}
   _bossDropsPool:
+  - {fileID: 6951969226015609480, guid: db5254f8ce7079143b6e00316397ed2f, type: 3}
   - {fileID: 6951969226015609480, guid: fcbc1935a53b298448cbf106fd381c73, type: 3}
-  - {fileID: 6951969226015609480, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
-  - {fileID: 6951969226015609480, guid: 3239d95dd34c8674ca822cd52f597610, type: 3}
-  - {fileID: 6951969226015609480, guid: ede17a7f90c55dd44bb3b5f2602e3174, type: 3}
+  - {fileID: 6951969226015609480, guid: 40bb34d08a34dca45b006c4e66d600e5, type: 3}
   - {fileID: 6951969226015609480, guid: 9968809ddc156cf49ba4df0a28263cc2, type: 3}
+  - {fileID: 6951969226015609480, guid: 76508cbd34c6a0041bfa703cd07e4711, type: 3}
+  - {fileID: 6951969226015609480, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+  - {fileID: 6951969226015609480, guid: ede17a7f90c55dd44bb3b5f2602e3174, type: 3}
+  - {fileID: 6951969226015609480, guid: 47f98668c346d04428745e0a187b6b2f, type: 3}
+  - {fileID: 6951969226015609480, guid: a15a8505e53565e4ea6b458df3664e36, type: 3}
+  - {fileID: 6951969226015609480, guid: 3239d95dd34c8674ca822cd52f597610, type: 3}
   - {fileID: 6951969226015609480, guid: 3f1408d77e7a6894088b2243b7d0c53d, type: 3}
+  - {fileID: 6951969226015609480, guid: 944c151e929734d479ae20645b66df23, type: 3}
+  - {fileID: 6951969226015609480, guid: d7246e5a9744a4344976ae80981b10b8, type: 3}
   _bossDropsToSpawn: []
   _weaponUpgradesPool:
   - {fileID: 9010852593865095087, guid: ea20a119d3080f6428d1eb515b77635d, type: 3}
@@ -7268,6 +7282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1708637171}
   - component: {fileID: 1708637172}
+  - component: {fileID: 1708637173}
   m_Layer: 0
   m_Name: DistanceManager
   m_TagString: Untagged
@@ -7305,11 +7320,40 @@ MonoBehaviour:
   _distanceCounterText: {fileID: 366983006}
   _distanceSlider: {fileID: 1689300815}
   _distanceSliderObject: {fileID: 1689300812}
-  _distancePerSecond: 10
+  _baseDistancePerSecond: 10
+  _thrusterBoostDistancePerSecond: 20
   _plasmaGenerationDistance: 100
-  _bossDistanceIncrement: 500
+  _bossDistanceIncrement: 10
   OnPickupDistanceReached: {fileID: 11400000, guid: 34cacb32737a09c4c9846fbe8217f017, type: 2}
   OnWeaponPackDistanceReached: {fileID: 11400000, guid: 7e49c6037b056b44bad767290adc514d, type: 2}
+--- !u!114 &1708637173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708637170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b7d2ddcd1d0ca45a1b9e8514b5ab11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: b7741c6418155db45860c26238d8cde3, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1708637172}
+        m_TargetAssemblyTypeName: CyberCruiser.DistanceManager, CyberCruiser
+        m_MethodName: ThrusterBoostUpgrade
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1744581506
 GameObject:
   m_ObjectHideFlags: 0
@@ -7801,9 +7845,9 @@ RectTransform:
   m_Father: {fileID: 1600552618}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 348.345, y: -215.20253}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 696.69, y: 100.2075}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1970179545
@@ -8455,15 +8499,15 @@ MonoBehaviour:
   _timesToReduce: 2
   _enemySpawnerInfo:
   - spawner: {fileID: 984547534}
-    SpawnerWeight: 0.26
-  - spawner: {fileID: 1370326090}
-    SpawnerWeight: 0.22
-  - spawner: {fileID: 47135018}
-    SpawnerWeight: 0.26
-  - spawner: {fileID: 485082065}
-    SpawnerWeight: 0.26
-  - spawner: {fileID: 71091565}
     SpawnerWeight: 0
+  - spawner: {fileID: 1370326090}
+    SpawnerWeight: 0
+  - spawner: {fileID: 47135018}
+    SpawnerWeight: 0
+  - spawner: {fileID: 485082065}
+    SpawnerWeight: 0
+  - spawner: {fileID: 71091565}
+    SpawnerWeight: 1
   _totalSpawnWeight: 1
   bossGoalPosition: {fileID: 1997121481}
   _isBossReadyToSpawn: {fileID: 11400000, guid: 1c1765d91cca04f4f96d5643a66a0af6, type: 2}
@@ -9196,37 +9240,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 2034869899}
     m_Modifications:
     - target: {fileID: 1324404178, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _doesPlayerShieldReflect
-      value: 
-      objectReference: {fileID: 11400000, guid: 1f38e27dcfed6f249aeeca6f24979374, type: 2}
+      propertyPath: _pickupStates.Array.size
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1324404178, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _doesPlayerHaveSignalBeam
+      propertyPath: _pickupStates.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: d9fe53655d3f6db4cb59c30cd654b8a4, type: 2}
+    - target: {fileID: 1324404178, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _pickupStates.Array.data[8]
       value: 
       objectReference: {fileID: 11400000, guid: 7e73cec95cf319f4c8efc77cb2190f73, type: 2}
     - target: {fileID: 1324404178, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _doesPlayerHaveBackupSystem
+      propertyPath: _pickupStates.Array.data[9]
       value: 
-      objectReference: {fileID: 11400000, guid: 7f99c7a0b828ed548a4e0bd50bebc141, type: 2}
+      objectReference: {fileID: 11400000, guid: 8bfcee335f827ba45abe58218a197be5, type: 2}
     - target: {fileID: 1324404178, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _doesPlayerHaveEmergencyArsenal
+      propertyPath: _pickupStates.Array.data[10]
       value: 
-      objectReference: {fileID: 11400000, guid: 41ef1470e77ef7c4885567b6c02e7595, type: 2}
-    - target: {fileID: 634649626243274674, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 634649626243274674, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _audioSource
-      value: 
-      objectReference: {fileID: 499797197}
-    - target: {fileID: 634649626243274674, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _lineRenderer
-      value: 
-      objectReference: {fileID: 673616933}
-    - target: {fileID: 634649626243274679, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: b91a490cdfdadb54eb097146330e03c6, type: 2}
     - target: {fileID: 1165463880448735964, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -9271,126 +9303,70 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1902999791175045035, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Color.a
+    - target: {fileID: 1550317530746784848, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1902999791175045035, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_RenderingLayerMask
+    - target: {fileID: 1550317530746784848, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1902999791175045035, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+    - target: {fileID: 1550317530746784848, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+      objectReference: {fileID: 1324404187}
+    - target: {fileID: 1550317530746784848, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550317530746784848, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: EnableAttractorUnit
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550317530746784848, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CyberCruiser.PlayerManager, CyberCruiser
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550317530746784848, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: Response.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _playerUIManager
       value: 
       objectReference: {fileID: 506270504}
-    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _onBackupSystemActivated
-      value: 
-      objectReference: {fileID: 11400000, guid: 0b6f4beb275415d4c8a7b21a0a454209, type: 2}
-    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _onEmergencyArsenalSuccess
-      value: 
-      objectReference: {fileID: 11400000, guid: 7c28e493e491a4f4599d7ec347764976, type: 2}
-    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _onThermalWeldingActivated
-      value: 
-      objectReference: {fileID: 11400000, guid: 51fe8e4db90605540990571cd1c5574c, type: 2}
-    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _isGamePausedReference.Variable
-      value: 
-      objectReference: {fileID: 11400000, guid: f33a1f7bf7d43d0419248478daca4c78, type: 2}
-    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _emergencyArsenalSuccessPercentage
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _doesPlayerHaveBackupSystem.Variable
-      value: 
-      objectReference: {fileID: 11400000, guid: 7f99c7a0b828ed548a4e0bd50bebc141, type: 2}
-    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _doesPlayerHaveThermalWelding.Variable
-      value: 
-      objectReference: {fileID: 11400000, guid: 8bfcee335f827ba45abe58218a197be5, type: 2}
-    - target: {fileID: 2424794497359752222, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _doesPlayerHaveEmergencyArsenal.Variable
-      value: 
-      objectReference: {fileID: 11400000, guid: 41ef1470e77ef7c4885567b6c02e7595, type: 2}
-    - target: {fileID: 2505861962732109647, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Color.b
+    - target: {fileID: 5081525453296535256, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2505861962732109647, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2505861962732109647, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2505861962732109647, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_RenderingLayerMask
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2505861962732109647, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-    - target: {fileID: 2984618082856845073, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_Parameters.textureMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4048304892678254558, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 5415765485526934196, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
-    - target: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _addOnManager
-      value: 
-      objectReference: {fileID: 1118535384}
     - target: {fileID: 5093816518230039129, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _playerUIManager
       value: 
       objectReference: {fileID: 506270504}
-    - target: {fileID: 5608880328762689204, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: m_PlayOnAwake
+    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _isTimeStopped
+      value: 
+      objectReference: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
+    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _playerUIManager
+      value: 
+      objectReference: {fileID: 506270504}
+    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _doesPlayerHaveTimeStop.Variable
+      value: 
+      objectReference: {fileID: 11400000, guid: b91a490cdfdadb54eb097146330e03c6, type: 2}
+    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _doesPlayerHaveTimeStop.UseConstant
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5608880328762689204, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 5415765485526934196, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
     - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _playerUIManager
-      value: 
-      objectReference: {fileID: 506270504}
-    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _signalBeamSuccess
-      value: 
-      objectReference: {fileID: 11400000, guid: b76e9aa5b08dfa64eba192aecc92b8da, type: 2}
-    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _onSignalBeamSuccess
-      value: 
-      objectReference: {fileID: 11400000, guid: b76e9aa5b08dfa64eba192aecc92b8da, type: 2}
-    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _signalBeaconSuccessPercentage
-      value: 33
+      propertyPath: _doesPlayerHaveTimeStop.ConstantValue
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _doesPlayerHaveSignalBeacon.Variable
-      value: 
-      objectReference: {fileID: 11400000, guid: 7e73cec95cf319f4c8efc77cb2190f73, type: 2}
     - target: {fileID: 7798838778722217166, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _addOnManager
       value: 
       objectReference: {fileID: 1118535384}
-    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _crashSpeed
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _spawnPosition
       value: 

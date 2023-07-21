@@ -67,11 +67,11 @@ namespace CyberCruiser
             }
             else if (_shieldsActiveOnSpawn)
             {
-                ActivateShields();
+                CheckShieldPickups();
             }
         }
 
-        protected virtual void ActivateShields()
+        protected virtual void CheckShieldPickups()
         {
             IsShieldsActive = true;
             _unitCollider.enabled = false;

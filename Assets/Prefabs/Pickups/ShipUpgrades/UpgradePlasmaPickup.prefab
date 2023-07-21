@@ -200,8 +200,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pickupName: Plasma
+  _pickupSprite: {fileID: 21300000, guid: 9ac29636f5e226f4f9833d23e6957656, type: 3}
   _pickupType: 1
-  _upgradeType: 0
+  _weaponSO: {fileID: 0}
   _speed: 3
   _healthOnPickup:
     UseConstant: 0
@@ -215,3 +216,4 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 8b9b1602b97c8c444835c67af79f56cc, type: 2}
+  _pickupEvent: {fileID: 0}

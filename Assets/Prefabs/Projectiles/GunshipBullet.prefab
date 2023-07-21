@@ -65,6 +65,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527497be6615eaf4f88a354ffeb3fb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPlayerBullet: 0
+  _isTimeStopped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
   _playerProjectileSprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
   _enemyProjectileSprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
   _collisionParticles: {fileID: 8553602988473826497, guid: 08865f867117733469bc08ef44229db0, type: 3}

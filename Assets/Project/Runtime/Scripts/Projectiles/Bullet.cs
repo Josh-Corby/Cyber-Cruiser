@@ -10,17 +10,25 @@ namespace CyberCruiser
         private BulletHoming _homingTrigger;
         private GameObject _homingTarget = null;
         private SpriteRenderer _spriteRenderer;
+        [SerializeField] private bool _isPlayerBullet = false;
 
+        [SerializeField] private BoolReference _isTimeStopped;
+
+        #region Art
         [Header("Art")]
         [SerializeField] private Sprite _playerProjectileSprite;
         [SerializeField] private Sprite _enemyProjectileSprite;
         [SerializeField] private GameObject _collisionParticles;
+        #endregion
 
+        #region Bullet Info
         [SerializeField] private float _speed;
         [SerializeField] private float _damage;
         [SerializeField] private bool _doesBulletExplode;
         [SerializeField] private GameObject _explosion;
+        #endregion
 
+        #region Homing 
         [Header("Homing Stats")]
         [SerializeField] private bool _isHoming;
         [SerializeField] private float _homeTurnSpeed;
@@ -28,6 +36,7 @@ namespace CyberCruiser
         [SerializeField] private bool _homeDelay;
         [SerializeField] private float _homeDelayTime;
         [SerializeField] private float _homeCounter;
+        #endregion
 
         public float Damage { get => _damage; }
 
@@ -52,16 +61,6 @@ namespace CyberCruiser
             GetComponents();
         }
 
-        private void GetComponents()
-        {
-            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-
-            if (transform.childCount > 0)
-            {
-                _homingTrigger = GetComponentInChildren<BulletHoming>();
-            }
-        }
-
         private void OnEnable()
         {
             GameManager.OnMissionEnd += DestroyBullet;
@@ -79,6 +78,11 @@ namespace CyberCruiser
 
         private void Update()
         {
+            if (_isTimeStopped.Value && !_isPlayerBullet)
+            {
+                return;
+            }
+
             if (IsHoming)
             {
                 if (_homingTarget != null)
@@ -89,6 +93,16 @@ namespace CyberCruiser
             }
 
             MoveRight();
+        }
+
+        private void GetComponents()
+        {
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+            if (transform.childCount > 0)
+            {
+                _homingTrigger = GetComponentInChildren<BulletHoming>();
+            }
         }
 
         private void AssignHoming()
@@ -149,21 +163,6 @@ namespace CyberCruiser
             }
         }
 
-        public void SwitchBulletTeam()
-        {
-            if (gameObject.layer == LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME))
-            {
-                gameObject.layer = ChangeLayerFromString(ENEMY_PROJECTILE_LAYER_NAME);
-                _spriteRenderer.sprite = _enemyProjectileSprite;
-            }
-
-            else if (gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME))
-            {
-                gameObject.layer = ChangeLayerFromString(PLAYER_PROJECTILE_LAYER_NAME);
-                _spriteRenderer.sprite = _playerProjectileSprite;
-            }
-        }
-
         private void OnCollisionEnter2D(Collision2D collision)
         {
             ProcessCollision(collision.gameObject);
@@ -204,11 +203,27 @@ namespace CyberCruiser
 
         public void Reflect(GameObject objectReflectedFrom)
         {
-            //Debug.Log("Bullet reflected");
             transform.right = objectReflectedFrom.transform.right;
             _speed /= 2;
             SwitchBulletTeam();
             _spriteRenderer.flipX = !_spriteRenderer.flipX;
+        }
+
+        public void SwitchBulletTeam()
+        {
+            if (gameObject.layer == LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME))
+            {
+                gameObject.layer = ChangeLayerFromString(ENEMY_PROJECTILE_LAYER_NAME);
+                _spriteRenderer.sprite = _enemyProjectileSprite;
+                _isPlayerBullet = false;
+            }
+
+            else if (gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME))
+            {
+                gameObject.layer = ChangeLayerFromString(PLAYER_PROJECTILE_LAYER_NAME);
+                _spriteRenderer.sprite = _playerProjectileSprite;
+                _isPlayerBullet = true;
+            }
         }
 
         private void DestroyBullet()

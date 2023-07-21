@@ -113,6 +113,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f983803b7c3c2240ae6af887933654e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPlayerInvisible:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: e041328f40345744cb2fbe2579b3253b, type: 2}
+  _isTimeStopped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
   gunshipMoveType: 0
 --- !u!114 &9038793214191941742
 MonoBehaviour:
@@ -182,6 +190,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentWeapon: {fileID: 11400000, guid: b034ace63ad0dd841930feaaf4474c83, type: 2}
   _soundController: {fileID: 0}
+  _autoFire: 0
+  _isPlayerInvisible:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: e041328f40345744cb2fbe2579b3253b, type: 2}
+  _isTimeStopped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
 --- !u!82 &2590652807368049367
 AudioSource:
   m_ObjectHideFlags: 0

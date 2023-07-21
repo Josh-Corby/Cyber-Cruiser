@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBeamFiring: 0
+  _lineRenderer: {fileID: 0}
   _beamDamage: 0.6
   _basicEnemyBeamDamage: 0
   _beamSpeed: 100
@@ -57,6 +58,7 @@ MonoBehaviour:
     m_Bits: 512
   _isBeamTimed: 1
   beamDuration: 3
+  _audioSource: {fileID: 0}
   _beamClip:
     Clip: {fileID: 8300000, guid: 81d57303a914704489ffc4f6db86da77, type: 3}
     OverrideSourceVolume: 1
@@ -298,6 +300,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPlayerInvisible:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: e041328f40345744cb2fbe2579b3253b, type: 2}
+  _isTimeStopped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
   _moveType: 1
 --- !u!1 &1791959886730766748
 GameObject:

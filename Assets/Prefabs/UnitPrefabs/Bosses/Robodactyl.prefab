@@ -254,8 +254,8 @@ MonoBehaviour:
   _attackCooldown: 1.5
   _attackTimer: 0
   _laserLaunchers:
-  - {fileID: 5710954070109479895}
-  - {fileID: 1958697201700664333}
+  - {fileID: 8225118910362484585}
+  - {fileID: 649928821646936493}
   _mineInfo: {fileID: 11400000, guid: cc0e1a3f7458d714da9b02da04b0e8d2, type: 2}
   _mineReleasePoint: {fileID: 837196206767586904}
 --- !u!114 &-4316434092633255210
@@ -270,6 +270,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17de12b62407ad640bcbcf93a95f5e05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPlayerInvisible:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: e041328f40345744cb2fbe2579b3253b, type: 2}
+  _isTimeStopped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
   _moveType: 2
 --- !u!1 &3534197723866894886
 GameObject:
@@ -280,9 +288,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 616892499982239966}
-  - component: {fileID: 1958697201700664333}
   - component: {fileID: 7508844165937560583}
   - component: {fileID: 1250293327161303791}
+  - component: {fileID: 649928821646936493}
   m_Layer: 1
   m_Name: Gun (1)
   m_TagString: Untagged
@@ -306,20 +314,6 @@ Transform:
   m_Father: {fileID: 8889222733417556062}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1958697201700664333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3534197723866894886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentWeapon: {fileID: 11400000, guid: 4d4f912b160dbeb44bc299a023fa5cd5, type: 2}
-  _soundController: {fileID: 1250293327161303791}
 --- !u!82 &7508844165937560583
 AudioSource:
   m_ObjectHideFlags: 0
@@ -429,7 +423,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 7508844165937560583}
-  _muteOnPause: 1
+  _pauseOnGamePaused: 1
+--- !u!114 &649928821646936493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3534197723866894886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0702ba6cee210479e32ae588f71995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentWeapon: {fileID: 11400000, guid: 4d4f912b160dbeb44bc299a023fa5cd5, type: 2}
+  _soundController: {fileID: 1250293327161303791}
+  _autoFire: 0
+  _isPlayerInvisible:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: e041328f40345744cb2fbe2579b3253b, type: 2}
+  _isTimeStopped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 0}
 --- !u!1 &3807874348917580334
 GameObject:
   m_ObjectHideFlags: 0
@@ -470,9 +487,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3050271229655569954}
-  - component: {fileID: 5710954070109479895}
   - component: {fileID: 6589020536793650243}
   - component: {fileID: 4143019195304805755}
+  - component: {fileID: 8225118910362484585}
   m_Layer: 1
   m_Name: Gun
   m_TagString: Untagged
@@ -496,20 +513,6 @@ Transform:
   m_Father: {fileID: 8889222733417556062}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5710954070109479895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4777969889959177776}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba325bf0ff3907044b6600e418053687, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _currentWeapon: {fileID: 11400000, guid: 4d4f912b160dbeb44bc299a023fa5cd5, type: 2}
-  _soundController: {fileID: 4143019195304805755}
 --- !u!82 &6589020536793650243
 AudioSource:
   m_ObjectHideFlags: 0
@@ -619,7 +622,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 6589020536793650243}
-  _muteOnPause: 1
+  _pauseOnGamePaused: 1
+--- !u!114 &8225118910362484585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4777969889959177776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea0702ba6cee210479e32ae588f71995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _currentWeapon: {fileID: 11400000, guid: 4d4f912b160dbeb44bc299a023fa5cd5, type: 2}
+  _soundController: {fileID: 4143019195304805755}
+  _autoFire: 0
+  _isPlayerInvisible:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: e041328f40345744cb2fbe2579b3253b, type: 2}
+  _isTimeStopped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 0}
 --- !u!1 &7020472227476826103
 GameObject:
   m_ObjectHideFlags: 0

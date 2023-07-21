@@ -87,6 +87,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365a316a2f7b6c445bfc232c6280bd6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPlayerInvisible:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 0}
+  _isTimeStopped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
 --- !u!58 &1390790281266195689
 CircleCollider2D:
   m_ObjectHideFlags: 0

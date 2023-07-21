@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -16,6 +15,8 @@ namespace CyberCruiser
         public static event Action<bool> OnIsTimeScalePaused = null;
         public static event Action OnMissionStart = null;
         public static event Action OnMissionEnd = null;
+
+        [SerializeField]
         #endregion
 
         private void Awake()

@@ -190,6 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentWeapon: {fileID: 0}
   _soundController: {fileID: 0}
+  _autoFire: 0
 --- !u!1 &599218783905735940
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,6 +222,7 @@ Transform:
   - {fileID: 3561995243611529597}
   - {fileID: 8975433740885526151}
   - {fileID: 6245948294140195694}
+  - {fileID: 6954606860315750875}
   m_Father: {fileID: 1165463880448735964}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1005,6 +1007,89 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &4115867455768231298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6954606860315750875}
+  - component: {fileID: 8049297662541525514}
+  - component: {fileID: 5081525453296535256}
+  - component: {fileID: 4713507465800597268}
+  m_Layer: 9
+  m_Name: AttractorUnit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6954606860315750875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115867455768231298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 683213703082008290}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &8049297662541525514
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115867455768231298}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!58 &5081525453296535256
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115867455768231298}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3.53
+--- !u!114 &4713507465800597268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4115867455768231298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4993d4da3a64fc6488e9f722dddc0b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6462939687940432047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,7 +1204,7 @@ MonoBehaviour:
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 8bfcee335f827ba45abe58218a197be5, type: 2}
   _onThermalWeldingActivated: {fileID: 11400000, guid: 51fe8e4db90605540990571cd1c5574c, type: 2}
-  _burstVents: {fileID: 0}
+  _burstVents: {fileID: 2076605998673752087}
   _doesPlayerHaveBurstVents:
     UseConstant: 0
     ConstantValue: 0
@@ -1385,7 +1470,9 @@ MonoBehaviour:
   _shieldsActiveOnSpawn: 0
   _isShieldImmuneToDamage: 1
   _playerUIManager: {fileID: 0}
-  _pulseDetonator: {fileID: 0}
+  _shieldActiveDuration: 5
+  _shieldActiveTimer: 0
+  _pulseDetonator: {fileID: 5060635908372879586}
   _doesPlayerHavePulseDetonator:
     UseConstant: 0
     ConstantValue: 0
@@ -1399,8 +1486,16 @@ MonoBehaviour:
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 7e73cec95cf319f4c8efc77cb2190f73, type: 2}
   _signalBeaconSuccessPercentage: 33
-  _shieldActiveDuration: 5
   _onSignalBeamSuccess: {fileID: 11400000, guid: b76e9aa5b08dfa64eba192aecc92b8da, type: 2}
+  _doesPlayerHaveInvisibilityShield:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 8a5424048ce38524ba80c368b89cd48f, type: 2}
+  _isPlayerInvisible: {fileID: 11400000, guid: e041328f40345744cb2fbe2579b3253b, type: 2}
+  _doesPlayerHaveShieldGenerator:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: d9fe53655d3f6db4cb59c30cd654b8a4, type: 2}
 --- !u!114 &1617183393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1500,6 +1595,7 @@ GameObject:
   - component: {fileID: 5093816518230039129}
   - component: {fileID: 1324404178}
   - component: {fileID: 1324404191}
+  - component: {fileID: 1550317530746784848}
   m_Layer: 9
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -1634,11 +1730,16 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: aa276e2714fc69841b52677e3cb3cc60, type: 2}
-  _retaliationMatrix: {fileID: 0}
+  _currentPlasmaCost:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: c49d7da04ef3a7e439093a39f44b3a2e, type: 2}
+  _retaliationMatrix: {fileID: 6389794538012074798}
   _doesPlayerHaveRetaliationMatrix:
     UseConstant: 0
     ConstantValue: 0
-    Variable: {fileID: 0}
+    Variable: {fileID: 11400000, guid: b8561f6062ce31b43aab8a517ede6bb8, type: 2}
+  _attractorUnit: {fileID: 4713507465800597268}
 --- !u!114 &1324404178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1651,26 +1752,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee3e8c255419c59489917969e4b295e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseWeaponMaxHeat: {fileID: 0}
-  _baseWeaponUpgradeDurationInSeconds: {fileID: 11400000, guid: 0105a809567c1a3489824ae208dd41b6, type: 2}
-  _baseHealthOnPickup: {fileID: 11400000, guid: cb13a566e4fa0dc418ff25a4d240cfd2, type: 2}
-  _basePlasmaOnPickup: {fileID: 11400000, guid: 89893a68d663c27439261c5283996d71, type: 2}
+  _baseWeaponMaxHeat: 100
+  _baseWeaponUpgradeDurationInSeconds: 10
+  _baseHealthOnPickup: 1
+  _basePlasmaOnPickup: 1
+  _basePlasmaCost: 5
   _baseRamDamage: 0
-  _baseHeatPerShot: {fileID: 11400000, guid: 62e7ca23de8f8ec48b7cbd419df2692d, type: 2}
-  _baseHeatLossPerFrame: {fileID: 0}
-  _baseCooldownHeatLossPerFrame: {fileID: 0}
+  _baseHeatPerShot: 1.75
+  _baseHeatLossPerFrame: 0
+  _baseCooldownHeatLossPerFrame: 0
   _currentWeaponUpgradeDurationInSeconds: {fileID: 11400000, guid: 4bc78e388cd28844e9b05d1c0c3d72c2, type: 2}
   _currentRamDamage: {fileID: 11400000, guid: aa276e2714fc69841b52677e3cb3cc60, type: 2}
   _currentHealthOnPickup: {fileID: 11400000, guid: f2bd373178f81194a953edb6ed8c42dd, type: 2}
   _currentPlasmaOnPickup: {fileID: 11400000, guid: e8a2002e6cf263f4f9b06e49d987c0f8, type: 2}
+  _currentPlasmaCost: {fileID: 11400000, guid: c49d7da04ef3a7e439093a39f44b3a2e, type: 2}
   _currentHeatPerShot: {fileID: 11400000, guid: 2458f85d47f8ede4a9983b4cb1742f54, type: 2}
-  _doesPlayerHavePulseDetonator: {fileID: 11400000, guid: 18055d9adfac546488460e5249e0c5f3, type: 2}
-  _doesPlayerShieldReflect: {fileID: 11400000, guid: 1f38e27dcfed6f249aeeca6f24979374, type: 2}
-  _doesPlayerHaveSignalBeam: {fileID: 11400000, guid: 7e73cec95cf319f4c8efc77cb2190f73, type: 2}
-  _doesPlayerHaveEmergencyArsenal: {fileID: 11400000, guid: 41ef1470e77ef7c4885567b6c02e7595, type: 2}
-  _doesPlayerHaveBackupSystem: {fileID: 11400000, guid: 7f99c7a0b828ed548a4e0bd50bebc141, type: 2}
-  _doesPlayerHaveBurstVents: {fileID: 0}
-  _batteryPackUpgradeValue: {fileID: 11400000, guid: 0105a809567c1a3489824ae208dd41b6, type: 2}
+  _pickupStates:
+  - {fileID: 11400000, guid: 7f99c7a0b828ed548a4e0bd50bebc141, type: 2}
+  - {fileID: 11400000, guid: 85b10b8227434814ba8e1b93312e3e2b, type: 2}
+  - {fileID: 11400000, guid: 41ef1470e77ef7c4885567b6c02e7595, type: 2}
+  - {fileID: 11400000, guid: 8a5424048ce38524ba80c368b89cd48f, type: 2}
+  - {fileID: 11400000, guid: 18055d9adfac546488460e5249e0c5f3, type: 2}
+  - {fileID: 11400000, guid: 1f38e27dcfed6f249aeeca6f24979374, type: 2}
+  - {fileID: 11400000, guid: b8561f6062ce31b43aab8a517ede6bb8, type: 2}
+  - {fileID: 11400000, guid: 7e73cec95cf319f4c8efc77cb2190f73, type: 2}
+  - {fileID: 11400000, guid: 8bfcee335f827ba45abe58218a197be5, type: 2}
+  _batteryPackUpgradeValue: {fileID: 11400000, guid: f6e2dd4012bdb63468f8ccad043e746a, type: 2}
   _ramDamageUpgradeValue: {fileID: 11400000, guid: c8d5bd4bfe64b2b45a84a9534e499367, type: 2}
   _healthPickupUpgradeValue: {fileID: 11400000, guid: bc9f466a84deaf246a01e474bafffd59, type: 2}
   _plasmaPickupUpgradeValue: {fileID: 11400000, guid: c9fd54c6a8ff6604094a501fa7fef6bc, type: 2}
@@ -1702,6 +1809,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1550317530746784848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8907491432247727163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91b7d2ddcd1d0ca45a1b9e8514b5ab11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: e144573be38aa1a4999f68423c1f6f10, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8988527786801626415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,7 +1869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb43b412f0f42458ab5314466a6dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _burstObject: {fileID: 0}
+  _burstObject: {fileID: 762726913902296103, guid: 66277acada437ea4fad569e4d26ab934, type: 3}
 --- !u!1 &9020465876192845082
 GameObject:
   m_ObjectHideFlags: 0
@@ -2592,21 +2715,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: RetaliationMatrix
       objectReference: {fileID: 0}
+    - target: {fileID: 4150786980244040276, guid: b33d30f09cb7dda47bf8c3e256ac92d6, type: 3}
+      propertyPath: _amountOfObjectsToSpawn
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 5789708609481566215, guid: b33d30f09cb7dda47bf8c3e256ac92d6, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5789708609481566215, guid: b33d30f09cb7dda47bf8c3e256ac92d6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.233342
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5789708609481566215, guid: b33d30f09cb7dda47bf8c3e256ac92d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5056378
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5789708609481566215, guid: b33d30f09cb7dda47bf8c3e256ac92d6, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.06441928
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5789708609481566215, guid: b33d30f09cb7dda47bf8c3e256ac92d6, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2643,6 +2770,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5789708609481566215, guid: b33d30f09cb7dda47bf8c3e256ac92d6, type: 3}
   m_PrefabInstance: {fileID: 7005228838316919162}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6389794538012074798 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4150786980244040276, guid: b33d30f09cb7dda47bf8c3e256ac92d6, type: 3}
+  m_PrefabInstance: {fileID: 7005228838316919162}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 519f9381a3c8c814a8486e1ca2642b46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7254446735263324825
 PrefabInstance:
   m_ObjectHideFlags: 0

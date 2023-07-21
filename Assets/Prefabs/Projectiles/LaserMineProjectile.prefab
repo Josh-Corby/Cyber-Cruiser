@@ -115,6 +115,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527497be6615eaf4f88a354ffeb3fb74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPlayerBullet: 0
+  _isTimeStopped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
   _playerProjectileSprite: {fileID: 0}
   _enemyProjectileSprite: {fileID: 0}
   _collisionParticles: {fileID: 0}

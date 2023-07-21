@@ -6,7 +6,6 @@ namespace CyberCruiser
     {
         protected static EnemyManager EnemyManagerInstance { get { return EnemyManager.INSTANCE; } }
         protected static EnemySpawnerManager EnemySpawnerManagerInstance { get { return EnemySpawnerManager.INSTANCE; } }
-        protected static InputManager InputManagerInstance { get { return InputManager.INSTANCE; } }
         protected static PlayerManager PlayerManagerInstance { get { return PlayerManager.INSTANCE; } }
         protected static RankManager RankManagerInstance { get { return RankManager.INSTANCE; } }
     }

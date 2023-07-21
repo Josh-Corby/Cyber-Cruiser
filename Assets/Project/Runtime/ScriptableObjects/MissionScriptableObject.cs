@@ -1,30 +1,34 @@
 using UnityEngine;
-
-public enum MissionPersistence
+namespace CyberCruiser
 {
-    OneRun, Total
-}
 
-public enum MissionConditions
-{
-    EndMission, CollectPlasma, UseShield, UseWeaponPack, FlyDistance, KillEnemy, DontShootForDistance
-}
+    public enum MissionPersistence
+    {
+        OneRun, Total
+    }
 
-public enum EnemyTypes
-{
-    AllBasicEnemies, Gunship, Mine, Missile, Blimp, Slicer, Dragon, AllBosses, Robodactyl, Behemoth, Battlecruiser, CyberKraken
-}
+    public enum MissionConditions
+    {
+        EndMission, CollectPlasma, UseShield, UseWeaponPack, FlyDistance, KillEnemy, DontShootForDistance
+    }
+
+    public enum EnemyTypes
+    {
+        AllBasicEnemies, Gunship, Mine, Missile, Blimp, Slicer, Dragon, AllBosses, Robodactyl, Behemoth, Battlecruiser, CyberKraken
+    }
 
 
-[CreateAssetMenu(fileName = "Mission", menuName = "ScriptableObject/New Mission")]
-public class MissionScriptableObject : ScriptableObject
-{
-    public int CategoryID;
-    public string missionDescription;
-    public Sprite missionIcon;
-    public MissionPersistence missionPersistence;
-    public MissionConditions missionCondition;
-    public EnemyTypes enemy;
-    public int missionObjectiveAmount;
-    public int missionStarReward;
+    [CreateAssetMenu(fileName = "Mission", menuName = "ScriptableObject/New Mission")]
+    public class MissionScriptableObject : ScriptableObject
+    {
+        public int CategoryID;
+        public string missionDescription;
+        public Sprite missionIcon;
+        public MissionPersistence missionPersistence;
+        public MissionConditions missionCondition;
+        public EnemyTypes enemy;
+        public int missionObjectiveAmount;
+        public int missionStarReward;
+    }
+
 }
