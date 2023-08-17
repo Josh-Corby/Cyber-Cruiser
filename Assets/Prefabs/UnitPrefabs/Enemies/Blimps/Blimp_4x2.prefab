@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1390790281266195689}
   - component: {fileID: 423042934259132589}
   - component: {fileID: 2590133778204819965}
+  - component: {fileID: 7280784781255025492}
   m_Layer: 7
   m_Name: Blimp_4x2
   m_TagString: Untagged
@@ -72,7 +73,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyInfo: {fileID: 0}
+  EnemyInfo: {fileID: 11400000, guid: fec2eebede64227409bac95b1dec3455, type: 2}
   _spriteRenderer: {fileID: 8450337475581012173}
   _deadSprite: {fileID: 21300000, guid: f7b8e7617d39a5e46a85f72bcab68625, type: 3}
 --- !u!114 &-8968039490281039228
@@ -90,7 +91,7 @@ MonoBehaviour:
   _isPlayerInvisible:
     UseConstant: 0
     ConstantValue: 0
-    Variable: {fileID: 0}
+    Variable: {fileID: 11400000, guid: e041328f40345744cb2fbe2579b3253b, type: 2}
   _isTimeStopped:
     UseConstant: 0
     ConstantValue: 0
@@ -143,6 +144,20 @@ CapsuleCollider2D:
   m_Offset: {x: -0.9, y: 0.08}
   m_Size: {x: 1.68, y: 0.53}
   m_Direction: 0
+--- !u!114 &7280784781255025492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653145768784104840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e9213a962dc2949891aec4b90a3516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashMaterial: {fileID: 2100000, guid: 986a0682d8c057b4bb80b3606c672534, type: 2}
+  _duration: 0.1
 --- !u!1 &7450378292503469831
 GameObject:
   m_ObjectHideFlags: 0

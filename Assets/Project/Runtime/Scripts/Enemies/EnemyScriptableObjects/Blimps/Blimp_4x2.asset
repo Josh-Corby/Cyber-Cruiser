@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: Blimp_4x2
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 2653145768784104840, guid: 5cccb7cfb1c26a64bb6ebfa3b5be061a, type: 3}
-  EnemyName: Blimp_4x2
+  EnemyName: Blimp
+  EnemyImage: {fileID: 21300000, guid: b2f5648a08493224384247a5e2b79cac, type: 3}
   GeneralStats:
+    Name: 
     Type: 4
     MaxHealth: 5
+    RamDamage: 1
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:
-    MoveType: 0
     Speed: 2
     SpeedWhenCrashing: 7
     UpDownMovementPattern: 0

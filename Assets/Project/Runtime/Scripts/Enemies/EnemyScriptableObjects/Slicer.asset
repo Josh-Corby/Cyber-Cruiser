@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 2653145768784104840, guid: 2fec4a945356f4243890bd799d60aa11, type: 3}
   EnemyName: Slicer
+  EnemyImage: {fileID: 21300000, guid: ecd9e27efbf19994e97b1b67a2d3adde, type: 3}
   GeneralStats:
+    Name: 
     Type: 5
     MaxHealth: 2
+    RamDamage: 1
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:
-    MoveType: 2
     Speed: 8
     SpeedWhenCrashing: 8
     UpDownMovementPattern: 0

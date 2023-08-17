@@ -18,6 +18,8 @@ namespace CyberCruiser
 
         public bool ReadyToFire { get => _readyToFire; }
 
+        private Coroutine _burstFireRoutine;
+
         private void Awake()
         {
             _soundController = GetComponent<SoundControllerBase>();
@@ -52,7 +54,12 @@ namespace CyberCruiser
 
             if (_currentWeapon.IsWeaponBurstFire)
             {
-                StartCoroutine(BurstFire());
+                if(_burstFireRoutine != null)
+                {
+                    StopCoroutine(_burstFireRoutine);
+                }
+
+                _burstFireRoutine = StartCoroutine(BurstFire());
                 return;
             }
 
@@ -88,6 +95,7 @@ namespace CyberCruiser
                 yield return new WaitForSeconds(_currentWeapon.TimeBetweenBurstShots);
             }
             StartCoroutine(ResetShooting());
+            StopCoroutine(BurstFire());
         }
 
         private void MultiFire()

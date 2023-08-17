@@ -7,6 +7,8 @@ namespace CyberCruiser
     {
         public GameObject EnemyPrefab;
         public string EnemyName;
+        public Sprite EnemyImage;
+        public string EnemyAbilities;
 
         [Header("Enemy Stats")]
         public EnemyStats GeneralStats;

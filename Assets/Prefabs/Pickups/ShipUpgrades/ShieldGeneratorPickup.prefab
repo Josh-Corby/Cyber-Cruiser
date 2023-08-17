@@ -128,8 +128,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5190738629216888542}
   - component: {fileID: 5443539861385694973}
-  - component: {fileID: 6025528392192912381}
   - component: {fileID: 1743152175}
+  - component: {fileID: 875842525093960523}
+  - component: {fileID: 6269273726169231350}
   m_Layer: 10
   m_Name: ShieldGeneratorPickup
   m_TagString: Untagged
@@ -169,7 +170,61 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.57
---- !u!114 &6025528392192912381
+--- !u!114 &1743152175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951969226015609480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _info:
+    Name: Shield Generator
+    Sprite: {fileID: 21300000, guid: 9ac29636f5e226f4f9833d23e6957656, type: 3}
+  _pickupType: 1
+  _weaponSO: {fileID: 0}
+  _speed: 3
+  _healthOnPickup:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: f6f677ff1af64934fb255372a76f7a1c, type: 2}
+  _plasmaOnPickup:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: e8a2002e6cf263f4f9b06e49d987c0f8, type: 2}
+  _ionOnPickup:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 8b9b1602b97c8c444835c67af79f56cc, type: 2}
+  _pickupEvent: {fileID: 0}
+--- !u!114 &875842525093960523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951969226015609480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4a88cb5c1d11f44b14418206ac71e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectValueToChange: {fileID: 11400000, guid: d9fe53655d3f6db4cb59c30cd654b8a4, type: 2}
+  _valueChanger: {fileID: 11400000, guid: 30bdc62ec69414a4ba2ff224b9c27cf7, type: 2}
+  _valueToChangeWith:
+    UseConstant: 1
+    ConstantValue: 1
+    Variable: {fileID: 0}
+  _valueChangerOnDropped: {fileID: 11400000, guid: 30bdc62ec69414a4ba2ff224b9c27cf7, type: 2}
+  _valueToChangeWithOnDropped:
+    UseConstant: 1
+    ConstantValue: 0
+    Variable: {fileID: 0}
+--- !u!114 &6269273726169231350
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,33 +242,8 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: 1
     Variable: {fileID: 0}
---- !u!114 &1743152175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6951969226015609480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pickupName: Battery Pack
-  _pickupSprite: {fileID: 21300000, guid: 9ac29636f5e226f4f9833d23e6957656, type: 3}
-  _pickupType: 1
-  _weaponSO: {fileID: 0}
-  _speed: 3
-  _healthOnPickup:
+  _valueChangerOnDropped: {fileID: 11400000, guid: 65ce4e83c843be04ea9c6f9feaf0574a, type: 2}
+  _valueToChangeWithOnDropped:
     UseConstant: 0
     ConstantValue: 0
-    Variable: {fileID: 11400000, guid: f6f677ff1af64934fb255372a76f7a1c, type: 2}
-  _plasmaOnPickup:
-    UseConstant: 0
-    ConstantValue: 0
-    Variable: {fileID: 11400000, guid: e8a2002e6cf263f4f9b06e49d987c0f8, type: 2}
-  _ionOnPickup:
-    UseConstant: 0
-    ConstantValue: 0
-    Variable: {fileID: 11400000, guid: 8b9b1602b97c8c444835c67af79f56cc, type: 2}
-  _pickupEvent: {fileID: 0}
+    Variable: {fileID: 11400000, guid: 152b7c3fc89dbbc4b852d89d6306e029, type: 2}

@@ -1,6 +1,5 @@
-using System;
-using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace CyberCruiser
 {
@@ -12,27 +11,31 @@ namespace CyberCruiser
         [SerializeField] private EnemyScriptableObject _missile;
         [SerializeField] private EnemyScriptableObject _homingMissile;
 
-        [SerializeField] private int _attacksSinceHomingAttack;
-
-
-        [SerializeField] private CircleCollider2D _warCryCollider;
-        private float _currentWarCryRadius;
-        [SerializeField] private float _warCryRange;
+        private int _attacksSinceHomingAttack = 0;
+        [SerializeField] private int _attacksSinceWarCry = 0;
+        [SerializeField] private WarCry _warCry;
 
         protected override void Start()
         {
             base.Start();
-            _attacksSinceHomingAttack = 0;
         }
 
         protected override void ChooseRandomAttack()
         {
-            if (_attacksSinceHomingAttack == 1)
+            _attackTimer = _attackCooldown;
+
+            if (_attacksSinceHomingAttack == 2)
             {
-                _attackTimer = _attackCooldown;
                 Attack2();
                 return;
             }
+
+            if (_attacksSinceWarCry >= 5)
+            {
+                Attack3();
+                return;
+            }
+
             else
             {
                 base.ChooseRandomAttack();
@@ -44,6 +47,7 @@ namespace CyberCruiser
         {
             _missileLauncher.CheckFireTypes();
             _attacksSinceHomingAttack += 1;
+            _attacksSinceWarCry += 1;
         }
 
         //shoot homing missiles at different directions
@@ -51,6 +55,14 @@ namespace CyberCruiser
         {
             _homingMissileLauncher.CheckFireTypes();
             _attacksSinceHomingAttack = 0;
+            _attacksSinceWarCry += 1;
+        }
+
+        public void Attack3()
+        {
+            _warCry.StartWarCry();
+            _attacksSinceWarCry = 0;
+            _attacksSinceHomingAttack += 1;
         }
     }
 }

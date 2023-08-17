@@ -87,7 +87,11 @@ namespace CyberCruiser
         {
             if (collider.TryGetComponent<IDamageable>(out var damageable))
             {
-                damageable.Damage(ShieldCollisionDamage);
+                if(ShieldCollisionDamage > 0)
+                {
+                    damageable.Damage(ShieldCollisionDamage);
+                }
+
                 if (!_isShieldImmuneToDamage)
                 {
                     ReduceShields(1);

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7752398562591275053}
   - component: {fileID: 7839305837616800354}
   - component: {fileID: 2588748747183702021}
+  - component: {fileID: 64471627381979363}
   m_Layer: 7
   m_Name: Behemoth
   m_TagString: Untagged
@@ -108,9 +109,8 @@ MonoBehaviour:
   _homingMissileLauncher: {fileID: 2625783356837087720}
   _missile: {fileID: 11400000, guid: e485d258fcdb9154abe4ade99eb035bc, type: 2}
   _homingMissile: {fileID: 11400000, guid: edde59c7b0e81a0419ac35efcb51e1c5, type: 2}
-  _attacksSinceHomingAttack: 0
-  _warCryCollider: {fileID: 0}
-  _warCryRange: 0
+  _attacksSinceWarCry: 0
+  _warCry: {fileID: 4266077223098790355}
 --- !u!114 &2588748747183702021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +132,20 @@ MonoBehaviour:
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
   _moveType: 0
+--- !u!114 &64471627381979363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980203594034234250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e9213a962dc2949891aec4b90a3516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashMaterial: {fileID: 2100000, guid: 986a0682d8c057b4bb80b3606c672534, type: 2}
+  _duration: 0.1
 --- !u!1 &1355927135244723045
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,13 +187,15 @@ GameObject:
   m_Component:
   - component: {fileID: 2945255790454745162}
   - component: {fileID: 3825535659819241025}
-  m_Layer: 7
+  - component: {fileID: 4266077223098790355}
+  - component: {fileID: 374653338333648932}
+  m_Layer: 6
   m_Name: WarCry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2945255790454745162
 Transform:
   m_ObjectHideFlags: 0
@@ -205,12 +221,77 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 31.55
+  m_Radius: 0.08
+--- !u!114 &4266077223098790355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3029927947194116414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 678b78b4ef8a2a748a31db5b9ec2ce75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 0}
+--- !u!212 &374653338333648932
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3029927947194116414}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1731554085
+  m_SortingLayer: 8
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.22745098}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &3069140740445223100
 GameObject:
   m_ObjectHideFlags: 0

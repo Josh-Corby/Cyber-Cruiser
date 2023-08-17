@@ -187,6 +187,11 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: 1
     Variable: {fileID: 11400000, guid: 18055d9adfac546488460e5249e0c5f3, type: 2}
+  _valueChangerOnDropped: {fileID: 11400000, guid: 30bdc62ec69414a4ba2ff224b9c27cf7, type: 2}
+  _valueToChangeWithOnDropped:
+    UseConstant: 1
+    ConstantValue: 0
+    Variable: {fileID: 0}
 --- !u!114 &1280142038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,6 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _info:
+    Name: Pulse Detonator
+    Sprite: {fileID: 21300000, guid: 9ac29636f5e226f4f9833d23e6957656, type: 3}
   _pickupName: Pulse Detonator
   _pickupSprite: {fileID: 21300000, guid: 9ac29636f5e226f4f9833d23e6957656, type: 3}
   _pickupType: 1

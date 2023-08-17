@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 2653145768784104840, guid: 1f555c3aa78c87a4595854770f311869, type: 3}
   EnemyName: Dragon
+  EnemyImage: {fileID: 21300000, guid: bdf91b09389c61d4fa97d83791dcf4c6, type: 3}
   GeneralStats:
+    Name: 
     Type: 6
     MaxHealth: 1
+    RamDamage: 1
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:
-    MoveType: 0
     Speed: 16
     SpeedWhenCrashing: 16
     UpDownMovementPattern: 0

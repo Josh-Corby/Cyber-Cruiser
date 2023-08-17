@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 6116196649286239462}
   - component: {fileID: 6714514900991200779}
   m_Layer: 0
-  m_Name: CurrentMissionText
+  m_Name: MissionStatusText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,11 +107,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9211833134938631728}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 11.999991, y: 49.63501}
+  m_AnchoredPosition: {x: 11.999991, y: 42}
   m_SizeDelta: {x: 500.33, y: 43.89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6116196649286239462
@@ -175,8 +175,8 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_fontStyle: 3
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -236,7 +236,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5399655508774970299}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.6452, y: 1.6452, z: 1.6452}
   m_ConstrainProportionsScale: 0
@@ -321,7 +321,7 @@ RectTransform:
   - {fileID: 4507415283887915866}
   - {fileID: 2696365958992488459}
   m_Father: {fileID: 9211833134938631728}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -461,7 +461,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9211833134938631728}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -613,9 +613,9 @@ RectTransform:
   m_Children:
   - {fileID: 9211833136693165521}
   - {fileID: 9211833135469623824}
+  - {fileID: 1160590739107172925}
   - {fileID: 3502131164585501579}
   - {fileID: 6080975314784170617}
-  - {fileID: 1160590739107172925}
   m_Father: {fileID: 7758266864475522156}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -639,13 +639,14 @@ MonoBehaviour:
   _missionManager: {fileID: 0}
   _missionDescription: {fileID: 9211833136693165520}
   _missionProgress: {fileID: 9211833135469623831}
+  _missionStatus: {fileID: 6714514900991200779}
   _missionImages:
   - {fileID: 111090283735585691}
-  - {fileID: 0}
   _missionStars:
   - {fileID: 7500034459770472739}
   - {fileID: 3250623559736890968}
   - {fileID: 8592273834513960640}
+  _currentMission: {fileID: 0}
 --- !u!1 &9211833135469623825
 GameObject:
   m_ObjectHideFlags: 0

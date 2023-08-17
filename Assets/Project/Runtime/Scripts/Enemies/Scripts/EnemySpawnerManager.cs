@@ -226,7 +226,7 @@ namespace CyberCruiser
 
         private void SpawnBoss()
         {
-            Debug.Log("spawning boss");
+            //Debug.Log("spawning boss");
             _bossSpawner.SpawnBoss(_currentBossToSpawn);
         }
 
@@ -269,7 +269,7 @@ namespace CyberCruiser
 
         private void ChangeSpawnInterval()
         {
-            Debug.Log("Spawn interval change");
+            //Debug.Log("Spawn interval change");
             if (_timesReduced >= _timesToReduce)
             {
                 _currentEnemiesToSpawn += 1;

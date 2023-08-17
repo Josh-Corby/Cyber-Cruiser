@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 3537538281721821469}
   - component: {fileID: 5714144778390559109}
+  - component: {fileID: 3320390486118442494}
   m_Layer: 7
   m_Name: Slicer
   m_TagString: Untagged
@@ -96,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyInfo: {fileID: 0}
+  EnemyInfo: {fileID: 11400000, guid: d60b4f6f9c2ff984fbc3222e72d154ca, type: 2}
   _spriteRenderer: {fileID: 4734148448805461130}
   _deadSprite: {fileID: 21300000, guid: 42860fa10457d6d419b4c97d56f0e3be, type: 3}
 --- !u!114 &5714144778390559109
@@ -120,6 +121,20 @@ MonoBehaviour:
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
   _seekTime: 0.75
+--- !u!114 &3320390486118442494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653145768784104840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e9213a962dc2949891aec4b90a3516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashMaterial: {fileID: 2100000, guid: 986a0682d8c057b4bb80b3606c672534, type: 2}
+  _duration: 0.1
 --- !u!1 &4854758790136460952
 GameObject:
   m_ObjectHideFlags: 0

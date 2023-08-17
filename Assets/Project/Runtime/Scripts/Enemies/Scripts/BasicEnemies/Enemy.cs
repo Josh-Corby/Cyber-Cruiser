@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -13,7 +14,7 @@ namespace CyberCruiser
         protected EnemyMovement _enemyMovement;
         private EnemyWeapon _weapon;
         private GameObject _crashParticles;
-        private GameObject _explosion;
+        private EnemyStats _stats;
         #endregion
 
         private Animator _animator;
@@ -21,12 +22,8 @@ namespace CyberCruiser
         [SerializeField] private Sprite _deadSprite;
         private SimpleFlash _flash;
 
-        #region Local Enemy General Stats
-        private string _enemyName;
-        protected float _maxHealth;
         protected float _currentHealth;
-        protected bool _doesEnemyExplodeOnDeath;
-        #endregion
+        public int RamDamage { get => _stats.RamDamage; }
 
         #region Actions
         public static event Action<GameObject> OnEnemySpawned = null;
@@ -40,12 +37,9 @@ namespace CyberCruiser
 
         private void AssignEnemyInfo()
         {
-            _enemyName = EnemyInfo.EnemyName;
-            gameObject.name = _enemyName;
-            _maxHealth = EnemyInfo.GeneralStats.MaxHealth;
-            _currentHealth = _maxHealth;
-            _doesEnemyExplodeOnDeath = EnemyInfo.GeneralStats.DoesEnemyExplodeOnDeath;
-            _explosion = EnemyInfo.GeneralStats.Explosion;
+            _stats = EnemyInfo.GeneralStats;
+            gameObject.name = _stats.Name;
+            _currentHealth = _stats.MaxHealth;
 
             GetComponents();
             _enemyMovement.AssignEnemyMovementInfo(EnemyInfo.MovementStats);
@@ -59,7 +53,7 @@ namespace CyberCruiser
             _weapon = GetComponentInChildren<EnemyWeapon>();
             _enemyMovement = GetComponent<EnemyMovement>();
 
-            if(!_doesEnemyExplodeOnDeath)
+            if(!_stats.DoesEnemyExplodeOnDeath)
             {
                 _crashParticles = transform.GetComponentInChildren<ParticleSystem>().gameObject;
                 if (_crashParticles != null)
@@ -73,17 +67,21 @@ namespace CyberCruiser
         {
             _currentHealth -= damage;
 
-            if(_flash != null)
+            if(damage < 0)
             {
-                _flash.Flash();
+                if (_flash != null)
+                {
+                    _flash.Flash();
+                }
             }
+          
 
             if (_currentHealth <= 0)
             {
-                if (_doesEnemyExplodeOnDeath)
+                if (_stats.DoesEnemyExplodeOnDeath)
                 {
                     Explode();
-                    _doesEnemyExplodeOnDeath = false;
+                    _stats.DoesEnemyExplodeOnDeath = false;
                 }
 
                 else
@@ -95,7 +93,7 @@ namespace CyberCruiser
 
         private void Explode()
         {
-            GameObject explosion = Instantiate(_explosion, transform.position, Quaternion.identity);
+            GameObject explosion = Instantiate(_stats.Explosion, transform.position, Quaternion.identity);
             explosion.transform.parent = null;
             Destroy();
         }
@@ -141,34 +139,56 @@ namespace CyberCruiser
             OnEnemyDied(gameObject, EnemyInfo.GeneralStats.Type);
             Destroy(gameObject);
         }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if(collision.gameObject.TryGetComponent<PlayerManager>(out var playerManager))
+            {
+                if(_stats.DoesEnemyExplodeOnDeath)
+                {
+                    Explode();
+                    return; 
+                }
+            }
+
+            if(collision.gameObject.TryGetComponent<Shield>(out var playerShield))
+            {
+                if (_stats.DoesEnemyExplodeOnDeath)
+                {
+                    Explode();
+                }
+            }
+        }
     }
 
-        [Serializable]
-        public struct EnemyStats
-        {
-            public EnemyTypes Type;
-            public int MaxHealth;
-            public bool DoesEnemyExplodeOnDeath;
-            public GameObject Explosion;
-        }
+    [Serializable]
+    public struct EnemyStats
+    {
+        public string Name;
+        public EnemyTypes Type;
+        public int MaxHealth;
+        public int RamDamage;
+        public bool DoesEnemyExplodeOnDeath;
+        public GameObject Explosion;
+    }
 
-        [Serializable]
-        public struct EnemyCategory
-        {
-            public string CategoryName;
-            [Range(0, 1)]
-            public float CategoryWeight;
-            public EnemyType[] CategoryTypes;
-            [HideInInspector]
-            [Range(0, 1)]
-            public float TotalTypeWeights;
-        }
+    [Serializable]
+    public struct EnemyCategory
+    {
+        public string CategoryName;
+        [Range(0, 1)]
+        public float CategoryWeight;
+        public EnemyType[] CategoryTypes;
+        [HideInInspector]
+        [Range(0, 1)]
+        public float TotalTypeWeights;
+    }
 
-        [Serializable]
-        public struct EnemyType
-        {
-            public EnemyScriptableObject EnemySO;
-            [Range(0, 1)]
-            public float spawnWeight;
-        }
+    [Serializable]
+    public struct EnemyType
+    {
+        public EnemyScriptableObject EnemySO;
+        [Range(0, 1)]
+        public float spawnWeight;
+    }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToFire: {fileID: 760453196464390188, guid: 0bc4f44e95491144f93d1772d1d05593, type: 3}
   TimeBetweenShots: 1
-  IsWeaponAutomatic: 1
+  IsWeaponAutomatic: 0
   Clip:
     Clip: {fileID: 8300000, guid: 69978527b4480414bbf449aa751ad852, type: 3}
     OverrideSourceVolume: 1

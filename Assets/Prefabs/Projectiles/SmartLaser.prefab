@@ -79,7 +79,7 @@ MonoBehaviour:
   _doesBulletExplode: 0
   _explosion: {fileID: 0}
   _isHoming: 1
-  _homeTurnSpeed: 1000
+  _homeTurnSpeed: 500
   _homeTime: 10
   _homeDelay: 0
   _homeDelayTime: 0
@@ -160,7 +160,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 8.64
+  m_Radius: 25
 --- !u!114 &1056493708914718010
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 1686505066082717662, guid: 66c6e72b98ecf6d43abdb0bc88401953, type: 3}
   EnemyName: BattleCruiser
+  EnemyImage: {fileID: 21300000, guid: 99e6cce1ead97854799c6422cdbcfa52, type: 3}
   GeneralStats:
+    Name: 
     Type: 10
     MaxHealth: 50
+    RamDamage: 0
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:
-    MoveType: 0
     Speed: 3
     SpeedWhenCrashing: 4
     UpDownMovementPattern: 0

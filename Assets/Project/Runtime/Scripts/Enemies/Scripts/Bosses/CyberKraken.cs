@@ -71,6 +71,11 @@ namespace CyberCruiser
                 _tentacles.Clear();
                 base.Crash();
             }
+
+            public void Attack3()
+            {
+                throw new NotImplementedException();
+            }
         } 
     }
 }

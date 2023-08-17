@@ -48,23 +48,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _explosionRadius: 1
-  _explosionDamage: 1
+  _explosionDamage: 2
   _explosionMask:
     serializedVersion: 2
     m_Bits: 512
-  _explosionDuration: 1
+  _explodeOnSpawn: 1
+  _destroyOnExplode: 1
+  _clusterOnDeath: 0
+  isClusterSpawningAUnit: 0
+  enemyToSpawn: {fileID: 0}
+  objectToSpawn: {fileID: 0}
+  _amountOfObjectsToSpawn: 0
+  _spawnRadius: 0
   _soundController: {fileID: 0}
   _explosionClip:
     Clip: {fileID: 8300000, guid: 97f2d77393620f6409175ab290dc3512, type: 3}
     OverrideSourceVolume: 0
     Volume: 1
     PlayOneShot: 0
-  clusterOnDeath: 0
-  isClusterSpawningAUnit: 0
-  enemyToSpawn: {fileID: 0}
-  objectToSpawn: {fileID: 0}
-  _amountOfObjectsToSpawn: 0
-  _spawnRadius: 0
 --- !u!114 &396160147959850325
 MonoBehaviour:
   m_ObjectHideFlags: 0

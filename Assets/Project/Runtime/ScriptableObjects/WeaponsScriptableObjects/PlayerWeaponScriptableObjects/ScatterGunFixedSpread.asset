@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbdfbc5f48b0e946bc23ca24fb9570b, type: 3}
   m_Name: ScatterGunFixedSpread
   m_EditorClassIdentifier: 
-  objectToFire: {fileID: 760453196464390188, guid: 1b3e20b833268c54a91ba787ca2e1d05, type: 3}
+  objectToFire: {fileID: 760453196464390188, guid: aefca9002aa15e2478302a3f2253c1b1, type: 3}
   TimeBetweenShots: 0.1
   IsWeaponAutomatic: 1
   Clip:

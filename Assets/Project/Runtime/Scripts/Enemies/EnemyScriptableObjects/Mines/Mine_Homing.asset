@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 2653145768784104840, guid: 230b08289a87517499c2033d09193f8a, type: 3}
   EnemyName: Mine
+  EnemyImage: {fileID: 21300000, guid: 297def513101f3c4483ba4083f6469aa, type: 3}
   GeneralStats:
+    Name: 
     Type: 2
     MaxHealth: 1
+    RamDamage: 0
     DoesEnemyExplodeOnDeath: 1
     Explosion: {fileID: 762726913902296103, guid: 4c12fb1ce68f53f4ba9702687134b17e, type: 3}
   MovementStats:
-    MoveType: 4
     Speed: 2
     SpeedWhenCrashing: 0
     UpDownMovementPattern: 0

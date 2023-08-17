@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 189618726288178038}
   - component: {fileID: -2497671660820981553}
   - component: {fileID: -4316434092633255210}
+  - component: {fileID: 1978170948411099160}
   m_Layer: 7
   m_Name: Robodactyl
   m_TagString: Untagged
@@ -279,6 +280,20 @@ MonoBehaviour:
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
   _moveType: 2
+--- !u!114 &1978170948411099160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686505066082717662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e9213a962dc2949891aec4b90a3516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashMaterial: {fileID: 2100000, guid: 986a0682d8c057b4bb80b3606c672534, type: 2}
+  _duration: 0.1
 --- !u!1 &3534197723866894886
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +461,7 @@ MonoBehaviour:
   _isTimeStopped:
     UseConstant: 0
     ConstantValue: 0
-    Variable: {fileID: 0}
+    Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
 --- !u!1 &3807874348917580334
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +660,7 @@ MonoBehaviour:
   _isTimeStopped:
     UseConstant: 0
     ConstantValue: 0
-    Variable: {fileID: 0}
+    Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
 --- !u!1 &7020472227476826103
 GameObject:
   m_ObjectHideFlags: 0

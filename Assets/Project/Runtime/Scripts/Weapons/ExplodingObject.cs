@@ -134,7 +134,7 @@ namespace CyberCruiser
 
                 if (Mathf.Abs(angle) == 90)
                 {
-                    spawnRotation = Quaternion.Euler(0, 180, angle);
+                    spawnRotation = Quaternion.Euler(0, 180, -angle);
 
                 }
 

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3537538281721821472}
   - component: {fileID: 3537538281721821469}
   - component: {fileID: 2534658592493653730}
+  - component: {fileID: 7578221997336646990}
   m_Layer: 7
   m_Name: Missile
   m_TagString: Untagged
@@ -114,11 +115,25 @@ MonoBehaviour:
   _isPlayerInvisible:
     UseConstant: 0
     ConstantValue: 0
-    Variable: {fileID: 0}
+    Variable: {fileID: 11400000, guid: e041328f40345744cb2fbe2579b3253b, type: 2}
   _isTimeStopped:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
+--- !u!114 &7578221997336646990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653145768784104840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e9213a962dc2949891aec4b90a3516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashMaterial: {fileID: 2100000, guid: 986a0682d8c057b4bb80b3606c672534, type: 2}
+  _duration: 0.1
 --- !u!1 &3134932138204227492
 GameObject:
   m_ObjectHideFlags: 0

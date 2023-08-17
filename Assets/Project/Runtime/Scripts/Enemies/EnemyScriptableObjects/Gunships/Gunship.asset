@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 2653145768784104840, guid: c55893e92d9776a4a822d0c8cdaf314e, type: 3}
   EnemyName: Gunship
+  EnemyImage: {fileID: 21300000, guid: 2ecc0ed3ca317e64b963f201b631d205, type: 3}
   GeneralStats:
+    Name: 
     Type: 1
     MaxHealth: 1
+    RamDamage: 1
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:

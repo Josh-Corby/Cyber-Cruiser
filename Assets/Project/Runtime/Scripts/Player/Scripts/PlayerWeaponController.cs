@@ -231,6 +231,12 @@ namespace CyberCruiser
             }
         }
 
+
+        public void OverheatToMax()
+        {
+            CurrentHeat = _heatMax;
+        }
+
         private void OverHeat()
         {
             IsOverheated = true;

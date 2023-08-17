@@ -7,12 +7,14 @@ namespace CyberCruiser
     public class PlayerShieldController : ShieldControllerBase
     {
         [SerializeField] PlayerUIManager _playerUIManager;
+        [SerializeField] private PlayerManager _playerManager;
 
         #region Fields
         [Header("Player Shield Info")]
         [Tooltip("Total duration of player shield activation")]
         [SerializeField] private int _shieldActiveDuration;
         [SerializeField] private float _shieldActiveTimer;
+        [SerializeField] private IntReference _ramDamage;
         private bool _controlsEnabled;
         #endregion
 
@@ -67,6 +69,7 @@ namespace CyberCruiser
         [Tooltip("SO Bool Value for if time is stopped")]
         [SerializeField] private BoolValue _isTimeStopped;
         #endregion
+
         #endregion
 
         #region Properties
@@ -92,6 +95,12 @@ namespace CyberCruiser
         #region Actions
         public static event Action OnPlayerShieldsActivated = null;
         #endregion
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _playerManager = GetComponentInParent<PlayerManager>();
+        }
 
         private void OnEnable()
         {
@@ -163,39 +172,31 @@ namespace CyberCruiser
         //activate whatever shield effect is currently equipped
         protected override void CheckShieldPickups()
         {
+            if (_doesPlayerHaveShieldGenerator.Value)
+            {
+                EnableShieldGenerator();
+            }
+
             if (_doesPlayerHavePulseDetonator.Value)
             {
                 _pulseDetonator.Detonate();
-                return;
             }
 
             if (_doesPlayerHaveInvisibilityShield.Value)
             {
                 IsPlayerInvisible = true;
-                EnableShield();
-                return;
             }
 
             if (_doesPlayerHaveSignalBeacon.Value)
             {
                 SignalBeaconRoll();
-            }
-
-            if (_doesPlayerHaveShieldGenerator.Value)
-            {
-                EnableShieldGenerator();
-                return;
-            }
+            }  
 
             if (_doesPlayerHaveTimeStop.Value)
             {
                 IsTimeStopped = true;
-                EnableShield();
-            }
+            }  
 
-            //if function isn't returned, activate base shield
-            IsShieldsActive = true;
-            PlayerManagerInstance.IsPlayerColliderEnabled = false;
             EnableShield();
         }
 
@@ -216,9 +217,8 @@ namespace CyberCruiser
             {
                 StopCoroutine(_shieldGeneratorRoutine);
             }
+
             Debug.Log("Shield generator started");
-            IsShieldsActive = true;
-            PlayerManagerInstance.IsPlayerColliderEnabled = false;
             _shieldGeneratorRoutine = StartCoroutine(nameof(ShieldGeneratorCoroutine));
         }
 
@@ -239,14 +239,23 @@ namespace CyberCruiser
             }
         }
         #endregion
+
         #endregion
 
         //enable the shield object
         private void EnableShield()
         {
+            IsShieldsActive = true;
+            PlayerManagerInstance.IsPlayerColliderEnabled = false;
             ResetShieldTimer();
             ToggleSliderUI(true);
             OnPlayerShieldsActivated?.Invoke();
+        }
+
+        public void DeactivateShield()
+        {
+            Debug.Log("Shields deactivated");
+            DeactivateShields();
         }
 
         protected override void DeactivateShields()
@@ -279,8 +288,7 @@ namespace CyberCruiser
 
             else if (collider.TryGetComponent<Pickup>(out var pickup))
             {
-                pickup.PickupEffect();
-                Destroy(pickup.gameObject);
+                _playerManager.OnPickup(pickup);
                 return;
             }
 

@@ -14198,11 +14198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70858b48e088fab41aff2309a9e08bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageParticles:
-  - {fileID: 9015826194958132397}
-  - {fileID: 9015826194958167187}
-  - {fileID: 9015826194958186009}
-  _crashParticles: []
+  _damagedParticles: []
+  _crashingParticles: []
 --- !u!114 &-6654605556509581688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37370,7 +37367,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &9015826194957895635
 Transform:
   m_ObjectHideFlags: 0

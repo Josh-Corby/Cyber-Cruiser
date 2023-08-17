@@ -62,6 +62,11 @@ namespace CyberCruiser
             {
                 bossMoveset.Attack2();
             }
+
+            if(ID == 2)
+            {
+                bossMoveset.Attack3();
+            }
         }
 
         public override void Damage(float damage)

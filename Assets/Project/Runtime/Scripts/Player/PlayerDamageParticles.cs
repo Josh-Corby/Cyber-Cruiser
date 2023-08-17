@@ -4,8 +4,8 @@ namespace CyberCruiser
 {
     public class PlayerDamageParticles : MonoBehaviour
     {
-        [SerializeField] private GameObject[] _damageParticles;
-        [SerializeField] private GameObject[] _crashParticles;
+        [SerializeField] private ParticleSystem[] _damagedParticles;
+        [SerializeField] private ParticleSystem[] _crashingParticles;
 
         private void OnEnable()
         {
@@ -22,19 +22,20 @@ namespace CyberCruiser
 
         private void DisableParticles()
         {
-            for (int i = 0; i < _damageParticles.Length; i++)
+            for (int i = 0; i < _damagedParticles.Length; i++)
             {
-                if (_damageParticles[i].activeSelf)
+         
+                if(_damagedParticles[i].gameObject.activeSelf)
                 {
-                    _damageParticles[i].SetActive(false);
+                    _damagedParticles[i].Stop();
                 }
             }
 
-            for (int i = 0; i < _crashParticles.Length; i++)
+            for (int i = 0; i < _crashingParticles.Length; i++)
             {
-                if (_crashParticles[i].activeSelf)
+                if (_crashingParticles[i].gameObject.activeSelf)
                 {
-                    _crashParticles[i].SetActive(false);
+                    _crashingParticles[i].Stop();
                 }
             }
         }
@@ -47,19 +48,20 @@ namespace CyberCruiser
                     DisableParticles();
                     break;
                 case PlayerHealthState.Low:
-                    _damageParticles[0].SetActive(true);
+                    _damagedParticles[0].Play();
+                    _damagedParticles[1].Stop();
                     break;
                 case PlayerHealthState.Critical:
-                    _damageParticles[1].SetActive(true);
+                    _damagedParticles[1].Play();
                     break;
             }
         }
 
         private void EnableCrashParticles()
         {
-            for (int i = 0; i < _crashParticles.Length; i++)
+            for (int i = 0; i < _crashingParticles.Length; i++)
             {
-                _crashParticles[i].SetActive(true);
+                _crashingParticles[i].Play();
             }
         }
     }

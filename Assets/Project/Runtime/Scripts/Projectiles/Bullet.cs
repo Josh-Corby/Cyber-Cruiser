@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -11,9 +12,10 @@ namespace CyberCruiser
         private GameObject _homingTarget = null;
         private SpriteRenderer _spriteRenderer;
         [SerializeField] private bool _isPlayerBullet = false;
-
         [SerializeField] private BoolReference _isTimeStopped;
-
+        private bool _rotateOut;
+        private Quaternion _homeOutRotation;
+        private const float _homeTurnSpeedBase = 100;
         #region Art
         [Header("Art")]
         [SerializeField] private Sprite _playerProjectileSprite;
@@ -40,6 +42,8 @@ namespace CyberCruiser
 
         public float Damage { get => _damage; }
 
+        public GameObject HomingTarget { get => _homingTarget; set => _homingTarget = value; }
+
         public bool IsHoming
         {
             get => _isHoming;
@@ -53,8 +57,6 @@ namespace CyberCruiser
                 }
             }
         }
-
-        public GameObject HomingTarget { get => _homingTarget; set => _homingTarget = value; }
 
         private void Awake()
         {
@@ -87,8 +89,7 @@ namespace CyberCruiser
             {
                 if (_homingTarget != null)
                 {
-                    HomingMovement();
-                    return;
+                    RotateTowardsTarget();
                 }
             }
 
@@ -120,6 +121,9 @@ namespace CyberCruiser
                 {
                     _homingTrigger.gameObject.SetActive(false);
                 }
+
+                _homeTurnSpeed = _homeTurnSpeedBase; ;
+                _rotateOut = true;
             }
         }
 
@@ -128,15 +132,15 @@ namespace CyberCruiser
             transform.position += transform.right * _speed * Time.deltaTime;
         }
 
-        private void HomingMovement()
+        public void AssignHomingRotation(Quaternion rotation)
         {
-            RotateTowardsTarget();
-            MoveTowardsTarget();
+            _homeOutRotation = rotation;
         }
 
         private void RotateTowardsTarget()
         {
-            _homeCounter -= Time.deltaTime;
+            float t = Time.deltaTime;
+            _homeCounter -= t;
 
             if (_homeCounter <= 0)
             {
@@ -144,15 +148,27 @@ namespace CyberCruiser
                 return;
             }
 
-            Vector3 vectorToPlayer = _homingTarget.transform.position - transform.position;
-            float angle = Mathf.Atan2(vectorToPlayer.y, vectorToPlayer.x) * Mathf.Rad2Deg - 90;
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-            transform.rotation = Quaternion.Slerp(transform.rotation, q, _homeTurnSpeed * Time.deltaTime);
-        }
+            Vector2 direction = _homingTarget.transform.position - transform.position;
+            float angle = MathF.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Quaternion targetRotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, angle);
 
-        private void MoveTowardsTarget()
-        {
-            transform.position = Vector2.MoveTowards(transform.position, _homingTarget.transform.position, _speed * Time.deltaTime);
+            if (_rotateOut)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, _homeOutRotation, _homeTurnSpeed * Time.deltaTime);
+
+                if(transform.rotation == _homeOutRotation)
+                {
+                    _rotateOut = false;
+                    _homeTurnSpeed = _homeTurnSpeedBase;          
+                }
+            }
+
+            if(!_rotateOut)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _homeTurnSpeed * Time.deltaTime);
+            }
+
+            _homeTurnSpeed += (2 * t * t) + (_homeTurnSpeed / 3);
         }
 
         public void CheckBulletLayer()

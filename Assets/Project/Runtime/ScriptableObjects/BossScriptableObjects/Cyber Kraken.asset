@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 1686505066082717662, guid: a66577e6ad684484ab66edd9c0cc193f, type: 3}
   EnemyName: Cyber Kraken
+  EnemyImage: {fileID: 21300000, guid: 15b62874709b4944fa389bab30690583, type: 3}
   GeneralStats:
+    Name: 
     Type: 11
     MaxHealth: 50
+    RamDamage: 0
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:
-    MoveType: 0
     Speed: 2
     SpeedWhenCrashing: 4
     UpDownMovementPattern: 0

@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 189618726288178038}
   - component: {fileID: 2768467503477785582}
   - component: {fileID: -4359868713181001793}
+  - component: {fileID: 2313503301765885826}
   m_Layer: 7
   m_Name: Cyber Kraken
   m_TagString: Untagged
@@ -201,6 +202,20 @@ MonoBehaviour:
   _spawnedTentaclePrefab: {fileID: 2481888040287939771, guid: 34ddddad777a73a418af6f5565072acc, type: 3}
   _grappleTentaclePrefab: {fileID: 2481888040287939771, guid: 2b5f6b2e33250eb4c94eb74ead9bc5fd, type: 3}
   _grappleTentacleSpawnPoint: {fileID: 8537070395581111515}
+--- !u!114 &2313503301765885826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686505066082717662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e9213a962dc2949891aec4b90a3516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flashMaterial: {fileID: 2100000, guid: 986a0682d8c057b4bb80b3606c672534, type: 2}
+  _duration: 0.1
 --- !u!1 &3893245595879433524
 GameObject:
   m_ObjectHideFlags: 0

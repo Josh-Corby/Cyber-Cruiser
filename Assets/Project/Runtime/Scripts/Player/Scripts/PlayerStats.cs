@@ -11,12 +11,11 @@ namespace CyberCruiser
         [SerializeField] private int _baseWeaponUpgradeDurationInSeconds;
         [SerializeField] private int _baseHealthOnPickup;
         [SerializeField] private int _basePlasmaOnPickup;
-        [SerializeField] private int _basePlasmaCost;
         [SerializeField] private int _baseRamDamage;
-
-        [SerializeField] private float _baseHeatPerShot;
+        [SerializeField] private IntValue _basePlasmaCost;
         [SerializeField] private float _baseHeatLossPerFrame;
         [SerializeField] private float _baseCooldownHeatLossPerFrame;
+        [SerializeField] private FloatValue _baseHeatPerShot;
 
         [Header("Current Stats")]
         [SerializeField] private IntValue _currentWeaponUpgradeDurationInSeconds;
@@ -26,14 +25,9 @@ namespace CyberCruiser
         [SerializeField] private IntValue _currentPlasmaCost;
         [SerializeField] private FloatValue _currentHeatPerShot;
 
-        [Header("Pickup States")]
+        [Space]
+        [Tooltip("Current active state of toggleable addons")]
         [SerializeField] private BoolValue[] _pickupStates;
-
-        [Header("Addon Modifiers")]
-        [SerializeField] private IntValue _batteryPackUpgradeValue;
-        [SerializeField] private IntValue _ramDamageUpgradeValue;
-        [SerializeField] private IntValue _healthPickupUpgradeValue;
-        [SerializeField] private IntValue _plasmaPickupUpgradeValue;
 
         private void OnEnable()
         {
@@ -46,8 +40,8 @@ namespace CyberCruiser
             _currentHealthOnPickup.Value = _baseHealthOnPickup;
             _currentPlasmaOnPickup.Value = _basePlasmaOnPickup;
             _currentWeaponUpgradeDurationInSeconds.Value = _baseWeaponUpgradeDurationInSeconds;
-            _currentHeatPerShot.Value = _baseHeatPerShot;
-            _currentPlasmaCost.Value = _basePlasmaCost;
+            _currentHeatPerShot.Value = _baseHeatPerShot.Value;
+            _currentPlasmaCost.Value = _basePlasmaCost.Value;
             ResetBools();
         }
 

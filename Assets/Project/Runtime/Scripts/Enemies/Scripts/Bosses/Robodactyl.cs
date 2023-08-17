@@ -24,5 +24,10 @@ namespace CyberCruiser
             GameObject mine = Instantiate(EnemyManagerInstance.CreateEnemyFromSO(_mineInfo), _mineReleasePoint.transform.position, _mineReleasePoint.transform.rotation);
             mine.transform.parent = null;
         }
+
+        public void Attack3()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

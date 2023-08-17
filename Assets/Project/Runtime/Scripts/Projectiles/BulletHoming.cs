@@ -14,11 +14,13 @@ namespace CyberCruiser
         {
             bullet = GetComponentInParent<Bullet>();
         }
+
         private void Update()
         {
             if (bullet.HomingTarget == null)
             {
                 FindClosestEnemy();
+
             }
         }
 
@@ -36,12 +38,15 @@ namespace CyberCruiser
                 }
 
                 _distanceToTarget = Vector2.Distance(transform.position, _enemiesInHomingRange[i].transform.position);
+
                 if (_distanceToTarget < minDistance)
                 {
                     minDistance = _distanceToTarget;
                     _homingTarget = _enemiesInHomingRange[i];
                 }
             }
+
+            bullet.AssignHomingRotation(transform.parent.rotation * Quaternion.Euler(0, 0, 45));
             bullet.HomingTarget = _homingTarget;
         }
 

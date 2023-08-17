@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 1686505066082717662, guid: 63caa24a17e837c4ebb6b3b44dc28a9e, type: 3}
   EnemyName: Robodactyl
+  EnemyImage: {fileID: 21300000, guid: e95fe719f7d0aa44b944955ba87f5f4b, type: 3}
   GeneralStats:
+    Name: 
     Type: 8
     MaxHealth: 50
+    RamDamage: 0
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:
-    MoveType: 0
     Speed: 6
     SpeedWhenCrashing: 4
     UpDownMovementPattern: 0

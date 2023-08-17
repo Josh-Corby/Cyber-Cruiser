@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -21,6 +24,11 @@ namespace CyberCruiser
         [SerializeField] private PlayerShieldController _playerShieldController;
         [SerializeField] private PlayerWeaponController _playerWeaponController;
         [SerializeField] private PlayerUIManager _playerUIManager;
+
+        [SerializeField] private BoolValue _holdOneAddOn;
+        [SerializeField] private GameObject _currentPickup;
+
+        [SerializeField] private List<PickupInfo> _currentAddOns = new();
         #endregion
 
         #region SO References
@@ -183,6 +191,7 @@ namespace CyberCruiser
         #region Actions
         public static event Action OnPlayerDeath = null;
         public static event Action<int> OnPlasmaChange = null;
+        public static event Action<int> OnPlasmaSpent = null;
         public static event Action<int> OnPlasmaPickupValue = null;
         public static event Action<PlayerHealthState> OnPlayerHealthStateChange = null;
         #endregion
@@ -277,6 +286,7 @@ namespace CyberCruiser
             if (CurrentPlasma >= PlasmaCost)
             {
                 CurrentPlasma -= PlasmaCost;
+                OnPlasmaSpent?.Invoke(PlasmaCost);
                 return true;
             }
 
@@ -288,10 +298,16 @@ namespace CyberCruiser
             PlayerCurrentHealth += PlayerMaxHealth / 4;
         }
 
+        public void Overload()
+        {
+            _playerWeaponController.OverheatToMax();
+            _playerShieldController.DeactivateShield();
+        }
+
         #region Player Damage Functions
         public void Damage(float damage)
         {
-            if (_isPlayerImmuneToDamage)
+            if (damage <= 0 || _isPlayerImmuneToDamage)
             {
                 return;
             }
@@ -366,6 +382,7 @@ namespace CyberCruiser
             DisablePlayerControls();
             _playerShipController.OnPlayerDeath();
         }
+        #endregion
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
@@ -376,19 +393,14 @@ namespace CyberCruiser
         {
             if (collider.TryGetComponent<Pickup>(out var pickup))
             {
-                if (collider.TryGetComponent<PickupEffectBase>(out var addOnPickup))
-                {
-                    addOnPickup.OnPickup();
-                }
-                pickup.PickupEffect();
-
+                OnPickup(pickup);
                 return;
             }
 
             if (collider.TryGetComponent<Enemy>(out var enemy))
             {
                 enemy.Damage(_currentRamDamageReference.Value);
-                Damage(1);
+                Damage(enemy.RamDamage);
             }
 
             else if (collider.TryGetComponent<CyberKrakenTentacle>(out var tentacle))
@@ -396,6 +408,64 @@ namespace CyberCruiser
                 Damage(1);
             }
         }
-        #endregion
+
+        public void OnPickup(Pickup pickup)
+        {
+            PickUpAddOn(pickup);
+            pickup.PickupEffect();
+        }
+
+        private void PickUpAddOn(Pickup addOn)
+        {
+            PickupEffectBase[] newEffects = addOn.gameObject.GetComponents<PickupEffectBase>();
+
+            Debug.Log("There are " + newEffects.Length + " new effects");
+            for (int i = 0; i < newEffects.Length; i++)
+            {
+                newEffects[i].OnPickup();
+            }
+
+            //check if pickup has addon effects
+            if (newEffects.Length > 0)
+            {
+                //if one pickup mode is enabled
+                if (_holdOneAddOn.Value)
+                {
+                    if(_currentPickup != null)
+                    {
+                        //if there are previous addons
+                        PickupEffectBase[] currentEffects = _currentPickup.GetComponents<PickupEffectBase>();
+                        Debug.Log("There are " +currentEffects.Length + " effects to be removed");
+
+                        //undo its effects
+                        if (currentEffects.Length > 0)
+                        {
+                            for (int i = 0; i < currentEffects.Length; i++)
+                            {
+                                currentEffects[i].OnDropped();
+                            }
+                        }
+
+
+                        Destroy(_currentPickup,1f);
+                    }       
+
+                    _currentPickup = addOn.gameObject;
+                    _currentPickup.SetActive(false);
+                }
+
+                //if there is no limit to pickups
+                if(!_holdOneAddOn.Value)
+                {
+                    _currentAddOns.Add(addOn.Info);
+                    Destroy(addOn.gameObject);
+                }
+            }
+        }
+
+        public void ToggleUseOneAddOn()
+        {
+            _holdOneAddOn.Value = !_holdOneAddOn.Value;
+        }
     }
 }

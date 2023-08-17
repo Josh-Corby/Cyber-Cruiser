@@ -63,7 +63,7 @@ namespace CyberCruiser
 
         protected virtual void Update()
         {
-            if (_isTimeStopped.Value)
+            if (_isTimeStopped.Value && !IsEnemyDead)
             {
                 return;
             }
@@ -71,7 +71,7 @@ namespace CyberCruiser
             UnitMovement();
         }
 
-        //Could definitely reference local movement stats directly but at the moment I prefer this approach as it takes away a step in referencing
+        //Could definitely reference local movement stats directly but at the moment I prefer this approach as it takes away a step in referencing during updates
         public void AssignEnemyMovementInfo(EnemyMovementStats movementStats)
         {
             _speed = movementStats.Speed;

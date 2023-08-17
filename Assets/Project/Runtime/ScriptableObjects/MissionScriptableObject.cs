@@ -29,6 +29,7 @@ namespace CyberCruiser
         public EnemyTypes enemy;
         public int missionObjectiveAmount;
         public int missionStarReward;
+        public bool isComplete;
     }
 
 }

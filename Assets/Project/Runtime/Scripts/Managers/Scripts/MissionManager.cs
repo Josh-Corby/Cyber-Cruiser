@@ -25,6 +25,8 @@ namespace CyberCruiser
         [SerializeField] private List<MissionScriptableObject> _missionsToCompleteInCategory = new();
         [SerializeField] private MissionScriptableObject _currentMission;
         [SerializeField] private MissionScriptableObject _nextMissionToStart;
+
+        public MissionScriptableObject MissionBeforeLevelStart;
         #endregion
 
         #region PlayerPrefs Strings
@@ -99,15 +101,19 @@ namespace CyberCruiser
         {
             if (_currentMission != null)
             {
+                MissionBeforeLevelStart = _currentMission;
                 return;
             }
 
             if(_nextMissionToStart == null)
             {
+                MissionBeforeLevelStart = _currentMission;
                 return;
             }
 
             _currentMission = _nextMissionToStart;
+            _currentMission.isComplete = false;
+            MissionBeforeLevelStart = _currentMission;
             _nextMissionToStart = null;
             SetMissionObjective();
         }
@@ -121,6 +127,7 @@ namespace CyberCruiser
 
             ClearMissionObjective(_currentMission.missionCondition);
             ResetMissionProgress();
+            _currentMission.isComplete = true;
             _currentMission = null;
         }
 
@@ -131,20 +138,6 @@ namespace CyberCruiser
             _missionsToCompleteInCategory.Clear();
             FillMissionsToComplete();
         }
-
-        //choose next mission when requested
-        //public void ChooseNextMission()
-        //{
-        //    //if player is in tutorial missions assign next mission directly, otherwise select random mission
-        //    if (_currentMissionCategory.ID == 0)
-        //    {
-        //        SetMission(_missionsToCompleteInCategory[0]);
-        //    }
-        //    else
-        //    {
-        //        PickRandomUncompletedMissionInCategory();
-        //    }
-        //}
 
         private void ChooseNextMission()
         {
@@ -163,9 +156,7 @@ namespace CyberCruiser
         {
             _nextMissionToStart = _missionsToCompleteInCategory[Random.Range(0, _missionsToCompleteInCategory.Count)];
         }
-        #endregion
-
-        
+        #endregion   
 
         #region Mission Condition Assigning
         private void SetMissionObjective()
@@ -380,7 +371,7 @@ namespace CyberCruiser
         }
         #endregion
 
-        #region EndMission
+        #region End Mission
         private void CompleteMission()
         {
             Debug.Log("mission complete");
@@ -471,7 +462,7 @@ namespace CyberCruiser
         private void RestoreCategoryIDOfCurrentMission()
         {
             int categoryIDOfCurrentMission = PlayerPrefs.GetInt(CATEGORY_ID_OF_CURRENT_MISSION, 0);
-            Debug.Log(categoryIDOfCurrentMission);
+            //Debug.Log(categoryIDOfCurrentMission);
             _nextMissionToStart = _missionsToCompleteInCategory[categoryIDOfCurrentMission];
         }
 

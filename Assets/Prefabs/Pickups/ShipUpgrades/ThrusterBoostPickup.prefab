@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 5190738629216888542}
   - component: {fileID: 5443539861385694973}
   - component: {fileID: 1280142038}
+  - component: {fileID: 3897828569921555734}
   m_Layer: 10
   m_Name: ThrusterBoostPickup
   m_TagString: Untagged
@@ -180,6 +181,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88af519079095f4fbf3b90feb619fbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _info:
+    Name: Thruster Boost
+    Sprite: {fileID: 21300000, guid: 9ac29636f5e226f4f9833d23e6957656, type: 3}
   _pickupName: Thruster Boost
   _pickupSprite: {fileID: 21300000, guid: 9ac29636f5e226f4f9833d23e6957656, type: 3}
   _pickupType: 1
@@ -197,4 +201,27 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 8b9b1602b97c8c444835c67af79f56cc, type: 2}
-  _pickupEvent: {fileID: 11400000, guid: b7741c6418155db45860c26238d8cde3, type: 2}
+  _pickupEvent: {fileID: 0}
+--- !u!114 &3897828569921555734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6951969226015609480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7de394872b20de74cb434082efd06c36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectValueToChange: {fileID: 11400000, guid: f428c9febf7b08741b6f1eecdc7a9b9b, type: 2}
+  _valueChanger: {fileID: 11400000, guid: 5d1e1be51e8386947b216fb4883d20b7, type: 2}
+  _valueToChangeWith:
+    UseConstant: 1
+    ConstantValue: 10
+    Variable: {fileID: 11400000, guid: 67f6d337a9ba2ec4ab11a6fa1c85f721, type: 2}
+  _valueChangerOnDropped: {fileID: 11400000, guid: e9e4b9e67cec2a4479bb861e523edf30, type: 2}
+  _valueToChangeWithOnDropped:
+    UseConstant: 1
+    ConstantValue: 10
+    Variable: {fileID: 11400000, guid: 67f6d337a9ba2ec4ab11a6fa1c85f721, type: 2}

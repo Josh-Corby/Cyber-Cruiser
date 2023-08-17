@@ -15,9 +15,8 @@ namespace CyberCruiser
 
         #region Fields
         [Header("Distance Increments")]
-        private float _currentDistancePerSecond;
-        [SerializeField] private float _baseDistancePerSecond = 10;
-        [SerializeField] private float _thrusterBoostDistancePerSecond = 20;
+        [SerializeField] private int _baseDistancePerSecond = 10;
+        [SerializeField] private IntValue _distancePerSecond;
         [SerializeField] private int _plasmaGenerationDistance = 100;
         [SerializeField] private int _bossDistanceIncrement = 500;
 
@@ -31,10 +30,10 @@ namespace CyberCruiser
         private Coroutine _increaseDistanceCoroutine = null;
 
         #region Properties
-        private int DistanceInt
+        public int DistanceInt
         {
             get => _distanceInt;
-            set
+            private set
             {
                 if (_distanceInt != value)
                 {
@@ -67,7 +66,7 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            Boss.OnBossTypeDied += (bossType) => StartIncreasingDistance();
+            Boss.OnBossTypeDied += (bossType) => StartIncreasingDistance();         
         }
 
         private void OnDisable()
@@ -78,7 +77,7 @@ namespace CyberCruiser
         #region Distance Control
         public void InitialiseLevelCounting()
         {
-            SetDistancePerSecond(_baseDistancePerSecond);
+            _distancePerSecond.Value = _baseDistancePerSecond;
             StartIncreasingDistance();
             GenerateNewPlasmaDropDistance();
             GenerateNewWeaponUpgradeDropDistance();
@@ -86,6 +85,10 @@ namespace CyberCruiser
 
         public void StartIncreasingDistance()
         {
+            if(_increaseDistanceCoroutine != null)
+            {
+                StopCoroutine(_increaseDistanceCoroutine );
+            }
             _increaseDistanceCoroutine = StartCoroutine(IncreaseDistance());
             _distanceSliderObject.SetActive(true);
         }
@@ -97,7 +100,7 @@ namespace CyberCruiser
                 DistanceInt += 1;
               
                 CheckDistance();
-                yield return new WaitForSeconds(1 / _currentDistancePerSecond);
+                yield return new WaitForSeconds(1f/_distancePerSecond.Value);
             }
         }
 
@@ -146,16 +149,6 @@ namespace CyberCruiser
             GenerateNewWeaponUpgradeDropDistance();
             GenerateNewPlasmaDropDistance();
             OnBossDistanceReached?.Invoke();
-        }
-
-        private void SetDistancePerSecond(float newDistancePerSecond)
-        {
-            _currentDistancePerSecond = newDistancePerSecond;
-        }
-
-        public void ThrusterBoostUpgrade()
-        {
-            SetDistancePerSecond(_thrusterBoostDistancePerSecond);
         }
 
         public void ResetValues()

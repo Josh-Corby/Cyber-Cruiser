@@ -74,5 +74,10 @@ namespace CyberCruiser
             _beamAttack.EnableBeam();
             _beamAttack.StartFiring();
         }
+
+        public void Attack3()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

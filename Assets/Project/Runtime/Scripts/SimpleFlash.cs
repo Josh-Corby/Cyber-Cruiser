@@ -37,6 +37,11 @@ namespace CyberCruiser
 
         private IEnumerator FlashRoutine()
         {
+            if(_spriteRenderer== null)
+            {
+                yield break;
+            }
+
             _spriteRenderer.material = _flashMaterial;
 
             yield return new WaitForSeconds(_duration);
