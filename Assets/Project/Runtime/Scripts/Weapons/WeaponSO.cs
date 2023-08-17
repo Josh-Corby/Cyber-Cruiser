@@ -6,6 +6,11 @@ namespace CyberCruiser
     [CreateAssetMenu]
     public class WeaponSO : ScriptableObject
     {
+        public string WeaponName;
+        public string WeaponDescription;
+        public Sprite WeaponUISprite;
+        public Sprite MuzzleFlash;
+
         public GameObject objectToFire;
         public float TimeBetweenShots;
         public bool IsWeaponAutomatic;

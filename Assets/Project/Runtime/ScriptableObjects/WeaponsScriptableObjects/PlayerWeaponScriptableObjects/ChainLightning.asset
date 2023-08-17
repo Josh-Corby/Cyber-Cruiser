@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbdfbc5f48b0e946bc23ca24fb9570b, type: 3}
   m_Name: ChainLightning
   m_EditorClassIdentifier: 
+  WeaponName: CHAIN LIGHTNING
+  WeaponDescription: 
+  WeaponUISprite: {fileID: 0}
   objectToFire: {fileID: 7804011280605575531, guid: 94b73fff4d492b64280382c32d1a646d, type: 3}
   TimeBetweenShots: 0.1
   IsWeaponAutomatic: 1

@@ -206,9 +206,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Backup System
+    Description: Backup system description
     Sprite: {fileID: 21300000, guid: 9ac29636f5e226f4f9833d23e6957656, type: 3}
-  _pickupName: Backup System
-  _pickupSprite: {fileID: 21300000, guid: 9ac29636f5e226f4f9833d23e6957656, type: 3}
   _pickupType: 1
   _weaponSO: {fileID: 0}
   _speed: 3

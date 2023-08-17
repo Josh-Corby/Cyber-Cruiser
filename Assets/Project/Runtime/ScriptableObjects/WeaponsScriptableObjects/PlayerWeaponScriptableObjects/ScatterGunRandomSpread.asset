@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbdfbc5f48b0e946bc23ca24fb9570b, type: 3}
   m_Name: ScatterGunRandomSpread
   m_EditorClassIdentifier: 
+  WeaponName: SCATTER LASER
+  WeaponDescription: lasers shoot in random patterns
+  WeaponUISprite: {fileID: 21300000, guid: 139608af3834cc84cb62a879d67fba31, type: 3}
   objectToFire: {fileID: 760453196464390188, guid: 1b3e20b833268c54a91ba787ca2e1d05, type: 3}
   TimeBetweenShots: 0.1
   IsWeaponAutomatic: 1

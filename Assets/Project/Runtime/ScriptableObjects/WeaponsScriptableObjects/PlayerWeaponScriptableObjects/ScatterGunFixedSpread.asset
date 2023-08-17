@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbdfbc5f48b0e946bc23ca24fb9570b, type: 3}
   m_Name: ScatterGunFixedSpread
   m_EditorClassIdentifier: 
+  WeaponName: NEUTRON LASERS
+  WeaponDescription: Fixed attack pattern multilaser
+  WeaponUISprite: {fileID: 21300000, guid: 82aba1b7da2d1064581490ab79d7107a, type: 3}
   objectToFire: {fileID: 760453196464390188, guid: aefca9002aa15e2478302a3f2253c1b1, type: 3}
   TimeBetweenShots: 0.1
   IsWeaponAutomatic: 1

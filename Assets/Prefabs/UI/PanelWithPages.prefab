@@ -282,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e03405c5a7fe28c46a87c2efa5d4d395, type: 2}
     - target: {fileID: 3830474876027036906, guid: 5044058090ead9b41bf6d8b6f630129a, type: 3}
       propertyPath: m_Name
-      value: EnemyInfoPage
+      value: PageTemplate
       objectReference: {fileID: 0}
     - target: {fileID: 3830474876027036906, guid: 5044058090ead9b41bf6d8b6f630129a, type: 3}
       propertyPath: m_IsActive
@@ -444,7 +444,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: d60b4f6f9c2ff984fbc3222e72d154ca, type: 2}
     - target: {fileID: 3830474876027036906, guid: 5044058090ead9b41bf6d8b6f630129a, type: 3}
       propertyPath: m_Name
-      value: EnemyInfoPage (1)
+      value: PageTemplate
       objectReference: {fileID: 0}
     - target: {fileID: 3830474876027036906, guid: 5044058090ead9b41bf6d8b6f630129a, type: 3}
       propertyPath: m_IsActive

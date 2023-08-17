@@ -12,6 +12,7 @@ namespace CyberCruiser
         [SerializeField] private SoundControllerBase _soundController;
         private GameObject _firePoint;
         private Transform _firePointTransform;
+        private SpriteRenderer _muzzleFlashRenderer;
 
         private bool _readyToFire;
         [SerializeField] protected bool _autoFire;
@@ -19,12 +20,20 @@ namespace CyberCruiser
         public bool ReadyToFire { get => _readyToFire; }
 
         private Coroutine _burstFireRoutine;
+        private Coroutine _muzzleFlashRoutine;
 
         private void Awake()
         {
             _soundController = GetComponent<SoundControllerBase>();
             _firePoint = transform.GetChild(0).gameObject;
             _firePointTransform = _firePoint.transform;
+            _muzzleFlashRenderer = GetComponentInChildren<SpriteRenderer>();
+
+            if(_muzzleFlashRenderer != null)
+            { 
+                _muzzleFlashRenderer.sprite = _currentWeapon.MuzzleFlash;
+                _muzzleFlashRenderer.enabled = false;
+            }
         }
 
         protected virtual void OnEnable()
@@ -46,6 +55,11 @@ namespace CyberCruiser
         public void SetWeapon(WeaponSO newWeapon)
         {
             _currentWeapon = newWeapon;
+
+            if(_muzzleFlashRenderer != null)
+            {
+                _muzzleFlashRenderer.sprite = _currentWeapon.MuzzleFlash;
+            }
         }
 
         public void CheckFireTypes()
@@ -70,7 +84,7 @@ namespace CyberCruiser
 
             else
             {
-                PlayFireSound();
+                FireEffects();
                 SpreadCheck();
             }
 
@@ -89,7 +103,7 @@ namespace CyberCruiser
                 else
                 {
                     SpreadCheck();
-                    PlayFireSound();
+                    FireEffects();
                 }
 
                 yield return new WaitForSeconds(_currentWeapon.TimeBetweenBurstShots);
@@ -100,7 +114,7 @@ namespace CyberCruiser
 
         private void MultiFire()
         {
-            PlayFireSound();
+            FireEffects();
             if (_currentWeapon.IsMultiFireSpreadRandom)
             {
                 for (int i = 0; i < _currentWeapon.MultiFireShots; i++)
@@ -150,9 +164,22 @@ namespace CyberCruiser
             _soundController.PlayNewClip(_currentWeapon.Clip);
         }
 
-        private void PlayFireSound()
+        private void FireEffects()
         {
+            if(_muzzleFlashRoutine != null)
+            {
+                StopCoroutine(_muzzleFlashRoutine);
+            }
+
+            _muzzleFlashRoutine = StartCoroutine(MuzzleFlashRoutine());
             _soundController.PlayNewClip(_currentWeapon.Clip);
+        }
+
+        private IEnumerator MuzzleFlashRoutine()
+        {
+            _muzzleFlashRenderer.enabled = true;
+            yield return new WaitForSeconds(0.1f);
+            _muzzleFlashRenderer.enabled = false;
         }
 
         private IEnumerator ResetShooting()

@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbdfbc5f48b0e946bc23ca24fb9570b, type: 3}
   m_Name: SmartGun
   m_EditorClassIdentifier: 
+  WeaponName: SMART LASER
+  WeaponDescription: 
+  WeaponUISprite: {fileID: 21300000, guid: a3cc20cf2a4e23a469ea8fbfc5f1aa97, type: 3}
   objectToFire: {fileID: 760453196464390188, guid: a85eefd37704a0440af18c18264d7ae2, type: 3}
   TimeBetweenShots: 0.1
   IsWeaponAutomatic: 1
