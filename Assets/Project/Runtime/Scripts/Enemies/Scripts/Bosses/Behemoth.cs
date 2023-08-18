@@ -8,9 +8,6 @@ namespace CyberCruiser
         [SerializeField] private Weapon _missileLauncher;
         [SerializeField] private Weapon _homingMissileLauncher;
 
-        [SerializeField] private EnemyScriptableObject _missile;
-        [SerializeField] private EnemyScriptableObject _homingMissile;
-
         private int _attacksSinceHomingAttack = 0;
         [SerializeField] private int _attacksSinceWarCry = 0;
         [SerializeField] private WarCry _warCry;

@@ -9,9 +9,9 @@ namespace CyberCruiser
     public class Weapon : GameBehaviour
     {
         [SerializeField] protected WeaponSO _currentWeapon;
-        [SerializeField] private SoundControllerBase _soundController;
+        [SerializeField] protected SoundControllerBase _soundController;
         private GameObject _firePoint;
-        private Transform _firePointTransform;
+        protected Transform _firePointTransform;
         private SpriteRenderer _muzzleFlashRenderer;
 
         private bool _readyToFire;
@@ -158,7 +158,7 @@ namespace CyberCruiser
             return directionWithSpread;
         }
 
-        private void FireBullet(Quaternion direction)
+        protected virtual void FireBullet(Quaternion direction)
         {
             GameObject bullet = Instantiate(_currentWeapon.objectToFire, _firePointTransform.position, direction);
             _soundController.PlayNewClip(_currentWeapon.Clip);

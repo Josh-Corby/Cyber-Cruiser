@@ -69,10 +69,10 @@ namespace CyberCruiser
             }
         }
 
-        public override void Damage(float damage)
+        public override void Damage(float damage, EnemyScriptableObject instigator)
         {
             OnBossDamage(_currentHealth);
-            base.Damage(damage);
+            base.Damage(damage, null);
         }
 
         protected override void Crash()

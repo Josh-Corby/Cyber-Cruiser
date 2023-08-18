@@ -55,12 +55,12 @@ namespace CyberCruiser
             IsRamAddOnActive = false;
         }
 
-        private void BuyOrSellAddOn(AddOnScriptableObject addOn, bool isBuyingAddOn)
+        private void BuyOrSellAddOn(PickUpScriptableObject addOn, bool isBuyingAddOn)
         {
-            int buyOrRefundValue = addOn.IonCost;
-            buyOrRefundValue = isBuyingAddOn ? -buyOrRefundValue : buyOrRefundValue;
-            _playerSaveManager.ChangeIon(buyOrRefundValue);
-            ChangeAddOnActiveState(addOn.ID, isBuyingAddOn);
+            //int buyOrRefundValue = addOn.IonCost;
+            //buyOrRefundValue = isBuyingAddOn ? -buyOrRefundValue : buyOrRefundValue;
+            //_playerSaveManager.ChangeIon(buyOrRefundValue);
+           // ChangeAddOnActiveState(addOn.ID, isBuyingAddOn);
         }
 
         private void ChangeAddOnActiveState(int addOnId, bool isActive)

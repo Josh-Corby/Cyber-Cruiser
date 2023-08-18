@@ -5,6 +5,9 @@ namespace CyberCruiser
     public class CyberKrakenTentacle : GameBehaviour
     {
         [SerializeField] protected float speed;
+        [SerializeField] protected float _damage;
+        [SerializeField] protected EnemyScriptableObject _owner;
+
 
         [SerializeField] protected Vector2 spawnPosition;
         [SerializeField] protected bool _moveForward;
@@ -88,6 +91,19 @@ namespace CyberCruiser
             {
                 _isWaiting = false;
                 _audioSource.Stop();
+            }
+        }
+
+        protected virtual void OnTriggerEnter2D(Collider2D collision)
+        {
+            ProcessCollision(collision.gameObject);
+        }
+
+        protected virtual void ProcessCollision(GameObject collider)
+        {
+            if(collider.TryGetComponent<PlayerManager>(out var player))
+            {
+                player.Damage(_damage, _owner);
             }
         }
     }

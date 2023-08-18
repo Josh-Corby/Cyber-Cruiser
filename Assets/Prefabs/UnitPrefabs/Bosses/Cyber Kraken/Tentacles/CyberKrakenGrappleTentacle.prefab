@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 25
+  _owner: {fileID: 11400000, guid: f9f7b71e06d9e7347a816ac37c62f91f, type: 2}
   spawnPosition: {x: 0, y: 0}
   _moveForward: 0
   _isWaiting: 0

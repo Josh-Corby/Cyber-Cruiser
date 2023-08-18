@@ -411,6 +411,7 @@ namespace CyberCruiser
             CurrentHeat = 0;
             _currentWeaponSO = newWeapon;
             _playerWeapon.SetWeapon(newWeapon);
+            newWeapon.IncrementEquips();
         }
 
         private void PulverizerUpgrade()

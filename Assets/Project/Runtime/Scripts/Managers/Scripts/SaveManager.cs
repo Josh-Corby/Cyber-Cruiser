@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -11,12 +10,14 @@ namespace CyberCruiser
         [SerializeField] private PlayerSaveManager _playerSaveManager;
         [SerializeField] private PlayerStatistics _playerStatistics;
 
+        public static event Action OnClearSaveData = null;
         public void ClearSaveData()
         {
             _missionManager.ClearSaveData();
             _playerRankManager.ClearSaveData();
             _playerSaveManager.ClearSaveData();
             _playerStatistics.ClearSaveData();
+            OnClearSaveData?.Invoke();
         }
     }
 }

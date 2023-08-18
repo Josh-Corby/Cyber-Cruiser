@@ -29,5 +29,22 @@ namespace CyberCruiser
         public bool IsWeaponMultiFire;
         public int MultiFireShots;
         public bool IsMultiFireSpreadRandom;
+
+        public int Equips;
+
+        private void OnEnable()
+        {
+            SaveManager.OnClearSaveData += () => { Equips = 0; };
+        }
+
+        private void OnDisable()
+        {
+            SaveManager.OnClearSaveData -= () => { Equips = 0; };
+        }
+
+        public void IncrementEquips()
+        {
+            Equips++;
+        }
     }
 }

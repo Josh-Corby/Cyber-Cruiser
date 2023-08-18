@@ -149,7 +149,7 @@ namespace CyberCruiser
 
             else if (collision.TryGetComponent<Enemy>(out var enemy))
             {
-                enemy.Damage(_chainDamage);
+                enemy.Damage(_chainDamage, null);
             }
 
             else

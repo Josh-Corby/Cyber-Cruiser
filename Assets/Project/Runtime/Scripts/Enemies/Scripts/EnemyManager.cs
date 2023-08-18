@@ -21,6 +21,7 @@ namespace CyberCruiser
             GameManager.OnMissionStart += () => { AreAllEnemiesDead = true; };
             Enemy.OnEnemySpawned += AddEnemy;
             Enemy.OnEnemyDied += (enemyObject, enemyType) => RemoveEnemy(enemyObject);
+            Enemy.OnEnemyCulled += RemoveEnemy;
             SlicerMovement.OnStartSeeking += RecieveUnit;
             GunshipMovement.OnGunshipSpawned += RecieveUnit;
         }
@@ -31,6 +32,7 @@ namespace CyberCruiser
             GameManager.OnMissionStart -= () => { AreAllEnemiesDead = true; };
             Enemy.OnEnemySpawned -= AddEnemy;
             Enemy.OnEnemyDied -= (enemyObject, enemyType) => RemoveEnemy(enemyObject);
+            Enemy.OnEnemyCulled += RemoveEnemy;
             SlicerMovement.OnStartSeeking -= RecieveUnit;
             GunshipMovement.OnGunshipSpawned -= RecieveUnit;
         }

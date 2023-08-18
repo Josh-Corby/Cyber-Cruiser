@@ -294,7 +294,7 @@ namespace CyberCruiser
 
             if (collider.TryGetComponent<IDamageable>(out var damageable))
             {
-                damageable.Damage(ShieldCollisionDamage);
+                damageable.Damage(ShieldCollisionDamage, null);
                 if (!_isShieldImmuneToDamage)
                 {
                     ReduceShields(1);

@@ -474,6 +474,8 @@ MonoBehaviour:
   _enemyInfo: {fileID: 11400000, guid: fec2eebede64227409bac95b1dec3455, type: 2}
   _enemyImage: {fileID: 4984649472151700785}
   _enemyName: {fileID: 381630725770265490}
+  _timesKilled: {fileID: 1390976583953554536}
+  _playerKills: {fileID: 78670117603861749}
 --- !u!1 &5338047713011520782
 GameObject:
   m_ObjectHideFlags: 0

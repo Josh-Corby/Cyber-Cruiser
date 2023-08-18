@@ -25,9 +25,12 @@ namespace CyberCruiser
         protected float _currentHealth;
         public int RamDamage { get => _stats.RamDamage; }
 
+        public EnemyScriptableObject Owner { get; set; }
+
         #region Actions
         public static event Action<GameObject> OnEnemySpawned = null;
         public static event Action<GameObject, EnemyTypes> OnEnemyDied = null;
+        public static event Action<GameObject> OnEnemyCulled = null;
         #endregion
 
         protected virtual void Awake()
@@ -40,6 +43,11 @@ namespace CyberCruiser
             _stats = EnemyInfo.GeneralStats;
             gameObject.name = _stats.Name;
             _currentHealth = _stats.MaxHealth;
+
+            if(Owner == null)
+            {
+                Owner = EnemyInfo;
+            }
 
             GetComponents();
             _enemyMovement.AssignEnemyMovementInfo(EnemyInfo.MovementStats);
@@ -63,7 +71,7 @@ namespace CyberCruiser
             }
         }
 
-        public virtual void Damage(float damage)
+        public virtual void Damage(float damage, EnemyScriptableObject instigator)
         {
             _currentHealth -= damage;
 
@@ -73,11 +81,11 @@ namespace CyberCruiser
                 {
                     _flash.Flash();
                 }
-            }
-          
+            }       
 
             if (_currentHealth <= 0)
             {
+                EnemyInfo.OnEnemyDied();
                 if (_stats.DoesEnemyExplodeOnDeath)
                 {
                     Explode();
@@ -93,8 +101,14 @@ namespace CyberCruiser
 
         private void Explode()
         {
-            GameObject explosion = Instantiate(_stats.Explosion, transform.position, Quaternion.identity);
-            explosion.transform.parent = null;
+            GameObject explosion = _stats.Explosion;
+            if(explosion.TryGetComponent<ExplodingObject>(out var enemyExplosion))
+            {
+                enemyExplosion.Owner = Owner;
+            }
+
+            GameObject spawnedExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
+            spawnedExplosion.transform.parent = null;
             Destroy();
         }
 
@@ -140,15 +154,23 @@ namespace CyberCruiser
             Destroy(gameObject);
         }
 
+        public virtual void Cull()
+        {
+            OnEnemyCulled(gameObject);
+            Destroy(gameObject);
+        }
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
             if(collision.gameObject.TryGetComponent<PlayerManager>(out var playerManager))
-            {
+            {          
                 if(_stats.DoesEnemyExplodeOnDeath)
                 {
                     Explode();
                     return; 
                 }
+
+                playerManager.Damage(RamDamage, EnemyInfo);
             }
 
             if(collision.gameObject.TryGetComponent<Shield>(out var playerShield))
@@ -156,6 +178,7 @@ namespace CyberCruiser
                 if (_stats.DoesEnemyExplodeOnDeath)
                 {
                     Explode();
+                    return;
                 }
             }
         }

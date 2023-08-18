@@ -59,7 +59,7 @@ namespace CyberCruiser
 
             else if (collision.TryGetComponent<Enemy>(out var enemy))
             {
-                enemy.Damage(_pulseDamage);
+                enemy.Damage(_pulseDamage, null);
             }
         }
     }

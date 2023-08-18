@@ -8,6 +8,9 @@ namespace CyberCruiser
     {
         private GameObject _explosionGraphic;
 
+        [SerializeField] private EnemyScriptableObject _owner;
+
+        public EnemyScriptableObject Owner { get => _owner; set => _owner = value; }
         #region Explosion Info
         [Header("Explosion Info")]
 
@@ -84,6 +87,10 @@ namespace CyberCruiser
             if (isClusterSpawningAUnit)
             {
                 _objectSpawnedOnCluster = EnemyManagerInstance.CreateEnemyFromSO(enemyToSpawn);
+
+                if (_objectSpawnedOnCluster.TryGetComponent<Enemy>(out var enemy)){
+                    enemy.Owner = _owner;
+                }
             }
 
             else
@@ -103,7 +110,7 @@ namespace CyberCruiser
             {
                 if (collider.TryGetComponent<IDamageable>(out var damageable))
                 {
-                    damageable.Damage(_explosionDamage);
+                    damageable.Damage(_explosionDamage, _owner);
                 }
             }
 

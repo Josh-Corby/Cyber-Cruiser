@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5363686644826107772}
   - component: {fileID: 788131885753128726}
   m_Layer: 0
-  m_Name: UpgradeDescription
+  m_Name: AddonDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 3659013477207974827}
   - component: {fileID: 7369168983752684985}
   m_Layer: 0
-  m_Name: EquipsText
+  m_Name: Equips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 3169675629741555481}
   - component: {fileID: 8410608013099690297}
   m_Layer: 0
-  m_Name: UpgradeInfoDisplay
+  m_Name: AddOnInfoDisplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,14 +336,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 062fc7575310d5141b67d5b8825aaf75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upgradeInfo:
-    Name: 
-    Description: 
-    Sprite: {fileID: 0}
-  _upgradeImage: {fileID: 4984649472151700785}
-  _upgradeName: {fileID: 381630725770265490}
-  _upgradeDescription: {fileID: 788131885753128726}
-  _equips: {fileID: 7369168983752684985}
+  _addonInfo: {fileID: 0}
+  _addonImageDisplay: {fileID: 4984649472151700785}
+  _addonNameDisplay: {fileID: 381630725770265490}
+  _addonDescriptionDisplay: {fileID: 788131885753128726}
+  _numberOfEquipsDisplay: {fileID: 7369168983752684985}
 --- !u!1 &5872810798050295461
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,7 +353,7 @@ GameObject:
   - component: {fileID: 8998787392631319771}
   - component: {fileID: 4984649472151700785}
   m_Layer: 0
-  m_Name: UpgradeIcon
+  m_Name: AddonIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -432,7 +429,7 @@ GameObject:
   - component: {fileID: 4372518887626190559}
   - component: {fileID: 381630725770265490}
   m_Layer: 0
-  m_Name: UpgradeName
+  m_Name: AddonName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

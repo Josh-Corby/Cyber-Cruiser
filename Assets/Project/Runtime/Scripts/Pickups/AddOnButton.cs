@@ -7,7 +7,7 @@ namespace CyberCruiser
     [RequireComponent(typeof(Button))]
     public class AddOnButton : GameBehaviour
     {
-        [SerializeField] private AddOnScriptableObject _addOnInfo;
+        [SerializeField] private PickUpScriptableObject _addOnInfo;
         private int _addOnCost;
         private Button _addOnButton;
         [SerializeField] public bool _doesPlayerHaveAddOn;
@@ -15,9 +15,9 @@ namespace CyberCruiser
 
         [SerializeField] private IntReference _playerIonReference;
 
-        public static event Action<AddOnScriptableObject> OnMouseEnter = null;
+        public static event Action<PickUpScriptableObject> OnMouseEnter = null;
         public static event Action OnMouseExit = null;
-        public static event Action<AddOnScriptableObject, bool> OnAddonBuyOrSell = null;
+        public static event Action<PickUpScriptableObject, bool> OnAddonBuyOrSell = null;
 
         private enum AddonType
         {
@@ -27,7 +27,7 @@ namespace CyberCruiser
         private void Awake()
         {
             _addOnButton = GetComponent<Button>();
-            _addOnCost = _addOnInfo.IonCost;       
+            //_addOnCost = _addOnInfo.IonCost;       
         }
 
         private void OnEnable()

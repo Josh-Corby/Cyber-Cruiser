@@ -305,7 +305,7 @@ namespace CyberCruiser
         }
 
         #region Player Damage Functions
-        public void Damage(float damage)
+        public void Damage(float damage, EnemyScriptableObject instigator)
         {
             if (damage <= 0 || _isPlayerImmuneToDamage)
             {
@@ -313,11 +313,23 @@ namespace CyberCruiser
             }
 
             _isPlayerImmuneToDamage = true;
+
+            if (DoesPlayerDieFromDamage(damage))
+            {
+                Debug.Log("Player killed by " + instigator.name);
+                instigator.OnPlayerKilled();
+            }
+
             PlayerCurrentHealth -= damage;
 
             RetaliationMatrixCheck();
             PlayCollisionParticles();
             StartIFrames();
+        }
+
+        public bool DoesPlayerDieFromDamage(float damage)
+        {
+            return PlayerCurrentHealth - damage <=0;
         }
 
         private void PlayCollisionParticles()
@@ -399,13 +411,7 @@ namespace CyberCruiser
 
             if (collider.TryGetComponent<Enemy>(out var enemy))
             {
-                enemy.Damage(_currentRamDamageReference.Value);
-                Damage(enemy.RamDamage);
-            }
-
-            else if (collider.TryGetComponent<CyberKrakenTentacle>(out var tentacle))
-            {
-                Damage(1);
+                enemy.Damage(_currentRamDamageReference.Value, null);
             }
         }
 

@@ -139,12 +139,12 @@ namespace CyberCruiser
 
                 if (hit.collider.TryGetComponent<Enemy>(out var enemy))
                 {
-                    enemy.GetComponent<IDamageable>().Damage(_basicEnemyBeamDamage);
+                    enemy.GetComponent<IDamageable>().Damage(_basicEnemyBeamDamage, null);
                 }
 
                 else if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
                 {
-                    damageable.Damage(_beamDamage);
+                    damageable.Damage(_beamDamage, null);
                 }
 
                 if (hit.collider.TryGetComponent<Shield>(out var shield))

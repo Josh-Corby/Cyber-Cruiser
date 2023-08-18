@@ -44,6 +44,8 @@ namespace CyberCruiser
 
         public GameObject HomingTarget { get => _homingTarget; set => _homingTarget = value; }
 
+        public EnemyScriptableObject Owner { get; set; }
+
         public bool IsHoming
         {
             get => _isHoming;
@@ -205,7 +207,7 @@ namespace CyberCruiser
 
             else if (collider.TryGetComponent<IDamageable>(out var interactable))
             {
-                interactable.Damage(Damage);
+                interactable.Damage(Damage, Owner);
             }
 
             DestroyBullet();

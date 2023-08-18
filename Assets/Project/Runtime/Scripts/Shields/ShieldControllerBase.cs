@@ -89,7 +89,7 @@ namespace CyberCruiser
             {
                 if(ShieldCollisionDamage > 0)
                 {
-                    damageable.Damage(ShieldCollisionDamage);
+                    damageable.Damage(ShieldCollisionDamage, null);
                 }
 
                 if (!_isShieldImmuneToDamage)

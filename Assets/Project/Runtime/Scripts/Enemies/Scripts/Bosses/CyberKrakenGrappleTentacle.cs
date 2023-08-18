@@ -75,13 +75,13 @@ namespace CyberCruiser
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        protected override void ProcessCollision(GameObject collider)
         {
-            if (collision.gameObject.TryGetComponent<PlayerShipController>(out var player))
-            {
-                Debug.Log("Player grappled");
+            base.ProcessCollision(collider);
 
-                player.ControlsEnabled = false;
+            if(collider.TryGetComponent<PlayerShipController>(out var playerController))
+            {
+                playerController.ControlsEnabled = false;
                 _isPlayerGrappled = true;
             }
         }

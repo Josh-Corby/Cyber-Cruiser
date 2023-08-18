@@ -6,7 +6,8 @@ namespace CyberCruiser
     public class Pickup : MonoBehaviour
     {
         #region Fields
-        [SerializeField] private PickupInfo _info;
+        [SerializeField] private PickUpScriptableObject _pickupSO;
+        private PickupInfo _info;
         public PickupType _pickupType;
         public WeaponSO _weaponSO;
 
@@ -29,8 +30,17 @@ namespace CyberCruiser
         public static event Action<string, Sprite> OnBossPickup = null;
         #endregion
 
+        private void Awake()
+        {
+            if(_pickupSO != null)
+            {
+                _info = _pickupSO.Info;
+            }
+        }
+
         public void PickupEffect()
         {
+            _pickupSO?.OnPickedUp();
             switch (_pickupType)
             {
                 case PickupType.Normal:

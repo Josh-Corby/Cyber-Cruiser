@@ -11,17 +11,16 @@ namespace CyberCruiser
                 //Debug.Log(collision.name);
                 if (collision.gameObject.TryGetComponent<Shield>(out var enemyShield))
                 {
-                    IDamageable ShieldUnit = enemyShield.GetComponentInParent<IDamageable>();
+                    Enemy ShieldUnit = enemyShield.GetComponentInParent<Enemy>();
                     if (ShieldUnit != null)
                     {
-                        ShieldUnit.Destroy();
+                        ShieldUnit.Cull();
                     }
                 }
 
-                else if (collision.gameObject.TryGetComponent<IDamageable>(out var damageable))
+                else if (collision.gameObject.TryGetComponent<Enemy>(out var enemy))
                 {
-                    //Debug.Log("enemy culled");
-                    damageable.Destroy();
+                    enemy.Cull();
                 }
 
                 else if (collision.gameObject.GetComponent<Bullet>())

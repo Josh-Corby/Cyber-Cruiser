@@ -9,7 +9,7 @@ namespace CyberCruiser
         [SerializeField] private AddOnButton[] _addOnButtons;
         [SerializeField] private TMP_Text _addOnName;
         [SerializeField] private TMP_Text _addOnDescription;
-        private AddOnScriptableObject _currentAddon;
+        private PickUpScriptableObject _currentAddon;
 
         private void OnEnable()
         {
@@ -23,7 +23,7 @@ namespace CyberCruiser
             AddOnButton.OnMouseExit -= ClearAddOn;
         }
 
-        private void SetCurrentAddOn(AddOnScriptableObject addOn)
+        private void SetCurrentAddOn(PickUpScriptableObject addOn)
         {
             _currentAddon = addOn;
             SetAddOnUI();
@@ -31,8 +31,8 @@ namespace CyberCruiser
 
         private void SetAddOnUI()
         {
-            _addOnName.text = _currentAddon.Name;
-            _addOnDescription.text = _currentAddon.Description;
+            //_addOnName.text = _currentAddon.Name;
+            //_addOnDescription.text = _currentAddon.Description;
         }
 
         private void ClearAddOn()
