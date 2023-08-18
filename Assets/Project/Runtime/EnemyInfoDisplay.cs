@@ -18,7 +18,7 @@ namespace CyberCruiser
             if(_enemyInfo != null)
             {
                 _enemyImage.sprite = _enemyInfo.EnemyImage;
-                _enemyName.text = _enemyInfo.EnemyName;
+                _enemyName.text = _enemyInfo.GeneralStats.Name;
             }     
         }
 

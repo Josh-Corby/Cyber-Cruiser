@@ -116,6 +116,8 @@ namespace CyberCruiser
             MissionBeforeLevelStart = _currentMission;
             _nextMissionToStart = null;
             SetMissionObjective();
+
+            Debug.Log("Mission started");
         }
 
         private void UnassignMission()
@@ -123,6 +125,11 @@ namespace CyberCruiser
             if (_currentMission == null)
             {
                 return;
+            }
+
+            if (_currentMission.missionPersistence == MissionPersistence.OneRun)
+            {
+                GameManager.OnMissionEnd -= ResetMissionProgress;
             }
 
             ClearMissionObjective(_currentMission.missionCondition);
@@ -170,12 +177,13 @@ namespace CyberCruiser
             {
                 _currentMissionGoal = _currentMission.missionObjectiveAmount;
             }
-            //CurrentMissionProgress = 0;
+
             _isMissionFailed = false;
 
             if (_currentMission.missionPersistence == MissionPersistence.OneRun)
             {
-                GameManager.OnMissionStart += ResetMissionProgress;
+                GameManager.OnMissionEnd += ResetMissionProgress;
+                ResetMissionProgress();
             }
 
             AssignMissionCondition(_currentMission.missionCondition);
@@ -338,6 +346,7 @@ namespace CyberCruiser
 
         private void IncreaseMissionProgress(int value)
         {
+            int newProgress = CurrentMissionProgress + value;
             CurrentMissionProgress += value;
         }
 
@@ -437,6 +446,14 @@ namespace CyberCruiser
 
         private void StoreMissionProgress()
         {
+            if (_currentMission != null)
+            {
+                if (_currentMission.missionPersistence == MissionPersistence.OneRun)
+                {
+                    _currentMissionProgress = 0;
+                }
+            }
+
             PlayerPrefs.SetInt(CURRENT_MISSION_PROGRESS, _currentMissionProgress);
         }
 
@@ -462,7 +479,6 @@ namespace CyberCruiser
         private void RestoreCategoryIDOfCurrentMission()
         {
             int categoryIDOfCurrentMission = PlayerPrefs.GetInt(CATEGORY_ID_OF_CURRENT_MISSION, 0);
-            //Debug.Log(categoryIDOfCurrentMission);
             _nextMissionToStart = _missionsToCompleteInCategory[categoryIDOfCurrentMission];
         }
 
@@ -492,8 +508,7 @@ namespace CyberCruiser
 
         public void ClearSaveData()
         {
-            _currentMission = null;
-            _currentMissionProgress = 0;
+            UnassignMission();
             _currentMissionCategory = _missionCategories[0];
             _missionsToCompleteInCategory.Clear();
             FillMissionsToComplete();

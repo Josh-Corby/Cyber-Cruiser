@@ -87,8 +87,9 @@ namespace CyberCruiser
         {
             if(_increaseDistanceCoroutine != null)
             {
-                StopCoroutine(_increaseDistanceCoroutine );
+                StopCoroutine(_increaseDistanceCoroutine);
             }
+
             _increaseDistanceCoroutine = StartCoroutine(IncreaseDistance());
             _distanceSliderObject.SetActive(true);
         }

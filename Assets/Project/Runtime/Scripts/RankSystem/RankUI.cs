@@ -19,7 +19,7 @@ namespace CyberCruiser
         [SerializeField] private Image _rankTextRenderer;
         [SerializeField] private GameObject[] _greyStars;
         [SerializeField] private GameObject[] _goldStars;
-        private List <StarAnimation> _starAnimations = new();
+        [SerializeField] private List <StarAnimation> _starAnimations = new();
         [SerializeField] private Rank _currentRank;
 
         [SerializeField] private SoundControllerBase _soundController;
@@ -113,7 +113,7 @@ namespace CyberCruiser
 
         private void DisableAllStars()
         {
-            for (int i = 0; i < _currentRank.StarsToRankUp; i++)
+            for (int i = 0; i < _greyStars.Length; i++)
             {
                 _goldStars[i].SetActive(false);
                 _greyStars[i].SetActive(false);
@@ -147,7 +147,7 @@ namespace CyberCruiser
             {
                 if (_starsEnabled < _currentRank.StarsToRankUp)
                 {
-                    yield return new WaitForSeconds(_starAnimationDelayInSeconds);
+                  
                     _goldStars[_starsEnabled].SetActive(true);
                     _starAnimations[_starsEnabled].PlayMoveAnimation();
                     _starsEnabled += 1;
@@ -155,7 +155,6 @@ namespace CyberCruiser
 
                 if (_starsEnabled >= _currentRank.StarsToRankUp)
                 {
-                    yield return new WaitForSeconds(_starAnimationDelayInSeconds);
                     _starsToGain -= _currentRank.StarsToRankUp;
                     RankUp();
                     i = 0;
@@ -165,6 +164,7 @@ namespace CyberCruiser
                         StopCoroutine(_gainStarsCoroutine);
                     }
                 }
+                yield return new WaitForSeconds(_starAnimationDelayInSeconds);
             }
         }
 

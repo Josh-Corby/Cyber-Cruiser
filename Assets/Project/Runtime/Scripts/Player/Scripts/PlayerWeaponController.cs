@@ -364,7 +364,6 @@ namespace CyberCruiser
 
         private void WeaponUpgrade(WeaponSO upgradeWeapon)
         {
-            Debug.Log("weapon upgrade pickup");
             if (_weaponUpgradeCoroutine != null)
             {
                 StopCoroutine(_weaponUpgradeCoroutine);

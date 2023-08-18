@@ -40,21 +40,21 @@ namespace CyberCruiser
 
         public void PickupEffect()
         {
-            _pickupSO?.OnPickedUp();
+            if(_pickupSO != null)
+            {
+                _pickupSO.OnPickedUp();
+            }
+
+            OnResourcePickup?.Invoke(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
+
             switch (_pickupType)
             {
-                case PickupType.Normal:
-                    OnResourcePickup?.Invoke(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
-                    break;
-
                 case PickupType.Boss:
-                    OnResourcePickup?.Invoke(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
                     OnBossPickup?.Invoke(_info.Name, _info.Sprite);
                     break;
 
                 case PickupType.Weapon:
                     OnWeaponUpgradePickup?.Invoke(_weaponSO);
-                    OnResourcePickup?.Invoke(_healthOnPickup.Value, _plasmaOnPickup.Value, _ionOnPickup.Value);
                     break;
             }
 

@@ -425,7 +425,6 @@ namespace CyberCruiser
         {
             PickupEffectBase[] newEffects = addOn.gameObject.GetComponents<PickupEffectBase>();
 
-            Debug.Log("There are " + newEffects.Length + " new effects");
             for (int i = 0; i < newEffects.Length; i++)
             {
                 newEffects[i].OnPickup();

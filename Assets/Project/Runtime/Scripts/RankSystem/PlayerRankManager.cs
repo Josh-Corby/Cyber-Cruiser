@@ -16,7 +16,7 @@ namespace CyberCruiser
         [SerializeField] private int _totalStarReward;
         #endregion
 
-        #region Proerties
+        #region Properties
         public Rank CurrentRank { get => _currentRank; }
         public Rank RankBeforeMissionStart { get => _rankBeforeMissionStart; }
         public int CurrentStars
@@ -79,6 +79,7 @@ namespace CyberCruiser
 
         private void StartStarIncreaseProcess(int starsToGain)
         {
+            Debug.Log(starsToGain + " stars gained");
             _starsToGain = starsToGain;
             _totalStarReward = starsToGain;
             IncreaseStars();
@@ -87,10 +88,12 @@ namespace CyberCruiser
         private void IncreaseStars()
         {
             CurrentStars += _starsToGain;
+
         }
 
         private void RankUp()
         {
+            _starsToGain -= _currentRank.StarsToRankUp;
             CurrentStars -= _currentRank.StarsToRankUp;
             _currentRank = RankManagerInstance.RankUp(_currentRank.RankID);
             if (_starsToGain > 0)
@@ -101,7 +104,7 @@ namespace CyberCruiser
 
         private void SaveValues()
         {
-            PlayerPrefs.SetInt(nameof(PLAYER_RANK), _currentRank.RankID);
+            PlayerPrefs.SetInt(PLAYER_RANK, _currentRank.RankID);
             PlayerPrefs.SetInt(PLAYER_STARS, _currentStars);
         }
 

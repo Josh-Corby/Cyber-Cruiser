@@ -6,7 +6,6 @@ namespace CyberCruiser
     public class EnemyScriptableObject : ScriptableObject
     {
         public GameObject EnemyPrefab;
-        public string EnemyName;
         public Sprite EnemyImage;
         public string EnemyAbilities;
         public EnemyKillData KillData;

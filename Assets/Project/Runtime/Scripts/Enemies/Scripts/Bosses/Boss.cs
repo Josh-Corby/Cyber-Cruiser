@@ -75,11 +75,15 @@ namespace CyberCruiser
             base.Damage(damage, null);
         }
 
+        public override void Cull()
+        {
+            Destroy();
+        }
         protected override void Crash()
         {
             _isBossDead = true;
             base.Crash();
-            OnBossDiedPosition(PickupType.Boss, transform.position);
+            OnBossDiedPosition?.Invoke(PickupType.Boss, transform.position);
         }
 
         public override void Destroy()

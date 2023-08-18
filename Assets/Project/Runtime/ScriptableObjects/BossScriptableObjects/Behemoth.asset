@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: Behemoth
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 980203594034234250, guid: 5742acc31e60e35449a79db534b7264b, type: 3}
-  EnemyName: Behemoth
   EnemyImage: {fileID: 21300000, guid: 83c8844486cb32b42884ab833abc4e0e, type: 3}
   EnemyAbilities: Rockets, debilitating War Cry
+  KillData:
+    TimesKilled: 0
+    PlayerKills: 0
   GeneralStats:
     Name: 
     Type: 9
     MaxHealth: 50
-    RamDamage: 0
+    RamDamage: 1
     DoesEnemyExplodeOnDeath: 0
     Explosion: {fileID: 0}
   MovementStats:

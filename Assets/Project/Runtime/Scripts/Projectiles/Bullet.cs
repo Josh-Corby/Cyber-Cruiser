@@ -232,14 +232,14 @@ namespace CyberCruiser
             if (gameObject.layer == LayerMask.NameToLayer(PLAYER_PROJECTILE_LAYER_NAME))
             {
                 gameObject.layer = ChangeLayerFromString(ENEMY_PROJECTILE_LAYER_NAME);
-                _spriteRenderer.sprite = _enemyProjectileSprite;
+                //_spriteRenderer.sprite = _enemyProjectileSprite;
                 _isPlayerBullet = false;
             }
 
             else if (gameObject.layer == LayerMask.NameToLayer(ENEMY_PROJECTILE_LAYER_NAME))
             {
                 gameObject.layer = ChangeLayerFromString(PLAYER_PROJECTILE_LAYER_NAME);
-                _spriteRenderer.sprite = _playerProjectileSprite;
+                //_spriteRenderer.sprite = _playerProjectileSprite;
                 _isPlayerBullet = true;
             }
         }

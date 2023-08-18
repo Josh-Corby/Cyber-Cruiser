@@ -29,11 +29,11 @@ namespace CyberCruiser
             _firePointTransform = _firePoint.transform;
             _muzzleFlashRenderer = GetComponentInChildren<SpriteRenderer>();
 
-            if(_muzzleFlashRenderer != null)
-            { 
-                _muzzleFlashRenderer.sprite = _currentWeapon.MuzzleFlash;
-                _muzzleFlashRenderer.enabled = false;
-            }
+            //if (_muzzleFlashRenderer != null)
+            //{
+            //    _muzzleFlashRenderer.sprite = _currentWeapon.MuzzleFlash;
+            //    _muzzleFlashRenderer.enabled = false;
+            //}
         }
 
         protected virtual void OnEnable()
@@ -56,7 +56,7 @@ namespace CyberCruiser
         {
             _currentWeapon = newWeapon;
 
-            if(_muzzleFlashRenderer != null)
+            if (_muzzleFlashRenderer != null)
             {
                 _muzzleFlashRenderer.sprite = _currentWeapon.MuzzleFlash;
             }
@@ -68,7 +68,7 @@ namespace CyberCruiser
 
             if (_currentWeapon.IsWeaponBurstFire)
             {
-                if(_burstFireRoutine != null)
+                if (_burstFireRoutine != null)
                 {
                     StopCoroutine(_burstFireRoutine);
                 }
@@ -166,13 +166,16 @@ namespace CyberCruiser
 
         private void FireEffects()
         {
-            if(_muzzleFlashRoutine != null)
-            {
-                StopCoroutine(_muzzleFlashRoutine);
-            }
-
-            _muzzleFlashRoutine = StartCoroutine(MuzzleFlashRoutine());
             _soundController.PlayNewClip(_currentWeapon.Clip);
+
+            if (_muzzleFlashRenderer != null)
+            {
+                if (_muzzleFlashRoutine != null)
+                {
+                    StopCoroutine(_muzzleFlashRoutine);
+                }
+                _muzzleFlashRoutine = StartCoroutine(MuzzleFlashRoutine());
+            }
         }
 
         private IEnumerator MuzzleFlashRoutine()

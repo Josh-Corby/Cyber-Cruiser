@@ -61,7 +61,7 @@ namespace CyberCruiser
 
         public void EnableBossWarningUI(EnemyScriptableObject bossInfo)
         {
-            switch (bossInfo.EnemyName)
+            switch (bossInfo.GeneralStats.Name)
             {
                 case "BattleCruiser":
                     _bossWarningImage.sprite = _battleCruiserWarning;
@@ -89,7 +89,7 @@ namespace CyberCruiser
 
         private void EnableBossUI(EnemyScriptableObject boss)
         {
-            SetBossNameText = boss.EnemyName;
+            SetBossNameText = boss.GeneralStats.Name;
             _bossHealthSlider.EnableSliderAtMaxValue(boss.GeneralStats.MaxHealth);
         }
 

@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbdfbc5f48b0e946bc23ca24fb9570b, type: 3}
   m_Name: RocketLauncher
   m_EditorClassIdentifier: 
+  WeaponName: 
+  WeaponDescription: 
+  WeaponUISprite: {fileID: 0}
+  MuzzleFlash: {fileID: 0}
   objectToFire: {fileID: 2653145768784104840, guid: 0f1e8bf274a42564ca36a284fb8da74a, type: 3}
   TimeBetweenShots: 1
-  IsWeaponAutomatic: 1
+  IsWeaponAutomatic: 0
   Clip:
     Clip: {fileID: 8300000, guid: fffbdd24865acec42803a1b86044c731, type: 3}
     OverrideSourceVolume: 0
@@ -28,3 +32,4 @@ MonoBehaviour:
   IsWeaponMultiFire: 1
   MultiFireShots: 5
   IsMultiFireSpreadRandom: 0
+  Equips: 0
