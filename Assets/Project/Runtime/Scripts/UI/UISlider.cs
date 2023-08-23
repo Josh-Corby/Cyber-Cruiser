@@ -128,6 +128,21 @@ namespace CyberCruiser
             }
         }
 
+        public void SetIsLerpingColour(bool isLerping)
+        {
+            _doesSliderLerpColour = isLerping;
+        }
+
+        public void SetLerpingColour(bool isLerping, Color newColour)
+        {
+            _doesSliderLerpColour = isLerping;
+            
+            if(!isLerping)
+            {
+                SetSliderFillColour(newColour);
+            }
+        }
+
         public void SetSliderFillColour(Color colour)
         {
             if(_fillImage != null)

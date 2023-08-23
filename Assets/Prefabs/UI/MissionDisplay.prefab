@@ -297,7 +297,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6080975314784170617}
-  - component: {fileID: 7041697371131934925}
   m_Layer: 0
   m_Name: MissionStars
   m_TagString: Untagged
@@ -328,32 +327,6 @@ RectTransform:
   m_AnchoredPosition: {x: -103.1, y: -54.9}
   m_SizeDelta: {x: 172.71, y: 52.53}
   m_Pivot: {x: 0.5, y: 0}
---- !u!114 &7041697371131934925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5519881365386025714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 7
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &7500034459770472739
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,6 +610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _missionManager: {fileID: 0}
+  _rankUI: {fileID: 0}
   _missionDescription: {fileID: 9211833136693165520}
   _missionProgress: {fileID: 9211833135469623831}
   _missionStatus: {fileID: 6714514900991200779}
@@ -647,6 +621,7 @@ MonoBehaviour:
   - {fileID: 3250623559736890968}
   - {fileID: 8592273834513960640}
   _currentMission: {fileID: 0}
+  _movingStar: {fileID: 0}
 --- !u!1 &9211833135469623825
 GameObject:
   m_ObjectHideFlags: 0

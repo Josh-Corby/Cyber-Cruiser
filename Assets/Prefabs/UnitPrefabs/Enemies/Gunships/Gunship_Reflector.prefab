@@ -200,6 +200,7 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
+  _owner: {fileID: 0}
 --- !u!114 &3966429793413987614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,7 +516,7 @@ PrefabInstance:
     - target: {fileID: 6190062103476473847, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: _collisionParticles
       value: 
-      objectReference: {fileID: 8553602988473826497, guid: e4e1f659bf5193348a0a54b709f9c524, type: 3}
+      objectReference: {fileID: 798786855538232214, guid: 62fceeac4c9501b448945f4f7659a928, type: 3}
     - target: {fileID: 6190062103476473847, guid: 786e06377470f484caa9a920ed543aa1, type: 3}
       propertyPath: _shieldCurrentStrength
       value: 3

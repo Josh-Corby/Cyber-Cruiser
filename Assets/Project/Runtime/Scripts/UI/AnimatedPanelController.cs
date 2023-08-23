@@ -22,7 +22,7 @@ namespace CyberCruiser
         [SerializeField] private GameObject _gameOverScreen;
 
         private GameObject _panelToEnable;
-        private GameObject _currentPanel;
+        [SerializeField] private GameObject _currentPanel;
         [SerializeField] private GameObject _titlePanel;
         [SerializeField] private GameObject _gameplayPanel;
         [SerializeField] private GameObject _menuPanel;
@@ -117,6 +117,23 @@ namespace CyberCruiser
             }
 
             OpenScreen();
+        }
+
+        public void ChangeScreenCheckinfIfInMission(GameObject screenToOpen)
+        {
+            //if in a mission go to the pause screen
+            if (_gameManager.InMission)
+            {
+                _screenToOpen = _pauseScreen;
+            }
+
+            //otherwise go to intended screen
+            else
+            {
+                _screenToOpen = screenToOpen;
+            }
+
+            ChangeScreen(_screenToOpen);
         }
 
         public void SwitchPanels(GameObject panelToEnable)

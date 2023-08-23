@@ -13,6 +13,8 @@ namespace CyberCruiser
         [SerializeField] private Image _pickupImage;
         [SerializeField] private GameObject _weaponUpgradeBarUI;
 
+        public UISlider HeatSlider { get => _weaponHeatSlider; }
+
         private void Awake()
         {
             _weaponUpgradeBarUI.SetActive(false);

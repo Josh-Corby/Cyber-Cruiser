@@ -73,7 +73,7 @@ MonoBehaviour:
     Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
   _playerProjectileSprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
   _enemyProjectileSprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
-  _collisionParticles: {fileID: 8553602988473826497, guid: bbda51b1c70853b4d9f5eb196896544e, type: 3}
+  _collisionParticles: {fileID: 4153871399588629141, guid: daeb7804abdd8ea4f915d164dc246216, type: 3}
   _speed: 40
   _damage: 0.334
   _doesBulletExplode: 0

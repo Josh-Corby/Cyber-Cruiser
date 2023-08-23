@@ -10,6 +10,7 @@ namespace CyberCruiser
         [SerializeField] private PlayerSoundController _soundController;
         [SerializeField] private PlayerUIManager _playerUIManager;
         [SerializeField] private BeamAttack _beamAttack;
+        [SerializeField] private Color _weaponUpgradeSliderColour;
         private Weapon _playerWeapon;
         private WeaponSO _currentWeaponSO;
 
@@ -216,9 +217,13 @@ namespace CyberCruiser
                 CheckForInput();
             }
 
-            TimeSinceLastShot += Time.deltaTime;
-            HeatReduction();
+            if (!_isWeaponUpgradeActive)
+            {
+                TimeSinceLastShot += Time.deltaTime;
+                HeatReduction();
+            }
         }
+
 
         private void HeatReduction()
         {
@@ -377,7 +382,10 @@ namespace CyberCruiser
             CurrentHeat = 0;
             _isWeaponUpgradeActive = true;
             OnWeaponUpgradeStart?.Invoke(_weaponUpgradeDurationInSeconds.Value);
-            _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.WeaponUpgrade, _weaponUpgradeDurationInSeconds.Value);
+            //_playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.WeaponUpgrade, _weaponUpgradeDurationInSeconds.Value);
+
+            _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.Heat, _weaponUpgradeDurationInSeconds.Value);
+            _playerUIManager.HeatSlider.SetLerpingColour(false, _weaponUpgradeSliderColour);
             _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimerCoroutine());
         }
 
@@ -387,7 +395,9 @@ namespace CyberCruiser
             while (weaponUpgradeTimer > 0)
             {
                 weaponUpgradeTimer -= Time.deltaTime;
-                _playerUIManager.ChangeSliderValue(PlayerSliderTypes.WeaponUpgrade, weaponUpgradeTimer);
+                //_playerUIManager.ChangeSliderValue(PlayerSliderTypes.WeaponUpgrade, weaponUpgradeTimer);
+
+                _playerUIManager.ChangeSliderValue(PlayerSliderTypes.Heat, weaponUpgradeTimer);
                 yield return new WaitForSeconds(0.01f);
             }
 
@@ -399,7 +409,10 @@ namespace CyberCruiser
 
         private void OnWeaponUpgradeFinish()
         {
-            _playerUIManager.DisableSlider(PlayerSliderTypes.WeaponUpgrade);
+            //_playerUIManager.DisableSlider(PlayerSliderTypes.WeaponUpgrade);
+
+            _playerUIManager.HeatSlider.SetSliderValues(0, 100);
+            _playerUIManager.HeatSlider.SetIsLerpingColour(true);
             ChangeWeapon(_baseWeaponSO);
             _isWeaponUpgradeActive = false;
             DisableBeam();

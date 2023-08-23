@@ -9,14 +9,14 @@ namespace CyberCruiser
         [SerializeField] private TMP_Text _buttonText;
         [SerializeField] private Color _baseColour;
         [SerializeField] private Color _highlightColour;
+        private const string TO_GLOW = "ToGlow";
+        private const string FROM_GLOW = "FromGlow";
 
         private void Awake()
         {
             _animator = GetComponentInChildren<Animator>();
         }
 
-        private const string TO_GLOW = "ToGlow";
-        private const string FROM_GLOW = "FromGlow";
         public void OnPointerEnter()
         {
             _buttonText.color = _highlightColour;

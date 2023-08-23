@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ddce0f69cfaf6747a7b8b3841ae0697, type: 3}
   m_Name: CurrentHeatPerShot
   m_EditorClassIdentifier: 
-  Value: 0
+  Value: 1.75

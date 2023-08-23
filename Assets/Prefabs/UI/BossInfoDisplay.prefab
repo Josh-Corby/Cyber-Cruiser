@@ -613,6 +613,7 @@ MonoBehaviour:
   _enemyImage: {fileID: 4984649472151700785}
   _enemyName: {fileID: 381630725770265490}
   _timesKilled: {fileID: 1390976583953554536}
+  _playerKills: {fileID: 78670117603861749}
   _bossDescriptionText: {fileID: 8476077833156835069}
 --- !u!1 &5338047713011520782
 GameObject:

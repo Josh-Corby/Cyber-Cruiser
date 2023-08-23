@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 namespace CyberCruiser
 {
@@ -14,10 +15,39 @@ namespace CyberCruiser
         [SerializeField] private GameObject[] _missionStars;
         [SerializeField] private MissionScriptableObject _currentMission;
 
+        [SerializeField] private List<Vector2> _starPositions = new List<Vector2>();
+
+        private void Awake()
+        {
+            GetInitialPositions();         
+        }
+
         private void OnEnable()
         {
             ClearMissionUI();
             AssignMissionUI();
+        }
+
+        private void OnDisable()
+        {
+            ResetStarPositions();
+        }
+
+        private void GetInitialPositions()
+        {
+            for (int i = 0; i < _missionStars.Length-1; i++)
+            {
+                _starPositions.Add(_missionStars[i].transform.position);
+            }
+        }
+
+        public void ResetStarPositions()
+        {
+            for (int i = 0; i < _missionStars.Length-1; i++)
+            {
+                _missionStars[i].transform.position = _starPositions[i];
+                _missionStars[i].SetActive(true);
+            }
         }
 
         private void ClearMissionUI()
@@ -44,11 +74,11 @@ namespace CyberCruiser
             {
                 return;
             }
+
             if (_currentMission.isComplete)
             {
                 _missionProgress.text = "";
                 _missionStatus.text = "Mission Complete";
-                return;
             }
 
             else

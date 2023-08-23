@@ -11,6 +11,9 @@ namespace CyberCruiser
         [SerializeField] private GameObject _playerObject;
         [SerializeField] private AnimatedPanelController _animPanelController;
 
+        private bool _inMission;
+
+        public bool InMission { get => _inMission; private set => _inMission = value; }
         #region Actions
         public static event Action<bool> OnIsTimeScalePaused = null;
         public static event Action OnMissionStart = null;
@@ -47,12 +50,14 @@ namespace CyberCruiser
             EnablePlayerObject();
             ResetSystems();
             OnMissionStart?.Invoke();
+            InMission = true;
         }
 
         public void EndMission()
         {
             OnMissionEnd?.Invoke();
             StopSystems();
+            InMission = false;
         }
 
         public void StartSystems()

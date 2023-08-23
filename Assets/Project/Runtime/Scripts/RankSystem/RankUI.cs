@@ -1,4 +1,5 @@
 using CyberCruiser.Audio;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace CyberCruiser
         }
 
         [SerializeField] private PlayerRankManager _playerRankManager;
+        [SerializeField] private CurrentMissionDisplay _currentMissionDisplay;
         [SerializeField] private UIType _uiType;
         [SerializeField] private Image[] _rankImageRenderers;
         [SerializeField] private Image _rankTextRenderer;
@@ -35,11 +37,12 @@ namespace CyberCruiser
         private float _starAnimationDelayInSeconds = 1.2f;
         private Coroutine _gainStarsCoroutine;
 
+        [SerializeField] private RectTransform[] _movingStarRects;
+        private int _starsPlaced = 0;
         private void Awake()
         {
-            if(_uiType == UIType.Animated)
+            if (_uiType == UIType.Animated)
             {
-                //_audioSource = GetComponent<AudioSource>();
                 InitializeStarAnimationsList();
             }
         }
@@ -62,6 +65,7 @@ namespace CyberCruiser
 
             if (_uiType == UIType.Animated)
             {
+                _starsPlaced = 0;
                 MissionScreenAnimation();
                 StarAnimation.OnStarAtDestination += StarSoundEffect;
             }
@@ -138,50 +142,74 @@ namespace CyberCruiser
                 _starsToGain = _playerRankManager.TotalStarReward;
             }
 
-            _gainStarsCoroutine = StartCoroutine(GainStarsAnimation());
+            _gainStarsCoroutine = StartCoroutine(NewGainStarsAnimation());
         }
 
-        private IEnumerator GainStarsAnimation()
+        private IEnumerator NewGainStarsAnimation()
         {
+            Debug.Log("Starting star animation");
+            yield return new WaitForSeconds(1f);
+
             for (int i = 0; i < _starsToGain; i++)
             {
+                Debug.Log("Moving star " + (_starsPlaced + 1) + " to position " + (_starsEnabled + 1));
                 if (_starsEnabled < _currentRank.StarsToRankUp)
                 {
-                  
+                    //get star to move
+                    RectTransform starToMove = _movingStarRects[_starsPlaced];
+
+                    //get move location
+                    RectTransform targetsprite = _greyStars[_starsEnabled].GetComponent<RectTransform>();
+                    HorizontalLayoutGroup layoutGroup = targetsprite.GetComponentInParent<HorizontalLayoutGroup>();
+
+                    if (layoutGroup != null)
+                    {
+                        layoutGroup.enabled = false;
+                    }
+
+                    Vector3 goalPosition = RectTransformUtility.WorldToScreenPoint(Camera.main, targetsprite.position);
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(starToMove.parent as RectTransform, goalPosition, Camera.main, out Vector2 localPoint);
+
+                    //play animation
+                    starToMove.DOLocalMove(localPoint, 1f);
+
+                    //enable and replace gold star
+                    yield return new WaitForSeconds(1f);
+
                     _goldStars[_starsEnabled].SetActive(true);
-                    _starAnimations[_starsEnabled].PlayMoveAnimation();
+                    _starAnimations[_starsEnabled].PlayEffectAnimation();
+                    starToMove.gameObject.SetActive(false);
                     _starsEnabled += 1;
+                    _starsPlaced += 1;
                 }
 
                 if (_starsEnabled >= _currentRank.StarsToRankUp)
                 {
-                    _starsToGain -= _currentRank.StarsToRankUp;
+                    yield return new WaitForSeconds(1f);
                     RankUp();
-                    i = 0;
-
-                    if(_gainStarsCoroutine != null)
-                    {
-                        StopCoroutine(_gainStarsCoroutine);
-                    }
+                    yield break;
                 }
-                yield return new WaitForSeconds(_starAnimationDelayInSeconds);
             }
-        }
+        }   
 
         private void StarSoundEffect()
         {
             _soundController.PlayNewClip(_starClip);
-            //_audioSource.PlayOneShot(_starClip);
         }
 
         private void RankUp()
         {
+            _starsToGain -= (_currentRank.StarsToRankUp - _playerRankManager.StarsBeforeMissionStart);
             _starsEnabled = 0;
             DisableAllStars();
             _currentRank = RankManagerInstance.RankUp(_currentRank.RankID);
             EnableGreyStars();
             SetRankUI();
-            _gainStarsCoroutine = StartCoroutine(GainStarsAnimation());
+            if (_gainStarsCoroutine != null)
+            {
+                StopCoroutine(_gainStarsCoroutine);
+            }
+            _gainStarsCoroutine = StartCoroutine(NewGainStarsAnimation());
         }
     }
 }

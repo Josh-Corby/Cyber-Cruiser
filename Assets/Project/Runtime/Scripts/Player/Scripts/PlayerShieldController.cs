@@ -131,7 +131,14 @@ namespace CyberCruiser
                 else
                 {
                     DeactivateShields();
+                    return;
                 }
+
+                if(ShieldActiveTimer >= 0.95 && ShieldActiveTimer <= 1.05)
+                {
+                    PlayCollisionParticles(transform.position);
+                }
+
             }
         }  
 
@@ -279,6 +286,15 @@ namespace CyberCruiser
             }
         }
 
+        protected void PlayCollisionParticles(Vector3 spawnVector)
+        {
+            if (_collisionParticles != null)
+            {
+                GameObject collisionParticles = Instantiate(_collisionParticles, spawnVector, Quaternion.identity);
+                collisionParticles.transform.parent = null;
+            }
+        }
+
         public override void ProcessCollision(GameObject collider, Vector2 collisionPoint)
         {
             if (collider.GetComponent<Boss>())
@@ -300,11 +316,7 @@ namespace CyberCruiser
                     ReduceShields(1);
                 }
 
-                if (_collisionParticles != null)
-                {
-                    GameObject collisionParticles = Instantiate(_collisionParticles, collisionPoint, Quaternion.identity);
-                    collisionParticles.transform.parent = null;
-                }
+             PlayCollisionParticles(collisionPoint);
             }
 
             else if (collider.TryGetComponent<ShieldControllerBase>(out var shield))

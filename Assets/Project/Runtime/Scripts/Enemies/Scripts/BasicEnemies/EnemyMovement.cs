@@ -40,7 +40,7 @@ namespace CyberCruiser
         private float _homeDelayTimeInSeconds;
         #endregion
 
-        private float _startingYRotation;
+        private Vector3 _startingRotation;
 
         public bool IsEnemyDead { get; set; }
 
@@ -53,12 +53,18 @@ namespace CyberCruiser
         protected virtual void Awake()
         {
             _player = PlayerManagerInstance.player.transform;
-            _startingYRotation = transform.eulerAngles.y;
+            _startingRotation = transform.eulerAngles;
         }
 
         protected virtual void Start()
         {
             CheckMovementBools();
+
+            if(_startingRotation.z == 270)
+            {
+                SpriteRenderer enemysprite = GetComponentInChildren<SpriteRenderer>();
+                enemysprite.flipY = true;
+            }
         }
 
         protected virtual void Update()
@@ -230,7 +236,7 @@ namespace CyberCruiser
             Vector2 direction = _player.transform.position - transform.position;
             float angle;
 
-            if (Mathf.Abs(_startingYRotation) == 180)
+            if (Mathf.Abs(_startingRotation.y) == 180)
             {
                 angle = Vector2.SignedAngle(transform.right, direction);
                 angle = -angle;

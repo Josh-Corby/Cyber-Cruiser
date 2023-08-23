@@ -20,3 +20,4 @@ MonoBehaviour:
   enemy: 0
   missionObjectiveAmount: 1
   missionStarReward: 1
+  isComplete: 1
