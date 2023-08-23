@@ -74,7 +74,7 @@ namespace CyberCruiser
         {
             _currentHealth -= damage;
 
-            if(damage < 0)
+            if(damage > 0)
             {
                 if (_flash != null)
                 {

@@ -8,20 +8,27 @@ namespace CyberCruiser
     {
         [SerializeField] private PickUpScriptableObject _addonInfo;
         [SerializeField] private Image _addonImageDisplay;
+        [SerializeField] private Sprite _unknownSprite;
         [SerializeField] private TMP_Text _addonNameDisplay;
         [SerializeField] private TMP_Text _addonDescriptionDisplay;
         [SerializeField] private TMP_Text _numberOfEquipsDisplay;
 
-        private void Awake()
-        {
-            _addonImageDisplay.sprite = _addonInfo.Info.Sprite;
-            _addonNameDisplay.text = _addonInfo.Info.Name;
-            _addonDescriptionDisplay.text = _addonInfo.Info.Description;
-        }
-
         private void OnEnable()
         {
-            _numberOfEquipsDisplay.text = _addonInfo.TimesPickedUp.ToString();
+            if (_addonInfo.TimesPickedUp == 0)
+            {
+                _addonImageDisplay.sprite = _unknownSprite;
+                _addonNameDisplay.text = "UNKNOWN";
+                _addonDescriptionDisplay.text = "";
+                _numberOfEquipsDisplay.text = "";
+            }
+            else
+            {
+                _addonImageDisplay.sprite = _addonInfo.Info.Sprite;
+                _addonNameDisplay.text = _addonInfo.Info.Name;
+                _addonDescriptionDisplay.text = _addonInfo.Info.Description;
+                _numberOfEquipsDisplay.text = _addonInfo.TimesPickedUp.ToString();
+            }
         }
     }
 }

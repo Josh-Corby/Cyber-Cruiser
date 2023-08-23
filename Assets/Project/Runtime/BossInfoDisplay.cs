@@ -7,10 +7,18 @@ namespace CyberCruiser
     {
         [SerializeField] private TMP_Text _bossDescriptionText;
 
-        protected override void Awake()
+
+        protected override void OnEnable()
         {
-            base.Awake();
-            _bossDescriptionText.text = _enemyInfo.EnemyAbilities;
+            base.OnEnable();
+            if (_enemyInfo.KillData.TimesKilled > 0)
+            {
+                _bossDescriptionText.text = _enemyInfo.EnemyAbilities;
+            }
+            else
+            {
+                _bossDescriptionText.text = "";
+            }
         }
     }
 }

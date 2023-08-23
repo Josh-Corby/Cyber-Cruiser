@@ -245,6 +245,7 @@ namespace CyberCruiser
             _lastRun = currentRunDistance;
             _totalDistanceFlown += currentRunDistance;
             _missionsCompleted += 1;
+            _totalRuns += 1;
 
             if (currentRunDistance > _longestRun)
             {

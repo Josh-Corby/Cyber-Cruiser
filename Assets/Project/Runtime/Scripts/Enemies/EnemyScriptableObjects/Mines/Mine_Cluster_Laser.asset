@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: Mine_Cluster_Laser
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 2653145768784104840, guid: 26d025349807efb46bbcf7de90e66d47, type: 3}
-  EnemyName: Mine_Cluser_Laser
   EnemyImage: {fileID: 21300000, guid: 297def513101f3c4483ba4083f6469aa, type: 3}
+  EnemyAbilities: 
+  KillData:
+    TimesKilled: 0
+    PlayerKills: 0
   GeneralStats:
     Name: 
     Type: 2
     MaxHealth: 1
     RamDamage: 0
     DoesEnemyExplodeOnDeath: 1
-    Explosion: {fileID: 762726913902296103, guid: 4c12fb1ce68f53f4ba9702687134b17e, type: 3}
+    Explosion: {fileID: 762726913902296103, guid: 5e8bc5d4843eec14286a645776ccd22b, type: 3}
   MovementStats:
     Speed: 3
     SpeedWhenCrashing: 0
