@@ -17567,7 +17567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DEBUG_forcePickup: 1
-  DEBUG_pickupToSpawn: {fileID: 6951969226015609480, guid: ac52932b96001934e8a6fa303ee3cc03, type: 3}
+  DEBUG_pickupToSpawn: {fileID: 6951969226015609480, guid: a15a8505e53565e4ea6b458df3664e36, type: 3}
   pickupsOnScreen: []
   _pickupSpawner: {fileID: 539388724}
   _upgradeSpawner: {fileID: 420019654}
@@ -34772,62 +34772,6 @@ PrefabInstance:
       propertyPath: _playerUIManager
       value: 
       objectReference: {fileID: 506270504}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _timeStop
-      value: 
-      objectReference: {fileID: 11400000, guid: 776b547308bc77b469bd2a0195fc7aee, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _burstVents
-      value: 
-      objectReference: {fileID: 11400000, guid: 3c588a9f573645a48b65975c5644d70d, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _batteryPack
-      value: 
-      objectReference: {fileID: 11400000, guid: d167f5ba7f140f040a381e578ed8f1f1, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _backupSystem
-      value: 
-      objectReference: {fileID: 11400000, guid: 31416db41a80eed46a941bb1b3ff654d, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _signalBeacon
-      value: 
-      objectReference: {fileID: 11400000, guid: 508990c924653f84d8fdb10febcdffd0, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _attractorUnit
-      value: 
-      objectReference: {fileID: 11400000, guid: b279a2eb34a291f488941a51bd3dde11, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _thrusterBoost
-      value: 
-      objectReference: {fileID: 11400000, guid: f18d8245e8928bb40a1275b400633c05, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _chainLightning
-      value: 
-      objectReference: {fileID: 11400000, guid: fd65652a19c4d5c44aa081fe1eaf4620, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _pulseDetonator
-      value: 
-      objectReference: {fileID: 11400000, guid: cdb3670196a8a4349b8bd0024057034d, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _thermalWelding
-      value: 
-      objectReference: {fileID: 11400000, guid: f94ef8b396863a648834f672cb80fbcc, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _reflectorShield
-      value: 
-      objectReference: {fileID: 11400000, guid: 96a93f873e9863d4c8f85a44665f3d77, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _shieldGenerator
-      value: 
-      objectReference: {fileID: 11400000, guid: 5a16a67ac81b57c42a10d151da9c55f8, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _emergencyArsenal
-      value: 
-      objectReference: {fileID: 11400000, guid: dc2ac1d68c8ea6047b36f2edd1adc83d, type: 2}
-    - target: {fileID: 5585154098926653751, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
-      propertyPath: _invisibilityShield
-      value: 
-      objectReference: {fileID: 11400000, guid: 98c3ab30d88bb374faaeb12de30133d1, type: 2}
     - target: {fileID: 6496008905095027466, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _playerUIManager
       value: 

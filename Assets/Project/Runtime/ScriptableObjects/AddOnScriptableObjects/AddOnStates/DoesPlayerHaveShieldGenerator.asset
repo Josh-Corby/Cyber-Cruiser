@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac812aa083a77c43b583ac9af787470, type: 3}
   m_Name: DoesPlayerHaveShieldGenerator
   m_EditorClassIdentifier: 
-  Value: 0
+  Value: 1

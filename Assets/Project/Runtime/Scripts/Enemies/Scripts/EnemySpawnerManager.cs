@@ -44,9 +44,6 @@ namespace CyberCruiser
         private List<EnemySpawner> _spawnersSpawning = new();
         private List<EnemyScriptableObject> _bossesToSpawn = new();
 
-        private Coroutine _spawnEnemiesCoroutine;
-        private Coroutine _spawnBossCoroutine;
-
         private bool IsBossReadyToSpawn { get => _isBossReadyToSpawn.Value; set => _isBossReadyToSpawn.Value = value; }
 
         public static event Action OnSpawnEnemyGroup = null;
@@ -120,7 +117,6 @@ namespace CyberCruiser
         public void ResetSpawning()
         {
             StopSpawningEnemies();
-            CancelBossSpawn();
             ResetBossesToSpawn();
             ResetSpawnersModifiers();
             _currentEnemiesToSpawn = _enemiesToSpawnBase;
@@ -242,14 +238,6 @@ namespace CyberCruiser
             _bossesToSpawn.RemoveAt(index);
 
             return boss;
-        }
-
-        private void CancelBossSpawn()
-        {
-            if (_spawnBossCoroutine != null)
-            {
-                StopCoroutine(_spawnBossCoroutine);
-            }
         }
 
         private void ProcessBossDied()

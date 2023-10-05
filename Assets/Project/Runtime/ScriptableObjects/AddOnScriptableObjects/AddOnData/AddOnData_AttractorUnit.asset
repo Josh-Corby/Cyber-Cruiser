@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: AddOnData_AttractorUnit
   m_EditorClassIdentifier: 
   _info:
-    Name: Backup System
+    Name: Attractor Unit
     Description: 
-    Sprite: {fileID: 21300000, guid: b47d98363249b2f4a9e16618833a661f, type: 3}
+    Sprite: {fileID: 21300000, guid: b21bbbf6f3821ad4f952201cab612f14, type: 3}
   _equipBoolToTrack:
     UseConstant: 0
     ConstantValue: 0
-    Variable: {fileID: 11400000, guid: 7f99c7a0b828ed548a4e0bd50bebc141, type: 2}
+    Variable: {fileID: 0}
   _timesPickedUp: 0

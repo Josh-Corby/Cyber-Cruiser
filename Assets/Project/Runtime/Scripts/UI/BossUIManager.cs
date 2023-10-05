@@ -1,5 +1,6 @@
 using CyberCruiser.Audio;
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,8 +23,9 @@ namespace CyberCruiser
         [SerializeField] private SoundControllerBase _soundController;
         [SerializeField] private ClipInfo _bossWarningClip;
 
-        private float _warningClipLength;
+        private Coroutine _bossWarningCoroutine = null;
 
+        private float _warningClipLength;
         private string SetBossNameText
         {
             set
@@ -40,7 +42,7 @@ namespace CyberCruiser
             Boss.OnBossDamage += UpdateBossHealthBar;
             Boss.OnBossDiedPosition += (p, v) => DisableBossUI();
             EnemySpawner.OnBossSpawned += EnableBossUI;
-            EnemySpawnerManager.OnBossSelected += EnableBossWarningUI;
+            EnemySpawnerManager.OnBossSelected += StartBossWarningCoroutine;
             GameManager.OnMissionEnd += DisableBossUI;
         }
 
@@ -49,7 +51,7 @@ namespace CyberCruiser
             Boss.OnBossDamage -= UpdateBossHealthBar;
             Boss.OnBossDiedPosition -= (p, v) => DisableBossUI();
             EnemySpawner.OnBossSpawned -= EnableBossUI;
-            EnemySpawnerManager.OnBossSelected -= EnableBossWarningUI;
+            EnemySpawnerManager.OnBossSelected -= StartBossWarningCoroutine;
             GameManager.OnMissionEnd -= DisableBossUI;
         }
 
@@ -59,7 +61,26 @@ namespace CyberCruiser
             _warningClipLength = _bossWarningClip.Clip.length;
         }
 
-        public void EnableBossWarningUI(EnemyScriptableObject bossInfo)
+        private void StopBossWarningCoroutine()
+        {
+            _bossWarningUI.SetActive(false);
+            if (_bossWarningCoroutine != null)
+            {
+                StopCoroutine(_bossWarningCoroutine);
+            }
+        }
+
+        private void StartBossWarningCoroutine(EnemyScriptableObject bossInfo)
+        {
+            if (_bossWarningCoroutine != null)
+            {
+                StopCoroutine(_bossWarningCoroutine);
+            }
+
+            _bossWarningCoroutine = StartCoroutine(EnableBossWarningUI(bossInfo));
+        }
+
+        public IEnumerator EnableBossWarningUI(EnemyScriptableObject bossInfo)
         {
             switch (bossInfo.GeneralStats.Type)
             {
@@ -76,12 +97,15 @@ namespace CyberCruiser
                     _bossWarningImage.sprite = _robodactylWarning;
                     break;
             }
+
             _bossWarningUI.SetActive(true);
             _soundController.PlayNewClip(_bossWarningClip);
-            Invoke(nameof(DisableBossWarningUI), _warningClipLength + 1f);
+
+            yield return new WaitForSeconds(_warningClipLength + 1f);
+            OnWarningCountdownComplete();
         }
 
-        private void DisableBossWarningUI()
+        private void OnWarningCountdownComplete()
         {
             _bossWarningUI.SetActive(false);
             OnBossWarningComplete?.Invoke();
@@ -98,6 +122,7 @@ namespace CyberCruiser
             _bossHealthBarUI.SetActive(false);
             _bossNameText.enabled = false;
             SetBossNameText = "";
+            StopBossWarningCoroutine();
         }
 
         private void UpdateBossHealthBar(float value)

@@ -1005,17 +1005,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _addOnManager: {fileID: 5585154098926653751}
-  _baseWeaponSO: {fileID: 11400000, guid: 816fa06f52bf15f42b701d9c5980edc8, type: 2}
-  _chainLightingWeaponSO: {fileID: 11400000, guid: af5679e0c375a45458c53be8fb165774, type: 2}
   _soundController: {fileID: 7594662664462515631}
   _playerUIManager: {fileID: 0}
+  _baseWeaponSO: {fileID: 11400000, guid: 816fa06f52bf15f42b701d9c5980edc8, type: 2}
+  _chainLightingWeaponSO: {fileID: 11400000, guid: af5679e0c375a45458c53be8fb165774, type: 2}
   _beamAttack: {fileID: 634649626243274674}
-  _weaponUpgradeSliderColour: {r: 1, g: 0, b: 0.78583336, a: 1}
   _overheatClip:
     Clip: {fileID: 8300000, guid: ca1f5538bded183489776e91329bfe1b, type: 3}
     OverrideSourceVolume: 1
     Volume: 1
     PlayOneShot: 0
+  _weaponUpgradeSliderColour: {r: 1, g: 0, b: 0.78583336, a: 1}
   _weaponUpgradeDurationInSeconds:
     UseConstant: 0
     ConstantValue: 0
@@ -1359,7 +1359,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1682,17 +1682,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac877b247733675438d7badf6f9c3c9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attractorUnit: {fileID: 0}
-  _backupSystem: {fileID: 0}
-  _burstVents: {fileID: 0}
-  _emergencyArsenal: {fileID: 0}
-  _invisibilityShield: {fileID: 0}
-  _pulseDetonator: {fileID: 0}
-  _reflectorShield: {fileID: 0}
-  _shieldGenerator: {fileID: 0}
-  _signalBeacon: {fileID: 0}
-  _thermalWelding: {fileID: 0}
-  _timeStop: {fileID: 0}
+  _attractorUnit: {fileID: 11400000, guid: 383dcce364871e74087b41d7c94106f4, type: 2}
+  _backupSystem: {fileID: 11400000, guid: 31416db41a80eed46a941bb1b3ff654d, type: 2}
+  _batteryPack: {fileID: 11400000, guid: d167f5ba7f140f040a381e578ed8f1f1, type: 2}
+  _burstVents: {fileID: 11400000, guid: 3c588a9f573645a48b65975c5644d70d, type: 2}
+  _chainLightning: {fileID: 11400000, guid: fd65652a19c4d5c44aa081fe1eaf4620, type: 2}
+  _emergencyArsenal: {fileID: 11400000, guid: 76db3c213b5e15f4c8b595dec0d0fdc7, type: 2}
+  _invisibilityShield: {fileID: 11400000, guid: 98c3ab30d88bb374faaeb12de30133d1, type: 2}
+  _pulseDetonator: {fileID: 11400000, guid: cdb3670196a8a4349b8bd0024057034d, type: 2}
+  _reflectorShield: {fileID: 11400000, guid: 96a93f873e9863d4c8f85a44665f3d77, type: 2}
+  _shieldGenerator: {fileID: 11400000, guid: 5a16a67ac81b57c42a10d151da9c55f8, type: 2}
+  _signalBeacon: {fileID: 11400000, guid: 508990c924653f84d8fdb10febcdffd0, type: 2}
+  _thermalWelding: {fileID: 11400000, guid: f94ef8b396863a648834f672cb80fbcc, type: 2}
+  _thrusterBoost: {fileID: 11400000, guid: f18d8245e8928bb40a1275b400633c05, type: 2}
+  _timeStop: {fileID: 11400000, guid: 776b547308bc77b469bd2a0195fc7aee, type: 2}
 --- !u!114 &1550317530746784848
 MonoBehaviour:
   m_ObjectHideFlags: 0
