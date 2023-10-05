@@ -6,86 +6,40 @@ namespace CyberCruiser
 {
     public class PlayerAddOnManager : GameBehaviour
     {
-        [SerializeField] private PlayerSaveManager _playerSaveManager;
-        [SerializeField] private PlayerShieldController _shieldController;
-        [SerializeField] private List<AddOnActiveState> _addOnActiveStates = new();
+        #region Add On Data
+        [Header("Add Ons")]
 
-        [SerializeField] private float _batteryPackEffectInSeconds;
+        [SerializeField] private AddOnSO _attractorUnit;
+        [SerializeField] private AddOnSO _backupSystem;
+        [SerializeField] private AddOnSO _batteryPack;
+        [SerializeField] private AddOnSO _burstVents;
+        [SerializeField] private AddOnSO _chainLightning;
+        [SerializeField] private AddOnSO _emergencyArsenal;
+        [SerializeField] private AddOnSO _invisibilityShield;
+        [SerializeField] private AddOnSO _pulseDetonator;  
+        [SerializeField] private AddOnSO _reflectorShield;
+        [SerializeField] private AddOnSO _shieldGenerator;
+        [SerializeField] private AddOnSO _signalBeacon;  
+        [SerializeField] private AddOnSO _thermalWelding;
+        [SerializeField] private AddOnSO _thrusterBoost;
+        [SerializeField] private AddOnSO _timeStop;
+        #endregion
 
-        [SerializeField] private BoolValue _doesPlayerHaveHydrocoolant;
-        [SerializeField] private BoolValue _doesPlayerHavePlasmaCache;
-       
-
-        public List<AddOnActiveState> AddOnActiveStates { get => _addOnActiveStates; }
-        public bool IsBatteryPackActive { get; private set; }
-        public bool IsPlasmaCacheActive { get; private set; }
-        public bool IsHydrocoolantActive { get; private set; }
-        public bool IsPulseDetonatorActive { get; private set; }
-        public bool IsRamAddOnActive{ get; private set; }
-
-        [Serializable]
-        public class AddOnActiveState
-        {
-            public string Name;
-            public bool IsAddOnActive;
-        }
-
-        private void OnEnable()
-        {
-            AddOnButton.OnAddonBuyOrSell += BuyOrSellAddOn;
-            DisableAllAddOns();
-        }
-
-        private void OnDisable()
-        {
-            AddOnButton.OnAddonBuyOrSell -= BuyOrSellAddOn;
-        }
- 
-        private void DisableAllAddOns()
-        {
-            for (int i = 0; i < _addOnActiveStates.Count; i++)
-            {
-                _addOnActiveStates[i].IsAddOnActive = false;
-            }
-
-            IsBatteryPackActive = false;
-            IsPlasmaCacheActive = false;
-            IsHydrocoolantActive = false;
-            IsPulseDetonatorActive = false;
-            IsRamAddOnActive = false;
-        }
-
-        private void BuyOrSellAddOn(PickUpScriptableObject addOn, bool isBuyingAddOn)
-        {
-            //int buyOrRefundValue = addOn.IonCost;
-            //buyOrRefundValue = isBuyingAddOn ? -buyOrRefundValue : buyOrRefundValue;
-            //_playerSaveManager.ChangeIon(buyOrRefundValue);
-           // ChangeAddOnActiveState(addOn.ID, isBuyingAddOn);
-        }
-
-        private void ChangeAddOnActiveState(int addOnId, bool isActive)
-        {
-            _addOnActiveStates[addOnId].IsAddOnActive = isActive;
-            switch (addOnId)
-            {
-                case 0:
-                    //battery pack
-                    IsBatteryPackActive = _addOnActiveStates[addOnId].IsAddOnActive;
-                    break;
-                //plasma cache
-                case 1:
-                    IsPlasmaCacheActive = _addOnActiveStates[addOnId].IsAddOnActive;
-                    break;
-                //hydro coolant
-                case 2:
-                    IsHydrocoolantActive = _addOnActiveStates[addOnId].IsAddOnActive;
-                    break;
-                //pulse detonator
-                case 3:
-                    IsPulseDetonatorActive = _addOnActiveStates[addOnId].IsAddOnActive;
-                    break;
-            }
-        }
+        #region Properties
+        public AddOnSO AttractorUnit { get => _attractorUnit; }
+        public AddOnSO BackupSystem { get => _backupSystem; }
+        public AddOnSO BatteryPack { get  => _batteryPack; }
+        public AddOnSO BurstVents { get => _burstVents; }
+        public AddOnSO ChainLightning { get => _chainLightning; }
+        public AddOnSO EmergencyArsenal { get => _emergencyArsenal; }
+        public AddOnSO InvisibilityShield { get => _invisibilityShield; }
+        public AddOnSO PulseDetonator {  get => _pulseDetonator; }
+        public AddOnSO ReflectorShield {  get => _reflectorShield; }
+        public AddOnSO ShieldGenerator {  get => _shieldGenerator; }
+        public AddOnSO SignalBeacon { get => _signalBeacon; }
+        public AddOnSO ThermalWelding {  get => _thermalWelding; }
+        public AddOnSO ThrusterBoost {  get => _thrusterBoost; }
+        public AddOnSO TimeStop { get => _timeStop; }
+        #endregion
     }
-
 }

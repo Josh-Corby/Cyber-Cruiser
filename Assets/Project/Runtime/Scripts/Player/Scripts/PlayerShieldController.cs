@@ -6,6 +6,8 @@ namespace CyberCruiser
 {
     public class PlayerShieldController : ShieldControllerBase
     {
+        [Header("Player Shield Controller")]
+        [SerializeField] private PlayerAddOnManager _addOnManager;
         [SerializeField] PlayerUIManager _playerUIManager;
         [SerializeField] private PlayerManager _playerManager;
 
@@ -20,56 +22,13 @@ namespace CyberCruiser
 
         #region Pickups
         [Header("Pickups")]
-
-        #region Pulse Detonator
-        [Header("Pulse Detonator")]
         [SerializeField] private PulseDetonator _pulseDetonator;
-
-        [Tooltip("SO Bool Reference for if player has pulse detonator")]
-        [SerializeField] private BoolReference _doesPlayerHavePulseDetonator;
-        #endregion
-
-        #region Reflector Shield
-        [Header("Reflector Shield")]
-        [Tooltip("SO Bool Reference for if player shield is reflecting")]
-        [SerializeField] private BoolReference _doesPlayerShieldReflect;
-        #endregion
-
-        #region Signal Beacon
-        [Header("Signal Beacon")]
-        [Tooltip("SO Bool Reference for if player has signal beacon")]
-        [SerializeField] private BoolReference _doesPlayerHaveSignalBeacon;
-
         [Tooltip("Percentage chance of player winning signal beacon roll")]
         [SerializeField] private int _signalBeaconSuccessPercentage = 33;
-
-        [SerializeField] private GameEvent _onSignalBeamSuccess;
-        #endregion
-
-        #region Invisibility Shield
-        [Header("Invisibility Shield")]
-        [Tooltip("SO Bool Reference for if player has invisibility shield")]
-        [SerializeField] private BoolReference _doesPlayerHaveInvisibilityShield;
-
         [Tooltip("SO Value for if player is currently invisible")]
         [SerializeField] private BoolValue _isPlayerInvisible;
-        #endregion
-
-        #region Shield Generator
-        [Header("Shield Generator")]
-        [Tooltip("SO Bool Reference for if player has shield generator")]
-        [SerializeField] private BoolReference _doesPlayerHaveShieldGenerator;
-        #endregion
-
-        #region Time Stop
-        [Header("Time Stop")]
-        [Tooltip("SO Bool Reference for if player has time stop")]
-        [SerializeField] private BoolReference _doesPlayerHaveTimeStop;
-
         [Tooltip("SO Bool Value for if time is stopped")]
         [SerializeField] private BoolValue _isTimeStopped;
-        #endregion
-
         #endregion
 
         #region Properties
@@ -94,6 +53,7 @@ namespace CyberCruiser
 
         #region Actions
         public static event Action OnPlayerShieldsActivated = null;
+        public static event Action OnSignalBeaconActivated = null;
         #endregion
 
         protected override void Awake()
@@ -106,17 +66,19 @@ namespace CyberCruiser
         {
             InputManager.OnShield += CheckShieldsState;
             GameManager.OnMissionEnd += DeactivateShields;
+            PlayerWeaponController.OnBackupSystemActivated += ActivateShield;
         }
 
         private void OnDisable()
         {
             InputManager.OnShield -= CheckShieldsState;
             GameManager.OnMissionEnd -= DeactivateShields;
+            PlayerWeaponController.OnBackupSystemActivated -= ActivateShield;
         }
 
         private void Update()
         {
-            if (_doesPlayerHaveShieldGenerator.Value)
+            if (_addOnManager.ShieldGenerator.DoesPlayerHave)
             {
                 return;
             }
@@ -130,6 +92,7 @@ namespace CyberCruiser
 
                 else
                 {
+                    _soundController.PlayNewClip(_shieldDisableClip);
                     DeactivateShields();
                     return;
                 }
@@ -138,7 +101,6 @@ namespace CyberCruiser
                 {
                     PlayCollisionParticles(transform.position);
                 }
-
             }
         }  
 
@@ -159,6 +121,12 @@ namespace CyberCruiser
                 return;
             }
 
+            if (_addOnManager.ShieldGenerator.DoesPlayerHave && IsShieldsActive)
+            {
+                DisableShieldGenerator();
+                return;
+            }
+
             if (IsShieldsActive || IsPlayerInvisible)
             {
                 return;
@@ -176,33 +144,22 @@ namespace CyberCruiser
             CheckShieldPickups();
         }
 
-        //activate whatever shield effect is currently equipped
         protected override void CheckShieldPickups()
         {
-            if (_doesPlayerHaveShieldGenerator.Value)
-            {
-                EnableShieldGenerator();
-            }
-
-            if (_doesPlayerHavePulseDetonator.Value)
-            {
-                _pulseDetonator.Detonate();
-            }
-
-            if (_doesPlayerHaveInvisibilityShield.Value)
-            {
+            if (_addOnManager.InvisibilityShield.DoesPlayerHave)
                 IsPlayerInvisible = true;
-            }
 
-            if (_doesPlayerHaveSignalBeacon.Value)
-            {
-                SignalBeaconRoll();
-            }  
+            if (_addOnManager.PulseDetonator.DoesPlayerHave)
+                _pulseDetonator.Detonate();
 
-            if (_doesPlayerHaveTimeStop.Value)
-            {
+            if (_addOnManager.SignalBeacon.DoesPlayerHave)
+                SignalBeaconRoll(); 
+
+            if (_addOnManager.TimeStop.DoesPlayerHave)
                 IsTimeStopped = true;
-            }  
+
+            if (_addOnManager.ShieldGenerator.DoesPlayerHave)
+                EnableShieldGenerator();
 
             EnableShield();
         }
@@ -212,21 +169,27 @@ namespace CyberCruiser
         {
             bool signalBeaconSuccess = PercentageRoll(_signalBeaconSuccessPercentage);
             if (signalBeaconSuccess)
-            {
-                _onSignalBeamSuccess.Raise();
-            }
+                OnSignalBeaconActivated();
         }
 
         #region Shield Generator
-        private void EnableShieldGenerator()
+        private void ClearShieldGeneratorCoroutine()
         {
             if (_shieldGeneratorRoutine != null)
             {
                 StopCoroutine(_shieldGeneratorRoutine);
             }
-
-            Debug.Log("Shield generator started");
-            _shieldGeneratorRoutine = StartCoroutine(nameof(ShieldGeneratorCoroutine));
+        }
+        private void DisableShieldGenerator()
+        {
+            Debug.Log("Disabling shield generator");
+            ClearShieldGeneratorCoroutine();
+            DeactivateShield();
+        }
+        private void EnableShieldGenerator()
+        {
+            ClearShieldGeneratorCoroutine();
+            _shieldGeneratorRoutine = StartCoroutine(nameof(ShieldGeneratorCoroutine));   
         }
 
         private IEnumerator ShieldGeneratorCoroutine()
@@ -235,7 +198,6 @@ namespace CyberCruiser
 
             while (IsShieldsActive)
             {
-
                 if (!PlayerManagerInstance.ComparePlasmaToCost())
                 {
                     DeactivateShields();
@@ -254,6 +216,7 @@ namespace CyberCruiser
         {
             IsShieldsActive = true;
             PlayerManagerInstance.IsPlayerColliderEnabled = false;
+            _soundController.PlayNewClip(_shieldEnableClip);
             ResetShieldTimer();
             ToggleSliderUI(true);
             OnPlayerShieldsActivated?.Invoke();
@@ -315,8 +278,8 @@ namespace CyberCruiser
                 {
                     ReduceShields(1);
                 }
-
-             PlayCollisionParticles(collisionPoint);
+                
+                PlayCollisionParticles(collisionPoint);
             }
 
             else if (collider.TryGetComponent<ShieldControllerBase>(out var shield))
@@ -330,12 +293,14 @@ namespace CyberCruiser
 
             else if (collider.TryGetComponent<Bullet>(out var bullet))
             {
+                _soundController.PlayNewClip(_shieldDamageClip);
+
                 if (!_isShieldImmuneToDamage)
                 {
                     ReduceShields(bullet.Damage);
                 }
 
-                if (_doesPlayerShieldReflect.Value)
+                if (_addOnManager.ReflectorShield.DoesPlayerHave)
                 {
                     ReflectProjectile(bullet);
                     return;

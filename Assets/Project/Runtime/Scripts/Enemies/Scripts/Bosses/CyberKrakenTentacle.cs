@@ -1,3 +1,4 @@
+using CyberCruiser.Audio;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -21,12 +22,20 @@ namespace CyberCruiser
         [SerializeField] private BoolReference _isTimeStopped;
         [SerializeField] private AudioSource _audioSource;
 
+        [SerializeField] protected SoundControllerBase _soundController;
+        [SerializeField] protected ClipInfo _tentacleClip;
+
         protected void Awake()
         {
             spawnPosition = transform.parent.position;
             _moveForward = true;
             _isWaiting = false;
             _col = GetComponent<BoxCollider2D>();
+        }
+
+        protected void OnEnable()
+        {
+            _soundController.PlayNewClip(_tentacleClip);
         }
 
         private void Update()
@@ -63,7 +72,7 @@ namespace CyberCruiser
             {
                 StartWaiting();
                 _moveForward = false;
-                _audioSource.Play();
+              
             }
         }
 
@@ -90,7 +99,6 @@ namespace CyberCruiser
             if (_waitTimer <= 0)
             {
                 _isWaiting = false;
-                _audioSource.Stop();
             }
         }
 

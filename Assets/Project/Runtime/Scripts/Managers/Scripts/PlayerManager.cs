@@ -1,3 +1,4 @@
+using CyberCruiser.Audio;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace CyberCruiser
         Healthy, Low, Critical
     }
 
+    [RequireComponent(typeof(SoundControllerBase))]
     public class PlayerManager : GameBehaviour<PlayerManager>, IDamageable
     {
         public GameObject player;
@@ -20,10 +22,13 @@ namespace CyberCruiser
 
         #region Player Systems
         [Header(" Systems References")]
+        [SerializeField] private PlayerAddOnManager _addOnManager;
         [SerializeField] private PlayerShipController _playerShipController;
         [SerializeField] private PlayerShieldController _playerShieldController;
         [SerializeField] private PlayerWeaponController _playerWeaponController;
         [SerializeField] private PlayerUIManager _playerUIManager;
+        private SoundControllerBase _damageSoundsController;
+        [SerializeField] private ClipInfo _damageClip;
 
         [SerializeField] private BoolValue _holdOneAddOn;
         [SerializeField] private GameObject _currentPickup;
@@ -52,6 +57,7 @@ namespace CyberCruiser
         #region Attractor Unit
         [Header("Attractor Unit")]
         [SerializeField] private AttractorUnit _attractorUnit;
+
         #endregion
         #endregion
 
@@ -59,6 +65,7 @@ namespace CyberCruiser
         private const int BASE_MAX_HEALTH = 5;
         private const int BASE_PLASMA_COST = 5;
         private const float BASE_I_FRAMES_DURATION = 0.3f;
+        private const string ATTRACTOR_UNIT_PICKUP_NAME = "Attractor Unit";
         #endregion
 
         #region Player Current Info
@@ -194,11 +201,13 @@ namespace CyberCruiser
         public static event Action<int> OnPlasmaSpent = null;
         public static event Action<int> OnPlasmaPickupValue = null;
         public static event Action<PlayerHealthState> OnPlayerHealthStateChange = null;
+
         #endregion
 
         protected override void Awake()
         {
             base.Awake();
+            _damageSoundsController = GetComponent<SoundControllerBase>();
             _playerCollider = player.GetComponent<Collider2D>();
         }
 
@@ -212,12 +221,17 @@ namespace CyberCruiser
             _playerCollider.enabled = true;
             GameManager.OnIsTimeScalePaused += SetPlayerControls;
             Pickup.OnResourcePickup += AddResources;
+            Pickup.OnBossPickup += (name, sprite) => { CheckPickedUpAddon(name); };
+            PlayerWeaponController.OnThermalWeldingActivated += QuarterHeal;
+
         }
 
         private void OnDisable()
         {
             GameManager.OnIsTimeScalePaused += SetPlayerControls;
             Pickup.OnResourcePickup -= AddResources;
+            Pickup.OnBossPickup -= (name, sprite) => { CheckPickedUpAddon(name); };
+            PlayerWeaponController.OnThermalWeldingActivated -= QuarterHeal;
         }
 
         private void SetPlayerControls(bool isControlsDisabled)
@@ -253,9 +267,22 @@ namespace CyberCruiser
             FullHeal();
         }
 
+        private void CheckPickedUpAddon(string addOnName)
+        {
+            if (addOnName != ATTRACTOR_UNIT_PICKUP_NAME)
+                DisableAttractorUnit();
+        }
+
         public void EnableAttractorUnit()
         {
+            if(!_attractorUnit.gameObject.activeSelf)
             _attractorUnit.gameObject.SetActive(true);
+        }
+
+        private void DisableAttractorUnit()
+        {
+            if (_attractorUnit.gameObject.activeSelf)
+                _attractorUnit.gameObject.SetActive(value: false);
         }
 
         private void AddResources(int healthAmount, int plasmaAmount, int ionAmount)
@@ -316,14 +343,17 @@ namespace CyberCruiser
 
             if (DoesPlayerDieFromDamage(damage))
             {
-                Debug.Log("Player killed by " + instigator.name);
-                instigator.OnPlayerKilled();
+                if(instigator.GeneralStats.Name != null)
+                {
+                    //Debug.Log("Player killed by " + instigator.name);
+                    instigator.OnPlayerKilled();
+                }
             }
 
             PlayerCurrentHealth -= damage;
 
             RetaliationMatrixCheck();
-            PlayCollisionParticles();
+            PlayCollisionEffects();
             StartIFrames();
         }
 
@@ -332,11 +362,16 @@ namespace CyberCruiser
             return PlayerCurrentHealth - damage <=0;
         }
 
-        private void PlayCollisionParticles()
+        private void PlayCollisionEffects()
         {
             if (_collisionParticles != null)
             {
                 _collisionParticles.Play();
+            }
+
+            if(_damageSoundsController != null)
+            {
+                _damageSoundsController.PlayNewClip(_damageClip);
             }
         }
 

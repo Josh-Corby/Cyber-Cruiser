@@ -61,18 +61,18 @@ namespace CyberCruiser
 
         public void EnableBossWarningUI(EnemyScriptableObject bossInfo)
         {
-            switch (bossInfo.GeneralStats.Name)
+            switch (bossInfo.GeneralStats.Type)
             {
-                case "BattleCruiser":
+                case EnemyTypes.Battlecruiser:
                     _bossWarningImage.sprite = _battleCruiserWarning;
                     break;
-                case "Behemoth":
+                case EnemyTypes.Behemoth:
                     _bossWarningImage.sprite = _behemothWarning;
                     break;
-                case "Cyber Kraken":
+                case EnemyTypes.CyberKraken:
                     _bossWarningImage.sprite = _cyberKrakenWarning;
                     break;
-                case "Robodactyl":
+                case EnemyTypes.Robodactyl:
                     _bossWarningImage.sprite = _robodactylWarning;
                     break;
             }

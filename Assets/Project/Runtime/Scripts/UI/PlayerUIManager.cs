@@ -50,6 +50,11 @@ namespace CyberCruiser
             _pickupImage.enabled = true;
         }
 
+        public void EnableSliderAtValue(PlayerSliderTypes slider, int maxValue, float currentValue)
+        {
+            GetSliderFromEnum(slider).EnableAndSetSlider(currentValue, 0, maxValue);
+        }
+
         public void EnableSliderAtMaxValue(PlayerSliderTypes slider, int maxValue)
         {
             GetSliderFromEnum(slider).EnableSliderAtMaxValue(maxValue);

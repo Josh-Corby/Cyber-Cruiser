@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 3344306858032566624}
   - component: {fileID: 1716874283377567269}
   - component: {fileID: 4939047705472786412}
+  - component: {fileID: 7871922172176470212}
   m_Layer: 7
   m_Name: GrappleTentacle
   m_TagString: Untagged
@@ -128,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 25
+  _damage: 0
   _owner: {fileID: 11400000, guid: f9f7b71e06d9e7347a816ac37c62f91f, type: 2}
   spawnPosition: {x: 0, y: 0}
   _moveForward: 0
@@ -139,6 +141,12 @@ MonoBehaviour:
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
   _audioSource: {fileID: 4939047705472786412}
+  _soundController: {fileID: 7871922172176470212}
+  _tentacleClip:
+    Clip: {fileID: 8300000, guid: f852740af13689a4ca269622d12167a8, type: 3}
+    OverrideSourceVolume: 0
+    Volume: 1
+    PlayOneShot: 0
 --- !u!82 &4939047705472786412
 AudioSource:
   m_ObjectHideFlags: 0
@@ -148,9 +156,9 @@ AudioSource:
   m_GameObject: {fileID: 4300760658401945032}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 731089902864400608, guid: ec5edd5ec3239c04994683d088bf20dd, type: 2}
   m_audioClip: {fileID: 8300000, guid: f852740af13689a4ca269622d12167a8, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -235,6 +243,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7871922172176470212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4300760658401945032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4253f859e1f003242b3cb4423558cb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 4939047705472786412}
+  _pauseOnGamePaused: 1
 --- !u!1 &6389217612636826822
 GameObject:
   m_ObjectHideFlags: 0

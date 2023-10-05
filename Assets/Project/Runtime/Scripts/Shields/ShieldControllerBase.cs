@@ -1,13 +1,21 @@
+using CyberCruiser.Audio;
 using UnityEngine;
 
 namespace CyberCruiser
 {
+    [RequireComponent(typeof(SoundControllerBase))]
     public class ShieldControllerBase : GameBehaviour
     {
         #region References
         [Tooltip("Unit collider to be toggled when the shield is enabled")]
         [SerializeField] protected Collider2D _unitCollider;
         [SerializeField] protected GameObject _collisionParticles;
+
+        protected SoundControllerBase _soundController;
+        [SerializeField] protected ClipInfo _shieldEnableClip;
+        [SerializeField] protected ClipInfo _shieldDamageClip;
+        [SerializeField] protected ClipInfo _shieldDisableClip;
+
         protected Shield _shields;
         #endregion
 
@@ -57,6 +65,7 @@ namespace CyberCruiser
         {
             _unitCollider = GetComponentInParent<Collider2D>();
             _shields = GetComponentInChildren<Shield>();
+            _soundController = GetComponent<SoundControllerBase>();
         }
 
         protected void Start()
@@ -115,6 +124,7 @@ namespace CyberCruiser
 
             else if (collider.TryGetComponent<Bullet>(out var bullet))
             {
+                _soundController.PlayNewClip(_shieldDamageClip);
                 if (!_isShieldImmuneToDamage)
                 {
                     ReduceShields(bullet.Damage);

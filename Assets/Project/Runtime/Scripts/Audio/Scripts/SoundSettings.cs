@@ -114,16 +114,19 @@ namespace CyberCruiser
 
         private void SetMasterVolume(float newMasterVolume)
         {
+            MasterVolume = newMasterVolume;
             SetMixerVolume(MASTER_VOLUME, IsAudioMuted, MasterVolume, newMasterVolume);
         }
 
         private void SetMusicVolume(float newMusicVolume)
         {
+            MusicVolume = newMusicVolume;
             SetMixerVolume(MUSIC_VOLUME, IsMusicMuted, MusicVolume, newMusicVolume);
         }
 
         private void SetEffectsVolume(float newEffectsVolume)
         {
+            EffectsVolume = newEffectsVolume;
             SetMixerVolume(EFFECTS_VOLUME, IsEffectsMuted, EffectsVolume, newEffectsVolume);
         }
 

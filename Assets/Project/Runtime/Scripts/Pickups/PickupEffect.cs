@@ -16,14 +16,26 @@ namespace CyberCruiser
         [SerializeField] private ScriptableObjectValueChanger<T> _valueChangerOnDropped;
         [SerializeField] private ScriptableObjectReference<T> _valueToChangeWithOnDropped;
 
+        [Header("Events")]
+        [SerializeField] private GameEvent _onPickup;
+        [SerializeField] private GameEvent _onDrop;
+
         public override void OnPickup()
         {
+            if(_scriptableObjectValueToChange != null)
             _valueChanger.ChangeValue(_scriptableObjectValueToChange, _valueToChangeWith.Value);
+
+            if(_onPickup != null)
+            _onPickup.Raise();
         }
 
         public override void OnDropped()
         {
-            _valueChangerOnDropped.ChangeValue(_scriptableObjectValueToChange, _valueToChangeWithOnDropped.Value);
+            if (_scriptableObjectValueToChange != null)
+                _valueChangerOnDropped.ChangeValue(_scriptableObjectValueToChange, _valueToChangeWithOnDropped.Value);
+
+            if(_onDrop != null)
+            _onDrop.Raise();
         }
     }
 }

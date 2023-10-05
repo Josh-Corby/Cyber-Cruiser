@@ -1,3 +1,4 @@
+using CyberCruiser.Audio;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -6,11 +7,16 @@ namespace CyberCruiser
 {
     public class PlayerWeaponController : GameBehaviour
     {
-        [SerializeField] private WeaponSO _baseWeaponSO;
+        [SerializeField] private PlayerAddOnManager _addOnManager;
         [SerializeField] private PlayerSoundController _soundController;
         [SerializeField] private PlayerUIManager _playerUIManager;
+
+        [SerializeField] private WeaponSO _baseWeaponSO;
+        [SerializeField] private WeaponSO _chainLightingWeaponSO;
         [SerializeField] private BeamAttack _beamAttack;
+        [SerializeField] private ClipInfo _overheatClip;
         [SerializeField] private Color _weaponUpgradeSliderColour;
+
         private Weapon _playerWeapon;
         private WeaponSO _currentWeaponSO;
 
@@ -22,66 +28,27 @@ namespace CyberCruiser
         [Header("Heat")]
         [Tooltip("Time player needs to not fire before they start losing heat")]
         [SerializeField] private float _timeBeforeHeatLoss;
-
-        [Tooltip("SO Float Reference of current heat per shot on weapon fire")]
-        [SerializeField] private FloatReference _currentHeatPerShotReference;
-
-        #region Pickups Setup
-        [Header("Pickups")]
-
-        #region Emergency Arsenal
-        [Header("Emergency arsenal")]
-        [Tooltip("SO Bool Reference for if player has emergency arsenal")]
-        [SerializeField] private BoolReference _doesPlayerHaveEmergencyArsenal;
-
         [Tooltip("Percentage change of player winning emergency arsenal roll")]
         [SerializeField] private int _emergencyArsenalSuccessPercentage = 10;
-
-        [Tooltip("Game event that fires if player succeeds emergency arsenal roll")]
-        [SerializeField] private GameEvent _onEmergencyArsenalSuccess;
-        #endregion
-
-        #region Backup System
-        [Header("Backup System")]
-        [Tooltip("SO Bool Reference for if player has backup system")]
-        [SerializeField] private BoolReference _doesPlayerHaveBackupSystem;
-
-        [Tooltip("Game event that fires if player has backup system")]
-        [SerializeField] private GameEvent _onBackupSystemActivated;
-        #endregion
-
-        #region Thermal Welding
-        [Header("Thermal Welding")]
-        [Tooltip("SO Bool Reference for in player has thermal welding")]
-        [SerializeField] private BoolReference _doesPlayerHaveThermalWelding;
-
-        [Tooltip("Game event that fires if player has thermal welding")]
-        [SerializeField] private GameEvent _onThermalWeldingActivated;
-        #endregion
-
-        #region Burst Vents
-        [Header("Burst Vents")]
+        [Tooltip("SO Float Reference of current heat per shot on weapon fire")]
+        [SerializeField] private FloatReference _currentHeatPerShotReference;
         [SerializeField] private BurstVents _burstVents;
-
-        [Tooltip("So Bool Reference for if player has burst vents")]
-        [SerializeField] private BoolReference _doesPlayerHaveBurstVents;
-        #endregion
-        #endregion
-
-        #region Private Fields
+  
+        #region Fields
         private const int BASE_HEAT_MAX = 100;
         private const float BASE_HEAT_LOSS_PER_FRAME = 0.4f;
         private const float BASE_COOLDOWN_HEAT_LOSS_PER_FRAME = 0.6f;
-        private bool _controlsEnabled;
+
+        private int _heatMax;
         private float _currentHeat;
         private float _heatLossPerFrame;
         private float _cooldownHeatLossPerFrame;
-        private int _heatMax;
         private float _timeSinceLastShot;
         private bool _isOverheated;
         private bool _fireInput;
         private bool _isWeaponUpgradeActive;
         private bool _isHeatDecreasing;
+        private bool _controlsEnabled;
         #endregion
 
         private Coroutine _weaponUpgradeCoroutine;
@@ -131,8 +98,11 @@ namespace CyberCruiser
         #endregion
 
         #region Actions
-        public static event Action<int> OnWeaponUpgradeStart = null;
         public static event Action OnShoot = null;
+        public static event Action OnThermalWeldingActivated = null;
+        public static event Action OnBackupSystemActivated = null;
+        public static event Action OnEmergencyArsenalActivated = null;
+        public static event Action<int> OnWeaponUpgradeStart = null;
         #endregion
 
         private void Awake()
@@ -147,6 +117,7 @@ namespace CyberCruiser
             InputManager.OnFire += SetFireInput;
             GameManager.OnMissionEnd += DisableBeam;
             Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
+            Pickup.OnBossPickup += (name, sprite) => { CheckIfAddOnIsChainLightning(name); };
             InitializeWeapon();
         }
 
@@ -155,6 +126,7 @@ namespace CyberCruiser
             InputManager.OnFire -= SetFireInput;
             GameManager.OnMissionEnd -= DisableBeam;
             Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
+            Pickup.OnBossPickup -= (name, sprite) => { CheckIfAddOnIsChainLightning(name); };
         }
 
         private void Start()
@@ -174,12 +146,12 @@ namespace CyberCruiser
         {
             _currentWeaponSO = _baseWeaponSO;
             _fireInput = false;
+            _heatMax = BASE_HEAT_MAX;
             CurrentHeat = 0;
             DisableBeam();
-            _heatMax = BASE_HEAT_MAX;
             _heatLossPerFrame = BASE_HEAT_LOSS_PER_FRAME;
             _cooldownHeatLossPerFrame = BASE_COOLDOWN_HEAT_LOSS_PER_FRAME;
-            _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.Heat, _heatMax);
+            _playerUIManager.EnableSliderAtValue(PlayerSliderTypes.Heat, _heatMax, _currentHeat);
         }
 
         private void CheckOverHeated()
@@ -224,7 +196,6 @@ namespace CyberCruiser
             }
         }
 
-
         private void HeatReduction()
         {
             if (_isHeatDecreasing)
@@ -236,7 +207,6 @@ namespace CyberCruiser
             }
         }
 
-
         public void OverheatToMax()
         {
             CurrentHeat = _heatMax;
@@ -245,41 +215,49 @@ namespace CyberCruiser
         private void OverHeat()
         {
             IsOverheated = true;
-
+            _soundController.PlayNewClip(_overheatClip);
             PickupChecks();
         }
 
         private void PickupChecks()
         {
-            if (_doesPlayerHaveEmergencyArsenal.Value)
-            {
-                EmergencyArsenalRoll();
-            }
+            if (_addOnManager.BackupSystem.DoesPlayerHave)
+                OnBackupSystemActivated?.Invoke();
 
-            if (_doesPlayerHaveBackupSystem.Value)
-            {
-                _onBackupSystemActivated.Raise();
-            }
-
-            if (_doesPlayerHaveThermalWelding.Value)
-            {
-                _onThermalWeldingActivated.Raise();
-            }
-
-            if (_doesPlayerHaveBurstVents.Value)
-            {
+            if (_addOnManager.BurstVents.DoesPlayerHave)
                 _burstVents.Burst();
-            }
+
+            if (_addOnManager.EmergencyArsenal.DoesPlayerHave)
+                EmergencyArsenalRoll();
+
+            if (_addOnManager.ThermalWelding.DoesPlayerHave)
+                OnThermalWeldingActivated?.Invoke();
         }
 
         private void EmergencyArsenalRoll()
         {
             bool emergencyArsenalSuccess = PercentageRoll(_emergencyArsenalSuccessPercentage);
-
             if (emergencyArsenalSuccess)
+                OnEmergencyArsenalActivated?.Invoke();
+        }
+
+        private void CheckIfAddOnIsChainLightning(string name)
+        {
+            if(name != _addOnManager.ChainLightning.Info.Name)
             {
-                _onEmergencyArsenalSuccess.Raise();
+                DisableChainLightning();
             }
+        }
+
+        public void EnableChainLightning()
+        {
+            ChangeWeapon(_chainLightingWeaponSO);
+
+        }
+
+        private void DisableChainLightning()
+        {
+            ChangeWeapon(_baseWeaponSO);
         }
 
         private void SetFireInput(bool input)
@@ -382,7 +360,6 @@ namespace CyberCruiser
             CurrentHeat = 0;
             _isWeaponUpgradeActive = true;
             OnWeaponUpgradeStart?.Invoke(_weaponUpgradeDurationInSeconds.Value);
-            //_playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.WeaponUpgrade, _weaponUpgradeDurationInSeconds.Value);
 
             _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.Heat, _weaponUpgradeDurationInSeconds.Value);
             _playerUIManager.HeatSlider.SetLerpingColour(false, _weaponUpgradeSliderColour);
@@ -395,22 +372,17 @@ namespace CyberCruiser
             while (weaponUpgradeTimer > 0)
             {
                 weaponUpgradeTimer -= Time.deltaTime;
-                //_playerUIManager.ChangeSliderValue(PlayerSliderTypes.WeaponUpgrade, weaponUpgradeTimer);
 
                 _playerUIManager.ChangeSliderValue(PlayerSliderTypes.Heat, weaponUpgradeTimer);
                 yield return new WaitForSeconds(0.01f);
             }
 
-            //reset player weapon to its original values after upgrade duration is over
-            Debug.Log("Upgrade finished");
-            _soundController.PlaySound(1);
             OnWeaponUpgradeFinish();
         }
 
         private void OnWeaponUpgradeFinish()
         {
-            //_playerUIManager.DisableSlider(PlayerSliderTypes.WeaponUpgrade);
-
+            _soundController.PlaySound(1);
             _playerUIManager.HeatSlider.SetSliderValues(0, 100);
             _playerUIManager.HeatSlider.SetIsLerpingColour(true);
             ChangeWeapon(_baseWeaponSO);

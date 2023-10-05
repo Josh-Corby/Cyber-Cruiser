@@ -1,13 +1,17 @@
+using CyberCruiser.Audio;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
 namespace CyberCruiser
 {
+    [RequireComponent(typeof(SoundControllerBase))]
     public class WarCry : MonoBehaviour
     {
         [SerializeField] private CircleCollider2D _collider;
         private SpriteRenderer _renderer;
+        [SerializeField] private ClipInfo _warCryClip;
+        [SerializeField] private SoundControllerBase _soundController;
 
         private void Awake()
         {
@@ -21,6 +25,7 @@ namespace CyberCruiser
         {
             _collider.enabled = true;
             _renderer.enabled = true;
+            _soundController.PlayNewClip(_warCryClip);
             //_collider.radius = 0.001f;
             StartCoroutine(ExpandWarCry());
         }

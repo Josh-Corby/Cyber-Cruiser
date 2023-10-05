@@ -16,6 +16,7 @@ namespace CyberCruiser
         private bool _rotateOut;
         private Quaternion _homeOutRotation;
         private const float _homeTurnSpeedBase = 100;
+        public EnemyScriptableObject Owner;
         #region Art
         [Header("Art")]
         [SerializeField] private Sprite _playerProjectileSprite;
@@ -44,7 +45,6 @@ namespace CyberCruiser
 
         public GameObject HomingTarget { get => _homingTarget; set => _homingTarget = value; }
 
-        public EnemyScriptableObject Owner { get; set; }
 
         public bool IsHoming
         {
@@ -223,8 +223,8 @@ namespace CyberCruiser
         {
             transform.right = objectReflectedFrom.transform.right;
             _speed /= 2;
+           // _spriteRenderer.flipX = !_spriteRenderer.flipX;
             SwitchBulletTeam();
-            _spriteRenderer.flipX = !_spriteRenderer.flipX;
         }
 
         public void SwitchBulletTeam()

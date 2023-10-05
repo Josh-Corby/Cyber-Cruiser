@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: addf7c2747ecd934e9c91a5420e5e138, type: 3}
+  m_Name: AddOnData_ShieldGenerator
+  m_EditorClassIdentifier: 
+  _info:
+    Name: Shield Generator
+    Description: 
+    Sprite: {fileID: 21300000, guid: ca814836488eac54ca409b6c9d697f69, type: 3}
+  _equipBoolToTrack:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: d9fe53655d3f6db4cb59c30cd654b8a4, type: 2}
+  _timesPickedUp: 0

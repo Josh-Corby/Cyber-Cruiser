@@ -53,11 +53,9 @@ namespace CyberCruiser
         public static event Action<int> OnDistanceChanged = null;
         public static event Action OnDistanceTraveled = null;
         public static event Action OnBossDistanceReached = null;
+        public static event Action OnPickupDistanceReached = null;
+        public static event Action OnWeaponPackDistanceReached = null;
         #endregion
-
-        [Header("Game Events")]
-        [SerializeField] private GameEvent OnPickupDistanceReached;
-        [SerializeField] private GameEvent OnWeaponPackDistanceReached;
 
         private void Awake()
         {
@@ -132,12 +130,12 @@ namespace CyberCruiser
 
             if (_distanceInt == _plasmaDropDistance)
             {
-                OnPickupDistanceReached.Raise();
+                OnPickupDistanceReached?.Invoke();
             }
 
             if (_distanceInt == _weaponUpgradeDropDistance)
             {
-                OnWeaponPackDistanceReached.Raise();
+                OnWeaponPackDistanceReached?.Invoke();
             }
         }
 

@@ -6,7 +6,7 @@ namespace CyberCruiser
 {
     public class AddOnInfoDisplay : MonoBehaviour
     {
-        [SerializeField] private PickUpScriptableObject _addonInfo;
+        [SerializeField] private AddOnSO _addonInfo;
         [SerializeField] private Image _addonImageDisplay;
         [SerializeField] private Sprite _unknownSprite;
         [SerializeField] private TMP_Text _addonNameDisplay;

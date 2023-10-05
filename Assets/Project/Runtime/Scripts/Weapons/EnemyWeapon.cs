@@ -14,6 +14,8 @@ namespace CyberCruiser
             base.OnEnable();
         }
 
+
+
         protected override void Update()
         {
             if (_isPlayerInvisible.Value || _isTimeStopped.Value)

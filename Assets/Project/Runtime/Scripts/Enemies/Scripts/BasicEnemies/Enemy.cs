@@ -1,9 +1,11 @@
+using CyberCruiser.Audio;
 using System;
 using UnityEngine;
 
 namespace CyberCruiser
 {
     [RequireComponent(typeof(EnemyMovement))]
+    [RequireComponent(typeof(SoundControllerBase))]
     public class Enemy : GameBehaviour, IDamageable
     {
         protected const string DEAD_ENEMY_LAYER_NAME = "DeadEnemy";
@@ -20,6 +22,8 @@ namespace CyberCruiser
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Sprite _deadSprite;
         private SimpleFlash _flash;
+        private SoundControllerBase _soundController;
+        [SerializeField] protected ClipInfo _damageClip;
 
         protected float _currentHealth;
         public int RamDamage { get => _stats.RamDamage; }
@@ -35,6 +39,7 @@ namespace CyberCruiser
         protected virtual void Awake()
         {
             AssignEnemyInfo();
+            _soundController = GetComponent<SoundControllerBase>();
         }
 
         private void AssignEnemyInfo()
@@ -76,9 +81,15 @@ namespace CyberCruiser
 
             if(damage > 0)
             {
+
                 if (_flash != null)
                 {
                     _flash.Flash();
+                }
+
+                if(_soundController != null)
+                {
+                    _soundController.PlayNewClip(_damageClip);
                 }
             }       
 

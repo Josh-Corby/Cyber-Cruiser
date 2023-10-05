@@ -26,19 +26,18 @@ namespace CyberCruiser
 
         [SerializeField] private SoundControllerBase _soundController;
         [SerializeField] private ClipInfo _starClip;
-        //[SerializeField] private AudioSource _audioSource;
-        //[SerializeField] private AudioClip _starClip;
 
         [SerializeField] private int _starsToGain;
         [SerializeField] private int _starsEnabled;
         private int _playerStarsBeforeMissionStart;
         private Rank _playerRankBeforeMissionStart;
 
-        private float _starAnimationDelayInSeconds = 1.2f;
         private Coroutine _gainStarsCoroutine;
 
         [SerializeField] private RectTransform[] _movingStarRects;
         private int _starsPlaced = 0;
+
+        private HorizontalLayoutGroup _layoutGroup;
         private void Awake()
         {
             if (_uiType == UIType.Animated)
@@ -160,11 +159,11 @@ namespace CyberCruiser
 
                     //get move location
                     RectTransform targetsprite = _greyStars[_starsEnabled].GetComponent<RectTransform>();
-                    HorizontalLayoutGroup layoutGroup = targetsprite.GetComponentInParent<HorizontalLayoutGroup>();
+                    _layoutGroup = targetsprite.GetComponentInParent<HorizontalLayoutGroup>();
 
-                    if (layoutGroup != null)
+                    if (_layoutGroup != null)
                     {
-                        layoutGroup.enabled = false;
+                        _layoutGroup.enabled = false;
                     }
 
                     Vector3 goalPosition = RectTransformUtility.WorldToScreenPoint(Camera.main, targetsprite.position);
@@ -181,6 +180,7 @@ namespace CyberCruiser
                     starToMove.gameObject.SetActive(false);
                     _starsEnabled += 1;
                     _starsPlaced += 1;
+                    _layoutGroup.enabled = true;
                 }
 
                 if (_starsEnabled >= _currentRank.StarsToRankUp)
@@ -199,6 +199,7 @@ namespace CyberCruiser
 
         private void RankUp()
         {
+            _layoutGroup.enabled = true;
             _starsToGain -= (_currentRank.StarsToRankUp - _playerRankManager.StarsBeforeMissionStart);
             _starsEnabled = 0;
             DisableAllStars();

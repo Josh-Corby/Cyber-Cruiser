@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbbdfbc5f48b0e946bc23ca24fb9570b, type: 3}
+  m_Name: WeaponData_HomingRocketLauncher
+  m_EditorClassIdentifier: 
+  WeaponName: 
+  WeaponDescription: 
+  WeaponUISprite: {fileID: 0}
+  MuzzleFlash: {fileID: 0}
+  objectToFire: {fileID: 2653145768784104840, guid: 6f3aeb39ec11dc14b837dd35b3eda443, type: 3}
+  TimeBetweenShots: 1
+  IsWeaponAutomatic: 0
+  Clip:
+    Clip: {fileID: 8300000, guid: fffbdd24865acec42803a1b86044c731, type: 3}
+    OverrideSourceVolume: 0
+    Volume: 1
+    PlayOneShot: 0
+  DoesWeaponUseSpread: 1
+  SpreadHalfAngle: 60
+  IsWeaponBurstFire: 0
+  AmountOfBursts: 0
+  TimeBetweenBurstShots: 0
+  IsWeaponMultiFire: 1
+  MultiFireShots: 3
+  IsMultiFireSpreadRandom: 0
+  Equips: 0

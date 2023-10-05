@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,38 +7,46 @@ namespace CyberCruiser
 {
     public class PickupManager : GameBehaviour
     {
-        [SerializeField] private List<GameObject> pickupsOnScreen = new List<GameObject>();
+        [SerializeField] private bool DEBUG_forcePickup;
+        [SerializeField] private GameObject DEBUG_pickupToSpawn;
 
+        [SerializeField] private List<GameObject> pickupsOnScreen = new List<GameObject>();
         [SerializeField] private PickupSpawner _pickupSpawner;
         [SerializeField] private PickupSpawner _upgradeSpawner;
-
         [SerializeField] private List<GameObject> _bossDropsPool = new();
         [SerializeField] private List<GameObject> _bossDropsToSpawn = new();
         [SerializeField] private GameObject[] _weaponUpgradesPool;
         [SerializeField] private GameObject _normalPickup;
         [SerializeField] private GameObject _baseBossDrop;
-
         [SerializeField] private GameObject _pickupIndicator;
-
         [SerializeField] private float _indicatorAngle;
+
         protected readonly float _indicatorTimer = 2f;
 
         private void OnEnable()
         {
+            DistanceManager.OnPickupDistanceReached += SpawnPlasmaDrop;
+            DistanceManager.OnWeaponPackDistanceReached += SpawnWeaponDrop;
             GameManager.OnMissionStart += ResetBossDropsList;
             GameManager.OnMissionEnd += ClearPickups;
             Boss.OnBossDiedPosition += SpawnPickupAtPosition;
             Pickup.OnPickedUp += RemovePickup;
-            PickupSpawner.OnPickupSpawned += AddPickup;         
+            PickupSpawner.OnPickupSpawned += AddPickup;
+            PlayerWeaponController.OnEmergencyArsenalActivated += SpawnWeaponDrop;
+            PlayerShieldController.OnSignalBeaconActivated += SpawnWeaponDrop;
         }
 
         private void OnDisable()
         {
+            DistanceManager.OnPickupDistanceReached -= SpawnPlasmaDrop;
+            DistanceManager.OnWeaponPackDistanceReached -= SpawnWeaponDrop;
             GameManager.OnMissionStart -= ResetBossDropsList;
             GameManager.OnMissionEnd -= ClearPickups;
             Boss.OnBossDiedPosition -= SpawnPickupAtPosition;
             Pickup.OnPickedUp -= RemovePickup;
             PickupSpawner.OnPickupSpawned -= AddPickup;
+            PlayerWeaponController.OnEmergencyArsenalActivated -= SpawnWeaponDrop;
+            PlayerShieldController.OnSignalBeaconActivated -= SpawnWeaponDrop;
         }
 
         public void SpawnPlasmaDrop()
@@ -83,7 +90,6 @@ namespace CyberCruiser
                     break;
             }
         }
-    
 
         private GameObject GetRandomWeaponUpgrade()
         {
@@ -98,6 +104,13 @@ namespace CyberCruiser
             {
                 return _baseBossDrop;
             }
+
+            if(DEBUG_forcePickup)
+            {
+                GameObject bossDrop = DEBUG_pickupToSpawn;
+                return bossDrop;
+            }
+
 
             int RandomBossDropIndex = Random.Range(0, _bossDropsPool.Count);
             GameObject randomBossDrop = _bossDropsPool[RandomBossDropIndex];

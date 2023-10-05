@@ -90,6 +90,13 @@ namespace CyberCruiser
             RestorePlayerData();        
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                CompleteMission();
+            }
+        }
         private void OnApplicationQuit()
         {
             StorePlayerData();

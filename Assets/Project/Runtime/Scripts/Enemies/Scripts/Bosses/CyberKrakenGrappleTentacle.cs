@@ -14,17 +14,6 @@ namespace CyberCruiser
             TentacleMovement();
         }
 
-        private void OnDisable()
-        {
-            if (_isPlayerGrappled)
-            {
-                //if (!PlayerManagerInstance.isDead)
-                //{
-                //    ResetPlayerMovement();
-                //}
-            }
-        }
-
         protected override void TentacleMovement()
         {
             if (!_isPlayerGrappled)

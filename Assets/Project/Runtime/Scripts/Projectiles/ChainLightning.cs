@@ -8,7 +8,7 @@ namespace CyberCruiser
     {
         [SerializeField] private int _totalChainBounces;
         [SerializeField] private int _currentChainBounces;
-        [SerializeField] private int _chainDamage;
+        [SerializeField] private float _chainDamage;
         [SerializeField] private float _chainRange;
         [SerializeField] private List<GameObject> _objectsInRange = new();
         [SerializeField] private List<GameObject> _objectsBouncedTo = new();

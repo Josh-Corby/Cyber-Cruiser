@@ -6,7 +6,7 @@ namespace CyberCruiser
     public class Pickup : MonoBehaviour
     {
         #region Fields
-        [SerializeField] private PickUpScriptableObject _pickupSO;
+        [SerializeField] private AddOnSO _pickupSO;
         private PickupInfo _info;
         public PickupType _pickupType;
         public WeaponSO _weaponSO;
@@ -18,7 +18,6 @@ namespace CyberCruiser
         [SerializeField] private IntReference _healthOnPickup;
         [SerializeField] private IntReference _plasmaOnPickup;
         [SerializeField] private IntReference _ionOnPickup;
-        [SerializeField] private GameEvent _pickupEvent;
         #endregion
 
         public PickupInfo Info { get => _info; }
@@ -56,11 +55,6 @@ namespace CyberCruiser
                 case PickupType.Weapon:
                     OnWeaponUpgradePickup?.Invoke(_weaponSO);
                     break;
-            }
-
-            if(_pickupEvent != null)
-            {
-                _pickupEvent.Raise();
             }
 
             OnPickedUp(this);
