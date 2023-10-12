@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -9,6 +10,7 @@ namespace CyberCruiser
         {
             [SerializeField] protected AudioSource _audioSource;
             [SerializeField] protected bool _pauseOnGamePaused = true;
+            private Coroutine _fadeOutCoroutine = null;
 
             protected void Awake()
             {
@@ -30,18 +32,34 @@ namespace CyberCruiser
                     GameManager.OnIsTimeScalePaused -= ToggleAudio;
                 }
             }
-            
+
+            private IEnumerator VolumeFadeCoroutine()
+            {
+                while (_audioSource.volume > 0)
+                {
+                    _audioSource.volume -= 0.1f;
+                    yield return new WaitForEndOfFrame();
+                }
+
+                _audioSource.Pause();
+            }
+
             protected void ToggleAudio(bool isAudioPausing)
             {
-                if (isAudioPausing)
+                if (_fadeOutCoroutine != null)
                 {
-                    _audioSource.Pause();
-
+                    StopCoroutine(_fadeOutCoroutine);
                 }
+
+                if (isAudioPausing)
+                {               
+                    _fadeOutCoroutine = StartCoroutine(VolumeFadeCoroutine());
+                }
+
                 else
                 {
+                    _audioSource.volume = 1;
                     _audioSource.UnPause();
-
                 }
             }
 

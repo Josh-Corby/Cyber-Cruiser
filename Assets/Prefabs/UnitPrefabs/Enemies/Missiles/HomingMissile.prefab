@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyInfo: {fileID: 11400000, guid: edde59c7b0e81a0419ac35efcb51e1c5, type: 2}
+  EnemyInfo: {fileID: 11400000, guid: e485d258fcdb9154abe4ade99eb035bc, type: 2}
   _spriteRenderer: {fileID: 3072962205943708527}
   _deadSprite: {fileID: 0}
   _damageClip:

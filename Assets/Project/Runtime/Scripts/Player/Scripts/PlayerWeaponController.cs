@@ -115,7 +115,7 @@ namespace CyberCruiser
         private void OnEnable()
         {
             InputManager.OnFire += SetFireInput;
-            GameManager.OnMissionEnd += DisableBeam;
+            GameManager.OnMissionEnd += ResetWeapon;
             Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
             Pickup.OnBossPickup += (name, sprite) => { CheckIfAddOnIsChainLightning(name); };
             InitializeWeapon();
@@ -124,7 +124,7 @@ namespace CyberCruiser
         private void OnDisable()
         {
             InputManager.OnFire -= SetFireInput;
-            GameManager.OnMissionEnd -= DisableBeam;
+            GameManager.OnMissionEnd -= ResetWeapon;
             Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
             Pickup.OnBossPickup -= (name, sprite) => { CheckIfAddOnIsChainLightning(name); };
         }
@@ -151,7 +151,15 @@ namespace CyberCruiser
             DisableBeam();
             _heatLossPerFrame = BASE_HEAT_LOSS_PER_FRAME;
             _cooldownHeatLossPerFrame = BASE_COOLDOWN_HEAT_LOSS_PER_FRAME;
+            _isWeaponUpgradeActive = false;
             _playerUIManager.EnableSliderAtValue(PlayerSliderTypes.Heat, _heatMax, _currentHeat);
+        }
+
+        private void ResetWeapon()
+        {
+            DisableBeam();
+            ChangeWeapon(_baseWeaponSO);
+            _isWeaponUpgradeActive = false;
         }
 
         private void CheckOverHeated()
@@ -252,7 +260,6 @@ namespace CyberCruiser
         public void EnableChainLightning()
         {
             ChangeWeapon(_chainLightingWeaponSO);
-
         }
 
         private void DisableChainLightning()
@@ -281,6 +288,8 @@ namespace CyberCruiser
                         _beamAttack.StartFiring();
                     }
                 }
+
+                OnShoot?.Invoke();
             }
 
             if (!_fireInput)
@@ -291,8 +300,6 @@ namespace CyberCruiser
                     _beamAttack.ResetBeam();
                 }
             }
-
-            OnShoot?.Invoke();
         } 
 
         private void CheckHoldToFire()
@@ -353,9 +360,17 @@ namespace CyberCruiser
             }
 
             _soundController.PlaySound(0);
-            ChangeWeapon(upgradeWeapon);
-            //reset in case a different type of pickup is picked up while an upgrade is currently active
-            // need a case for pulverizer
+
+            if(upgradeWeapon == null)
+            {
+                Debug.Log("pulverizer upgrade");
+                PulverizerUpgrade();
+            }
+
+            else
+            {
+                ChangeWeapon(upgradeWeapon);
+            }
 
             CurrentHeat = 0;
             _isWeaponUpgradeActive = true;
@@ -400,7 +415,6 @@ namespace CyberCruiser
 
         private void PulverizerUpgrade()
         {
-            //_baseWeapon.gameObject.SetActive(false);
             _beamAttack.enabled = true;
         }
 

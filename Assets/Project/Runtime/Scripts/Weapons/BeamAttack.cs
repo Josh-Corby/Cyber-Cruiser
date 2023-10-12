@@ -1,4 +1,5 @@
 using CyberCruiser.Audio;
+using System.Collections;
 using UnityEngine;
 
 
@@ -7,7 +8,7 @@ namespace CyberCruiser
     [RequireComponent(typeof(AudioSource))]
     public class BeamAttack : GameBehaviour
     {
-        private bool _isBeamActive;
+        [SerializeField] private bool _isBeamActive;
         public bool IsBeamFiring;
         [SerializeField] private LineRenderer _lineRenderer;
         [SerializeField] private float _beamDamage;
@@ -26,6 +27,8 @@ namespace CyberCruiser
         [SerializeField] private ClipInfo _beamClip;
 
         [SerializeField] private BoolReference _isGamePausedReference;
+
+        private Coroutine _fadeOutCoroutine = null;
 
         private void Awake()
         {
@@ -67,7 +70,6 @@ namespace CyberCruiser
             if (IsBeamActive == false)
             {
                 _isBeamActive = true;
-                _beamSoundController.PlayNewClip(_beamClip);
                 _lineRenderer.enabled = true;
             }
         }
@@ -75,6 +77,12 @@ namespace CyberCruiser
         public void StartFiring()
         {
             IsBeamFiring = true;
+
+            if (_fadeOutCoroutine != null)
+            {
+                StopCoroutine(_fadeOutCoroutine);
+            }
+            _audioSource.volume = 1.0f;
             _beamSoundController.PlayNewClip(_beamClip);
         }
 
@@ -82,8 +90,7 @@ namespace CyberCruiser
         {
             IsBeamFiring = false;
             _isBeamActive = false;
-            _lineRenderer.enabled = false;
-            _audioSource.Stop();
+            _lineRenderer.enabled = false;      
         }
 
         public void ExtendBeam()
@@ -108,8 +115,7 @@ namespace CyberCruiser
 
                 if (_beamTimer <= 0)
                 {
-                    StopFiring();
-                  
+                    StopFiring();                
                 }
             }
 
@@ -128,6 +134,23 @@ namespace CyberCruiser
             _currentBeamLength = 0;
             _beamTimer = beamDuration;
             _lineRenderer.enabled = false;
+
+            if(_fadeOutCoroutine != null)
+            {
+                StopCoroutine(_fadeOutCoroutine);
+            }
+
+            _fadeOutCoroutine = StartCoroutine(VolumeFadeCoroutine());
+        }
+
+        private IEnumerator VolumeFadeCoroutine()
+        {
+            while (_audioSource.volume >0)
+            {
+                _audioSource.volume -= 0.1f;
+                yield return new WaitForEndOfFrame();
+            }
+
             _audioSource.Stop();
         }
 

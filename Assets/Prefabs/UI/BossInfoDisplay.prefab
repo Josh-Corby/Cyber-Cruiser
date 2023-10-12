@@ -611,7 +611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyInfo: {fileID: 0}
   _enemyImage: {fileID: 4984649472151700785}
-  _unknownSprite: {fileID: 21300000, guid: cc6ea6e5cbd936649810b3d5ea7b4a72, type: 3}
+  _unknownSprite: {fileID: 21300000, guid: 9d1715d405f73094aba7af6d2a65f0eb, type: 3}
   _enemyName: {fileID: 381630725770265490}
   _timesKilled: {fileID: 1390976583953554536}
   _playerKills: {fileID: 78670117603861749}

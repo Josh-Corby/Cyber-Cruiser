@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 5965890103032499190}
   - component: {fileID: 3401874875470714931}
   - component: {fileID: 3537538281721821472}
-  - component: {fileID: 3537538281721821469}
   - component: {fileID: -3806085156021533184}
   - component: {fileID: 7011809842335278444}
   - component: {fileID: 7449025862796418458}
+  - component: {fileID: 781626764201807943}
   m_Layer: 7
   m_Name: Mine
   m_TagString: Untagged
@@ -75,26 +75,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 7
---- !u!114 &3537538281721821469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2653145768784104840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef2685e7744cf194a8259e19a4127b88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnemyInfo: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
-  _spriteRenderer: {fileID: 6224517711084455413}
-  _deadSprite: {fileID: 0}
-  _damageClip:
-    Clip: {fileID: 8300000, guid: a40a12cdcdc62d2448cecbc0510722c6, type: 3}
-    OverrideSourceVolume: 0
-    Volume: 1
-    PlayOneShot: 0
 --- !u!114 &-3806085156021533184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,6 +205,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 0}
   _pauseOnGamePaused: 1
+--- !u!114 &781626764201807943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2653145768784104840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6db0171c3f713c94a8e99b8d168d7b38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyInfo: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
+  _spriteRenderer: {fileID: 6224517711084455413}
+  _deadSprite: {fileID: 0}
+  _damageClip:
+    Clip: {fileID: 8300000, guid: a40a12cdcdc62d2448cecbc0510722c6, type: 3}
+    OverrideSourceVolume: 0
+    Volume: 1
+    PlayOneShot: 0
 --- !u!1 &3030845770333381816
 GameObject:
   m_ObjectHideFlags: 0

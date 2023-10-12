@@ -15,7 +15,7 @@ MonoBehaviour:
   _info:
     Name: Pulse Detonator
     Description: 
-    Sprite: {fileID: 0}
+    Sprite: {fileID: 21300000, guid: 82082187df9ebff468f6b8a2319a510a, type: 3}
   _equipBoolToTrack:
     UseConstant: 0
     ConstantValue: 0

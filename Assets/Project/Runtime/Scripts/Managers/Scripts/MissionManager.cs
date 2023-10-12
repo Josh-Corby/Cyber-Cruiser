@@ -90,13 +90,6 @@ namespace CyberCruiser
             RestorePlayerData();        
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                CompleteMission();
-            }
-        }
         private void OnApplicationQuit()
         {
             StorePlayerData();
@@ -118,6 +111,7 @@ namespace CyberCruiser
                 return;
             }
 
+            _currentMissionProgress = 0;
             _currentMission = _nextMissionToStart;
             _currentMission.isComplete = false;
             MissionBeforeLevelStart = _currentMission;

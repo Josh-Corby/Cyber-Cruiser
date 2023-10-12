@@ -19,7 +19,7 @@ namespace CyberCruiser
         #endregion
 
         private Animator _animator;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] protected SpriteRenderer _spriteRenderer;
         [SerializeField] private Sprite _deadSprite;
         private SimpleFlash _flash;
         private SoundControllerBase _soundController;
