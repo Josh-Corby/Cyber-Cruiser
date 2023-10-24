@@ -221,7 +221,7 @@ namespace CyberCruiser
             _playerCollider.enabled = true;
             GameManager.OnIsTimeScalePaused += SetPlayerControls;
             Pickup.OnResourcePickup += AddResources;
-            Pickup.OnBossPickup += (name, sprite) => { CheckPickedUpAddon(name); };
+            Pickup.OnBossPickup += CheckPickedUpAddon;
             PlayerWeaponController.OnThermalWeldingActivated += QuarterHeal;
 
         }
@@ -230,7 +230,7 @@ namespace CyberCruiser
         {
             GameManager.OnIsTimeScalePaused += SetPlayerControls;
             Pickup.OnResourcePickup -= AddResources;
-            Pickup.OnBossPickup -= (name, sprite) => { CheckPickedUpAddon(name); };
+            Pickup.OnBossPickup -= CheckPickedUpAddon;
             PlayerWeaponController.OnThermalWeldingActivated -= QuarterHeal;
         }
 
@@ -267,9 +267,9 @@ namespace CyberCruiser
             FullHeal();
         }
 
-        private void CheckPickedUpAddon(string addOnName)
+        private void CheckPickedUpAddon(PickupInfo info)
         {
-            if (addOnName != ATTRACTOR_UNIT_PICKUP_NAME)
+            if (info.Name != ATTRACTOR_UNIT_PICKUP_NAME)
                 DisableAttractorUnit();
         }
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: HydroCoolant
-    Description: 
+    Description: Lasers continue to shoot when Overheated
     Sprite: {fileID: 21300000, guid: 1bbec5ec6f9902549ad87eb01ad7c789, type: 3}
   _equipBoolToTrack:
     UseConstant: 0

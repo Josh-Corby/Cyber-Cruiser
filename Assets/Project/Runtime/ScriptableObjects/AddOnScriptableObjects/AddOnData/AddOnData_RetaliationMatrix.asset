@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Retaliation Matrix
-    Description: 
+    Description: Hits from enemy attacks release a fan of lasers
     Sprite: {fileID: 21300000, guid: ed3356fcc9826404b9b0c5ca70668b83, type: 3}
   _equipBoolToTrack:
     UseConstant: 0

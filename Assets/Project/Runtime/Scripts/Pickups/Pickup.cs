@@ -26,7 +26,7 @@ namespace CyberCruiser
         public static event Action<int, int, int> OnResourcePickup = null;
         public static event Action<Pickup> OnPickedUp = null;
         public static event Action<WeaponSO> OnWeaponUpgradePickup = null;
-        public static event Action<string, Sprite> OnBossPickup = null;
+        public static event Action<PickupInfo> OnBossPickup = null;
         #endregion
 
         private void Awake()
@@ -49,7 +49,7 @@ namespace CyberCruiser
             switch (_pickupType)
             {
                 case PickupType.Boss:
-                    OnBossPickup?.Invoke(_info.Name, _info.Sprite);
+                    OnBossPickup?.Invoke(Info);
                     break;
 
                 case PickupType.Weapon:

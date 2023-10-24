@@ -14,7 +14,7 @@ namespace CyberCruiser
 
         private Animator _animator;
 
-        private GameObject _currentScreen;
+        [SerializeField] private GameObject _currentScreen;
         private GameObject _screenToOpen;
         [SerializeField] private GameObject _missionScreen;
         [SerializeField] private GameObject _pauseScreen;
@@ -22,7 +22,7 @@ namespace CyberCruiser
         [SerializeField] private GameObject _gameOverScreen;
 
         private GameObject _panelToEnable;
-        [SerializeField] private GameObject _currentPanel;
+        private GameObject _currentPanel;
         [SerializeField] private GameObject _titlePanel;
         [SerializeField] private GameObject _gameplayPanel;
         [SerializeField] private GameObject _menuPanel;
@@ -101,7 +101,6 @@ namespace CyberCruiser
             panelToEnable.SetActive(true);
         }
 
-
         public void DisablePanel(GameObject panelToDisable)
         {
             panelToDisable.SetActive(false);
@@ -110,6 +109,7 @@ namespace CyberCruiser
         public void ChangeScreen(GameObject screenToOpen)
         {
             _screenToOpen = screenToOpen;
+
             if (_currentScreen != null)
             {
                 CloseCurrentScreen();
@@ -124,23 +124,36 @@ namespace CyberCruiser
             //if in a mission go to the pause screen
             if (_gameManager.InMission)
             {
-                _screenToOpen = _pauseScreen;
+                SwitchScreens(_pauseScreen);
             }
 
             //otherwise go to intended screen
             else
             {
-                _screenToOpen = screenToOpen;
+                ChangeScreen(screenToOpen);
             }
 
-            ChangeScreen(_screenToOpen);
         }
 
-        public void SwitchPanels(GameObject panelToEnable)
+        public void SwitchScreens(GameObject screenToOpen)
         {
+            _screenToOpen = screenToOpen;
+            _currentScreen.SetActive(false);
+            _currentScreen = _screenToOpen;
+            _currentScreen.SetActive(true);
+        }
+
+        public void SwitchPanels(GameObject panelToEnable = null)
+        {
+            if(panelToEnable != null)
+            {
+                _panelToEnable = panelToEnable;
+            }
+
             _currentPanel.SetActive(false);
-            _currentPanel = panelToEnable;
-            _currentPanel.SetActive(true);  
+            _currentPanel = _panelToEnable;
+            _currentPanel.SetActive(true);
+            _panelToEnable = null;
         }
 
         public void ChangeToPauseScreen()
@@ -212,29 +225,33 @@ namespace CyberCruiser
                 OpenScreen();
             }
 
+            //if game panel is changing
             if (_panelToEnable != null)
             {
+                //lkear screen after gameplay screen is closed
                 if (_currentPanel == _gameplayPanel)
                 {
                     OnGameplayPanelClosed?.Invoke();
                 }
-                _currentPanel.SetActive(false);
-                _currentPanel = _panelToEnable;
-                _panelToEnable.SetActive(true);
-                _panelToEnable = null;
 
+                //switch panels
+                SwitchPanels();
+
+                //if we have gone to the gameplay panel start mission
                 if (_currentPanel == _gameplayPanel)
                 {
                     _gameManager.StartMission();
                 }
             }
 
-            if (_currentScreen == _pauseScreen)
+            //if a screen has been closed in mission resume the game
+            if (_gameManager.InMission)
             {
+                _inputManager.EnableControls();
+                _gameManager.ResumeGame();
                 if (_isResumingGame)
                 {
-                    _inputManager.EnableControls();
-                    _gameManager.ResumeGame();
+                   
                 }
             }
 

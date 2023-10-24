@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Burst Vents
-    Description: 
+    Description: Overheating releases a massive explosion
     Sprite: {fileID: 21300000, guid: 6751431a0c7c8f8458d08b0bf05423b9, type: 3}
   _equipBoolToTrack:
     UseConstant: 0

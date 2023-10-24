@@ -97,10 +97,11 @@ namespace CyberCruiser
                     return;
                 }
 
-                if(ShieldActiveTimer >= 0.95 && ShieldActiveTimer <= 1.05)
-                {
-                    PlayCollisionParticles(transform.position);
-                }
+                //shield about to disable visuals
+                //if(ShieldActiveTimer >= 0.95 && ShieldActiveTimer <= 1.05)
+                //{
+                //    PlayCollisionParticles(transform.position);
+                //}
             }
         }  
 
@@ -295,6 +296,7 @@ namespace CyberCruiser
             {
                 _soundController.PlayNewClip(_shieldDamageClip);
 
+                PlayCollisionParticles(collisionPoint);
                 if (!_isShieldImmuneToDamage)
                 {
                     ReduceShields(bullet.Damage);

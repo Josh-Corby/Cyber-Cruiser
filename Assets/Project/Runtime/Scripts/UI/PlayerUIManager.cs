@@ -23,13 +23,13 @@ namespace CyberCruiser
         private void OnEnable()
         {
             GameManager.OnMissionStart += ClearPickupImage;
-            Pickup.OnBossPickup += (pickupName, pickupSprite) => { SetPickupImage(pickupSprite); };
+            Pickup.OnBossPickup += SetPickupImage;
         }
 
         private void OnDisable()
         {
             GameManager.OnMissionEnd -= ClearPickupImage;
-            Pickup.OnBossPickup -= (pickupName, pickupSprite) => { SetPickupImage(pickupSprite); };
+            Pickup.OnBossPickup -= SetPickupImage;
         }
 
         private void ClearPickupImage()
@@ -38,15 +38,16 @@ namespace CyberCruiser
             _pickupImage.sprite = null;
         }
 
-        private void SetPickupImage(Sprite pickupSprite)
+        private void SetPickupImage(PickupInfo info)
         {
-            if(pickupSprite == null)
+            Sprite newSprite = info.Sprite;
+            if(newSprite == null)
             {
                 _pickupImage.enabled = false;
                 _pickupImage.sprite = null;
             }
 
-            _pickupImage.sprite = pickupSprite;
+            _pickupImage.sprite = newSprite;
             _pickupImage.enabled = true;
         }
 

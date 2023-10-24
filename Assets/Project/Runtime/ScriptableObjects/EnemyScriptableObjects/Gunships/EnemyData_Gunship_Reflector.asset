@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1071420a8ff31248a4fef43cd8e1575, type: 3}
-  m_Name: EnemyData_Gunship_Reflecto
+  m_Name: EnemyData_Gunship_Reflector
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 2653145768784104840, guid: 5315175d49caa2c4d9ee273cc227786a, type: 3}
   EnemyImage: {fileID: 21300000, guid: 2ecc0ed3ca317e64b963f201b631d205, type: 3}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Battery Pack
-    Description: 
+    Description: Weapon Packs last longer
     Sprite: {fileID: 21300000, guid: 716f55a94eef07b48abce19f42d16788, type: 3}
   _equipBoolToTrack:
     UseConstant: 0

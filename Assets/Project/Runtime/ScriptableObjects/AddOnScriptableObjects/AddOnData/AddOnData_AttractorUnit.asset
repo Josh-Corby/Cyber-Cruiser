@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Attractor Unit
-    Description: 
+    Description: Plasma & Weapon Packs are pulled towards you
     Sprite: {fileID: 21300000, guid: b21bbbf6f3821ad4f952201cab612f14, type: 3}
   _equipBoolToTrack:
     UseConstant: 0

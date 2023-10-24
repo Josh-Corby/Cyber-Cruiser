@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Backup System
-    Description: 
-    Sprite: {fileID: 21300000, guid: b47d98363249b2f4a9e16618833a661f, type: 3}
+    Description: Overheating Equips a free Plasma Shield
+    Sprite: {fileID: 21300000, guid: 959bf7540026bc44caba6c56c4039b5e, type: 3}
   _equipBoolToTrack:
     UseConstant: 0
     ConstantValue: 0

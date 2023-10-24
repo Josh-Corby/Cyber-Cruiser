@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbdfbc5f48b0e946bc23ca24fb9570b, type: 3}
   m_Name: WeaponData_RobodactylWeapon
   m_EditorClassIdentifier: 
+  WeaponName: 
+  WeaponDescription: 
+  WeaponUISprite: {fileID: 0}
+  MuzzleFlash: {fileID: 0}
   objectToFire: {fileID: 760453196464390188, guid: 0bc4f44e95491144f93d1772d1d05593, type: 3}
   TimeBetweenShots: 1
   IsWeaponAutomatic: 0
@@ -26,5 +30,6 @@ MonoBehaviour:
   AmountOfBursts: 2
   TimeBetweenBurstShots: 0.4
   IsWeaponMultiFire: 1
-  MultiFireShots: 3
-  IsMultiFireSpreadRandom: 1
+  MultiFireShots: 4
+  IsMultiFireSpreadRandom: 0
+  Equips: 0

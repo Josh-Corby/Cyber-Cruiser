@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Shield Generator
-    Description: 
+    Description: Shield duration extended (consumes 1 Plasma/sec)
     Sprite: {fileID: 21300000, guid: ca814836488eac54ca409b6c9d697f69, type: 3}
   _equipBoolToTrack:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: d9fe53655d3f6db4cb59c30cd654b8a4, type: 2}
-  _timesPickedUp: 0
+  _timesPickedUp: 1

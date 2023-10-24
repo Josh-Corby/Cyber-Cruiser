@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Chain Lightning
-    Description: 
+    Description: Laser attacks bounce to additional targets
     Sprite: {fileID: 21300000, guid: 441bcecb48cfbfb41b634bf7568a8e10, type: 3}
   _equipBoolToTrack:
     UseConstant: 0

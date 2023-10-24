@@ -79,5 +79,12 @@ namespace CyberCruiser
         {
             throw new NotImplementedException();
         }
+
+        protected override void Crash()
+        {
+            _beamAttack.ResetBeam();
+            _beamAttack.StopFiring();
+            base.Crash();
+        }
     }
 }

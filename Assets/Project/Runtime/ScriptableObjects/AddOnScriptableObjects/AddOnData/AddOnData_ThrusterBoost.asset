@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Thruster Boost
-    Description: 
+    Description: Fly at increased speed
     Sprite: {fileID: 21300000, guid: 0767e4722513c7f4baa4e12314199862, type: 3}
   _equipBoolToTrack:
     UseConstant: 0

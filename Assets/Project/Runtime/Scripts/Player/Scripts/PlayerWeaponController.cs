@@ -18,7 +18,7 @@ namespace CyberCruiser
         [SerializeField] private Color _weaponUpgradeSliderColour;
 
         private Weapon _playerWeapon;
-        private WeaponSO _currentWeaponSO;
+        [SerializeField] private WeaponSO _currentWeaponSO;
 
         #region SO References
         [SerializeField] private IntReference _weaponUpgradeDurationInSeconds;
@@ -117,7 +117,7 @@ namespace CyberCruiser
             InputManager.OnFire += SetFireInput;
             GameManager.OnMissionEnd += ResetWeapon;
             Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
-            Pickup.OnBossPickup += (name, sprite) => { CheckIfAddOnIsChainLightning(name); };
+            Pickup.OnBossPickup += CheckIfAddOnIsChainLightning;
             InitializeWeapon();
         }
 
@@ -126,7 +126,7 @@ namespace CyberCruiser
             InputManager.OnFire -= SetFireInput;
             GameManager.OnMissionEnd -= ResetWeapon;
             Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
-            Pickup.OnBossPickup -= (name, sprite) => { CheckIfAddOnIsChainLightning(name); };
+            Pickup.OnBossPickup -=CheckIfAddOnIsChainLightning;
         }
 
         private void Start()
@@ -249,9 +249,9 @@ namespace CyberCruiser
                 OnEmergencyArsenalActivated?.Invoke();
         }
 
-        private void CheckIfAddOnIsChainLightning(string name)
+        private void CheckIfAddOnIsChainLightning(PickupInfo info)
         {
-            if(name != _addOnManager.ChainLightning.Info.Name)
+            if(info.Name != _addOnManager.ChainLightning.Info.Name)
             {
                 DisableChainLightning();
             }

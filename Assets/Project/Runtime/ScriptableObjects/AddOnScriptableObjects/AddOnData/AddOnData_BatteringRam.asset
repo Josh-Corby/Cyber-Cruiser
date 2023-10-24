@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: addf7c2747ecd934e9c91a5420e5e138, type: 3}
-  m_Name: AddOnData_RamDamage
+  m_Name: AddOnData_BatteringRam
   m_EditorClassIdentifier: 
   _info:
-    Name: Ram Upgrade
-    Description: 
+    Name: Battering Ram
+    Description: Collisions destroy enemies while Shield is active
     Sprite: {fileID: 21300000, guid: 432e290059ed2e246971e651b88d077b, type: 3}
   _equipBoolToTrack:
     UseConstant: 0

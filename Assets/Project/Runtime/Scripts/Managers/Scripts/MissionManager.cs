@@ -100,16 +100,10 @@ namespace CyberCruiser
         public void StartNextMissionIfReady()
         {
             if (_currentMission != null)
-            {
-                MissionBeforeLevelStart = _currentMission;
                 return;
-            }
 
-            if(_nextMissionToStart == null)
-            {
-                MissionBeforeLevelStart = _currentMission;
-                return;
-            }
+            if(_nextMissionToStart == null && _currentMission == null)
+                _nextMissionToStart = _currentMissionCategory.Missions[0];              
 
             _currentMissionProgress = 0;
             _currentMission = _nextMissionToStart;
@@ -428,19 +422,14 @@ namespace CyberCruiser
             int missionIndexInMissionsToComplete;
 
             if (_currentMission != null)
-            {
                 missionIndexInMissionsToComplete = _missionsToCompleteInCategory.ToList().FindIndex(obj => obj == _currentMission);
-            }
 
+            //current mission is null(next mission hasnt been assigned yet)
             else if (_nextMissionToStart != null)
-            {
                 missionIndexInMissionsToComplete = _missionsToCompleteInCategory.ToList().FindIndex(obj => obj == _nextMissionToStart);
-            }
 
             else
-            {
                 missionIndexInMissionsToComplete = 0;
-            }
             
             PlayerPrefs.SetInt(CATEGORY_ID_OF_CURRENT_MISSION, missionIndexInMissionsToComplete);
         }
@@ -467,7 +456,6 @@ namespace CyberCruiser
         {
             RestoreMissionCategory();
             RestoreMissionsToCompleteInCategoryFromJSON();
-            RestoreCategoryIDOfCurrentMission();
             RestoreMissionProgress();
             StartNextMissionIfReady();
         }
@@ -475,6 +463,15 @@ namespace CyberCruiser
         private void RestoreMissionCategory()
         {
             _currentMissionCategory = _missionCategories[PlayerPrefs.GetInt(CURRENT_MISSION_CATEGORY_ID, 0)];
+        }
+
+        private void RestoreMissionsToCompleteInCategoryFromJSON()
+        {
+            _missionsToCompleteInCategory = FileHandler.ReadFromJSON<MissionScriptableObject>(fileName);
+
+            RestoreCategoryIDOfCurrentMission();
+
+            //FillMissionsToComplete();
         }
 
         private void RestoreCategoryIDOfCurrentMission()
@@ -486,17 +483,6 @@ namespace CyberCruiser
         private void RestoreMissionProgress()
         {
             _currentMissionProgress = PlayerPrefs.GetInt(CURRENT_MISSION_PROGRESS, 0);
-        }
-
-        private void RestoreMissionsToCompleteInCategoryFromJSON()
-        {
-            _missionsToCompleteInCategory = FileHandler.ReadFromJSON<MissionScriptableObject>(fileName);
-
-            if (_missionsToCompleteInCategory.Count == 0)
-            {
-                Debug.Log("Missions left to complete is empty, repopulating list.");
-                FillMissionsToComplete();
-            }
         }
 
         private void FillMissionsToComplete()
