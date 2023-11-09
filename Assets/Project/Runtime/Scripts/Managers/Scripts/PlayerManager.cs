@@ -294,12 +294,22 @@ namespace CyberCruiser
             {
                 CurrentPlasma += plasmaAmount;
                 OnPlasmaPickupValue?.Invoke(plasmaAmount);
+
+                if (!_playerShieldController.PublicIsShieldsActive)
+                {
+                    _playerUIManager.ToggleGreenShieldDisplay(CanAffordShield());
+                }
             }
         }
 
         private void FullHeal()
         {
             PlayerCurrentHealth = PlayerMaxHealth;
+        }
+
+        public bool CanAffordShield()
+        {
+            return CurrentPlasma >= PlasmaCost;
         }
 
         public bool ComparePlasmaToCost()

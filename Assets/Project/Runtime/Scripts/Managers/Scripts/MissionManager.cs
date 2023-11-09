@@ -467,11 +467,11 @@ namespace CyberCruiser
 
         private void RestoreMissionsToCompleteInCategoryFromJSON()
         {
-            _missionsToCompleteInCategory = FileHandler.ReadFromJSON<MissionScriptableObject>(fileName);
+            //_missionsToCompleteInCategory = FileHandler.ReadFromJSON<MissionScriptableObject>(fileName);
 
+            FillMissionsToComplete();
             RestoreCategoryIDOfCurrentMission();
 
-            //FillMissionsToComplete();
         }
 
         private void RestoreCategoryIDOfCurrentMission()

@@ -13,6 +13,7 @@ namespace CyberCruiser
         [SerializeField] private TMP_Text _bossNameText;
         [SerializeField] private UISlider _bossHealthSlider;
         [SerializeField] private Image _bossWarningImage;
+        [SerializeField] private Sprite _bossHealthFillSprite;
 
         [Header("Boss Warnings")]
         [SerializeField] private Sprite _battleCruiserWarning;
@@ -114,12 +115,12 @@ namespace CyberCruiser
         private void EnableBossUI(EnemyScriptableObject boss)
         {
             SetBossNameText = boss.GeneralStats.Name;
+            _bossHealthSlider.SetFillImage(_bossHealthFillSprite);
             _bossHealthSlider.EnableSliderAtMaxValue(boss.GeneralStats.MaxHealth);
         }
 
         private void DisableBossUI()
         {
-            _bossHealthBarUI.SetActive(false);
             _bossNameText.enabled = false;
             SetBossNameText = "";
             StopBossWarningCoroutine();

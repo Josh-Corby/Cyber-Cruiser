@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace CyberCruiser
@@ -9,9 +10,10 @@ namespace CyberCruiser
     public class DistanceManager : GameBehaviour
     {
         [Header("UI References")]
-        [SerializeField] private TMP_Text _distanceCounterText;
         [SerializeField] private UISlider _distanceSlider;
         [SerializeField] private GameObject _distanceSliderObject;
+        [SerializeField] private Sprite _distanceFillSprite;
+        [SerializeField] private Image _distanceMarker;
 
         #region Fields
         [Header("Distance Increments")]
@@ -43,7 +45,6 @@ namespace CyberCruiser
                 _distanceInt = value;
                 OnDistanceChanged?.Invoke(_distanceInt);
                 UpdateDistanceSlider();
-                UpdateDistanceText();
             }
         }
 
@@ -57,10 +58,6 @@ namespace CyberCruiser
         public static event Action OnWeaponPackDistanceReached = null;
         #endregion
 
-        private void Awake()
-        {
-            _distanceSliderObject.SetActive(false);
-        }
 
         private void OnEnable()
         {
@@ -88,8 +85,9 @@ namespace CyberCruiser
                 StopCoroutine(_increaseDistanceCoroutine);
             }
 
+            _distanceSlider.SetFillImage(_distanceFillSprite);
+            _distanceMarker.enabled = true;
             _increaseDistanceCoroutine = StartCoroutine(IncreaseDistance());
-            _distanceSliderObject.SetActive(true);
         }
 
         private IEnumerator IncreaseDistance()
@@ -141,13 +139,13 @@ namespace CyberCruiser
 
         private void BossDistanceReached()
         {
-            _distanceSliderObject.SetActive(false);
             _previousBossDistance = _currentBossDistance;
             _currentBossDistance += _bossDistanceIncrement;
             StopIncreasingDistance();
             GenerateNewWeaponUpgradeDropDistance();
             GenerateNewPlasmaDropDistance();
             OnBossDistanceReached?.Invoke();
+            _distanceMarker.enabled = false;
         }
 
         public void ResetValues()
@@ -181,11 +179,6 @@ namespace CyberCruiser
         private void UpdateDistanceSlider()
         {
             _distanceSlider.EnableAndSetSlider(DistanceInt, _previousBossDistance, _currentBossDistance);
-        }
-
-        private void UpdateDistanceText()
-        {
-            _distanceCounterText.text = _distanceInt.ToString();
         }
         #endregion
     }

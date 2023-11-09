@@ -13,11 +13,6 @@ namespace CyberCruiser
         [SerializeField] private float _sliderLerpSpeed;
         [SerializeField] private bool _isSliderLerping;
 
-        [Header("Lerp Colour Settins")]
-        [SerializeField] private bool _doesSliderLerpColour;
-        [SerializeField] private Color _fillColourAtMinValue;
-        [SerializeField] private Color _fillColourAtMaxValue;
-
         private float _targetLerpValue;
 
         private float CurrentValue
@@ -34,10 +29,6 @@ namespace CyberCruiser
                 }
 
                 _slider.value = value;
-                if (_doesSliderLerpColour)
-                {
-                    LerpSliderFillColour();
-                }
             }
         }
 
@@ -128,34 +119,10 @@ namespace CyberCruiser
             }
         }
 
-        public void SetIsLerpingColour(bool isLerping)
+        public void SetFillImage(Sprite sprite)
         {
-            _doesSliderLerpColour = isLerping;
+            _fillImage.sprite = sprite;
         }
 
-        public void SetLerpingColour(bool isLerping, Color newColour)
-        {
-            _doesSliderLerpColour = isLerping;
-            
-            if(!isLerping)
-            {
-                SetSliderFillColour(newColour);
-            }
-        }
-
-        public void SetSliderFillColour(Color colour)
-        {
-            if(_fillImage != null)
-            {
-                _fillImage.color = colour;
-            }
-        }
-
-        public void LerpSliderFillColour()
-        {
-            float percentage = CurrentValue / MaxValue;
-            Color lerpedColour = Color.Lerp(_fillColourAtMinValue, _fillColourAtMaxValue, percentage);
-            SetSliderFillColour(lerpedColour);
-        }
     }
 }

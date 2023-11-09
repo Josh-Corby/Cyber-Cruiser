@@ -2,6 +2,7 @@ using CyberCruiser.Audio;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CyberCruiser
 {
@@ -10,6 +11,7 @@ namespace CyberCruiser
         [SerializeField] private PlayerAddOnManager _addOnManager;
         [SerializeField] private PlayerSoundController _soundController;
         [SerializeField] private PlayerUIManager _playerUIManager;
+        [SerializeField] private Image _overheatFlame;
 
         [SerializeField] private WeaponSO _baseWeaponSO;
         [SerializeField] private WeaponSO _chainLightingWeaponSO;
@@ -19,7 +21,6 @@ namespace CyberCruiser
 
         private Weapon _playerWeapon;
         [SerializeField] private WeaponSO _currentWeaponSO;
-
         #region SO References
         [SerializeField] private IntReference _weaponUpgradeDurationInSeconds;
         [SerializeField] private BoolReference _isGamePausedReference;
@@ -92,7 +93,7 @@ namespace CyberCruiser
             set
             {
                 _isOverheated = value;
-                _playerUIManager.OverheatUI(_isOverheated);
+                _playerUIManager.ToggleHeatSliderFill(_isOverheated);
             }
         }
         #endregion
@@ -153,6 +154,7 @@ namespace CyberCruiser
             _cooldownHeatLossPerFrame = BASE_COOLDOWN_HEAT_LOSS_PER_FRAME;
             _isWeaponUpgradeActive = false;
             _playerUIManager.EnableSliderAtValue(PlayerSliderTypes.Heat, _heatMax, _currentHeat);
+            _overheatFlame.enabled = false;
         }
 
         private void ResetWeapon()
@@ -187,6 +189,8 @@ namespace CyberCruiser
             {
                 CurrentHeat = 0;
                 IsOverheated = false;
+                _overheatFlame.enabled = false;
+                _playerUIManager.ToggleHeatSliderFill(false);
             }
         }
 
@@ -225,6 +229,8 @@ namespace CyberCruiser
             IsOverheated = true;
             _soundController.PlayNewClip(_overheatClip);
             PickupChecks();
+            _overheatFlame.enabled = true;
+            _playerUIManager.ToggleHeatSliderFill(true);
         }
 
         private void PickupChecks()
@@ -377,7 +383,7 @@ namespace CyberCruiser
             OnWeaponUpgradeStart?.Invoke(_weaponUpgradeDurationInSeconds.Value);
 
             _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.Heat, _weaponUpgradeDurationInSeconds.Value);
-            _playerUIManager.HeatSlider.SetLerpingColour(false, _weaponUpgradeSliderColour);
+            _playerUIManager.ToggleWeaponPackSliderFill(true);
             _weaponUpgradeCoroutine = StartCoroutine(WeaponUpgradeTimerCoroutine());
         }
 
@@ -398,10 +404,9 @@ namespace CyberCruiser
         private void OnWeaponUpgradeFinish()
         {
             _soundController.PlaySound(1);
-            _playerUIManager.HeatSlider.SetSliderValues(0, 100);
-            _playerUIManager.HeatSlider.SetIsLerpingColour(true);
             ChangeWeapon(_baseWeaponSO);
             _isWeaponUpgradeActive = false;
+            _playerUIManager.ToggleHeatSliderFill(false);
             DisableBeam();
         }
 

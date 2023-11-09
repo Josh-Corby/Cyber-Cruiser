@@ -6,33 +6,34 @@ namespace CyberCruiser
     public class PlayerUIManager : GameBehaviour
     {
         [SerializeField] private UISlider _playerHealthSlider;
-        [SerializeField] private UISlider _playerShieldSlider;
         [SerializeField] private UISlider _weaponHeatSlider;
-        [SerializeField] private UISlider _weaponUpgradeSlider;
+
+        [SerializeField] private Image _shieldActiveImage;
+        [SerializeField] private Image _shieldActiveUnderlay;
+        [SerializeField] private Image _shieldUnderlay;
+
+        [SerializeField] private Sprite _healthFillSprite;
+        [SerializeField] private Sprite _shieldFillSprite;
+
+        [SerializeField] private Sprite _heatFillSprite;
+        [SerializeField] private Sprite _overheatFillSprite;
+        [SerializeField] private Sprite _weaponPackFillSprite;
 
         [SerializeField] private Image _pickupImage;
-        [SerializeField] private GameObject _weaponUpgradeBarUI;
-
-        public UISlider HeatSlider { get => _weaponHeatSlider; }
-
-        private void Awake()
-        {
-            _weaponUpgradeBarUI.SetActive(false);
-        }
 
         private void OnEnable()
         {
-            GameManager.OnMissionStart += ClearPickupImage;
+            GameManager.OnMissionStart += ResetUI;
             Pickup.OnBossPickup += SetPickupImage;
         }
 
         private void OnDisable()
         {
-            GameManager.OnMissionEnd -= ClearPickupImage;
+            GameManager.OnMissionEnd -= ResetUI;
             Pickup.OnBossPickup -= SetPickupImage;
         }
 
-        private void ClearPickupImage()
+        private void ResetUI()
         {
             _pickupImage.enabled = false;
             _pickupImage.sprite = null;
@@ -71,15 +72,28 @@ namespace CyberCruiser
             GetSliderFromEnum(slider).ChangeSliderValue(value);
         }
 
-        public void OverheatUI(bool status)
+        public void ToggleHeatSliderFill(bool status)
         {
             if (status)
             {
-                _weaponHeatSlider.SetSliderFillColour(Color.red);
+                _weaponHeatSlider.SetFillImage(_overheatFillSprite);
             }
             else if (!status)
             {
-                _weaponHeatSlider.SetSliderFillColour(Color.cyan);
+                _weaponHeatSlider.SetFillImage(_heatFillSprite);
+            }
+        }
+
+        public void ToggleWeaponPackSliderFill(bool status)
+        {
+            if (status)
+            {
+                _weaponHeatSlider.SetFillImage(_weaponPackFillSprite);
+            }
+
+            else if (!status)
+            {
+                _weaponHeatSlider.SetFillImage(_heatFillSprite);
             }
         }
 
@@ -91,18 +105,38 @@ namespace CyberCruiser
                 case PlayerSliderTypes.Health:
                     currentSlider = _playerHealthSlider;
                     break;
-                case PlayerSliderTypes.Shield:
-                    currentSlider = _playerShieldSlider;
-                    break;
                 case PlayerSliderTypes.Heat:
                     currentSlider = _weaponHeatSlider;
-                    break;
-                case PlayerSliderTypes.WeaponUpgrade:
-                    currentSlider = _weaponUpgradeSlider;
                     break;
             }
 
             return currentSlider;
+        }
+
+        public void SetShieldSliderProgress(float progress)
+        {
+            _shieldActiveImage.fillAmount = progress;
+            _shieldActiveUnderlay.fillAmount = progress;
+        }
+
+        public void ToggleHealthSliderFill(bool status)
+        {
+            if(status)
+            {
+                _playerHealthSlider.SetFillImage(_shieldFillSprite);
+            }
+
+            else if (!status)
+            {
+                _playerHealthSlider.SetFillImage(_healthFillSprite);
+            }
+        }
+
+        public void ToggleGreenShieldDisplay(bool status)
+        {
+            _shieldActiveImage.enabled = status;
+            _shieldActiveUnderlay.enabled = status;
+            _shieldUnderlay.enabled = status;
         }
     }
 }
@@ -110,7 +144,5 @@ namespace CyberCruiser
 public enum PlayerSliderTypes
 {
     Health,
-    Shield,
     Heat,
-    WeaponUpgrade
 }

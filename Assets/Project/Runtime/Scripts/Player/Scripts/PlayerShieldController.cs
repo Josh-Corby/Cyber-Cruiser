@@ -38,11 +38,13 @@ namespace CyberCruiser
             set
             {
                 _shieldActiveTimer = value;
-                _playerUIManager.ChangeSliderValue(PlayerSliderTypes.Shield, _shieldActiveTimer);
+                _playerUIManager.SetShieldSliderProgress(GetShieldDurationInterped());
             }
         }
 
         protected override bool IsShieldsActive { get => _shieldsActive; set => base.IsShieldsActive = value; }
+
+        public bool PublicIsShieldsActive { get => _shieldsActive; }
 
         private bool IsPlayerInvisible { get => _isPlayerInvisible.Value; set => _isPlayerInvisible.Value = value; }
 
@@ -67,6 +69,7 @@ namespace CyberCruiser
             InputManager.OnShield += CheckShieldsState;
             GameManager.OnMissionEnd += DeactivateShields;
             PlayerWeaponController.OnBackupSystemActivated += ActivateShield;
+            _playerUIManager.ToggleGreenShieldDisplay(_playerManager.CanAffordShield());
         }
 
         private void OnDisable()
@@ -221,6 +224,8 @@ namespace CyberCruiser
             ResetShieldTimer();
             ToggleSliderUI(true);
             OnPlayerShieldsActivated?.Invoke();
+
+            _playerUIManager.ToggleGreenShieldDisplay(true);
         }
 
         public void DeactivateShield()
@@ -232,6 +237,7 @@ namespace CyberCruiser
         protected override void DeactivateShields()
         {
             ToggleSliderUI(false);
+            _playerUIManager.ToggleGreenShieldDisplay(_playerManager.CanAffordShield());
 
             if (IsPlayerInvisible)
             {
@@ -324,16 +330,12 @@ namespace CyberCruiser
 
         private void ToggleSliderUI(bool value)
         {
-            if (value)
-            {
-                _playerUIManager.EnableSliderAtMaxValue(PlayerSliderTypes.Shield, _shieldActiveDuration);
-            }
-
-            if (!value)
-            {
-                _playerUIManager.DisableSlider(PlayerSliderTypes.Shield);
-            }
+            _playerUIManager.ToggleHealthSliderFill(value);
         }
 
+        private float GetShieldDurationInterped()
+        {
+            return _shieldActiveTimer / _shieldActiveDuration;
+        }
     }
 }
