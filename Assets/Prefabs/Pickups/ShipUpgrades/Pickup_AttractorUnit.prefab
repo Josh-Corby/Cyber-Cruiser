@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5854018712851499478}
   - component: {fileID: 8319758977938239426}
   m_Layer: 0
-  m_Name: Pickup_Plasma_Art
+  m_Name: Pickup_Boss_Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 701405901
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 521ea27f514b9924d9d3f5829f62228a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc2914af08434c34ba49040f0223c289, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 906527034814220270}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e1089f0ee5f894d4cba8554fc7122663, type: 2}
+  m_Controller: {fileID: 9100000, guid: a667344659303654a9689e714ad43a45, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

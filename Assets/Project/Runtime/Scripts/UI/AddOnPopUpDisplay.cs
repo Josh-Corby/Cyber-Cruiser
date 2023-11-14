@@ -6,46 +6,35 @@ namespace CyberCruiser
 {
     public class AddOnPopUpDisplay : MonoBehaviour
     {
-
-        [SerializeField] private TMP_Text _addOnNameText;
-        [SerializeField] private TMP_Text _addOnDescriptionText;
-        [SerializeField] private Image _addOnImage; 
+        [SerializeField] private Image _popUpImage; 
         private void OnEnable()
         {
-            Pickup.OnBossPickup += DisplayPickupDescription;
+            Disable();
+            Pickup.OnBossPickup += DisplayPopUp;
         }
 
         private void OnDisable()
         {
-            DisableText();
-            Pickup.OnBossPickup -= DisplayPickupDescription;
+            Disable();
+            Pickup.OnBossPickup -= DisplayPopUp;
         }
 
-        private void DisplayPickupDescription(PickupInfo info)
+        private void DisplayPopUp(PickupInfo info)
         {
-            EnableText();
-            _addOnNameText.text = info.Name;
-            _addOnDescriptionText.text = info.Description;
-            _addOnImage.sprite = info.Sprite;
-            Invoke(nameof(DisableText), 2f);
+            Enable();
+            _popUpImage.sprite = info.Popup;
+            Invoke(nameof(Disable), 2f);
         }
 
-        private void EnableText()
+        private void Enable()
         {
-            _addOnNameText.enabled = true;
-            _addOnDescriptionText.enabled = true;
-            _addOnImage.enabled = true;
+            _popUpImage.enabled = true;
         }
 
-        private void DisableText()
+        private void Disable()
         {
-            _addOnNameText.text = "";
-            _addOnDescriptionText.text = "";
-            _addOnImage.sprite = null;
-
-            _addOnNameText.enabled = false;
-            _addOnDescriptionText.enabled = false;
-            _addOnImage.enabled = false;
+            _popUpImage.sprite = null;
+            _popUpImage.enabled = false;
         }
     }
 }

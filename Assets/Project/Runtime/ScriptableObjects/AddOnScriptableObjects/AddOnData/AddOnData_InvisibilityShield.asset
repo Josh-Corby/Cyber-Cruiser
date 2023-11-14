@@ -15,7 +15,8 @@ MonoBehaviour:
   _info:
     Name: Invisibility Shield
     Description: Standard enemies don't notice you
-    Sprite: {fileID: 21300000, guid: d9a8f03cf40d5e4478f7decdc7bd578a, type: 3}
+    Sprite: {fileID: 21300000, guid: 57929ee75acaddf48a36893236fe019c, type: 3}
+    Popup: {fileID: 21300000, guid: 08b089382d27875418168b22710bcf25, type: 3}
   _equipBoolToTrack:
     UseConstant: 0
     ConstantValue: 0

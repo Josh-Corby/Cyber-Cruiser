@@ -15,7 +15,8 @@ MonoBehaviour:
   _info:
     Name: Thermal Welding
     Description: Overheating heals you
-    Sprite: {fileID: 21300000, guid: 9e48b1b3135f2f341ac7a57d6bbca207, type: 3}
+    Sprite: {fileID: 21300000, guid: 59907d113391b7446a417da4790c9559, type: 3}
+    Popup: {fileID: 21300000, guid: 1355c641a2040a64aaaa0d272815dcb0, type: 3}
   _equipBoolToTrack:
     UseConstant: 0
     ConstantValue: 0

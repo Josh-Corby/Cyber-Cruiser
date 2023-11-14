@@ -116,7 +116,7 @@ namespace CyberCruiser
         {
             SetBossNameText = boss.GeneralStats.Name;
             _bossHealthSlider.SetFillImage(_bossHealthFillSprite);
-            _bossHealthSlider.EnableSliderAtMaxValue(boss.GeneralStats.MaxHealth);
+            _bossHealthSlider.EnableAndSetSlider(boss.GeneralStats.MaxHealth,0, boss.GeneralStats.MaxHealth);
         }
 
         private void DisableBossUI()

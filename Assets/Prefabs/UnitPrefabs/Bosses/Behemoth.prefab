@@ -192,7 +192,7 @@ MonoBehaviour:
     OverrideSourceVolume: 0
     Volume: 1
     PlayOneShot: 0
-  _attackCooldown: 1.75
+  _attackCooldown: 0.7
   _attackTimer: 0.0640432
   _missileLauncher: {fileID: 8696463764316948251}
   _homingMissileLauncher: {fileID: 5618699712732783143}

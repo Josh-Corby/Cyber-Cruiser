@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CategoryID: 0
   missionDescription: Collect 25 Plasma
-  missionIcon: {fileID: 21300000, guid: 5391fd3b444835142b7840b70a7929be, type: 3}
+  missionIcon: {fileID: 21300000, guid: 02d3995711dd2b942bee977e72e24e0b, type: 3}
   missionPersistence: 1
   missionCondition: 1
   enemy: 0
   missionObjectiveAmount: 25
   missionStarReward: 1
+  isComplete: 0

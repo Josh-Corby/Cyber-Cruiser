@@ -14,6 +14,7 @@ namespace CyberCruiser
         [SerializeField] private GameObject _distanceSliderObject;
         [SerializeField] private Sprite _distanceFillSprite;
         [SerializeField] private Image _distanceMarker;
+        [SerializeField] private TMP_Text _distanceText;
 
         #region Fields
         [Header("Distance Increments")]
@@ -44,7 +45,9 @@ namespace CyberCruiser
 
                 _distanceInt = value;
                 OnDistanceChanged?.Invoke(_distanceInt);
+                
                 UpdateDistanceSlider();
+                _distanceText.text = _distanceInt.ToString();
             }
         }
 

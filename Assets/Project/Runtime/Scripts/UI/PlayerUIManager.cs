@@ -134,6 +134,7 @@ namespace CyberCruiser
 
         public void ToggleGreenShieldDisplay(bool status)
         {
+            SetShieldSliderProgress(1);
             _shieldActiveImage.enabled = status;
             _shieldActiveUnderlay.enabled = status;
             _shieldUnderlay.enabled = status;

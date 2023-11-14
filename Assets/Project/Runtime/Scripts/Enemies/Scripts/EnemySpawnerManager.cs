@@ -65,14 +65,14 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            DistanceManager.OnBossDistanceReached += SetupForBossSpawn;
+            DistanceManager.OnBossDistanceReached += SelectBossToSpawn;
             BossUIManager.OnBossWarningComplete += SpawnBoss;
             Boss.OnBossDiedPosition += (p, v) => ProcessBossDied();
         }
 
         private void OnDisable()
         {
-            DistanceManager.OnBossDistanceReached -= SetupForBossSpawn;
+            DistanceManager.OnBossDistanceReached -= SelectBossToSpawn;
             BossUIManager.OnBossWarningComplete -= SpawnBoss;
             Boss.OnBossDiedPosition -= (p, v) => ProcessBossDied();
         }
@@ -215,6 +215,7 @@ namespace CyberCruiser
 
         public void SelectBossToSpawn()
         {
+            StopSpawningEnemies();
             IsBossReadyToSpawn = false;
             _currentBossToSpawn = GetRandomBossToSpawn();
             OnBossSelected?.Invoke(_currentBossToSpawn);

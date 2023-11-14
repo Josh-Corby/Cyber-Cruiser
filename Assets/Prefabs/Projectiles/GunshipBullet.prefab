@@ -70,9 +70,10 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: efe9fede56b570b43a349c4d24043c12, type: 2}
+  Owner: {fileID: 0}
   _playerProjectileSprite: {fileID: 21300000, guid: 387cf088b89ad5b4aa020c04aa8acf8f, type: 3}
   _enemyProjectileSprite: {fileID: 21300000, guid: 23658842e6e46944abed6d698f3e550d, type: 3}
-  _collisionParticles: {fileID: 1476194722184337808, guid: 4d3ad22d4657ab04ba1bb6d979b90b0c, type: 3}
+  _collisionParticles: {fileID: 3129365258440886864, guid: c8e3819948a418846a19e069d9aeeac8, type: 3}
   _speed: 30
   _damage: 1
   _doesBulletExplode: 0

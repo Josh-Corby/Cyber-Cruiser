@@ -267,9 +267,9 @@ MonoBehaviour:
   _soundController: {fileID: 9168493408039516493}
   _tentacleClip:
     Clip: {fileID: 8300000, guid: a15043b38d007ff4e9c2219744d1856c, type: 3}
-    OverrideSourceVolume: 0
-    Volume: 1
-    PlayOneShot: 0
+    OverrideSourceVolume: 1
+    Volume: 0.801
+    PlayOneShot: 1
 --- !u!82 &812462650973986154
 AudioSource:
   m_ObjectHideFlags: 0

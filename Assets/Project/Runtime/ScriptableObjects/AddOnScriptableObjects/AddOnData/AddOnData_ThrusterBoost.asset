@@ -15,7 +15,8 @@ MonoBehaviour:
   _info:
     Name: Thruster Boost
     Description: Fly at increased speed
-    Sprite: {fileID: 21300000, guid: 0767e4722513c7f4baa4e12314199862, type: 3}
+    Sprite: {fileID: 21300000, guid: dec77014fcae2244089ed64f06fe128a, type: 3}
+    Popup: {fileID: 21300000, guid: 36c623e52f337e445ad2b508746c1172, type: 3}
   _equipBoolToTrack:
     UseConstant: 0
     ConstantValue: 0

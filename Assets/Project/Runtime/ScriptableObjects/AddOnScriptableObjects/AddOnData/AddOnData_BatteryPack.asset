@@ -15,7 +15,8 @@ MonoBehaviour:
   _info:
     Name: Battery Pack
     Description: Weapon Packs last longer
-    Sprite: {fileID: 21300000, guid: 716f55a94eef07b48abce19f42d16788, type: 3}
+    Sprite: {fileID: 21300000, guid: 6f52d202d107d724b850470ae7f506e2, type: 3}
+    Popup: {fileID: 21300000, guid: 991d8208c7d30bf488c633548fef004d, type: 3}
   _equipBoolToTrack:
     UseConstant: 0
     ConstantValue: 0

@@ -8,12 +8,16 @@ namespace CyberCruiser
         [SerializeField] private Weapon _homingMissileLauncher;
 
         private int _attacksSinceHomingAttack = 0;
-        [SerializeField] private int _attacksSinceWarCry = 0;
+        private int _attacksToWarCry = 5;
+        private const int MINATTACKSTOWARCRY = 3;
+        private const int MAXATTACKSTOWARCRY = 7;
+        [SerializeField] private int _attacksSinceWarCry = 5;
         [SerializeField] private WarCry _warCry;
 
         protected override void Start()
         {
             base.Start();
+            _attacksToWarCry = Random.Range(MINATTACKSTOWARCRY, MAXATTACKSTOWARCRY);
         }
 
         protected override void ChooseRandomAttack()
@@ -57,6 +61,7 @@ namespace CyberCruiser
         public void Attack3()
         {
             _warCry.StartWarCry();
+            _attacksToWarCry = Random.Range(MINATTACKSTOWARCRY, MAXATTACKSTOWARCRY);
             _attacksSinceWarCry = 0;
             _attacksSinceHomingAttack += 1;
         }

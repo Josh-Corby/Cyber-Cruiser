@@ -127,7 +127,7 @@ namespace CyberCruiser
             InputManager.OnFire -= SetFireInput;
             GameManager.OnMissionEnd -= ResetWeapon;
             Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
-            Pickup.OnBossPickup -=CheckIfAddOnIsChainLightning;
+            Pickup.OnBossPickup -= CheckIfAddOnIsChainLightning;
         }
 
         private void Start()
@@ -407,6 +407,7 @@ namespace CyberCruiser
             ChangeWeapon(_baseWeaponSO);
             _isWeaponUpgradeActive = false;
             _playerUIManager.ToggleHeatSliderFill(false);
+            _playerUIManager.EnableSliderAtValue(PlayerSliderTypes.Heat, _heatMax, _currentHeat);
             DisableBeam();
         }
 

@@ -15,7 +15,8 @@ MonoBehaviour:
   _info:
     Name: Shield Generator
     Description: Shield duration extended (consumes 1 Plasma/sec)
-    Sprite: {fileID: 21300000, guid: ca814836488eac54ca409b6c9d697f69, type: 3}
+    Sprite: {fileID: 21300000, guid: c8b2e76436d3be44fbfcb150ec065213, type: 3}
+    Popup: {fileID: 21300000, guid: f8f37e428acee0b45bc7667e6e1b06d8, type: 3}
   _equipBoolToTrack:
     UseConstant: 0
     ConstantValue: 0

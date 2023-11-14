@@ -15,7 +15,8 @@ MonoBehaviour:
   _info:
     Name: Reflector Shields
     Description: 
-    Sprite: {fileID: 21300000, guid: c4274a5975349654390217043764e96c, type: 3}
+    Sprite: {fileID: 21300000, guid: 066b70086985db0438ed6c26525744c7, type: 3}
+    Popup: {fileID: 21300000, guid: 066b70086985db0438ed6c26525744c7, type: 3}
   _equipBoolToTrack:
     UseConstant: 0
     ConstantValue: 0

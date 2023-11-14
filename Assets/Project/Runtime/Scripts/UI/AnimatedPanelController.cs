@@ -220,6 +220,15 @@ namespace CyberCruiser
         public void OnCloseScreenAnimationEnd()
         {
 
+            //if a screen has been closed in mission resume the game
+            if (_gameManager.InMission)
+            {
+                Debug.Log("Resuming game");
+                _inputManager.EnableControls();
+                _gameManager.ResumeGame();
+                _screenToOpen = null;
+            }
+
             if (_screenToOpen != null)
             {
                 OpenScreen();
@@ -228,7 +237,7 @@ namespace CyberCruiser
             //if game panel is changing
             if (_panelToEnable != null)
             {
-                //lkear screen after gameplay screen is closed
+                //ckear screen after gameplay screen is closed
                 if (_currentPanel == _gameplayPanel)
                 {
                     OnGameplayPanelClosed?.Invoke();
@@ -241,17 +250,6 @@ namespace CyberCruiser
                 if (_currentPanel == _gameplayPanel)
                 {
                     _gameManager.StartMission();
-                }
-            }
-
-            //if a screen has been closed in mission resume the game
-            if (_gameManager.InMission)
-            {
-                _inputManager.EnableControls();
-                _gameManager.ResumeGame();
-                if (_isResumingGame)
-                {
-                   
                 }
             }
 
