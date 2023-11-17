@@ -17,7 +17,6 @@ namespace CyberCruiser
         [SerializeField] private WeaponSO _chainLightingWeaponSO;
         [SerializeField] private BeamAttack _beamAttack;
         [SerializeField] private ClipInfo _overheatClip;
-        [SerializeField] private Color _weaponUpgradeSliderColour;
 
         private Weapon _playerWeapon;
         [SerializeField] private WeaponSO _currentWeaponSO;
@@ -118,7 +117,7 @@ namespace CyberCruiser
             InputManager.OnFire += SetFireInput;
             GameManager.OnMissionEnd += ResetWeapon;
             Pickup.OnWeaponUpgradePickup += WeaponUpgrade;
-            Pickup.OnBossPickup += CheckIfAddOnIsChainLightning;
+            //Pickup.OnBossPickup += CheckIfAddOnIsChainLightning;
             InitializeWeapon();
         }
 
@@ -127,7 +126,7 @@ namespace CyberCruiser
             InputManager.OnFire -= SetFireInput;
             GameManager.OnMissionEnd -= ResetWeapon;
             Pickup.OnWeaponUpgradePickup -= WeaponUpgrade;
-            Pickup.OnBossPickup -= CheckIfAddOnIsChainLightning;
+            //Pickup.OnBossPickup -= CheckIfAddOnIsChainLightning;
         }
 
         private void Start()

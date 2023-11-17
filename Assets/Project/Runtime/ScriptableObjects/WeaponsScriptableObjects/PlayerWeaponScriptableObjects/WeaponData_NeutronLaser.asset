@@ -21,7 +21,7 @@ MonoBehaviour:
   IsWeaponAutomatic: 1
   Clip:
     Clip: {fileID: 8300000, guid: 4517ca5002617704998cd5341723ce81, type: 3}
-    OverrideSourceVolume: 1
+    OverrideSourceVolume: 0
     Volume: 0.901
     PlayOneShot: 0
   DoesWeaponUseSpread: 0
@@ -32,3 +32,4 @@ MonoBehaviour:
   IsWeaponMultiFire: 0
   MultiFireShots: 0
   IsMultiFireSpreadRandom: 0
+  Equips: 13

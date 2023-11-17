@@ -57,7 +57,7 @@ namespace CyberCruiser
                     break;
             }
 
-            OnPickedUp(this);
+            OnPickedUp?.Invoke(this);
 
             if(_pickupType == PickupType.Boss)
             {

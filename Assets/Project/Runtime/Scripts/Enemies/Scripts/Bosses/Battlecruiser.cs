@@ -15,12 +15,32 @@ namespace CyberCruiser
         [SerializeField] private GameObject _pulverizerBeam;
         [SerializeField] private BeamAttack _beamAttack;
 
+        private readonly Vector2 SHIELDACTIVATIONRANGE = new Vector2(8, 12);
+
+        [SerializeField] private ShieldControllerBase _shields;
         private bool _isBeamCharging = false;
 
         protected override void Awake()
         {
             base.Awake();
             _beamAttack = _pulverizerBeam.GetComponent<BeamAttack>();
+            _shields = GetComponentInChildren<ShieldControllerBase>();
+        }
+
+        private void OnEnable()
+        {
+            ShieldControllerBase.OnShieldDeactivated += OnShieldsDeactivated;
+        }
+
+        private void OnDisable()
+        {
+            ShieldControllerBase.OnShieldDeactivated -= OnShieldsDeactivated;
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            _beamAttack._owner = EnemyInfo;
         }
 
         //check if beam is active
@@ -68,11 +88,11 @@ namespace CyberCruiser
 
         private void BeamAttack()
         {
-            _isBeamCharging = false;    
             _chargingParticles.Stop();
             _beamAttack.ResetBeam();
             _beamAttack.EnableBeam();
             _beamAttack.StartFiring();
+            _isBeamCharging = false;    
         }
 
         public void Attack3()
@@ -85,6 +105,27 @@ namespace CyberCruiser
             _beamAttack.ResetBeam();
             _beamAttack.StopFiring();
             base.Crash();
+        }
+
+        private void StartShieldCountdown()
+        {
+            Invoke(nameof(ActivateShields), Random.Range(SHIELDACTIVATIONRANGE.x, SHIELDACTIVATIONRANGE.y));
+            Debug.Log("shields warming up");
+        }
+
+        private void ActivateShields()
+        {
+            _shields.ActivateShields();
+        }
+
+        private void OnShieldsDeactivated(ShieldControllerBase shield)
+        {
+            if(shield == _shields)
+            {
+                //shield deactivated
+                Debug.Log("shields deactivated");
+                StartShieldCountdown();
+            }
         }
     }
 }

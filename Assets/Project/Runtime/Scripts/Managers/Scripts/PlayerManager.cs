@@ -71,7 +71,7 @@ namespace CyberCruiser
         #region Player Current Info
         [Header("Player Current Info")]
         private int _maxHealth;
-        private float _currentHealth;
+        [SerializeField] private float _currentHealth;
         private PlayerHealthState _playerHealthState;
         private float _iFramesDuration;
         private bool _isPlayerImmuneToDamage;
@@ -344,8 +344,10 @@ namespace CyberCruiser
         #region Player Damage Functions
         public void Damage(float damage, EnemyScriptableObject instigator)
         {
+            Debug.Log(instigator.name);
             if (damage <= 0 || _isPlayerImmuneToDamage)
             {
+                Debug.Log("Player took no damage");
                 return;
             }
 
@@ -398,7 +400,6 @@ namespace CyberCruiser
             if (_iFramesCoroutine != null)
             {
                 StopCoroutine(_iFramesCoroutine);
-
             }
             CancelIFrames();
             _iFramesCoroutine = StartCoroutine(Iframes());

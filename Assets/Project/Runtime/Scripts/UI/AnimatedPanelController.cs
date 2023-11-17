@@ -21,6 +21,8 @@ namespace CyberCruiser
         [SerializeField] private GameObject _missionCompleteScreen;
         [SerializeField] private GameObject _gameOverScreen;
 
+        [SerializeField] private GameObject _currentGameScreen;
+
         private GameObject _panelToEnable;
         private GameObject _currentPanel;
         [SerializeField] private GameObject _titlePanel;
@@ -124,7 +126,7 @@ namespace CyberCruiser
             //if in a mission go to the pause screen
             if (_gameManager.InMission)
             {
-                SwitchScreens(_pauseScreen);
+                SwitchScreens(_currentGameScreen);
             }
 
             //otherwise go to intended screen
@@ -158,7 +160,8 @@ namespace CyberCruiser
 
         public void ChangeToPauseScreen()
         {
-            ChangeScreen(_pauseScreen);
+            _currentGameScreen = _pauseScreen;
+            ChangeScreen(_currentGameScreen);
         }
 
         public void IsGameResumingWhenScreenCloses(bool isResumingGame)
@@ -171,13 +174,16 @@ namespace CyberCruiser
             Cursor.visible = true;
             if (_missionManager.IsAnyMissionCompleted)
             {
-                ChangeScreen(_missionCompleteScreen);
+                _currentGameScreen = _missionCompleteScreen;         
             }
 
             else
             {
-                ChangeScreen(_gameOverScreen);
+                _currentGameScreen = _gameOverScreen;
             }
+            _gameplayPanel.SetActive(false);
+            ChangeScreen(_currentGameScreen);
+
         }
 
         public void EndMission()
@@ -192,6 +198,10 @@ namespace CyberCruiser
         public void OnOpenScreenAnimationStart()
         {
             _inputManager.DisableControls();
+            if (_screenToOpen == _pauseScreen)
+            {
+                _gameplayPanel.SetActive(false);
+            }
         }
 
         public void OnOpenScreenAnimationEnd()
@@ -227,6 +237,7 @@ namespace CyberCruiser
                 _inputManager.EnableControls();
                 _gameManager.ResumeGame();
                 _screenToOpen = null;
+                _gameplayPanel.SetActive(true);
             }
 
             if (_screenToOpen != null)

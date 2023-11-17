@@ -28,6 +28,8 @@ namespace CyberCruiser
 
         [SerializeField] private BoolReference _isGamePausedReference;
 
+        public EnemyScriptableObject _owner = null;
+
         private Coroutine _fadeOutCoroutine = null;
 
         private void Awake()
@@ -90,7 +92,15 @@ namespace CyberCruiser
         {
             IsBeamFiring = false;
             _isBeamActive = false;
-            _lineRenderer.enabled = false;      
+            _lineRenderer.enabled = false;
+
+
+            if (_fadeOutCoroutine != null)
+            {
+                StopCoroutine(_fadeOutCoroutine);
+            }
+
+            _fadeOutCoroutine = StartCoroutine(VolumeFadeCoroutine());
         }
 
         public void ExtendBeam()
@@ -135,12 +145,10 @@ namespace CyberCruiser
             _beamTimer = beamDuration;
             _lineRenderer.enabled = false;
 
-            if(_fadeOutCoroutine != null)
+            if (_fadeOutCoroutine != null)
             {
                 StopCoroutine(_fadeOutCoroutine);
             }
-
-            _fadeOutCoroutine = StartCoroutine(VolumeFadeCoroutine());
         }
 
         private IEnumerator VolumeFadeCoroutine()
@@ -167,7 +175,7 @@ namespace CyberCruiser
 
                 else if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
                 {
-                    damageable.Damage(_beamDamage, null);
+                    damageable.Damage(_beamDamage, _owner);
                 }
 
                 if (hit.collider.TryGetComponent<Shield>(out var shield))

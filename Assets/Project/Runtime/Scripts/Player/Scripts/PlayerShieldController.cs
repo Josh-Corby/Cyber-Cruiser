@@ -138,17 +138,17 @@ namespace CyberCruiser
 
             if (PlayerManagerInstance.ComparePlasmaToCost())
             {
-                CheckShieldPickups();
+                ActivateShields();
             }
         }
 
         //a way to activate player shields from other classes, or from unity events
         public void ActivateShield()
         {
-            CheckShieldPickups();
+            ActivateShields();
         }
 
-        protected override void CheckShieldPickups()
+        public override void ActivateShields()
         {
             if (_addOnManager.InvisibilityShield.DoesPlayerHave)
                 IsPlayerInvisible = true;

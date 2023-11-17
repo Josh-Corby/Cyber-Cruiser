@@ -94,6 +94,14 @@ namespace CyberCruiser
         {
             StorePlayerData();
         }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                CompleteMission();
+            }
+        }
         #endregion
 
         #region Mission Assigning
@@ -386,7 +394,7 @@ namespace CyberCruiser
             if (_missionsToCompleteInCategory.Contains(_currentMission))
             {
                 _missionsToCompleteInCategory.Remove(_currentMission);
-                if (_missionsToCompleteInCategory == null)
+                if (_missionsToCompleteInCategory.Count ==0)
                 {
                     GetNextMissionCategory();
                 }

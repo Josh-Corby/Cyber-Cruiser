@@ -1,4 +1,5 @@
 using CyberCruiser.Audio;
+using System;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -48,6 +49,7 @@ namespace CyberCruiser
                 if (value == true)
                 {
                     ShieldCurrentStrength = ShieldMaxStrength;
+                    _shields.SetTargetAlpha(ShieldCurrentStrength, ShieldMaxStrength);
                 }
                 _shieldsActive = value;
                 _shields.ToggleShields(value);
@@ -60,6 +62,8 @@ namespace CyberCruiser
 
         public float ShieldCollisionDamage { get => _shieldCollisionDamage; set => _shieldCollisionDamage = value; }
         #endregion
+
+        public static event Action<ShieldControllerBase> OnShieldDeactivated = null;
 
         protected virtual void Awake()
         {
@@ -76,11 +80,11 @@ namespace CyberCruiser
             }
             else if (_shieldsActiveOnSpawn)
             {
-                CheckShieldPickups();
+                ActivateShields();
             }
         }
 
-        protected virtual void CheckShieldPickups()
+        public virtual void ActivateShields()
         {
             IsShieldsActive = true;
             _unitCollider.enabled = false;
@@ -90,6 +94,7 @@ namespace CyberCruiser
         {
             IsShieldsActive = false;
             _unitCollider.enabled = true;
+            OnShieldDeactivated?.Invoke(this);
         }
 
         public virtual void ProcessCollision(GameObject collider, Vector2 collisionPoint)
