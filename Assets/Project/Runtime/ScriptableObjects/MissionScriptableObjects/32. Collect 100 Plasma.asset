@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 32. Collect 100 Plasma
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Collect 100 Plasma
+  missionDescription: Collect {x} Plasma
   missionIcon: {fileID: 21300000, guid: 02d3995711dd2b942bee977e72e24e0b, type: 3}
   missionPersistence: 1
   missionCondition: 1

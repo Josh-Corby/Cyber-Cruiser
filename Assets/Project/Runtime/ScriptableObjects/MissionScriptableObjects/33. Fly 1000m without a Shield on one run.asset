@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
-  m_Name: 18. Fly 500m without shooting consecutively NOT IMPLEMENTED
+  m_Name: 33. Fly 1000m without a Shield on one run
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Fly 500m without shooting consecutively
-  missionIcon: {fileID: 21300000, guid: 86ee781ed14ee964280c50b783a52170, type: 3}
-  missionPersistence: 1
-  missionCondition: 0
+  missionDescription: Fly {x}m without a Shield on one run
+  missionIcon: {fileID: 21300000, guid: 8cfa3e5eff6de554497a2df3fa37d66d, type: 3}
+  missionPersistence: 0
+  missionCondition: 7
   enemy: 0
-  missionObjectiveAmount: 500
+  missionObjectiveAmount: 1000
   missionStarReward: 0
+  isComplete: 0

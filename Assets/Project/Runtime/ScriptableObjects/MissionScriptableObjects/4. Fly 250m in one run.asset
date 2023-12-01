@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 4. Fly 250m in one run
   m_EditorClassIdentifier: 
   CategoryID: 4
-  missionDescription: Fly 250m in one run
+  missionDescription: Fly {x}m in one run
   missionIcon: {fileID: 21300000, guid: ddcf240ba1fc0e04d9a209cbe9dd2801, type: 3}
   missionPersistence: 0
   missionCondition: 4

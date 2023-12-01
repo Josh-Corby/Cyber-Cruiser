@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 13. Pick up 5 weapon packs
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Pick up 5 weapon packs
+  missionDescription: Pick up {x} weapon packs
   missionIcon: {fileID: 21300000, guid: d0f31b832a8d3a9498fee762317d1c25, type: 3}
   missionPersistence: 1
   missionCondition: 3
   enemy: 0
   missionObjectiveAmount: 5
   missionStarReward: 1
+  isComplete: 0

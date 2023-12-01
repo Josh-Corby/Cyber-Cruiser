@@ -6,7 +6,7 @@ namespace CyberCruiser
 {
     public class AddOnPopUpDisplay : MonoBehaviour
     {
-        [SerializeField] private Image _popUpImage; 
+        [SerializeField] private Image _popUpImage;
         private void OnEnable()
         {
             Disable();
@@ -23,7 +23,7 @@ namespace CyberCruiser
         {
             Enable();
             _popUpImage.sprite = info.Popup;
-            Invoke(nameof(Disable), 2f);
+            Invoke(nameof(Disable), 3f);
         }
 
         private void Enable()

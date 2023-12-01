@@ -19,7 +19,7 @@ MonoBehaviour:
     TimesKilled: 13
     PlayerKills: 0
   GeneralStats:
-    Name: Missile
+    Name: Guided Missile
     Type: 3
     MaxHealth: 1
     RamDamage: 0

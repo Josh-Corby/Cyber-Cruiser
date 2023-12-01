@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 37. Defeat the Battlecruiser 3 times
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Defeat the Battlecruiser 3 times
+  missionDescription: Defeat the Battlecruiser {x} times
   missionIcon: {fileID: 21300000, guid: 99e6cce1ead97854799c6422cdbcfa52, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 10
   missionObjectiveAmount: 3
   missionStarReward: 3
+  isComplete: 0

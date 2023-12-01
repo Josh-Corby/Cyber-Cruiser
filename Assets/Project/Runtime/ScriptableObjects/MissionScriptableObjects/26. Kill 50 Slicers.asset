@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 26. Kill 50 Slicers
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Kill 50 Slicers
+  missionDescription: Kill {x} Slicers
   missionIcon: {fileID: 21300000, guid: ecd9e27efbf19994e97b1b67a2d3adde, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 5
   missionObjectiveAmount: 50
   missionStarReward: 2
+  isComplete: 0

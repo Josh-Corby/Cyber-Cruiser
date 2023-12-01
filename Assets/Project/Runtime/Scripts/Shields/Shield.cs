@@ -8,7 +8,6 @@ namespace CyberCruiser
         [SerializeField] private Collider2D _shieldCollider;
         private SpriteRenderer _spriteRenderer;
         private Color _tempColour;
-        private float _startAlpha;
 
         private void Awake()
         {
@@ -17,10 +16,7 @@ namespace CyberCruiser
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
-        private void Start()
-        {
-            _startAlpha = _spriteRenderer.color.a;
-        }
+
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
@@ -55,8 +51,8 @@ namespace CyberCruiser
         public void SetTargetAlpha(float currentStrength, float maxStrength)
         {
             float currentPercentStrength = currentStrength / maxStrength;
-            float targetAlpha = _startAlpha * currentPercentStrength;
-            ChangeSpriteRendererAlpha(targetAlpha);
+
+            ChangeSpriteRendererAlpha(currentPercentStrength);
         }
 
         public void ChangeSpriteRendererAlpha(float targetAlpha)

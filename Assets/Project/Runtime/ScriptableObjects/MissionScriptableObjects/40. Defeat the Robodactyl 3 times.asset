@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 40. Defeat the Robodactyl 3 times
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Defeat the Robodactyl 3 times
+  missionDescription: Defeat the Robodactyl {x} times
   missionIcon: {fileID: 21300000, guid: e95fe719f7d0aa44b944955ba87f5f4b, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 8
   missionObjectiveAmount: 3
   missionStarReward: 3
+  isComplete: 0

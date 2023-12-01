@@ -9,7 +9,6 @@ namespace CyberCruiser
     {
         [SerializeField] private MissionManager _missionManager;
         [SerializeField] private TMP_Text _missionDescription;
-        [SerializeField] private TMP_Text _missionProgress;
         [SerializeField] private TMP_Text _missionStatus;
         [SerializeField] private Image[] _missionImages;
         [SerializeField] private GameObject[] _missionStars;
@@ -53,7 +52,6 @@ namespace CyberCruiser
         private void ClearMissionUI()
         {
             _missionDescription.text = "";
-            _missionProgress.text = "";
 
             for (int i = 0; i < _missionImages.Length; i++)
             {
@@ -77,17 +75,17 @@ namespace CyberCruiser
 
             if (_currentMission.isComplete)
             {
-                _missionProgress.text = "";
                 _missionStatus.text = "Mission Complete";
             }
 
             else
             {
                 _missionStatus.text = "Current Mission";
-                _missionProgress.text = _missionManager.MissionProgressLeft.ToString() + " left";
             }
 
-            _missionDescription.text = _currentMission.missionDescription;
+            string text = _currentMission.missionDescription;
+            string formattedText = text.Replace("{x}", _missionManager.MissionProgressLeft.ToString());
+            _missionDescription.text = formattedText;
 
             for (int i = 0; i < _missionImages.Length; i++)
             {

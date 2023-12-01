@@ -20,6 +20,7 @@ namespace CyberCruiser
 
         private Weapon _playerWeapon;
         [SerializeField] private WeaponSO _currentWeaponSO;
+        [SerializeField] private WeaponSO _pulverizerData;
         #region SO References
         [SerializeField] private IntReference _weaponUpgradeDurationInSeconds;
         [SerializeField] private BoolReference _isGamePausedReference;
@@ -303,6 +304,7 @@ namespace CyberCruiser
                 {
                     _beamAttack.IsBeamFiring = false;
                     _beamAttack.ResetBeam();
+                    _beamAttack.StopFiring();
                 }
             }
         } 
@@ -370,6 +372,7 @@ namespace CyberCruiser
             {
                 Debug.Log("pulverizer upgrade");
                 PulverizerUpgrade();
+                _pulverizerData.IncrementEquips();
             }
 
             else

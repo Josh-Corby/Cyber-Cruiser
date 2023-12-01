@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 19. Fly 5000m
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Fly 5000m
+  missionDescription: Fly {x}m
   missionIcon: {fileID: 21300000, guid: 20c49f75a1e43c24ca55dfefbda64a1e, type: 3}
   missionPersistence: 1
   missionCondition: 4
   enemy: 0
   missionObjectiveAmount: 5000
   missionStarReward: 2
+  isComplete: 0

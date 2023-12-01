@@ -9,7 +9,7 @@ namespace CyberCruiser
 
     public enum MissionConditions
     {
-        EndMission, CollectPlasma, UseShield, UseWeaponPack, FlyDistance, KillEnemy, DontShootForDistance
+        EndMission, CollectPlasma, UseShield, UseWeaponPack, FlyDistance, KillEnemy, DontShootForDistance, DontShieldForDistance
     }
 
     public enum EnemyTypes

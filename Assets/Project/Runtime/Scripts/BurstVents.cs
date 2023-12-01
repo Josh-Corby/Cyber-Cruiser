@@ -8,6 +8,7 @@ namespace CyberCruiser
 
         public void Burst()
         {
+            Debug.Log("Bursting");
             GameObject burstExplosion = Instantiate(_burstObject, transform.position, Quaternion.identity);
             burstExplosion.transform.parent = null;
         }

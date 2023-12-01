@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 41. Defeat 5 bosses
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Defeat 5 bosses
+  missionDescription: Defeat {x} bosses
   missionIcon: {fileID: 21300000, guid: 987fb7cfdc2814b46ad1ece630935e1e, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 7
   missionObjectiveAmount: 5
   missionStarReward: 3
+  isComplete: 0

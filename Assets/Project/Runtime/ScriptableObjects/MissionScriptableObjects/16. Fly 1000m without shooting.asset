@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 279b1d6dd6188ba42946edae14672dc6, type: 3}
-  m_Name: 16. Fly 1000m without shooting NOT IMPLEMENTED
+  m_Name: 16. Fly 1000m without shooting
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Fly 1000m without shooting
+  missionDescription: Fly {x}m without shooting
   missionIcon: {fileID: 21300000, guid: 86ee781ed14ee964280c50b783a52170, type: 3}
-  missionPersistence: 0
-  missionCondition: 0
+  missionPersistence: 1
+  missionCondition: 6
   enemy: 0
   missionObjectiveAmount: 1000
   missionStarReward: 0
+  isComplete: 0

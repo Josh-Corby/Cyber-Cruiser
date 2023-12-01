@@ -219,11 +219,11 @@ namespace CyberCruiser
             _attractorUnit.gameObject.SetActive(false);
             _isPlayerImmuneToDamage = false;
             _playerCollider.enabled = true;
+
             GameManager.OnIsTimeScalePaused += SetPlayerControls;
             Pickup.OnResourcePickup += AddResources;
             Pickup.OnBossPickup += CheckPickedUpAddon;
             PlayerWeaponController.OnThermalWeldingActivated += QuarterHeal;
-
         }
 
         private void OnDisable()
@@ -344,7 +344,6 @@ namespace CyberCruiser
         #region Player Damage Functions
         public void Damage(float damage, EnemyScriptableObject instigator)
         {
-            Debug.Log(instigator.name);
             if (damage <= 0 || _isPlayerImmuneToDamage)
             {
                 Debug.Log("Player took no damage");
@@ -387,7 +386,7 @@ namespace CyberCruiser
             }
         }
 
-        private void RetaliationMatrixCheck()
+        public void RetaliationMatrixCheck()
         {
             if (_doesPlayerHaveRetaliationMatrix.Value)
             {

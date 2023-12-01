@@ -278,24 +278,20 @@ namespace CyberCruiser
                 return;
             }
 
+            float shieldDamage = 0;
             if (collider.TryGetComponent<IDamageable>(out var damageable))
             {
-                damageable.Damage(ShieldCollisionDamage, null);
-                if (!_isShieldImmuneToDamage)
-                {
-                    ReduceShields(1);
-                }
-                
+                damageable.Damage(_ramDamage.Value, null);
+                shieldDamage = 1;
+ 
                 PlayCollisionParticles(collisionPoint);
             }
 
             else if (collider.TryGetComponent<ShieldControllerBase>(out var shield))
             {
-                shield.ReduceShields(ShieldCollisionDamage);
-                if (!_isShieldImmuneToDamage)
-                {
-                    ReduceShields(shield.ShieldCollisionDamage);
-                }
+                shield.ReduceShields(_ramDamage.Value);
+
+                shieldDamage = shield.ShieldCollisionDamage;
             }
 
             else if (collider.TryGetComponent<Bullet>(out var bullet))
@@ -303,11 +299,8 @@ namespace CyberCruiser
                 _soundController.PlayNewClip(_shieldDamageClip);
 
                 PlayCollisionParticles(collisionPoint);
-                if (!_isShieldImmuneToDamage)
-                {
-                    ReduceShields(bullet.Damage);
-                }
-
+                shieldDamage = bullet.Damage;
+                
                 if (_addOnManager.ReflectorShield.DoesPlayerHave)
                 {
                     ReflectProjectile(bullet);
@@ -316,6 +309,14 @@ namespace CyberCruiser
 
                 Destroy(bullet.gameObject);
             }
+
+            if (!_isShieldImmuneToDamage)
+            {
+                ReduceShields(shieldDamage);               
+            }
+
+            _playerManager.RetaliationMatrixCheck();
+
         }
 
         public override void ReduceShields(float damage)

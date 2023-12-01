@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponName: NEUTRON LASERS
   WeaponDescription: Fixed attack pattern multilaser
-  WeaponUISprite: {fileID: 21300000, guid: 82aba1b7da2d1064581490ab79d7107a, type: 3}
+  WeaponUISprite: {fileID: 21300000, guid: 139608af3834cc84cb62a879d67fba31, type: 3}
+  MuzzleFlash: {fileID: 0}
   objectToFire: {fileID: 760453196464390188, guid: aefca9002aa15e2478302a3f2253c1b1, type: 3}
   TimeBetweenShots: 0.1
   IsWeaponAutomatic: 1
@@ -31,3 +32,4 @@ MonoBehaviour:
   IsWeaponMultiFire: 1
   MultiFireShots: 3
   IsMultiFireSpreadRandom: 0
+  Equips: 0

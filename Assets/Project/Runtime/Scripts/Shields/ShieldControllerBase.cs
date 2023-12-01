@@ -22,13 +22,13 @@ namespace CyberCruiser
 
         #region Fields
         protected bool _shieldsActive;
-        private float _shieldCurrentStrength;
+        [SerializeField] private float _shieldCurrentStrength;
 
         [Tooltip("Strength of shield when activated")]
         [SerializeField] private int _shieldMaxStrength;
 
         [Tooltip("Damage shield does when colliding with a damageable target")]
-        [SerializeField] protected float _shieldCollisionDamage;
+        [SerializeField] private float _shieldCollisionDamage;
 
         [Tooltip("Does the shield reflect projectiles")]
         [SerializeField] protected bool _reflectorShield;

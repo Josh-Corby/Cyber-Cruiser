@@ -224,6 +224,10 @@ namespace CyberCruiser
                     DistanceManager.OnDistanceTraveled += IncrementMissionProgress;
                     PlayerWeaponController.OnShoot += FailMission;
                     break;
+                case MissionConditions.DontShieldForDistance:
+                    DistanceManager.OnDistanceTraveled += IncrementMissionProgress;
+                    PlayerShieldController.OnPlayerShieldsActivated += FailMission;
+                    break;
             }
         }
 
@@ -325,6 +329,11 @@ namespace CyberCruiser
                 case MissionConditions.DontShootForDistance:
                     DistanceManager.OnDistanceTraveled -= IncrementMissionProgress;
                     PlayerWeaponController.OnShoot -= FailMission;
+                    break;
+
+                case MissionConditions.DontShieldForDistance:
+                    DistanceManager.OnDistanceTraveled -= IncrementMissionProgress;
+                    PlayerShieldController.OnPlayerShieldsActivated -= FailMission;
                     break;
             }
         }

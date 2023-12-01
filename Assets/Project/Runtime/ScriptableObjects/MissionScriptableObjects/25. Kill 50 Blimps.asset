@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 25. Kill 50 Blimps
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Kill 50 Blimps
+  missionDescription: Kill {x} Blimps
   missionIcon: {fileID: 21300000, guid: b2f5648a08493224384247a5e2b79cac, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 4
   missionObjectiveAmount: 50
   missionStarReward: 2
+  isComplete: 0

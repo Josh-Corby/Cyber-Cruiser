@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 38. Defeat the Behemoth 3 times
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Defeat the Behemoth 3 times
+  missionDescription: Defeat the Behemoth {x} times
   missionIcon: {fileID: 21300000, guid: 83c8844486cb32b42884ab833abc4e0e, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 9
   missionObjectiveAmount: 3
   missionStarReward: 3
+  isComplete: 0

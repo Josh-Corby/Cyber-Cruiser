@@ -31,7 +31,7 @@ namespace CyberCruiser
                 _weaponImage.sprite = _weaponInfo.WeaponUISprite;
                 _weaponName.text = _weaponInfo.WeaponName;
                 _weaponDescription.text = _weaponInfo.WeaponDescription;
-                _equips.text = _weaponInfo.Equips.ToString();
+                _equips.text = "Equipped:_" + _weaponInfo.Equips.ToString();
             }
         }
     }

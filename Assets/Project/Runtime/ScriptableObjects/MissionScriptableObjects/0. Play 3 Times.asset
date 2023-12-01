@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 0. Play 3 Times
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Play 3 Times
+  missionDescription: Play {x} Times
   missionIcon: {fileID: 21300000, guid: 9888c2fa9f973e4438a47c40010eeec3, type: 3}
   missionPersistence: 1
   missionCondition: 0
   enemy: 0
   missionObjectiveAmount: 3
   missionStarReward: 1
+  isComplete: 0

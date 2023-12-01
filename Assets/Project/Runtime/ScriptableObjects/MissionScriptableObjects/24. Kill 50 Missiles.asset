@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: 24. Kill 50 Missiles
   m_EditorClassIdentifier: 
   CategoryID: 0
-  missionDescription: Kill 50 Missiles
+  missionDescription: Kill {x} Missiles
   missionIcon: {fileID: 21300000, guid: 150eed172f6f91945affa321c2579947, type: 3}
   missionPersistence: 1
   missionCondition: 5
   enemy: 3
   missionObjectiveAmount: 50
   missionStarReward: 2
+  isComplete: 0

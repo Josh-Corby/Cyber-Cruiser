@@ -59,7 +59,7 @@ namespace CyberCruiser
             if (!_isCountdownDone)
             {
                 OnCountdownDone?.Invoke();
-                WaveCountdownText = "GO!";
+                WaveCountdownText = "Commence Mission";
                 _waveCountdownText.color = Color.green;
                 _isCountdownDone = true;
             }
@@ -72,6 +72,7 @@ namespace CyberCruiser
             if (_waveCountdownText.enabled == true)
             {
                 _waveCountdownText.enabled = false;
+                WaveCountdownText = "";
             }
         }
 
