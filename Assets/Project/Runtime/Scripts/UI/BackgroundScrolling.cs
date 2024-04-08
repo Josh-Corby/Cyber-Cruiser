@@ -8,9 +8,11 @@ namespace CyberCruiser
         [SerializeField] private RawImage _image;
         [SerializeField] private Vector2 _speed;
 
+        [SerializeField] private IntReference _scrollSpeedMultiplier;
+
         private void Update()
         {
-            _image.uvRect = new Rect(_image.uvRect.position + new Vector2(_speed.x, _speed.y) * Time.deltaTime, _image.uvRect.size);
+            _image.uvRect = new Rect(_image.uvRect.position + new Vector2(_speed.x, _speed.y) * _scrollSpeedMultiplier.Value * Time.deltaTime, _image.uvRect.size);
         }
     }
 }

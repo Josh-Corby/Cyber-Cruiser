@@ -14,6 +14,8 @@ namespace CyberCruiser
         private bool _inMission;
 
         public bool InMission { get => _inMission; private set => _inMission = value; }
+        public bool IsPaused { get => _isGamePaused.Value; }
+
         #region Actions
         public static event Action<bool> OnIsTimeScalePaused = null;
         public static event Action OnMissionStart = null;

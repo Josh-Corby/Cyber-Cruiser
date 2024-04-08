@@ -429,6 +429,7 @@ namespace CyberCruiser
         public void DisableBeam()
         {
             _beamAttack.StopFiring();
+            _beamAttack._audioSource.Stop();
             _beamAttack.enabled = false;
         }   
     }

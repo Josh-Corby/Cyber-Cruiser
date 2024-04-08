@@ -19,39 +19,6 @@ namespace CyberCruiser
         [SerializeField] private Sprite _overheatFillSprite;
         [SerializeField] private Sprite _weaponPackFillSprite;
 
-        [SerializeField] private Image _pickupImage;
-
-        private void OnEnable()
-        {
-            GameManager.OnMissionStart += ResetUI;
-            Pickup.OnBossPickup += SetPickupImage;
-        }
-
-        private void OnDisable()
-        {
-            GameManager.OnMissionEnd -= ResetUI;
-            Pickup.OnBossPickup -= SetPickupImage;
-        }
-
-        private void ResetUI()
-        {
-            _pickupImage.enabled = false;
-            _pickupImage.sprite = null;
-        }
-
-        private void SetPickupImage(PickupInfo info)
-        {
-            Sprite newSprite = info.Sprite;
-            if(newSprite == null)
-            {
-                _pickupImage.enabled = false;
-                _pickupImage.sprite = null;
-            }
-
-            _pickupImage.sprite = newSprite;
-            _pickupImage.enabled = true;
-        }
-
         public void EnableSliderAtValue(PlayerSliderTypes slider, int maxValue, float currentValue)
         {
             GetSliderFromEnum(slider).EnableAndSetSlider(currentValue, 0, maxValue);

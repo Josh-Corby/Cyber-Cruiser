@@ -22,7 +22,7 @@ namespace CyberCruiser
         [SerializeField] private float beamDuration;
         private float _beamTimer;
 
-        [SerializeField] private AudioSource _audioSource;
+        public AudioSource _audioSource;
         private SoundControllerBase _beamSoundController;
         [SerializeField] private ClipInfo _beamClip;
 
@@ -90,8 +90,8 @@ namespace CyberCruiser
 
         public void StopFiring()
         {
-            IsBeamFiring = false;
             _isBeamActive = false;
+            IsBeamFiring = false;
             _lineRenderer.enabled = false;
 
 

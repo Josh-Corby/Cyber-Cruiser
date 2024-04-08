@@ -118,6 +118,12 @@ namespace CyberCruiser
             _controlsEnabled = false;
         }
 
+        public void CheckShieldsState_Public()
+        {
+            Debug.Log("Shield button pressed");
+            CheckShieldsState();
+        }
+
         private void CheckShieldsState()
         {
             if (!_controlsEnabled)

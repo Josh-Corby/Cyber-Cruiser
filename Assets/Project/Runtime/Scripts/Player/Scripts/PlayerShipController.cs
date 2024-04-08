@@ -16,7 +16,7 @@ namespace CyberCruiser
         #endregion
 
         #region Fields
-        private Vector2 _input;
+        [SerializeField] private Vector2 _input;
         [SerializeField] private float baseSpeed = 0.1f;
         [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private float distanceToStopRotation = 5f;
@@ -35,8 +35,8 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
-            InputManager.OnMouseMove += RecieveInput;
             CyberKrakenGrappleTentacle.OnGrappleEnd += EnableControls;
+            InputManager.OnMove += RecieveInput;
 
             GoToStartPos();
             Cursor.lockState = CursorLockMode.Confined;
@@ -45,7 +45,7 @@ namespace CyberCruiser
 
         private void OnDisable()
         {
-            InputManager.OnMouseMove -= RecieveInput;
+            InputManager.OnMove -= RecieveInput;
             CyberKrakenGrappleTentacle.OnGrappleEnd -= EnableControls;
         }
 
@@ -64,7 +64,7 @@ namespace CyberCruiser
         }
 
         private void PlayerMovement()
-        {
+        {        
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(_input);
             mousePosition.z = 0f;
             //mouseInput.transform.position = mousePosition;
@@ -116,7 +116,8 @@ namespace CyberCruiser
         private void GoToStartPos()
         {
             transform.position = _spawnPosition.position;
-            _playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+            _input = Camera.main.WorldToScreenPoint(_spawnPosition.position);
+            _playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);         
         }
 
         private void RecieveInput(Vector2 _input)
