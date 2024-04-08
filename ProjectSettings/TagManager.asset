@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - UpDown
+  - UI
   layers:
   - Default
   - TransparentFX

@@ -55,12 +55,6 @@ namespace CyberCruiser
         #endregion
         #endregion
 
-
-
-
-
-
-
         #region Ints
         private int _longestRun;
         private int _lastRun;
@@ -121,6 +115,9 @@ namespace CyberCruiser
             MissionManager.OnMissionComplete += (i) => { _missionsCompleted++; };
             PlayerManager.OnPlasmaPickupValue += (plasmaCollected) => { _plasmaCollected += plasmaCollected; };
             PlayerManager.OnPlasmaSpent += (plasmaSpent) => { _plasmaSpent += plasmaSpent; };
+
+            SaveManager.OnSaveData += SaveStatistics;
+            SaveManager.OnClearSaveData += ClearSaveData;
         }
 
         private void OnDisable()
@@ -130,11 +127,6 @@ namespace CyberCruiser
             MissionManager.OnMissionComplete -= (i) => { _missionsCompleted++; };
             PlayerManager.OnPlasmaPickupValue -= (plasmaCollected) => { _plasmaCollected += plasmaCollected; };
             PlayerManager.OnPlasmaSpent -= (plasmaSpent) => { _plasmaSpent += plasmaSpent; };
-        }
-
-        private void OnApplicationQuit()
-        {
-            SaveStatistics();
         }
 
         private void SaveStatistics()
@@ -179,7 +171,6 @@ namespace CyberCruiser
             PlayerPrefs.SetInt(BFG_EQUIPS, _bfgData.Equips);
         }
 
-
         private void LoadStatistics()
         {
             _longestRun = PlayerPrefs.GetInt(LONGEST_RUN, 0);
@@ -223,7 +214,7 @@ namespace CyberCruiser
             SetTexts();
         }
 
-        public void ClearSaveData()
+        private void ClearSaveData()
         {
             _longestRun = 0;
             _lastRun = 0;

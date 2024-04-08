@@ -76,13 +76,16 @@ namespace CyberCruiser
         {
             GameManager.OnMissionStart += () => IsAnyMissionCompleted = false;
             GameManager.OnMissionEnd += StartNextMissionIfReady;
+            SaveManager.OnSaveData += StorePlayerData;
+            SaveManager.OnClearSaveData += ClearSaveData;
         }
 
         private void OnDisable()
         {
-
             GameManager.OnMissionStart -= () => IsAnyMissionCompleted = false;
-            GameManager.OnMissionEnd += StartNextMissionIfReady;
+            GameManager.OnMissionEnd -= StartNextMissionIfReady;
+            SaveManager.OnSaveData -= StorePlayerData;
+            SaveManager.OnClearSaveData -= ClearSaveData;
         }
 
         private void Start()
@@ -90,18 +93,6 @@ namespace CyberCruiser
             RestorePlayerData();        
         }
 
-        private void OnApplicationQuit()
-        {
-            StorePlayerData();
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                CompleteMission();
-            }
-        }
         #endregion
 
         #region Mission Assigning
@@ -488,7 +479,6 @@ namespace CyberCruiser
 
             FillMissionsToComplete();
             RestoreCategoryIDOfCurrentMission();
-
         }
 
         private void RestoreCategoryIDOfCurrentMission()
@@ -510,7 +500,7 @@ namespace CyberCruiser
             }
         }
 
-        public void ClearSaveData()
+        private void ClearSaveData()
         {
             UnassignMission();
             _currentMissionCategory = _missionCategories[0];

@@ -40,6 +40,11 @@ namespace CyberCruiser
         private bool IsMusicMuted { get => _isMusicMuted.Value; set => _isMusicMuted.Value = value; }
         private bool IsEffectsMuted { get => _isEffectsMuted.Value; set => _isEffectsMuted.Value = value; }
 
+        private void OnEnable()
+        {
+            SaveManager.OnSaveData += SaveAudioSettings;
+        }
+
         private void Start()
         {
             RestoreAudioSettings();
@@ -193,10 +198,5 @@ namespace CyberCruiser
             IsEffectsMuted = !currentMuteState;
         }
         #endregion
-
-        private void OnApplicationQuit()
-        {
-            SaveAudioSettings();
-        }
     }
 }

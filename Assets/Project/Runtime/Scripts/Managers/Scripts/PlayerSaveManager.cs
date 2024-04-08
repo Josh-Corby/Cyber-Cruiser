@@ -27,6 +27,11 @@ namespace CyberCruiser
 
         public static event Action<int> OnIonChange = null;
 
+        private void OnEnable()
+        {
+            SaveManager.OnSaveData += SaveValues;
+            SaveManager.OnClearSaveData += ClearSaveData;
+        }
 
         private void Awake()
         {
@@ -58,15 +63,10 @@ namespace CyberCruiser
             PlayerPrefs.SetInt(PLAYER_ION, _playerIon.Value);
         }
 
-        public void ClearSaveData()
+        private void ClearSaveData()
         {
             PlayerPlasma = 0;
             _playerIon.Value = 0;
-        }
-
-        private void OnApplicationQuit()
-        {
-            SaveValues();
         }
     }
 }

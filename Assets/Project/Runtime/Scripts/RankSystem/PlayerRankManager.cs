@@ -40,6 +40,8 @@ namespace CyberCruiser
         {
             GameManager.OnMissionEnd += StoreRankValues;
             MissionManager.OnMissionComplete += StartStarIncreaseProcess;
+            SaveManager.OnSaveData += SaveValues;
+            SaveManager.OnClearSaveData += ClearSaveData;
         }
 
         private void OnDisable()
@@ -108,7 +110,7 @@ namespace CyberCruiser
             PlayerPrefs.SetInt(PLAYER_STARS, _currentStars);
         }
 
-        public void ClearSaveData()
+        private void ClearSaveData()
         {
             _currentRank = RankManagerInstance.GetRank(0);
             _rankBeforeMissionStart = RankManagerInstance.GetRank(0);
@@ -116,9 +118,5 @@ namespace CyberCruiser
             _starsBeforeMissionStart = 0;
         }
 
-        private void OnApplicationQuit()
-        {
-            SaveValues();
-        }
     }
 }

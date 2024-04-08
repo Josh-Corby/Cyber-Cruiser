@@ -86,9 +86,23 @@ namespace CyberCruiser
                 _initialInputPrevented = false;
                 return;
             }
-
-            //Debug.Log(TouchPosition);
             OnMove?.Invoke(touchPosition);
+        }
+
+        private void OnTouch1Performed(InputAction.CallbackContext context)
+        {
+            TouchState touch = context.ReadValue<TouchState>();
+            TouchPhase state = touch.phase;
+
+            if (state == TouchPhase.Began)
+            {
+                OnFire?.Invoke(true);
+            }
+
+            if (state == TouchPhase.Ended)
+            {
+                OnFire?.Invoke(false);
+            }
         }
 
         private bool ClickedOnUI(Vector2 position)
@@ -108,21 +122,6 @@ namespace CyberCruiser
             return false;
         }
 
-        private void OnTouch1Performed(InputAction.CallbackContext context)
-        {
-            TouchState touch = context.ReadValue<TouchState>();
-            TouchPhase state = touch.phase;
 
-            if(state == TouchPhase.Began)
-            {
-                OnFire?.Invoke(true);
-            }
-
-            if(state == TouchPhase.Ended)
-            {
-                OnFire?.Invoke(false);
-            }
-
-        }
     }
 }
