@@ -9430,7 +9430,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: -358000221
-  m_SortingOrder: 0
+  m_SortingOrder: 40
   m_TargetDisplay: 0
 --- !u!1 &774350661
 GameObject:
