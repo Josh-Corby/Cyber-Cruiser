@@ -19618,10 +19618,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 128064054592236939, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 192563306479618735, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 929984886701716984, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
+      propertyPath: InitialModule.startSize.scalar
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1728119577918149259, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
@@ -19646,7 +19650,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1976802101109768670, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303506062553800152, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9e338e10cf6fb5f41a23053906123c70, type: 2}
+    - target: {fileID: 2669312434644400683, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2671802394472564673, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
       propertyPath: m_Name
@@ -19656,6 +19668,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2809812898901251368, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 34f5963970772db47be4548c7f9f7ea1, type: 2}
     - target: {fileID: 3221997829493111949, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
@@ -19670,7 +19686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4217369417017105738, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4554144226009105047, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
       propertyPath: m_IsActive
@@ -19760,6 +19776,10 @@ PrefabInstance:
       propertyPath: InitialModule.startLifetime.minScalar
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7587258924593863198, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2caa5182d7bf6184898635e8ed9ce2ee, type: 2}
     - target: {fileID: 7838995580731747304, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -19791,6 +19811,10 @@ PrefabInstance:
     - target: {fileID: 8679856508146851269, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 3.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754048545741391500, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9171555649188793696, guid: de34a791ea7c49c4687cd4c50964fc26, type: 3}
       propertyPath: ShapeModule.type
