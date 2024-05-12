@@ -851,6 +851,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrashingParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 9015826194958140947, guid: 793e22f6840038c40a622558248ac7ae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 793e22f6840038c40a622558248ac7ae, type: 3}
 --- !u!4 &5337824813742517658 stripped
