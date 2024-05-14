@@ -48,10 +48,8 @@ namespace CyberCruiser
             DisableControls();          
         }
 
-
         public void EnableControls()
         {
-            Debug.Log("Controls enabled");
             controls?.Enable();
         }
 
@@ -66,7 +64,5 @@ namespace CyberCruiser
             Debug.Log(movePosition);
             OnMove?.Invoke(movePosition);
         }
-
-
     }
 }

@@ -30,7 +30,7 @@ namespace CyberCruiser
         private readonly float maxAngle = 20;
         private Quaternion targetRotation;
 
-        [SerializeField] private FloatingJoystick _joystick; 
+        [SerializeField] private VariableJoystick _joystick; 
         #endregion
 
         #region Properties

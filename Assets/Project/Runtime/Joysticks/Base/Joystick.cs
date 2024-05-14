@@ -35,8 +35,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     [SerializeField] private RectTransform handle = null;
     private RectTransform baseRect = null;
 
-    private Canvas canvas;
-    private Camera cam;
+    [SerializeField] private Canvas canvas;
+    [SerializeField] private Camera cam;
 
     private Vector2 input = Vector2.zero;
 
@@ -64,9 +64,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     public void OnDrag(PointerEventData eventData)
     {
-        cam = null;
-        if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
-            cam = canvas.worldCamera;
+        //cam = null;
+        //if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
+       //     cam = canvas.worldCamera;
 
         Vector2 position = RectTransformUtility.WorldToScreenPoint(cam, background.position);
         Vector2 radius = background.sizeDelta / 2;

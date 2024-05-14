@@ -22,7 +22,7 @@ TagManager:
   - CullingLayer
   - DeadPlayer
   - AttractorUnit
-  - 
+  - BlockPlayer
   - 
   - 
   - 
