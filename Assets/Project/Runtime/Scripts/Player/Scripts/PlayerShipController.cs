@@ -16,8 +16,10 @@ namespace CyberCruiser
         #endregion
 
         #region Fields
-        [SerializeField] private Vector2 _input;
-        [SerializeField] private float baseSpeed = 0.1f;
+        public Vector2 GetInput { get => _input; }
+        [SerializeField] private bool _moveWithJoystick = false;
+        [SerializeField] private Vector2 _input = Vector2.zero;
+        [SerializeField] private float baseSpeed = 0.5f;
         [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private float distanceToStopRotation = 5f;
         private readonly bool _lerpMovement = true;
@@ -27,6 +29,8 @@ namespace CyberCruiser
         private readonly float minAngle = -20;
         private readonly float maxAngle = 20;
         private Quaternion targetRotation;
+
+        [SerializeField] private FloatingJoystick _joystick; 
         #endregion
 
         #region Properties
@@ -35,10 +39,9 @@ namespace CyberCruiser
 
         private void OnEnable()
         {
+            GoToStartPos();
             CyberKrakenGrappleTentacle.OnGrappleEnd += EnableControls;
             InputManager.OnMove += RecieveInput;
-
-            GoToStartPos();
             Cursor.lockState = CursorLockMode.Confined;
             gameObject.layer = LayerMask.NameToLayer(PLAYER_ALIVE_LAYER);
         }
@@ -64,31 +67,39 @@ namespace CyberCruiser
         }
 
         private void PlayerMovement()
-        {        
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(_input);
-            mousePosition.z = 0f;
-            //mouseInput.transform.position = mousePosition;
+        {
+            Vector2 desiredMoveLocation = transform.position;
+
+            if(_moveWithJoystick)
+            {
+                _input = new Vector2(_joystick.Horizontal, _joystick.Vertical);
+                desiredMoveLocation = (Vector2)transform.position + _input;
+            }
+            else
+            {
+                desiredMoveLocation = Camera.main.ScreenToWorldPoint(_input);
+            }
 
             if (!_lerpMovement)
             {
-                transform.position = Vector2.MoveTowards(transform.position, mousePosition, baseSpeed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, desiredMoveLocation, baseSpeed * Time.deltaTime);
             }
 
             if (_lerpMovement)
             {
-                transform.position = Vector2.Lerp(transform.position, mousePosition, baseSpeed);
+                transform.position = Vector2.Lerp(transform.position, desiredMoveLocation, baseSpeed * Time.deltaTime);
             }
 
-            float yDiff = Mathf.Abs(mousePosition.y - transform.position.y);
+            float yDiff = Mathf.Abs(desiredMoveLocation.y - transform.position.y);
             if (yDiff > distanceToStopRotation)
             {
 
-                if (mousePosition.y > transform.position.y)
+                if (desiredMoveLocation.y > transform.position.y)
                 {
                     targetRotation = Quaternion.Euler(0, 0, maxAngle);
                 }
 
-                else if (mousePosition.y < transform.position.y)
+                else if (desiredMoveLocation.y < transform.position.y)
                 {
                     targetRotation = Quaternion.Euler(0, 0, minAngle);
                 }
@@ -115,20 +126,20 @@ namespace CyberCruiser
 
         private void GoToStartPos()
         {
-            transform.position = _spawnPosition.position;
-            _input = Camera.main.WorldToScreenPoint(_spawnPosition.position);
-            _playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);         
+            transform.position = _spawnPosition.position;      
+            _playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+            _input = new Vector2(0, 0);
         }
 
         private void RecieveInput(Vector2 _input)
         {
-            this._input = _input;
+            this._input =_input;
         }
 
         public void EnableControls()
         {
             _controlsEnabled = true;
-            _inputManager.IsCursorVisible = false;
+            //_inputManager.IsCursorVisible = false;
         }
 
         public void DisableControls()

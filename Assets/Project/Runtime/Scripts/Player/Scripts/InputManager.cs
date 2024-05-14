@@ -25,25 +25,19 @@ namespace CyberCruiser
         public static event Action OnPause = null;
         #endregion
 
-        bool _initialInputPrevented;
-
         private void OnEnable()
         {
             if (controls == null)
             {
                 controls = new PlayerControls();
 
-                controls.Controls.MouseVectorInput.performed += i => OnMove?.Invoke(i.ReadValue<Vector2>());           
+                controls.Controls.MouseVectorInput.performed += i => OnMouseMove(i);           
                 controls.Controls.Shoot.performed += i => OnFire?.Invoke(true);
                 controls.Controls.Shoot.canceled += i => OnFire?.Invoke(false);
                 controls.Controls.Shield.performed += i => OnShield?.Invoke();
                 controls.Controls.Pause.performed += i => OnPause?.Invoke();
-
-                controls.Controls.TouchPosition.performed += OnPrimaryTouch;
-                controls.Controls.Touch1.performed += OnTouch1Performed;
             }
 
-            _initialInputPrevented = true;
             GameManager.OnMissionStart += EnableControls;
         }
 
@@ -66,60 +60,11 @@ namespace CyberCruiser
             controls?.Disable();
         }
 
-        private void OnPrimaryTouch(InputAction.CallbackContext context)
+        private void OnMouseMove(InputAction.CallbackContext context)
         {
-            Vector2 touchPosition = context.ReadValue<Vector2>();
-
-            if (ClickedOnUI(touchPosition))
-            {
-                return;
-            }
-
-            if (_isGamePaused.Value)
-            {
-                _initialInputPrevented = true;
-                return;
-            }
-
-            if (_initialInputPrevented)
-            {
-                _initialInputPrevented = false;
-                return;
-            }
-            OnMove?.Invoke(touchPosition);
-        }
-
-        private void OnTouch1Performed(InputAction.CallbackContext context)
-        {
-            TouchState touch = context.ReadValue<TouchState>();
-            TouchPhase state = touch.phase;
-
-            if (state == TouchPhase.Began)
-            {
-                OnFire?.Invoke(true);
-            }
-
-            if (state == TouchPhase.Ended)
-            {
-                OnFire?.Invoke(false);
-            }
-        }
-
-        private bool ClickedOnUI(Vector2 position)
-        {
-            PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-            eventDataCurrentPosition.position = position;
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-            // return results.Count > 0;
-            foreach (var item in results)
-            {
-                if (item.gameObject.CompareTag("UI"))
-                {
-                    return true;
-                }
-            }
-            return false;
+            Vector2 movePosition = context.ReadValue<Vector2>();
+            Debug.Log(movePosition);
+            OnMove?.Invoke(movePosition);
         }
 
 
