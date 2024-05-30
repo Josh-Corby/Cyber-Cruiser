@@ -10163,7 +10163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3881087803549984437, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3881087803549984439, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: cam
@@ -10173,6 +10173,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1892795444}
+    - target: {fileID: 3881087803549984439, guid: ec536a7718376554185e4a856d5ae230, type: 3}
+      propertyPath: deadZone
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3881087803549984439, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: handleRange
       value: 0.5
@@ -10786,6 +10790,7 @@ MonoBehaviour:
   _starsBeforeMissionStart: 0
   _starsToGain: 0
   _totalStarReward: 0
+  _Gamemanager: {fileID: 244827580}
 --- !u!1 &935659170
 GameObject:
   m_ObjectHideFlags: 0
@@ -14567,6 +14572,15 @@ MonoBehaviour:
   _playerSprite: {fileID: 1030409408}
   width: 1
   height: 1
+  _isDead:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: fb368de7f5af5a5498305d302df0599d, type: 2}
+--- !u!50 &1324404204 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 9082158770902853956, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+  m_PrefabInstance: {fileID: 8907491432400472847}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1326374112
 GameObject:
   m_ObjectHideFlags: 0
@@ -18651,31 +18665,30 @@ MonoBehaviour:
   pickupsOnScreen: []
   _pickupSpawner: {fileID: 539388724}
   _upgradeSpawner: {fileID: 420019654}
-  _bossDropsPool:
-  - {fileID: 6951969226015609480, guid: e1eb90043abfde241b2bdd74007ea305, type: 3}
-  - {fileID: 6951969226015609480, guid: db5254f8ce7079143b6e00316397ed2f, type: 3}
-  - {fileID: 6951969226015609480, guid: fcbc1935a53b298448cbf106fd381c73, type: 3}
-  - {fileID: 6951969226015609480, guid: 40bb34d08a34dca45b006c4e66d600e5, type: 3}
-  - {fileID: 6951969226015609480, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
-  - {fileID: 6951969226015609480, guid: ede17a7f90c55dd44bb3b5f2602e3174, type: 3}
-  - {fileID: 6951969226015609480, guid: 47f98668c346d04428745e0a187b6b2f, type: 3}
-  - {fileID: 6951969226015609480, guid: cc2e6380eb81d424abde978a70c13cc8, type: 3}
-  - {fileID: 6951969226015609480, guid: a15a8505e53565e4ea6b458df3664e36, type: 3}
-  - {fileID: 6951969226015609480, guid: 3239d95dd34c8674ca822cd52f597610, type: 3}
-  - {fileID: 6951969226015609480, guid: 3f1408d77e7a6894088b2243b7d0c53d, type: 3}
-  - {fileID: 6951969226015609480, guid: 944c151e929734d479ae20645b66df23, type: 3}
-  - {fileID: 6951969226015609480, guid: d7246e5a9744a4344976ae80981b10b8, type: 3}
+  _initialBossDrops: []
+  _unlockedBossDrops: []
   _bossDropsToSpawn: []
-  _weaponUpgradesPool:
-  - {fileID: 9010852593865095087, guid: 888315a2ca640964989b3803c815bbee, type: 3}
-  - {fileID: 9010852593865095087, guid: ea20a119d3080f6428d1eb515b77635d, type: 3}
-  - {fileID: 9010852593865095087, guid: 0b05c1059bb5125439a8d3baa6287b52, type: 3}
-  - {fileID: 9010852593865095087, guid: 2e1c104e9af1a8441bbcc0c9386d09cc, type: 3}
-  - {fileID: 9010852593865095087, guid: c52fa3d5f46a89942aad7179b0af6037, type: 3}
+  _initialWeaponUpgrades: []
+  _weaponDropsToSpawn: []
   _normalPickup: {fileID: 9010852593865095087, guid: 779ade78571d9ab48a240c09c3373d84, type: 3}
   _baseBossDrop: {fileID: 9010852593865095087, guid: 6f93701b93521ef4c917649eb38830e8, type: 3}
   _pickupIndicator: {fileID: 4630231504149823482, guid: eccf7339e3ebce64b95a42c2273d0758, type: 3}
   _indicatorAngle: 0
+  _spawnPowerupOnMissionStart: 1
+  _spawnPowerUpOnMissionStartTransform: {fileID: 0}
+  _unlocks:
+  - UnlockedItem: {fileID: 0}
+    ItemType: 0
+  - UnlockedItem: {fileID: 6951969226015609480, guid: db5254f8ce7079143b6e00316397ed2f, type: 3}
+    ItemType: 0
+  - UnlockedItem: {fileID: 6951969226015609480, guid: fcbc1935a53b298448cbf106fd381c73, type: 3}
+    ItemType: 0
+  - UnlockedItem: {fileID: 6951969226015609480, guid: e1eb90043abfde241b2bdd74007ea305, type: 3}
+    ItemType: 0
+  - UnlockedItem: {fileID: 9010852593865095087, guid: 888315a2ca640964989b3803c815bbee, type: 3}
+    ItemType: 1
+  - UnlockedItem: {fileID: 6951969226015609480, guid: 28a68ce0a7d3e5f41b287eaeeb0dab85, type: 3}
+    ItemType: 0
 --- !u!1 &1649397719
 GameObject:
   m_ObjectHideFlags: 0
@@ -19843,7 +19856,7 @@ MonoBehaviour:
   _baseDistancePerSecond: 10
   _distancePerSecond: {fileID: 11400000, guid: f428c9febf7b08741b6f1eecdc7a9b9b, type: 2}
   _plasmaGenerationDistance: 100
-  _bossDistanceIncrement: 10
+  _bossDistanceIncrement: 500
 --- !u!1001 &1710098781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35974,6 +35987,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: f33a1f7bf7d43d0419248478daca4c78, type: 2}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _rb
+      value: 
+      objectReference: {fileID: 1324404204}
+    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _joystick
       value: 
       objectReference: {fileID: 1801953325}
@@ -35982,16 +35999,28 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _lerpMovement
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _spawnPosition
       value: 
       objectReference: {fileID: 1067534575}
     - target: {fileID: 8907491432247727162, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: _moveWithJoystick
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8907491432247727163, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_Name
       value: PlayerShip
+      objectReference: {fileID: 0}
+    - target: {fileID: 9082158770902853956, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_Constraints
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9082158770902853956, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}

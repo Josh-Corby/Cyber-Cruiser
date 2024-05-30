@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -10,6 +8,7 @@ namespace CyberCruiser
         [SerializeField] private SpriteRenderer _playerSprite;
         [SerializeField] float width = 1;
         [SerializeField] float height = 1;
+        [SerializeField] private BoolReference _isDead;
 
         void Start()
         {
@@ -20,10 +19,13 @@ namespace CyberCruiser
 
         void LateUpdate()
         {
-            Vector3 viewPos = transform.position;
-            viewPos.x = Mathf.Clamp(viewPos.x, _screenBounds.x * -1 + width,_screenBounds.x - width);
-            viewPos.y = Mathf.Clamp(viewPos.y, _screenBounds.y * -1 + height,_screenBounds.y - height);
-            transform.position = viewPos;
+            if(!_isDead.Value)
+            {
+                Vector3 viewPos = transform.position;
+                viewPos.x = Mathf.Clamp(viewPos.x, _screenBounds.x * -1 + width,_screenBounds.x - width);
+                viewPos.y = Mathf.Clamp(viewPos.y, _screenBounds.y * -1 + height,_screenBounds.y - height);
+                transform.position = viewPos;
+            }
         }
     }
 }

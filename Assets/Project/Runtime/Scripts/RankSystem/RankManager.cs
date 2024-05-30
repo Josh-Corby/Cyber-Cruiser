@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,7 +31,8 @@ namespace CyberCruiser
 
         public Rank RankUp(int rankID)
         {
-            return ranks[rankID + 1];
+            Rank newRank = ranks[rankID + 1];
+            return newRank;
         }
     }
 }

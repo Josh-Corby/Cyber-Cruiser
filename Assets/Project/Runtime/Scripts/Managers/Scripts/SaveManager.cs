@@ -20,7 +20,7 @@ namespace CyberCruiser
 
         private void OnApplicationFocus(bool focus)
         {
-            SaveData();
+            if(!focus) SaveData();
         }
 
         private void OnApplicationQuit()
