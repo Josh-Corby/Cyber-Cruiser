@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,9 +14,17 @@ namespace CyberCruiser
         [SerializeField] private List<GameObject> pickupsOnScreen = new List<GameObject>();
         [SerializeField] private PickupSpawner _pickupSpawner;
         [SerializeField] private PickupSpawner _upgradeSpawner;
-        [SerializeField] private List<GameObject> _bossDropsPool = new();
+
+        // Boss Drops
+        [SerializeField] private List<GameObject> _initialBossDrops = new();
+        [SerializeField] private List<GameObject> _unlockedBossDrops = new();
         [SerializeField] private List<GameObject> _bossDropsToSpawn = new();
-        [SerializeField] private GameObject[] _weaponUpgradesPool;
+
+        // Weapon Drops
+        [SerializeField] private List<GameObject> _initialWeaponUpgrades;
+        [SerializeField] private List<GameObject> _weaponDropsToSpawn;
+
+
         [SerializeField] private GameObject _normalPickup;
         [SerializeField] private GameObject _baseBossDrop;
         [SerializeField] private GameObject _pickupIndicator;
@@ -23,8 +32,14 @@ namespace CyberCruiser
 
         protected readonly float _indicatorTimer = 2f;
 
+        [SerializeField] private bool _spawnPowerupOnMissionStart = false;
+        [SerializeField] private Transform _spawnPowerUpOnMissionStartTransform;
+        [SerializeField] private Unlock[] _unlocks;
+
         private void OnEnable()
         {
+            ResetUnlocks();
+
             DistanceManager.OnPickupDistanceReached += SpawnPlasmaDrop;
             DistanceManager.OnWeaponPackDistanceReached += SpawnWeaponDrop;
             GameManager.OnMissionStart += ResetBossDropsList;
@@ -34,6 +49,9 @@ namespace CyberCruiser
             PickupSpawner.OnPickupSpawned += AddPickup;
             PlayerWeaponController.OnEmergencyArsenalActivated += SpawnWeaponDrop;
             PlayerShieldController.OnSignalBeaconActivated += SpawnWeaponDrop;
+            PlayerRankManager.OnRankUp += UnlockNewUpgrade;
+            PlayerRankManager.OnRankLoaded += RestoreUnlocks;
+            SaveManager.OnClearSaveData += ResetUnlocks;
         }
 
         private void OnDisable()
@@ -47,6 +65,9 @@ namespace CyberCruiser
             PickupSpawner.OnPickupSpawned -= AddPickup;
             PlayerWeaponController.OnEmergencyArsenalActivated -= SpawnWeaponDrop;
             PlayerShieldController.OnSignalBeaconActivated -= SpawnWeaponDrop;
+            PlayerRankManager.OnRankUp -= UnlockNewUpgrade;
+            PlayerRankManager.OnRankLoaded -= RestoreUnlocks;
+            SaveManager.OnClearSaveData -= ResetUnlocks;
         }
 
         public void SpawnPlasmaDrop()
@@ -93,8 +114,8 @@ namespace CyberCruiser
 
         private GameObject GetRandomWeaponUpgrade()
         {
-            int randomIndex = Random.Range(0, _weaponUpgradesPool.Length);
-            GameObject randomUpgradePrefab = _weaponUpgradesPool[randomIndex];
+            int randomIndex = Random.Range(0, _weaponDropsToSpawn.Count);
+            GameObject randomUpgradePrefab = _weaponDropsToSpawn[randomIndex];
             return randomUpgradePrefab;
         }
 
@@ -112,8 +133,8 @@ namespace CyberCruiser
             }
 
 
-            int RandomBossDropIndex = Random.Range(0, _bossDropsPool.Count);
-            GameObject randomBossDrop = _bossDropsPool[RandomBossDropIndex];
+            int RandomBossDropIndex = Random.Range(0, _unlockedBossDrops.Count);
+            GameObject randomBossDrop = _unlockedBossDrops[RandomBossDropIndex];
             _bossDropsToSpawn.RemoveAt(RandomBossDropIndex);
             return randomBossDrop;
         }
@@ -145,7 +166,13 @@ namespace CyberCruiser
 
         private void ResetBossDropsList()
         {
-            _bossDropsToSpawn = _bossDropsPool;
+            _bossDropsToSpawn = new(_unlockedBossDrops);
+
+
+            if(_spawnPowerupOnMissionStart)
+            {
+                SpawnPickupAtPosition(PickupType.Boss, _pickupSpawner.transform.position);
+            }
         }
 
         // not currently used functions
@@ -177,5 +204,62 @@ namespace CyberCruiser
             Indicator.transform.rotation = Quaternion.Euler(0, 0, _indicatorAngle);
             Indicator.GetComponent<Indicator>().timer = _indicatorTimer;
         }
+
+        private void RestoreUnlocks(int currentRankID)
+        {
+            if (currentRankID <= 0) return;
+
+            for (int i = 1; i <= currentRankID; i++)
+            {
+                UnlockNewUpgrade(i);
+            }
+        }
+
+        private void UnlockNewUpgrade(int newRankID)
+        {
+            if (_unlocks.Length - 1 < newRankID)
+            {
+                Debug.Log("There is no unlock for rank " + (newRankID+1).ToString());
+                return;
+            }
+            
+            Itemtype unlockType = _unlocks[newRankID].ItemType;
+            GameObject unlockedItem = _unlocks[newRankID].UnlockedItem;
+            if(unlockType == Itemtype.BossDrop)
+            {
+                if(!_unlockedBossDrops.Contains(unlockedItem))
+                {
+                    _unlockedBossDrops.Add(unlockedItem);
+                }
+            }
+            if(unlockType == Itemtype.Weapon)
+            {
+                if(!_weaponDropsToSpawn.Contains(unlockedItem))
+                {
+                    _weaponDropsToSpawn.Add(unlockedItem);
+                }
+            }
+        }
+
+        private void ResetUnlocks()
+        {
+            _unlockedBossDrops = new(_initialBossDrops);
+            _weaponDropsToSpawn = new(_initialWeaponUpgrades);
+        }
+    }
+
+
+    [Serializable]
+    public struct Unlock
+    {
+        public GameObject UnlockedItem;
+        public Itemtype ItemType;
+    }
+
+    [Serializable]
+    public enum Itemtype
+    {
+        BossDrop,
+        Weapon
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -8,7 +6,6 @@ namespace CyberCruiser
     {
         void Start()
         {
-            Debug.Log(transform.rotation.eulerAngles.z);
             if (transform.rotation.eulerAngles.z != 0 && Mathf.Abs(transform.rotation.eulerAngles.z) % 90 == 0)
             {
                 _spriteRenderer.gameObject.transform.Rotate(0, 0, -45);

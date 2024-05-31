@@ -273,7 +273,7 @@ namespace CyberCruiser
             ChangeWeapon(_baseWeaponSO);
         }
 
-        private void SetFireInput(bool input)
+        public void SetFireInput(bool input)
         {
             if (_controlsEnabled)
             {

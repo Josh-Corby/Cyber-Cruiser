@@ -1,4 +1,5 @@
 using CyberCruiser;
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AddOn", menuName = "ScriptableObject/New AddOn")]
@@ -28,3 +29,4 @@ public class AddOnSO : ScriptableObject
         TimesPickedUp++;
     }
 }
+
