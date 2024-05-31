@@ -37,15 +37,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""TouchPosition"",
-                    ""type"": ""Value"",
-                    ""id"": ""7dcd047b-8409-4213-bbec-412c12304684"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Shoot"",
                     ""type"": ""Button"",
                     ""id"": ""d83b5978-50cb-4fd6-93b0-34417f8ea103"",
@@ -71,15 +62,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Touch1"",
-                    ""type"": ""Value"",
-                    ""id"": ""d83dd4c9-5b63-4629-8e96-86b3f8e071ec"",
-                    ""expectedControlType"": ""Touch"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -126,28 +108,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b3b1b8e0-f00b-4bf8-97e8-36819a217fc4"",
-                    ""path"": ""<Touchscreen>/primaryTouch/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TouchPosition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""714fb255-1f0f-4bec-ab3a-fff677d03bd1"",
-                    ""path"": ""<Touchscreen>/touch1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Touch1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -157,11 +117,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Controls
         m_Controls = asset.FindActionMap("Controls", throwIfNotFound: true);
         m_Controls_MouseVectorInput = m_Controls.FindAction("MouseVectorInput", throwIfNotFound: true);
-        m_Controls_TouchPosition = m_Controls.FindAction("TouchPosition", throwIfNotFound: true);
         m_Controls_Shoot = m_Controls.FindAction("Shoot", throwIfNotFound: true);
         m_Controls_Shield = m_Controls.FindAction("Shield", throwIfNotFound: true);
         m_Controls_Pause = m_Controls.FindAction("Pause", throwIfNotFound: true);
-        m_Controls_Touch1 = m_Controls.FindAction("Touch1", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -224,21 +182,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Controls;
     private List<IControlsActions> m_ControlsActionsCallbackInterfaces = new List<IControlsActions>();
     private readonly InputAction m_Controls_MouseVectorInput;
-    private readonly InputAction m_Controls_TouchPosition;
     private readonly InputAction m_Controls_Shoot;
     private readonly InputAction m_Controls_Shield;
     private readonly InputAction m_Controls_Pause;
-    private readonly InputAction m_Controls_Touch1;
     public struct ControlsActions
     {
         private @PlayerControls m_Wrapper;
         public ControlsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @MouseVectorInput => m_Wrapper.m_Controls_MouseVectorInput;
-        public InputAction @TouchPosition => m_Wrapper.m_Controls_TouchPosition;
         public InputAction @Shoot => m_Wrapper.m_Controls_Shoot;
         public InputAction @Shield => m_Wrapper.m_Controls_Shield;
         public InputAction @Pause => m_Wrapper.m_Controls_Pause;
-        public InputAction @Touch1 => m_Wrapper.m_Controls_Touch1;
         public InputActionMap Get() { return m_Wrapper.m_Controls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -251,9 +205,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MouseVectorInput.started += instance.OnMouseVectorInput;
             @MouseVectorInput.performed += instance.OnMouseVectorInput;
             @MouseVectorInput.canceled += instance.OnMouseVectorInput;
-            @TouchPosition.started += instance.OnTouchPosition;
-            @TouchPosition.performed += instance.OnTouchPosition;
-            @TouchPosition.canceled += instance.OnTouchPosition;
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
@@ -263,9 +214,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
-            @Touch1.started += instance.OnTouch1;
-            @Touch1.performed += instance.OnTouch1;
-            @Touch1.canceled += instance.OnTouch1;
         }
 
         private void UnregisterCallbacks(IControlsActions instance)
@@ -273,9 +221,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MouseVectorInput.started -= instance.OnMouseVectorInput;
             @MouseVectorInput.performed -= instance.OnMouseVectorInput;
             @MouseVectorInput.canceled -= instance.OnMouseVectorInput;
-            @TouchPosition.started -= instance.OnTouchPosition;
-            @TouchPosition.performed -= instance.OnTouchPosition;
-            @TouchPosition.canceled -= instance.OnTouchPosition;
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
@@ -285,9 +230,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
-            @Touch1.started -= instance.OnTouch1;
-            @Touch1.performed -= instance.OnTouch1;
-            @Touch1.canceled -= instance.OnTouch1;
         }
 
         public void RemoveCallbacks(IControlsActions instance)
@@ -308,10 +250,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IControlsActions
     {
         void OnMouseVectorInput(InputAction.CallbackContext context);
-        void OnTouchPosition(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnShield(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnTouch1(InputAction.CallbackContext context);
     }
 }

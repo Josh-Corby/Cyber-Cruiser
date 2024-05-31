@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CyberCruiser
@@ -14,6 +15,7 @@ namespace CyberCruiser
         [SerializeField] private int _starsBeforeMissionStart;
         [SerializeField] private int _starsToGain;
         [SerializeField] private int _totalStarReward;
+        [SerializeField] private GameManager _Gamemanager;
         #endregion
 
         #region Properties
@@ -25,7 +27,7 @@ namespace CyberCruiser
 
             set
             {
-                _currentStars = value;
+                _currentStars = (int)MathF.Max(0, value);
                 if(_currentStars >= _currentRank.StarsToRankUp)
                 {
                     RankUp();
@@ -35,6 +37,9 @@ namespace CyberCruiser
         public int StarsBeforeMissionStart { get => _starsBeforeMissionStart; }
         public int TotalStarReward { get => _totalStarReward; }
         #endregion
+
+        public static event Action<int> OnRankUp;
+        public static event Action<int> OnRankLoaded;
 
         private void OnEnable()
         {
@@ -48,11 +53,21 @@ namespace CyberCruiser
         {
             GameManager.OnMissionEnd -= StoreRankValues;
             MissionManager.OnMissionComplete -= StartStarIncreaseProcess;
+            SaveManager.OnSaveData -= SaveValues;
+            SaveManager.OnClearSaveData -= ClearSaveData;
         }
 
         private void Start()
         {
             RestoreValues();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                RankUp();
+            }
         }
 
         private void RestoreValues()
@@ -63,8 +78,10 @@ namespace CyberCruiser
 
         private void RestoreRank()
         {
+            Debug.Log(PlayerPrefs.GetInt(PLAYER_RANK));
             _currentRank = RankManagerInstance.GetRank(PlayerPrefs.GetInt(PLAYER_RANK, 0));
             _rankBeforeMissionStart = _currentRank;
+            OnRankLoaded?.Invoke(_currentRank.RankID);
         }
 
         private void RestoreStars()
@@ -96,16 +113,25 @@ namespace CyberCruiser
         private void RankUp()
         {
             _starsToGain -= _currentRank.StarsToRankUp;
+            _starsToGain = (int)MathF.Max(0, _starsToGain);
             CurrentStars -= _currentRank.StarsToRankUp;
             _currentRank = RankManagerInstance.RankUp(_currentRank.RankID);
+            if(!_Gamemanager.InMission)
+            {
+                _rankBeforeMissionStart = _currentRank;
+            }
+
             if (_starsToGain > 0)
             {
                 IncreaseStars();
             }
+
+            OnRankUp?.Invoke(_currentRank.RankID);
         }
 
         private void SaveValues()
         {
+            Debug.Log("Saving rank of " + _currentRank.RankID);
             PlayerPrefs.SetInt(PLAYER_RANK, _currentRank.RankID);
             PlayerPrefs.SetInt(PLAYER_STARS, _currentStars);
         }
@@ -117,6 +143,5 @@ namespace CyberCruiser
             _currentStars = 0;
             _starsBeforeMissionStart = 0;
         }
-
     }
 }
