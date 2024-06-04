@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: AddOnData_BatteringRam
   m_EditorClassIdentifier: 
   _info:
-    Name: Battering Ram
-    Description: Collisions destroy enemies while Shield is active
+    Name: Ram Attack
+    Description: Shield collisions destroy enemies
     Sprite: {fileID: 21300000, guid: 8169f018eab50ac45a3821aa5e71b2e0, type: 3}
     Popup: {fileID: 21300000, guid: d1021bab4b7b3424fbeff6bec68a157d, type: 3}
   _equipBoolToTrack:

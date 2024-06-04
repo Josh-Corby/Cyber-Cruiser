@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Emergency Arsenal
-    Description: Overheating has a chance to drop a Weapon Pack
+    Description: Overheating chance to drop Weapon Pack
     Sprite: {fileID: 21300000, guid: 63767cb2f9b0cdf45b901cd1b42a3995, type: 3}
     Popup: {fileID: 21300000, guid: e01502f88d21fde4a98352130b7db1f7, type: 3}
   _equipBoolToTrack:

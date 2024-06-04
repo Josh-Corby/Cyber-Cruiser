@@ -9,25 +9,22 @@ namespace CyberCruiser
     public class WarCry : MonoBehaviour
     {
         [SerializeField] private CircleCollider2D _collider;
-        private SpriteRenderer _renderer;
         [SerializeField] private ClipInfo _warCryClip;
         [SerializeField] private SoundControllerBase _soundController;
+        [SerializeField] private ParticleSystem _warCryParticles;
 
         private void Awake()
         {
             _collider = GetComponent<CircleCollider2D>();
-            _renderer = GetComponent<SpriteRenderer>();
-            _renderer.enabled = false;
             _collider.enabled = false;
         }
 
         public void StartWarCry()
         {
             _collider.enabled = true;
-            _renderer.enabled = true;
             _soundController.PlayNewClip(_warCryClip);
-            //_collider.radius = 0.001f;
             StartCoroutine(ExpandWarCry());
+            _warCryParticles.Play();
         }
 
         private IEnumerator ExpandWarCry()
@@ -40,7 +37,6 @@ namespace CyberCruiser
 
             transform.localScale = Vector3.one;
             _collider.enabled = false;
-            _renderer.enabled = false;
             StopCoroutine(ExpandWarCry());
         }
 

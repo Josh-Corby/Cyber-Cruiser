@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Signal Beacon
-    Description: Chance to drop Weapon Pack when activating Shield
+    Description: Shield chance to drop Weapon Pack
     Sprite: {fileID: 21300000, guid: d37d418b5eba7964c884ab1eb4bc2b05, type: 3}
     Popup: {fileID: 21300000, guid: b1ddaba2f59a64d4f865f2e43f73b440, type: 3}
   _equipBoolToTrack:

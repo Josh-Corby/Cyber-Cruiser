@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: EnemyData_Gunship_Reflector
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 2653145768784104840, guid: 5315175d49caa2c4d9ee273cc227786a, type: 3}
-  EnemyImage: {fileID: 21300000, guid: 2ecc0ed3ca317e64b963f201b631d205, type: 3}
+  EnemyImage: {fileID: 21300000, guid: 67df00f54b64f8743bf8aa16bab026b9, type: 3}
   EnemyAbilities: 
   KillData:
-    TimesKilled: 1
+    TimesKilled: 0
     PlayerKills: 0
   GeneralStats:
-    Name: Gunship_Reflector
+    Name: Reflector_Gunship
     Type: 1
     MaxHealth: 1
     RamDamage: 1

@@ -611,11 +611,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyInfo: {fileID: 0}
   _enemyImage: {fileID: 4984649472151700785}
-  _unknownSprite: {fileID: 21300000, guid: 9d1715d405f73094aba7af6d2a65f0eb, type: 3}
+  _unknownSprite: {fileID: 21300000, guid: dae41c4e2fe966b4aaa8c953b05cc101, type: 3}
   _enemyName: {fileID: 381630725770265490}
   _timesKilled: {fileID: 1390976583953554536}
   _playerKills: {fileID: 78670117603861749}
   _bossDescriptionText: {fileID: 8476077833156835069}
+  _questionSprite: {fileID: 21300000, guid: dae41c4e2fe966b4aaa8c953b05cc101, type: 3}
 --- !u!1 &5338047713011520782
 GameObject:
   m_ObjectHideFlags: 0

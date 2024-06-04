@@ -201,6 +201,7 @@ namespace CyberCruiser
         public static event Action<int> OnPlasmaSpent = null;
         public static event Action<int> OnPlasmaPickupValue = null;
         public static event Action<PlayerHealthState> OnPlayerHealthStateChange = null;
+        public static event Action OnPlayerCanAffordShield = null;
 
         #endregion
 
@@ -298,6 +299,11 @@ namespace CyberCruiser
                 if (!_playerShieldController.PublicIsShieldsActive)
                 {
                     _playerUIManager.ToggleGreenShieldDisplay(CanAffordShield());
+                }
+
+                if(CanAffordShield())
+                {
+                    OnPlayerCanAffordShield?.Invoke();
                 }
             }
         }

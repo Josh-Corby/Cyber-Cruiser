@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: EnemyData_Mine_Cluster
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 2653145768784104840, guid: 26d025349807efb46bbcf7de90e66d47, type: 3}
-  EnemyImage: {fileID: 21300000, guid: 297def513101f3c4483ba4083f6469aa, type: 3}
+  EnemyImage: {fileID: 21300000, guid: a04ed748073ee2c4b827cb762cc8c093, type: 3}
   EnemyAbilities: 
   KillData:
-    TimesKilled: 1
+    TimesKilled: 0
     PlayerKills: 0
   GeneralStats:
     Name: Mine

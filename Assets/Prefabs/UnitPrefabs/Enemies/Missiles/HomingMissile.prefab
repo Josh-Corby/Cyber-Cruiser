@@ -513,6 +513,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1548726495860243209}
     m_Modifications:
+    - target: {fileID: 1182860529685859003, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1182860529685859003, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1362004309
+      objectReference: {fileID: 0}
+    - target: {fileID: 2030638435293112562, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2338492765369980450, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3308716237454912745, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3330379553873616096, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
       propertyPath: m_Name
       value: ExposionParticles
@@ -559,6 +579,46 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3601520480057004824, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5509533894871170663, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841180778964877048, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841180778964877048, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1362004309
+      objectReference: {fileID: 0}
+    - target: {fileID: 6952297798274903509, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6952297798274903509, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1362004309
+      objectReference: {fileID: 0}
+    - target: {fileID: 7571443910273157245, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7571443910273157245, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1362004309
+      objectReference: {fileID: 0}
+    - target: {fileID: 8289453229785333978, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8289453229785333978, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1362004309
+      objectReference: {fileID: 0}
+    - target: {fileID: 9205527579169731812, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

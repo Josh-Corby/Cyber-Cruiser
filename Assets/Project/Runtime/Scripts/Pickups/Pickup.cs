@@ -14,6 +14,8 @@ namespace CyberCruiser
         private bool _isAttracted;
         private Transform _attractorTransform;
 
+        [SerializeField] private SpriteRenderer _plasmaTutorialSprite;
+
         [SerializeField] private float _speed;
         [SerializeField] private IntReference _healthOnPickup;
         [SerializeField] private IntReference _plasmaOnPickup;
@@ -27,6 +29,7 @@ namespace CyberCruiser
         public static event Action<Pickup> OnPickedUp = null;
         public static event Action<WeaponSO> OnWeaponUpgradePickup = null;
         public static event Action<PickupInfo> OnBossPickup = null;
+        public static event Action<Pickup> OnPlasmaPickupSpawned = null;
         #endregion
 
         private void Awake()
@@ -34,6 +37,14 @@ namespace CyberCruiser
             if(_pickupSO != null)
             {
                 _info = _pickupSO.Info;
+            }
+        }
+
+        private void Start()
+        {
+            if(_pickupType == PickupType.Normal)
+            {
+                OnPlasmaPickupSpawned?.Invoke(this);
             }
         }
 
@@ -95,6 +106,24 @@ namespace CyberCruiser
         private void MoveTowardsTarget()
         {
             transform.position = Vector2.MoveTowards(transform.position, _attractorTransform.position, _speed * Time.deltaTime);
+        }
+
+        public void EnablePlasmaTutorial()
+        {
+            if(_plasmaTutorialSprite != null)
+            {
+                _plasmaTutorialSprite.enabled = true;
+                Debug.Log("Enabling plasma tutorial sprite");
+            }
+        }
+
+        public void DisablePlasmaTutorial()
+        {
+            if (_plasmaTutorialSprite != null)
+            {
+                _plasmaTutorialSprite.enabled = false;
+                Debug.Log("Enabling plasma tutorial sprite");
+            }
         }
     }
 

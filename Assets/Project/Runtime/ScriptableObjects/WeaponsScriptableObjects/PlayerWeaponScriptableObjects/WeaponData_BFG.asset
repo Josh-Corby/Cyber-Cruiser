@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WeaponData_BFG
   m_EditorClassIdentifier: 
   WeaponName: CYBER CANNON
-  WeaponDescription: Devastating explosive projectile. Slow reload
+  WeaponDescription: Explosive projectile. Slow reload
   WeaponUISprite: {fileID: 21300000, guid: a3cc20cf2a4e23a469ea8fbfc5f1aa97, type: 3}
   MuzzleFlash: {fileID: 0}
   objectToFire: {fileID: 976552681326359198, guid: c7a34c62830e2df48bc90895d9129f7d, type: 3}

@@ -75,7 +75,6 @@ namespace CyberCruiser
                 _input = new Vector2(_joystick.Horizontal, _joystick.Vertical);
                 _input *= .75f;
                 desiredMoveLocation += _input;
-                Debug.Log(_input.magnitude);
 
                 //_rb.AddForce(_input * baseSpeed * 1.5f);
                 if (!_lerpMovement)

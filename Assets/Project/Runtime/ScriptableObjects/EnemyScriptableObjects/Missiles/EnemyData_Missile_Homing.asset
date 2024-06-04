@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: EnemyData_Missile_Homing
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 2653145768784104840, guid: 6f3aeb39ec11dc14b837dd35b3eda443, type: 3}
-  EnemyImage: {fileID: 21300000, guid: 150eed172f6f91945affa321c2579947, type: 3}
+  EnemyImage: {fileID: 21300000, guid: 3cb91860164afe2488134cbf4989f7b7, type: 3}
   EnemyAbilities: 
   KillData:
-    TimesKilled: 13
+    TimesKilled: 0
     PlayerKills: 0
   GeneralStats:
     Name: Guided Missile

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyPrefab: {fileID: 980203594034234250, guid: 5742acc31e60e35449a79db534b7264b, type: 3}
   EnemyImage: {fileID: 21300000, guid: 83c8844486cb32b42884ab833abc4e0e, type: 3}
-  EnemyAbilities: Rockets, debilitating War Cry
+  EnemyAbilities: 
   KillData:
     TimesKilled: 0
     PlayerKills: 0

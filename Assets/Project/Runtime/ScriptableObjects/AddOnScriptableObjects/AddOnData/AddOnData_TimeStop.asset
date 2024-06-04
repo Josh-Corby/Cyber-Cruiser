@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Time Stop
-    Description: Shield activation freezes all enemies and projectiles
+    Description: Shield activation freezes time
     Sprite: {fileID: 21300000, guid: 8d8a973849b8c0e499ca7b7f6f6b7306, type: 3}
     Popup: {fileID: 21300000, guid: 05323761e1c252d46b69b2c96ed72277, type: 3}
   _equipBoolToTrack:
