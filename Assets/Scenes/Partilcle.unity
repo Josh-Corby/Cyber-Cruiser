@@ -7486,6 +7486,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3830474876027036906, guid: 5044058090ead9b41bf6d8b6f630129a, type: 3}
   m_PrefabInstance: {fileID: 602299732}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &607980352 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 994896259009601763, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+  m_PrefabInstance: {fileID: 8907491432400472847}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &623342394
 GameObject:
   m_ObjectHideFlags: 0
@@ -35763,6 +35768,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1362004309
       objectReference: {fileID: 0}
+    - target: {fileID: 994896259009601763, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1140242607254446349, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_SortingLayer
       value: 3
@@ -35815,6 +35824,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1772267147982634637, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1972109766866036180, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: looping
       value: 0
@@ -35839,6 +35852,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3537572330944391453, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: _explosionParticles
+      value: 
+      objectReference: {fileID: 607980352}
     - target: {fileID: 3570984759039552761, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -35850,6 +35867,14 @@ PrefabInstance:
     - target: {fileID: 3616349516025353285, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: m_SortingLayerID
       value: 1362004309
+      objectReference: {fileID: 0}
+    - target: {fileID: 3717861344649978611, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3963706849486542348, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3978963688750024401, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: looping
@@ -35902,6 +35927,10 @@ PrefabInstance:
     - target: {fileID: 5563813406855243784, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: lengthInSec
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5723911275432111368, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6168011789099631808, guid: 606a282f554faec45bfe8ddfbcbd7a48, type: 3}
       propertyPath: looping

@@ -34,6 +34,7 @@ namespace CyberCruiser
         [Tooltip("SO Float Reference of current heat per shot on weapon fire")]
         [SerializeField] private FloatReference _currentHeatPerShotReference;
         [SerializeField] private BurstVents _burstVents;
+        [SerializeField] private ParticleSystem _OverheatParticles;
   
         #region Fields
         private const int BASE_HEAT_MAX = 100;
@@ -231,6 +232,7 @@ namespace CyberCruiser
             PickupChecks();
             _overheatFlame.enabled = true;
             _playerUIManager.ToggleHeatSliderFill(true);
+            _OverheatParticles.Play();
         }
 
         private void PickupChecks()

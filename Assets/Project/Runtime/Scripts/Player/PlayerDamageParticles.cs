@@ -6,6 +6,7 @@ namespace CyberCruiser
     {
         [SerializeField] private ParticleSystem[] _damagedParticles;
         [SerializeField] private ParticleSystem[] _crashingParticles;
+        [SerializeField] private ParticleSystem _explosionParticles;
 
         private void OnEnable()
         {
@@ -59,6 +60,7 @@ namespace CyberCruiser
 
         private void EnableCrashParticles()
         {
+            _explosionParticles.Play();
             for (int i = 0; i < _crashingParticles.Length; i++)
             {
                 _crashingParticles[i].Play();

@@ -1003,6 +1003,7 @@ Transform:
   - {fileID: 6834963151512619296}
   - {fileID: 7285992313904762917}
   - {fileID: 6418262053132931299}
+  - {fileID: 8933485136872894271}
   m_Father: {fileID: 3061054622817398978}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1084,6 +1085,7 @@ MonoBehaviour:
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 2458f85d47f8ede4a9983b4cb1742f54, type: 2}
   _burstVents: {fileID: 2076605998673752087}
+  _OverheatParticles: {fileID: 7987981137067851815}
 --- !u!114 &7594662664462515631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1555,7 +1557,6 @@ Transform:
   - {fileID: 703919016318476738}
   - {fileID: 3061054622817398978}
   - {fileID: 683213703082008290}
-  - {fileID: 8933485136872894271}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3466,11 +3467,15 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1165463880448735964}
+    m_TransformParent: {fileID: 14939473773078338}
     m_Modifications:
+    - target: {fileID: 479613116858249261, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1407078519754530613, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1407078519754530613, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3490,15 +3495,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1407078519754530613, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1407078519754530613, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1407078519754530613, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1407078519754530613, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3512,12 +3517,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1557924569871757413, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6932595711545666985, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6932595711545666985, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1362004309
+      objectReference: {fileID: 0}
     - target: {fileID: 6989471415094264409, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
       propertyPath: m_Name
       value: OverheatParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 7738305607466338185, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7738305607466338185, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1362004309
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346957738867295800, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8346957738867295800, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1362004309
+      objectReference: {fileID: 0}
+    - target: {fileID: 8906875873693310871, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+--- !u!198 &7987981137067851815 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 479613116858249261, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
+  m_PrefabInstance: {fileID: 7529155542217355274}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8933485136872894271 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1407078519754530613, guid: 2525e38994bdacc46b0e6ab36d139f56, type: 3}
