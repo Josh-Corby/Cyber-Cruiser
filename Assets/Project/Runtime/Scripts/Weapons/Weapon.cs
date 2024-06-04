@@ -13,6 +13,7 @@ namespace CyberCruiser
         private GameObject _firePoint;
         protected Transform _firePointTransform;
         private SpriteRenderer _muzzleFlashRenderer;
+        [SerializeField] private ParticleSystem _muzzleFlashParticles;
 
         private bool _readyToFire;
         [SerializeField] protected bool _autoFire;
@@ -20,7 +21,6 @@ namespace CyberCruiser
         public bool ReadyToFire { get => _readyToFire; }
 
         private Coroutine _burstFireRoutine;
-        private Coroutine _muzzleFlashRoutine;
 
         private void Awake()
         {
@@ -29,11 +29,6 @@ namespace CyberCruiser
             _firePointTransform = _firePoint.transform;
             _muzzleFlashRenderer = GetComponentInChildren<SpriteRenderer>();
 
-            //if (_muzzleFlashRenderer != null)
-            //{
-            //    _muzzleFlashRenderer.sprite = _currentWeapon.MuzzleFlash;
-            //    _muzzleFlashRenderer.enabled = false;
-            //}
         }
 
         protected virtual void OnEnable()
@@ -168,13 +163,14 @@ namespace CyberCruiser
         {
             _soundController.PlayNewClip(_currentWeapon.Clip);
 
-            if (_muzzleFlashRenderer != null)
+            FireMuzzleFlash();
+        }
+
+        private void FireMuzzleFlash()
+        {
+            if(_muzzleFlashParticles != null)
             {
-                if (_muzzleFlashRoutine != null)
-                {
-                    StopCoroutine(_muzzleFlashRoutine);
-                }
-                _muzzleFlashRoutine = StartCoroutine(MuzzleFlashRoutine());
+                _muzzleFlashParticles.Play();
             }
         }
 
