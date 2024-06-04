@@ -18665,7 +18665,8 @@ MonoBehaviour:
   pickupsOnScreen: []
   _pickupSpawner: {fileID: 539388724}
   _upgradeSpawner: {fileID: 420019654}
-  _initialBossDrops: []
+  _initialBossDrops:
+  - {fileID: 6951969226015609480, guid: e1eb90043abfde241b2bdd74007ea305, type: 3}
   _unlockedBossDrops: []
   _bossDropsToSpawn: []
   _initialWeaponUpgrades: []
