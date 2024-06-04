@@ -9,6 +9,7 @@ namespace CyberCruiser
         private Vector2 _minSize = new Vector2(0.1f, 0.1f);
         private bool _isDetonating;
         private Collider2D _col;
+        [SerializeField] private ParticleSystem _PulseDetonatorParticles;
 
         private void Awake()
         {
@@ -33,6 +34,7 @@ namespace CyberCruiser
         {
             _isDetonating = true;
             _col.enabled = true;
+            _PulseDetonatorParticles.Play();
         }
 
         private void Detonation()
