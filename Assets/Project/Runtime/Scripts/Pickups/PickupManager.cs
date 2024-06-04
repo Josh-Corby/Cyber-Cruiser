@@ -34,7 +34,7 @@ namespace CyberCruiser
 
         [SerializeField] private bool _spawnPowerupOnMissionStart = false;
         [SerializeField] private Transform _spawnPowerUpOnMissionStartTransform;
-        [SerializeField] private Unlock[] _unlocks;
+        [SerializeField] private UnlockContainer[] _unlocksPerRank;
 
         private void OnEnable()
         {
@@ -217,26 +217,32 @@ namespace CyberCruiser
 
         private void UnlockNewUpgrade(int newRankID)
         {
-            if (_unlocks.Length - 1 < newRankID)
+            if(GetUnlocksAtRankID(newRankID).UnlockRankID == -1)
             {
-                Debug.Log("There is no unlock for rank " + (newRankID+1).ToString());
+                Debug.Log("No unlocks at rank " + newRankID.ToString());
                 return;
             }
             
-            Itemtype unlockType = _unlocks[newRankID].ItemType;
-            GameObject unlockedItem = _unlocks[newRankID].UnlockedItem;
-            if(unlockType == Itemtype.BossDrop)
+            UnlockContainer unlocksThisRank = GetUnlocksAtRankID(newRankID);
+            foreach(Unlock unlock in unlocksThisRank.Unlocks)
             {
-                if(!_unlockedBossDrops.Contains(unlockedItem))
+                Itemtype unlockType = unlock.ItemType;
+                GameObject unlockedItem = unlock.UnlockedItem;
                 {
-                    _unlockedBossDrops.Add(unlockedItem);
-                }
-            }
-            if(unlockType == Itemtype.Weapon)
-            {
-                if(!_weaponDropsToSpawn.Contains(unlockedItem))
-                {
-                    _weaponDropsToSpawn.Add(unlockedItem);
+                    if (unlockType == Itemtype.BossDrop)
+                    {
+                        if (!_unlockedBossDrops.Contains(unlockedItem))
+                        {
+                            _unlockedBossDrops.Add(unlockedItem);
+                        }
+                    }
+                    if (unlockType == Itemtype.Weapon)
+                    {
+                        if (!_weaponDropsToSpawn.Contains(unlockedItem))
+                        {
+                            _weaponDropsToSpawn.Add(unlockedItem);
+                        }
+                    }
                 }
             }
         }
@@ -245,6 +251,20 @@ namespace CyberCruiser
         {
             _unlockedBossDrops = new(_initialBossDrops);
             _weaponDropsToSpawn = new(_initialWeaponUpgrades);
+        }
+
+        private UnlockContainer GetUnlocksAtRankID(int rankID)
+        {
+            foreach(var UnlockContainer in _unlocksPerRank)
+            {
+                if(UnlockContainer.UnlockRankID == rankID)
+                {
+                    return UnlockContainer;
+                }
+            }
+
+            // invalid unlock container
+            return _unlocksPerRank[0];
         }
     }
 
@@ -255,6 +275,14 @@ namespace CyberCruiser
         public GameObject UnlockedItem;
         public Itemtype ItemType;
     }
+
+    [Serializable]
+    public struct UnlockContainer
+    {
+        public int UnlockRankID;
+        public Unlock[] Unlocks;
+    }
+
 
     [Serializable]
     public enum Itemtype

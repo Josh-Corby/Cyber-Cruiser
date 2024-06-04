@@ -31,6 +31,11 @@ namespace CyberCruiser
 
         public Rank RankUp(int rankID)
         {
+            if (ranks[rankID + 1] == null)
+            {
+                return null;
+            }
+
             Rank newRank = ranks[rankID + 1];
             return newRank;
         }

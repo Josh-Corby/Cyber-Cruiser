@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 5730645401882679849}
   - component: {fileID: 224514308}
   m_Layer: 10
-  m_Name: Pickup_Smart
+  m_Name: Pickup_SmartGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

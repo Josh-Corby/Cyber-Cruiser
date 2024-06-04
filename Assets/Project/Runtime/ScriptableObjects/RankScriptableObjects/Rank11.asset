@@ -17,4 +17,4 @@ MonoBehaviour:
     _sprite: {fileID: 21300000, guid: 5fbd85e664a1dc04b83460aecfda7d3d, type: 3}
     _rankTextSprite: {fileID: 21300000, guid: 1eb2878f577fe7a4383b856213fab703, type: 3}
     _rankID: 10
-    _starsToRankUp: 13
+    _starsToRankUp: 3

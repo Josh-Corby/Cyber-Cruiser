@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _info:
     Name: Pulse Detonator
-    Description: Plasma Shield releases a huge explosion
+    Description: Shield releases huge explosion
     Sprite: {fileID: 21300000, guid: f72287c672767d441ba5af38a0242359, type: 3}
     Popup: {fileID: 21300000, guid: d1a444330a38ee84895b59427da9d772, type: 3}
   _equipBoolToTrack:
