@@ -5,7 +5,7 @@ namespace CyberCruiser
 {
     public class UISlider : GameBehaviour
     {
-        private Slider _slider;
+        [SerializeField] private Slider _slider;
         [SerializeField] private Image _fillImage;
 
         [Header("Lerp Settins")]

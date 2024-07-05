@@ -13,11 +13,11 @@ namespace CyberCruiser
         [SerializeField] private BoolReference _isPlayerDeadReference;
         [SerializeField] private InputManager _inputManager;
         [SerializeField] private Rigidbody2D _rb;
+        [SerializeField] private BoolReference _isPlatformPC;
         #endregion
 
         #region Fields
         public Vector2 GetInput { get => _input; }
-        [SerializeField] private bool _moveWithJoystick = false;
         [SerializeField] private Vector2 _input = Vector2.zero;
         [SerializeField] private float baseSpeed = 0.5f;
         [SerializeField] private float rotationSpeed = 5f;
@@ -69,8 +69,22 @@ namespace CyberCruiser
         private void PlayerMovement()
         {
             Vector2 desiredMoveLocation = transform.position;
+            if(_isPlatformPC.Value == true)
+            {
+                desiredMoveLocation = Camera.main.ScreenToWorldPoint(_input);
+                if (!_lerpMovement)
+                {
+                    transform.position = Vector2.MoveTowards(transform.position, desiredMoveLocation, baseSpeed * Time.deltaTime);
+                }
 
-            if(_moveWithJoystick)
+                if (_lerpMovement)
+                {
+                    transform.position = Vector2.Lerp(transform.position, desiredMoveLocation, baseSpeed * Time.deltaTime);
+                }
+
+            }
+
+            else
             {
                 _input = new Vector2(_joystick.Horizontal, _joystick.Vertical);
                 _input *= .75f;
@@ -86,23 +100,7 @@ namespace CyberCruiser
                 {
                     transform.position = Vector2.Lerp(transform.position, desiredMoveLocation, baseSpeed * 1.25f * Time.deltaTime);
                 }
-            }
-
-
-            else
-            {
-                desiredMoveLocation = Camera.main.ScreenToWorldPoint(_input);
-                if (!_lerpMovement)
-                {
-                    transform.position = Vector2.MoveTowards(transform.position, desiredMoveLocation, baseSpeed * Time.deltaTime);
-                }
-
-                if (_lerpMovement)
-                {
-                    transform.position = Vector2.Lerp(transform.position, desiredMoveLocation, baseSpeed * Time.deltaTime);
-                }
-
-            }
+            }      
 
             float yDiff = Mathf.Abs(desiredMoveLocation.y - transform.position.y);
             if (yDiff > distanceToStopRotation)

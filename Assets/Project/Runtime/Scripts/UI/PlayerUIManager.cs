@@ -5,6 +5,8 @@ namespace CyberCruiser
 {
     public class PlayerUIManager : GameBehaviour
     {
+        [SerializeField] private BoolReference _isPlatformPC;
+
         [SerializeField] private UISlider _playerHealthSlider;
         [SerializeField] private UISlider _weaponHeatSlider;
 
@@ -12,12 +14,49 @@ namespace CyberCruiser
         [SerializeField] private Image _shieldActiveUnderlay;
         [SerializeField] private Image _shieldUnderlay;
 
+        // PC Elements
+        [SerializeField] private UISlider _pcPlayerHealthSlider;
+        [SerializeField] private UISlider _pcWeaponHeatSlider;
+
+        [SerializeField] private Image _pcShieldActiveImage;
+        [SerializeField] private Image _pcShieldActiveUnderlay;
+        [SerializeField] private Image _pcShieldUnderlay;
+
+        // MobileElements
+        [SerializeField] private UISlider _mobilePlayerHealthSlider;
+        [SerializeField] private UISlider _mobileWeaponHeatSlider;
+
+        [SerializeField] private Image _mobileShieldActiveImage;
+        [SerializeField] private Image _mobileShieldActiveUnderlay;
+        [SerializeField] private Image _mobileShieldUnderlay;
+
         [SerializeField] private Sprite _healthFillSprite;
         [SerializeField] private Sprite _shieldFillSprite;
 
         [SerializeField] private Sprite _heatFillSprite;
         [SerializeField] private Sprite _overheatFillSprite;
         [SerializeField] private Sprite _weaponPackFillSprite;
+
+
+        private void Awake()
+        {
+            if(_isPlatformPC.Value)
+            {
+                _playerHealthSlider = _pcPlayerHealthSlider;
+                _weaponHeatSlider = _pcWeaponHeatSlider;
+                _shieldActiveImage = _pcShieldActiveImage;
+                _shieldActiveUnderlay = _pcShieldActiveUnderlay;
+                _shieldUnderlay = _pcShieldUnderlay;
+            }
+            else
+            {
+                _playerHealthSlider = _mobilePlayerHealthSlider;
+                _weaponHeatSlider = _mobileWeaponHeatSlider;
+                _shieldActiveImage = _mobileShieldActiveImage;
+                _shieldActiveUnderlay = _mobileShieldActiveUnderlay;
+                _shieldUnderlay = _mobileShieldUnderlay;
+            }
+        }
 
         public void EnableSliderAtValue(PlayerSliderTypes slider, int maxValue, float currentValue)
         {

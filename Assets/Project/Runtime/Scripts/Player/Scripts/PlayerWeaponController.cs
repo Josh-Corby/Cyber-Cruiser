@@ -8,10 +8,15 @@ namespace CyberCruiser
 {
     public class PlayerWeaponController : GameBehaviour
     {
+        [Header("Managers")]
         [SerializeField] private PlayerAddOnManager _addOnManager;
         [SerializeField] private PlayerSoundController _soundController;
         [SerializeField] private PlayerUIManager _playerUIManager;
-        [SerializeField] private Image _overheatFlame;
+
+        [Header("OverheatUI")]
+        private Image _overheatFlame;
+        [SerializeField] private Image _pcOverheatFlame;
+        [SerializeField] private Image _mobileOverheatFlame;
 
         [SerializeField] private WeaponSO _baseWeaponSO;
         [SerializeField] private WeaponSO _chainLightingWeaponSO;
@@ -21,9 +26,12 @@ namespace CyberCruiser
         private Weapon _playerWeapon;
         [SerializeField] private WeaponSO _currentWeaponSO;
         [SerializeField] private WeaponSO _pulverizerData;
+
         #region SO References
+        [Header("SO References")]
         [SerializeField] private IntReference _weaponUpgradeDurationInSeconds;
         [SerializeField] private BoolReference _isGamePausedReference;
+        [SerializeField] private BoolReference _isPlatformPC;
         #endregion
 
         [Header("Heat")]
@@ -112,6 +120,15 @@ namespace CyberCruiser
             _playerWeapon = GetComponentInChildren<Weapon>();
             _playerWeapon.SetWeapon(_baseWeaponSO);
             _beamAttack = GetComponentInChildren<BeamAttack>();
+
+            if(_isPlatformPC.Value)
+            {
+                _overheatFlame = _pcOverheatFlame;
+            }
+            else
+            {
+                _overheatFlame = _mobileOverheatFlame;
+            }
         }
 
         private void OnEnable()
