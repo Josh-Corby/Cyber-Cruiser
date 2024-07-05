@@ -14,7 +14,7 @@ namespace CyberCruiser
         public EnemyScriptableObject EnemyInfo;
         protected EnemyMovement _enemyMovement;
         private EnemyWeapon _weapon;
-        private GameObject _crashParticles;
+        [SerializeField] private GameObject _crashParticles;
         private EnemyStats _stats;
         #endregion
 
@@ -65,11 +65,12 @@ namespace CyberCruiser
             _weapon = GetComponentInChildren<EnemyWeapon>();
             _enemyMovement = GetComponent<EnemyMovement>();
 
-            if(!_stats.DoesEnemyExplodeOnDeath)
+            if (!_stats.DoesEnemyExplodeOnDeath)
             {
-                _crashParticles = transform.GetComponentInChildren<ParticleSystem>().gameObject;
+                //_crashParticles = transform.GetComponentInChildren<ParticleSystem>().gameObject;
                 if (_crashParticles != null)
                 {
+                    Debug.Log("Can't find Particle");
                     _crashParticles.SetActive(false);
                 }
             }
