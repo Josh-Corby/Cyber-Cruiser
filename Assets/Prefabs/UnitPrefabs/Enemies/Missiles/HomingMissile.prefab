@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyInfo: {fileID: 11400000, guid: e485d258fcdb9154abe4ade99eb035bc, type: 2}
+  _crashParticles: {fileID: 4742364672681055063}
   _spriteRenderer: {fileID: 3072962205943708527}
   _deadSprite: {fileID: 0}
   _damageClip:
@@ -623,6 +624,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+--- !u!1 &4742364672681055063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3330379553873616096, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}
+  m_PrefabInstance: {fileID: 8063590696605994935}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6781447762930031791 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3601520480057004824, guid: 89e33bde2c699d447be2ce6a97929e47, type: 3}

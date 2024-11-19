@@ -19472,6 +19472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyInfo: {fileID: 11400000, guid: f27584928e9808d459ce0f8d352e17f5, type: 2}
+  _crashParticles: {fileID: 426998557373652126}
   _spriteRenderer: {fileID: 6224517711084455413}
   _deadSprite: {fileID: 0}
   _damageClip:
