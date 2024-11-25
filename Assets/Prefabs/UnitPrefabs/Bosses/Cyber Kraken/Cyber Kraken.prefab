@@ -194,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyInfo: {fileID: 11400000, guid: f9f7b71e06d9e7347a816ac37c62f91f, type: 2}
+  _crashParticles: {fileID: 7337218565103471216}
   _spriteRenderer: {fileID: 1718110299894638061}
   _deadSprite: {fileID: 21300000, guid: fe09aa424bd722c428d1d277b78f36a9, type: 3}
   _damageClip:
@@ -573,19 +574,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 96885821566847702, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 265293981418436155, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 532250067889199517, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 645577509810004845, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 946402379893315524, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_Name
@@ -593,11 +594,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1087701478477769254, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1770565966340908717, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2013975831101428330, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_SortingLayer
@@ -617,7 +618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2290051112040977393, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2656114020169937135, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_SortingLayer
@@ -637,7 +638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2993615719767372517, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2997548172037389819, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_RootOrder
@@ -693,7 +694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3654881210501973573, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3663519402691674906, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_SortingLayer
@@ -705,7 +706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3873124290843440891, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4641064068323704842, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_SortingLayer
@@ -733,7 +734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5761288428995047890, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5940038562480217770, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_SortingLayer
@@ -745,7 +746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5995221580383793335, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6350140604123957615, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_SortingLayer
@@ -757,7 +758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6605836944214641615, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6835976329745053983, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_SortingLayer
@@ -769,15 +770,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6864299159141248417, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6973369617692618070, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7091159570165373727, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8031546346407617819, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_SortingLayer
@@ -789,7 +790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8391096747471224078, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: playOnAwake
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8497788154180174021, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
       propertyPath: m_SortingLayer
@@ -820,5 +821,10 @@ PrefabInstance:
 --- !u!4 &4713066162306162767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2997548172037389819, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
+  m_PrefabInstance: {fileID: 7561898480139296180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7337218565103471216 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 946402379893315524, guid: 99e4bf1423346884ab2393acd0cc23b1, type: 3}
   m_PrefabInstance: {fileID: 7561898480139296180}
   m_PrefabAsset: {fileID: 0}

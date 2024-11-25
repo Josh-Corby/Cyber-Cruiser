@@ -16,10 +16,10 @@ MonoBehaviour:
   EnemyImage: {fileID: 21300000, guid: a04ed748073ee2c4b827cb762cc8c093, type: 3}
   EnemyAbilities: 
   KillData:
-    TimesKilled: 0
+    TimesKilled: 9
     PlayerKills: 0
   GeneralStats:
-    Name: Mine
+    Name: Cluster Mine
     Type: 2
     MaxHealth: 1
     RamDamage: 0
