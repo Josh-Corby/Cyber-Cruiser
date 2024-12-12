@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: WeaponData_ScatterGunRandomSpread
   m_EditorClassIdentifier: 
   WeaponName: SCATTER LASER
-  WeaponDescription: lasers shoot in random patterns
+  WeaponDescription: Lasers shoot in random patterns
   WeaponUISprite: {fileID: 21300000, guid: 139608af3834cc84cb62a879d67fba31, type: 3}
+  MuzzleFlash: {fileID: 0}
   objectToFire: {fileID: 760453196464390188, guid: 1b3e20b833268c54a91ba787ca2e1d05, type: 3}
   TimeBetweenShots: 0.1
   IsWeaponAutomatic: 1
@@ -31,3 +32,4 @@ MonoBehaviour:
   IsWeaponMultiFire: 1
   MultiFireShots: 3
   IsMultiFireSpreadRandom: 1
+  Equips: 3

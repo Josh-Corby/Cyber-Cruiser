@@ -27,7 +27,7 @@ namespace CyberCruiser
                 _addonImageDisplay.sprite = _addonInfo.Info.Sprite;
                 _addonNameDisplay.text = _addonInfo.Info.Name;
                 _addonDescriptionDisplay.text = _addonInfo.Info.Description;
-                _numberOfEquipsDisplay.text = _addonInfo.TimesPickedUp.ToString();
+                _numberOfEquipsDisplay.text = "Equipped:_" + _addonInfo.TimesPickedUp.ToString();
             }
         }
     }

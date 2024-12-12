@@ -8,8 +8,8 @@ namespace CyberCruiser
     {
         [SerializeField] private BoolValue _isPlatformPC;
 
-        private int _plasmaTutorialsDone = 0;
-        private int _plasmaTutorialsMax = 3;
+        [SerializeField] private int _plasmaTutorialsDone = 0;
+        private int _plasmaTutorialsMax = 5;
 
         [SerializeField] private SpriteRenderer _PCShieldTutorial;
         [SerializeField] private SpriteRenderer _mobileShieldTutorial;
@@ -20,6 +20,8 @@ namespace CyberCruiser
 
         [SerializeField] private SpriteRenderer _PCShootTutorial;
         [SerializeField] private SpriteRenderer _mobileShootTutorial;
+
+        [SerializeField] private PlayerRankManager _rankManager;
 
         private void OnEnable()
         {
@@ -35,17 +37,30 @@ namespace CyberCruiser
             GameManager.OnMissionStart -= MoveTutorial;
         }
 
+
+        // Shows Plasma Pickup first 4 instances on launch 
+        // DOES NOT SAVE
         private void PlasmaTutorial(Pickup plasmaPickup)
         {
-            Debug.Log("Tutorial manager enabling plasma tutorial sprite");
-            plasmaPickup.EnablePlasmaTutorial();
+            if (_plasmaTutorialsDone <= _plasmaTutorialsMax) 
+            {
+                Debug.Log("Tutorial manager enabling plasma tutorial sprite");
+                plasmaPickup.EnablePlasmaTutorial();
+            }
+            else
+            {
+                plasmaPickup.DisablePlasmaTutorial();
+            }
+
+            _plasmaTutorialsDone++;
         }
 
         private void ShieldTutorial()
         {
             if(_isPlatformPC.Value)
             {
-                StartCoroutine(TutorialCoroutine(_PCShieldTutorial, _tutorialDuration));
+                if(_rankManager.CurrentRank.RankID == 0)
+                    StartCoroutine(TutorialCoroutine(_PCShieldTutorial, _tutorialDuration));
             }
             else
             {
@@ -62,7 +77,10 @@ namespace CyberCruiser
 
         private void MoveTutorial()
         {
-            StartCoroutine(nameof(MoveTutorialCoroutine));
+            if(_rankManager.CurrentRank.RankID == 0)
+            {
+                StartCoroutine(nameof(MoveTutorialCoroutine));
+            }
         }
 
         private IEnumerator MoveTutorialCoroutine()
