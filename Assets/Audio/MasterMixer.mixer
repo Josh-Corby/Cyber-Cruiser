@@ -263,6 +263,9 @@ AudioMixerController:
     - 2999d4e0c7f860c46b8bd903b786021f
     - a4a6ff4837c257a4b88bba1a0a13d37d
     - f853755771f2f3b4d8397e3b346327a1
+    - 9eff3ed8fe57a02478ccd9558713f069
+    - 8808fdb348ca8f94eb813a93a595048d
+    - c457ba8f43ca9864486b86e7aa7465e5
     name: Weapons
   - guids:
     - ec94bc8555e2573408fb096470554de2

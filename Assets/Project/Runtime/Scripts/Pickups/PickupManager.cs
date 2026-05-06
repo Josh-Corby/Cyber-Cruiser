@@ -133,9 +133,10 @@ namespace CyberCruiser
             }
 
 
-            int RandomBossDropIndex = Random.Range(0, _unlockedBossDrops.Count - 1);
+            int RandomBossDropIndex = Random.Range(0, _unlockedBossDrops.Count);
             GameObject randomBossDrop = _unlockedBossDrops[RandomBossDropIndex];
-            _bossDropsToSpawn.RemoveAt(RandomBossDropIndex);
+            Debug.Log(RandomBossDropIndex);
+            //_bossDropsToSpawn.RemoveAt(RandomBossDropIndex);
             return randomBossDrop;
         }
 
